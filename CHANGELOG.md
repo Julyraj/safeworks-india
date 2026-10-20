@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1 — 2026-10-20
+- TN vs Karnataka regulatory & enforcement matrix view (table + 9 domains: PTW/LOTO, confined space, work at height, machinery/lifting/pressure, chemical/hazardous/explosives, construction, environment/waste/hygiene, electrical/fire/radiation, PPE BIS set).
+- New regulation entries: IS 17893:2023, TN CIMAH Rules 1994, MAH Control (Karnataka) Rules 1994, BOCW (Karnataka Amendment) Rules 2024, Karnataka Boiler Rules 1982, TN Boiler Rules, BIS hygiene/electrical/construction/PPE sets.
+- State rule/section/form citations injected into 35 procedures; Karnataka dangerous-operations rule corrected to Rule 129; KSPCB/TNPCB entries extended (portals, ZLD, river G.O.s, lake buffers, OCEMS, STP dual piping, TSDFs).
+- Forms & registers: TN Forms 8/9/8-A, KA Forms 6/7/8, HW Forms 1/3/4/8/9/10, CTE/CTO portals, IS 17893 permit formats; new limits, keywords and portal contacts.
+
 ## 3.0 — 2026-10-20
 - Safety protocols view: 12 Life-Saving Rules, site rule book, 17 standing protocols, 25 emergency protocols.
 - Unsafe acts & conditions master list (165 items), causes and causation models; Observation card tool with on-device log and CSV export.

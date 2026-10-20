@@ -1,0 +1,315 @@
+{
+ "table": [
+  [
+   "Workplace Safety Enforcement",
+   "Ministry of Labour & Employment (DGFASLI)",
+   "DISH Tamil Nadu (Directorate of Industrial Safety and Health)",
+   "FBISH Karnataka (Dept. of Factories, Boilers, Industrial Safety & Health – e-Surakshate portal)"
+  ],
+  [
+   "Core Factory Safety Rules",
+   "The Factories Act, 1948",
+   "Tamil Nadu Factories Rules, 1950",
+   "The Karnataka Factories Rules, 1969 & Karnataka Factories Safety Audit Rules, 2024"
+  ],
+  [
+   "New Labour Code Transition",
+   "OSH&WC Code, 2020",
+   "OSH&WC (Tamil Nadu) Rules",
+   "OSH&WC (Karnataka) Draft Rules, 2026"
+  ],
+  [
+   "Construction Safety",
+   "BOCW Act, 1996 & NBC 2016",
+   "Tamil Nadu BOCW Rules, 2006",
+   "BOCW (Karnataka) Rules, 2006 & BOCW (Karnataka Amendment) Rules, 2024"
+  ],
+  [
+   "Major Chemical / Hazard Control",
+   "MSIHC Rules, 1989 & EP Act, 1986",
+   "TN Control of Industrial Major Accident Hazards (CIMAH) Rules, 1994",
+   "The Major Accident Hazards Control (Karnataka) Rules, 1994"
+  ],
+  [
+   "Boilers & Steam Plants",
+   "Indian Boilers Act, 1923 (now Boilers Act, 2025) & IBR 1950",
+   "Tamil Nadu Boiler Rules (Directorate of Boilers, TN)",
+   "Karnataka Boiler Rules, 1982 (FBISH Karnataka)"
+  ],
+  [
+   "Environment & Pollution",
+   "Water Act (1974), Air Act (1981), EP Act (1986)",
+   "TNPCB (Tamil Nadu Pollution Control Board – OCMMS portal)",
+   "KSPCB (Karnataka State Pollution Control Board – XGN portal)"
+  ],
+  [
+   "Fire & Electrical Safety",
+   "CEA Safety Regulations, 2023 & NBC Part 4",
+   "TN Fire & Rescue Services Act, 1985 & CEIG Tamil Nadu",
+   "Karnataka Fire Force Act, 1964 & CEIG Karnataka"
+  ]
+ ],
+ "domains": [
+  {
+   "n": 1,
+   "t": "Permit-to-Work (PTW): Hot Work, Cold Work & Isolation (LOTO)",
+   "procs": [
+    "ptw",
+    "hotwork",
+    "loto"
+   ],
+   "central": [
+    "The Factories Act, 1948 Section 24 (striking gear and devices for cutting off power / LOTO) and Section 37 (precautions against explosive or inflammable dust, gas or vapour before applying heat) — carried into OSH Code s.6 and state rules"
+   ],
+   "tn": [
+    "TN Factories Rules, 1950 (Rule 95, Schedule XVI – Chemical Works) mandates written permits, mechanical isolation (blinding/disconnecting pipelines) and gas-free certification by a competent person before any hot or cold work"
+   ],
+   "ka": [
+    "Karnataka Factories Rules, 1969 (Rule 129, Schedule XVI) enforces identical isolation, purging and hot-work permit protocols for chemical and hazardous processes"
+   ],
+   "bis": [
+    "IS 17893:2023 – Work Permit System — Code of Practice (national benchmark covering 7 permits: Cold Work, Hot Work, Confined Space, Excavation, Electrical, Work at Height, Radiography)",
+    "OISD-STD-105 – Work Permit System for oil, gas and petrochemical installations",
+    "IS 818 – Safety and health requirements in electric and gas welding and cutting operations",
+    "IS 3016 – Fire precautions in welding and cutting operations",
+    "IS 11006 – Flashback arrestors (flame arrestors) for gas cylinders used in oxy-acetylene hot work",
+    "IS 5216 – Safety procedures and practices in electrical work (electrical LOTO, earthing, isolation)"
+   ]
+  },
+  {
+   "n": 2,
+   "t": "Confined Space Entry",
+   "procs": [
+    "confined",
+    "tankclean"
+   ],
+   "central": [
+    "Factories Act Sections 36 & 36A prohibit entry into any chamber, tank, vat, pit, pipe or flue where dangerous fumes are likely unless it has a certified manhole, is purged/ventilated, tested for oxygen and toxic gases, and the entrant wears breathing apparatus with a rescue lifeline. Section 36A restricts portable electric hand lamps inside confined spaces to a maximum of 24 V"
+   ],
+   "tn": [
+    "TN Rule 95 (Schedule XVI, Para 18): continuous standby attendants, forced ventilation and formal sign-off prior to entry"
+   ],
+   "ka": [
+    "KA Rule 129 (Schedule XVI): continuous standby attendants, forced ventilation and formal sign-off prior to entry"
+   ],
+   "bis": [
+    "IS 11972 – Safety precautions when entering a sewerage system or confined space",
+    "IS 10245 (Parts 1–4) – Respiratory protective devices: SCBA and compressed-airline breathing apparatus",
+    "IS 17893:2023 (Annex C) – Confined-space entry permit format and gas-testing log (Oxygen 19.5–23.5%; LEL < 5%, 0% for hot work)"
+   ]
+  },
+  {
+   "n": 3,
+   "t": "Work at Height, Scaffolding & Fall Protection",
+   "procs": [
+    "wah",
+    "scaffold",
+    "steel"
+   ],
+   "central": [
+    "Factories Act Section 32 (floors, stairs and means of access) requires fencing, handrails or fall-arrest harnesses wherever a worker is liable to fall more than 2 m (1.8 m under standard corporate/construction protocols)"
+   ],
+   "tn": [
+    "TN Factories Rules Rule 61-O & Rule 61-B: certified industrial safety belts/harnesses, safety helmets with nape straps, periodic inspection of safety belts by a DISH-approved Competent Person",
+    "TN BOCW Rules, 2006 (Rules 188–205) govern construction scaffolding and ladders"
+   ],
+   "ka": [
+    "Karnataka Factories Rules Rule 65 & Rule 88B and Karnataka BOCW Rules, 2006: fall protection, scaffold stability inspections and safety nets on elevated sites"
+   ],
+   "bis": [
+    "IS 3521:2021 (Parts 1–5) – Personal fall-arrest systems: Pt 1 full-body harnesses; Pt 2 lanyards and energy absorbers; Pt 3 self-retracting lifelines; Pt 4 vertical rails/lifelines; Pt 5 connectors/hooks",
+    "IS 3696 (Parts 1 & 2) – Safety code for scaffolds (Pt 1) and ladders (Pt 2)",
+    "IS 4014 (Parts 1 & 2) – Steel tubular scaffolding",
+    "IS 5175 & IS 11057 – Polypropylene/nylon safety nets for industrial and building construction"
+   ]
+  },
+  {
+   "n": 4,
+   "t": "Machinery, Lifting Equipment, Pressure Vessels & Boilers",
+   "procs": [
+    "machine",
+    "lifting",
+    "tackles",
+    "towercrane",
+    "pressure",
+    "tools"
+   ],
+   "central": [
+    "Factories Act Chapter IV (Sections 21–31): fencing of rotary/moving machinery (s.21), work near machinery in motion (s.22), prohibition of young persons on dangerous machines (s.23), hoists and lifts (s.28), lifting machines/tackles (s.29), revolving machinery (s.30), pressure plants (s.31)"
+   ],
+   "tn": [
+    "TN Rules 53–61E statutory testing & forms — Rule 53 (Schedules I–VIII): machine guarding for textile machinery, cotton openers, woodworking, rubber mills, power presses, shears, guillotines",
+    "Rule 55 & 55A (Forms 8 & 9): annual examination of hoists, lifts, cranes, slings and lifting tackles by a DISH-approved Competent Person",
+    "Rule 56 (Form 8-A): hydrostatic testing (every 2–4 years) and external/internal examination (every 6–12 months) of unfired pressure vessels and air receivers",
+    "Rules 61-D & 61-E: mandatory testing of ovens, driers and thermic-fluid heaters"
+   ],
+   "ka": [
+    "KA Rules 56–65 statutory testing & forms — Rule 56 (Schedules I–VII): machine guarding for power presses, woodworking, rubber/plastic mills, centrifugal machines",
+    "Rules 58 & 59 (Forms 6 & 7): annual statutory certification of hoists, lifts, EOT cranes, chain pulley blocks and wire ropes via the e-Surakshate portal",
+    "Rule 61 (Form 8): statutory testing and ultrasonic/hydrostatic certification of pressure vessels and air receivers",
+    "Rule 65-B: thermic-fluid heaters and ovens testing"
+   ],
+   "bis": [
+    "IS 9474 & IS 16819 – Mechanical guarding of machinery; safety of machinery design",
+    "IS 1991 (Parts 1–10) – Use, care and protection of abrasive grinding wheels",
+    "IS 3177 & IS 807 – EOT cranes; structural design of hoisting appliances",
+    "IS 13367 & IS 2762 – Safe use and maintenance of wire-rope slings and lifting tackles",
+    "IS 2825 – Unfired pressure vessels"
+   ]
+  },
+  {
+   "n": 5,
+   "t": "Chemical Safety, Hazardous Processes & Explosives",
+   "procs": [
+    "chemicals",
+    "psm",
+    "toxicgas",
+    "tanks",
+    "cylinders",
+    "blasting"
+   ],
+   "central": [
+    "Factories Act Chapter IVA (Sections 41A–41H): Site Appraisal Committees, compulsory disclosure of dangers to workers and local authorities, On-Site Emergency Plans, Occupational Health Centres (OHC), permissible exposure limits (Second Schedule)",
+    "MSIHC Rules, 1989 & Chemical Accidents (Emergency Planning, Preparedness and Response) Rules, 1996",
+    "PESO regulations (Petroleum Act, 1934 & Explosives Act, 1884) — PESO Southern Circle, Chennai (TN); Sub-circle Mangaluru/Bengaluru (KA) — under Petroleum Rules, 2002, Gas Cylinders Rules, 2016 and SMPV (Unfired) Rules, 2016"
+   ],
+   "tn": [
+    "TN Rules 61-F to 61-T: Site Appraisal (61-F), Safety Data Sheets (61-H), OHC and Ambulance Vans (61-O & 61-P), Decontamination (61-Q), Pre/Periodic Medical Examinations (61-N)",
+    "TN Rule 95 (Dangerous Operations): 30+ Schedules — electroplating, lead, glass, grinding, sandblasting, tanning, chemical works (Sch. XVI), asbestos, manganese, benzene, solvent extraction, fireworks",
+    "TN CIMAH Rules, 1994: third-party safety audits and Off-Site Emergency inputs for Major Accident Hazard (MAH) units"
+   ],
+   "ka": [
+    "KA Rules 88-A to 88-P: Health and Safety Policy, OHC requirements, Ambulance Vans, Safety Committees (Rule 88-B), Chemical Disclosure",
+    "KA Rule 129 (Dangerous Operations): 26+ Schedules — chemical works, spray painting, lead, chrome plating, blasting, toxic compounds",
+    "Major Accident Hazards Control (Karnataka) Rules, 1994 & Karnataka Factories Safety Audit Rules, 2024 (periodic safety audits by accredited auditors for hazardous factories)"
+   ],
+   "bis": [
+    "IS 14489 – Occupational Health and Safety Audit (benchmark for TN and KA statutory safety audits)",
+    "IS 17859 – GHS-aligned classification, labelling and Safety Data Sheets (SDS) for chemicals",
+    "IS 4209 – Safety in chemical laboratories and plants",
+    "IS 11457 (Part 1) – Fire safety of chemical, petroleum and petrochemical plants"
+   ]
+  },
+  {
+   "n": 6,
+   "t": "Construction & Civil Engineering Safety",
+   "procs": [
+    "excavation",
+    "demolition",
+    "steel",
+    "concrete",
+    "piling",
+    "roadworks",
+    "housekeeping"
+   ],
+   "central": [
+    "BOCW Act, 1996 and National Building Code of India (NBC 2016 – Part 7: Construction Management, Practices and Safety)"
+   ],
+   "tn": [
+    "Tamil Nadu BOCW Rules, 2006 (enforced by DISH TN & local bodies CMDA/DTCP): excavation, cofferdams, demolition, structural steel erection, concrete formwork, tower cranes, mandatory Safety Officers for sites with 500+ workers"
+   ],
+   "ka": [
+    "BOCW (Karnataka) Rules, 2006 and BOCW (Karnataka Amendment) Rules, 2024 (enforced by FBISH & Labour Dept Karnataka; alongside BBMP/BDA bylaws)"
+   ],
+   "bis": [
+    "SP 70 (2001) – BIS Handbook on Construction Safety Practices (CED 46 series)",
+    "IS 3764 – Excavation work (trenching, shoring, sloping, tunnelling)",
+    "IS 4130 – Demolition of buildings",
+    "IS 7205 – Erection of structural steelwork",
+    "IS 8989 – Erection of concrete-framed structures (formwork and centering)",
+    "IS 5121 – Piling and other deep foundations",
+    "IS 5916 – Construction involving hot bituminous materials",
+    "IS 7969 – Handling and storage of building materials",
+    "IS 13415 & IS 13416 – Protective barriers in and around buildings; preventive measures against falling-material hazards"
+   ]
+  },
+  {
+   "n": 7,
+   "t": "Environmental Laws, Waste Management & Industrial Hygiene",
+   "procs": [
+    "housekeeping",
+    "noise",
+    "health",
+    "esg"
+   ],
+   "central": [
+    "Water Act 1974 & Air Act 1981: Consent to Establish (CTE) before construction and Consent to Operate (CTO) before production for Red, Orange and Green category industries",
+    "Environment (Protection) Act 1986 & Rules: annual Form V (Environmental Audit Statement) by 30 September",
+    "Hazardous and Other Wastes Rules 2016: Form 1 authorisation, Form 3 daily generation logs, Form 4 annual returns (by 30 June), Form 8 hazardous-waste labelling, Form 9 TREM Card, Form 10 manifest for disposal to authorised TSDFs (Gummidipoondi / Virudhunagar in TN; Dobbaspet / Harohalli in KA)",
+    "E-Waste (Management) Rules 2022, Battery Waste Management Rules 2022, Plastic Waste Management Rules 2016, Bio-Medical Waste Management Rules 2016 (factory OHCs), Solid / C&D Waste Rules 2016 (C&D now 2025 Rules)",
+    "Noise Pollution Rules 2000: industrial zones 75 dB(A) day / 70 dB(A) night; inside factory workrooms 8-h TWA limit 85–90 dB(A)"
+   ],
+   "tn": [
+    "TNPCB: strict Zero Liquid Discharge (ZLD) enforcement for dyeing, bleaching and tannery clusters; G.O. Ms. No. 213 & 127 banning polluting industries within 1–5 km of major rivers (Cauvery, Bhavani, Palar, Tamirabarani)"
+   ],
+   "ka": [
+    "KSPCB: strict lake & buffer-zone protection norms (NGT/KSPCB mandates around Bellandur, Varthur and Peenya industrial basins); mandatory Online Continuous Effluent/Emission Monitoring Systems (OCEMS) for 17-category highly polluting industries; mandatory STP dual-piping reuse for commercial/industrial complexes in Bengaluru"
+   ],
+   "bis": [
+    "IS 3103 – Industrial ventilation (enforcing TN Rule 17 and KA Rule 19 on fresh-air changes and temperature control)",
+    "IS 6665 – Industrial lighting (lux levels for precision vs general workrooms)",
+    "IS 7194 – Assessment of noise exposure during work for hearing conservation"
+   ]
+  },
+  {
+   "n": 8,
+   "t": "Electrical Safety, Fire Safety & Radiation",
+   "procs": [
+    "electrical",
+    "substation",
+    "fire",
+    "firesys",
+    "radiography"
+   ],
+   "central": [
+    "CEA (Measures relating to Safety and Electric Supply) Regulations 2023: high-voltage installations, transformer yards, DG set approvals, licensed electrical supervisors, periodic inspections by the CEIG in both states",
+    "Fire: Factories Act Section 38; NBC 2016 Part 4 (travel distance to exits, fire doors, hydrant networks, sprinkler density, static water tank capacities)",
+    "Radiation: Atomic Energy Act 1962 & Atomic Energy (Radiation Protection) Rules 2004 — AERB via the e-LORA portal for industrial radiography (NDT), nucleonic gauges and X-ray baggage/quality scanners"
+   ],
+   "tn": [
+    "TN Factories Rule 61-A (fire); Fire NOC from Tamil Nadu Fire and Rescue Services (TNFRS); CEIG Tamil Nadu"
+   ],
+   "ka": [
+    "KA Factories Rule 66 (fire); Fire NOC from Karnataka State Fire and Emergency Services (KSFES); CEIG Karnataka"
+   ],
+   "bis": [
+    "IS 3043 – Earthing (double earthing; earth-pit resistance logging)",
+    "IS 15652 – Insulating mats for electrical purposes (in front of all LT/HT panels; replaces IS 5424)",
+    "IS/IEC 60079 series – Explosive atmospheres: flameproof/intrinsically safe equipment in Zones 0, 1, 2",
+    "IS 2190 – Selection, installation and maintenance of first-aid fire extinguishers",
+    "IS 15683 – Portable fire extinguishers: performance and construction",
+    "IS 3844 & IS 13039 – Internal fire hydrants, hose reels and external hydrant systems",
+    "IS 2189 – Automatic fire detection and alarm systems (FDAS)"
+   ]
+  },
+  {
+   "n": 9,
+   "t": "Mandatory Personal Protective Equipment (PPE) BIS Standards",
+   "procs": [
+    "ppe"
+   ],
+   "central": [
+    "TN Factories Rule 61-O and KA Factories Rule 65 / 88 mandate that all PPE provided to workers carries BIS (ISI) certification"
+   ],
+   "tn": [
+    "TN Factories Rule 61-O"
+   ],
+   "ka": [
+    "KA Factories Rule 65 / Rule 88"
+   ],
+   "bis": [
+    "Industrial safety helmets: IS 2925",
+    "Personal protective footwear (safety shoes): IS 15298 (Parts 2, 3 & 4)",
+    "Personal eye-protectors (safety goggles/spectacles): IS 5983 & IS 8520",
+    "Industrial safety gloves (leather/mechanical): IS 6994",
+    "Electrical insulating gloves: IS 4770 & IS 13774",
+    "Hearing protectors (earplugs & earmuffs): IS 9167 & IS 6229",
+    "Respiratory protective devices (dust masks / filtering half masks): IS 9473",
+    "Gas filters and combined cartridges: IS 15322",
+    "High-visibility warning clothing (reflective jackets): IS 15809",
+    "Protective clothing against heat and flame: IS 15748",
+    "Emergency safety showers and eyewash stations: IS 10592"
+   ]
+  }
+ ]
+}

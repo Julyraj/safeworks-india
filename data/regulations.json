@@ -667,9 +667,9 @@
    "Foundry & Metals",
    "Pressure/Boilers"
   ],
-  "a": "Department of Factories, Boilers, Industrial Safety & Health (DFBISH), Govt of Karnataka",
+  "a": "Department of Factories, Boilers, Industrial Safety & Health (DFBISH / FBISH), Govt of Karnataka – e-Surakshate portal",
   "s": "In force (transition)",
-  "sum": "State rules under the Factories Act: approval of plans, licensing (Forms), hazardous process schedules, competent persons, safety officer, medical examination, dangerous operations (Rule 110 Schedules), welfare. Remain the working technical standard until the OSH (Karnataka) Rules are final.",
+  "sum": "State rules under the Factories Act: approval of plans, licensing (Forms), hazardous process chapter (Rules 88-A to 88-P: H&S policy, OHC, ambulance van, Safety Committee 88-B, chemical disclosure), machine guarding (Rule 56 Schedules I–VII), lifting machines (Rules 58/59, Forms 6/7), pressure vessels (Rule 61, Form 8), thermic-fluid heaters (Rule 65-B), PPE (Rule 65/88), fire (Rule 66), ventilation (Rule 19), dangerous operations (Rule 129, 26+ Schedules), welfare. Remain the working technical standard until the OSH (Karnataka) Rules are final.",
   "key": [
    "Approval of plans & licence (online via DFBISH/Seva Sindhu); self-certification scheme 2024 for low-risk factories",
    "Lifting machines/tackles tested every 12 months by competent person; pressure vessels (Rule 61) hydraulic test; hoists/lifts 6-monthly",
@@ -823,7 +823,7 @@
   ],
   "a": "KSPCB",
   "s": "In force",
-  "sum": "CTE/CTO under Air & Water Acts via the online portal; HW authorisation; C&D waste; noise (Bengaluru construction-noise regulation); Bengaluru dust-control checklist (barricading ≥ 3 m, covered transport, wheel wash, water sprinkling, no on-site burning).",
+  "sum": "CTE/CTO under Air & Water Acts via the XGN portal; HW authorisation; lake & buffer-zone protection norms (NGT/KSPCB mandates around Bellandur, Varthur and Peenya industrial basins); mandatory OCEMS for the 17 highly polluting categories; mandatory STP dual-piping reuse for commercial/industrial complexes in Bengaluru; authorised TSDFs at Dobbaspet and Harohalli; C&D waste; noise (Bengaluru construction-noise regulation); Bengaluru dust-control checklist (barricading ≥ 3 m, covered transport, wheel wash, water sprinkling, no on-site burning).",
   "key": [
    "Red/Orange/Green/White categories; consent validity by category; bank guarantee for non-compliance",
    "Diesel generator: KSPCB noise & emission norms; DG > 1 MVA needs separate consent"
@@ -908,7 +908,7 @@
   ],
   "a": "Directorate of Industrial Safety and Health (DISH), Govt of Tamil Nadu",
   "s": "In force (transition)",
-  "sum": "State rules under the Factories Act, frequently amended (2019 licence validity; 2022 first-aid training providers; 2023 rule deletions; 2025 – Schedule XX asbestos processes, explosives-rules references, online payment). Remain the working technical standard until TN OSH rules are fully final.",
+  "sum": "State rules under the Factories Act: ventilation (Rule 17), machine guarding (Rule 53 Schedules I–VIII), lifting machines (Rules 55/55A, Forms 8/9), pressure vessels (Rule 56, Form 8-A), fire (Rule 61-A), PPE/harness (Rules 61-B, 61-O), ovens/driers/thermic-fluid heaters (61-D/61-E), hazardous-process chapter (Rules 61-F to 61-T: site appraisal, SDS, medical exams, OHC, ambulance van, decontamination), dangerous operations (Rule 95, 30+ Schedules incl. Sch. XVI chemical works). Frequently amended (2019 licence validity; 2022 first-aid training providers; 2023 rule deletions; 2025 – Schedule XX asbestos processes, explosives-rules references, online payment). Remain the working technical standard until TN OSH rules are fully final.",
   "key": [
    "Licensing & renewal (multi-year), approval of plans (Form 1), online via DISH portal; fees online",
    "Rule 61 pressure vessels; Rule 55A lifting machines & tackles (competent person annual test); Rule 95 dangerous operations (Schedules I–XX incl. asbestos Sch. XX 2025); Rule 63-B first aid training (St John / TN Apex Skill Development Centre for Health Care)",
@@ -1051,7 +1051,7 @@
   ],
   "a": "TNPCB",
   "s": "In force",
-  "sum": "CTE/CTO (online OCMMS), HW authorisation, C&D waste compliance, noise; Chennai construction dust guidelines; ready-mix concrete plant and hot-mix plant siting norms; Ennore/Manali chemical corridor MAH coordination.",
+  "sum": "CTE/CTO (online OCMMS), HW authorisation (TSDFs at Gummidipoondi and Virudhunagar), strict Zero Liquid Discharge for dyeing, bleaching and tannery clusters, G.O. Ms. No. 213 & 127 banning polluting industries within 1–5 km of the Cauvery, Bhavani, Palar and Tamirabarani rivers, C&D waste compliance, noise; Chennai construction dust guidelines; ready-mix concrete plant and hot-mix plant siting norms; Ennore/Manali chemical corridor MAH coordination.",
   "key": [
    "Red/Orange/Green/White categorisation; consent validity; bank guarantee",
    "Construction: barricading, sprinkling, covered trucks, wheel wash, no open burning"
@@ -1926,7 +1926,7 @@
  },
  {
   "id": "state-dangerous-ops",
-  "t": "Dangerous operations schedules – Karnataka Factories Rules 1969 (Rule 110 schedules) & Tamil Nadu Factories Rules 1950 (Rule 95 schedules I–XX)",
+  "t": "Dangerous operations schedules – Karnataka Factories Rules 1969 (Rule 129 schedules) & Tamil Nadu Factories Rules 1950 (Rule 95 schedules I–XX)",
   "yr": 0,
   "j": "Karnataka",
   "d": [
@@ -2162,5 +2162,161 @@
    "Burn kit and burns-centre tie-up for bitumen crews"
   ],
   "url": "https://www.irc.nic.in"
+ },
+ {
+  "id": "is-17893",
+  "t": "IS 17893:2023 – Work Permit System — Code of Practice",
+  "yr": 2023,
+  "j": "India – Central",
+  "d": [
+   "Management System",
+   "Process Safety",
+   "Factories",
+   "Construction"
+  ],
+  "a": "Bureau of Indian Standards",
+  "s": "In force",
+  "sum": "National benchmark for permit-to-work systems, covering seven distinct permits: Cold Work, Hot Work, Confined Space, Excavation, Electrical, Work at Height and Radiography. Annex C gives the confined-space entry permit format and gas-testing log (Oxygen 19.5–23.5%; LEL < 5%, 0% for hot work).",
+  "key": [
+   "Roles: permit issuer, receiver, gas tester, isolation authority; validity, extension, suspension, close-out",
+   "Companion standards: OISD-STD-105 (oil & gas), IS 818 / IS 3016 (welding & cutting), IS 11006 (flashback arrestors), IS 5216 (electrical work), IS 11972 (sewer/confined space), IS 10245 (breathing apparatus)"
+  ],
+  "url": "https://www.bis.gov.in"
+ },
+ {
+  "id": "tn-cimah",
+  "t": "Tamil Nadu Control of Industrial Major Accident Hazards (CIMAH) Rules, 1994",
+  "yr": 1994,
+  "j": "Tamil Nadu",
+  "d": [
+   "Chemical",
+   "Process Safety",
+   "Factories"
+  ],
+  "a": "DISH Tamil Nadu (Chief Inspector of Factories)",
+  "s": "In force (transition)",
+  "sum": "State rules under the Factories Act for Major Accident Hazard (MAH) units: notification of sites, safety reports, third-party safety audits, on-site emergency plans and inputs to the District Collector's off-site plan. Operate alongside MSIHC Rules 1989 (under the EP Act) and continue in transition under the OSH Code.",
+  "key": [
+   "Third-party safety audit periodicity and auditor recognition by DISH",
+   "Information to the public; mock drills with the District Crisis Group"
+  ],
+  "url": "https://dish.tn.gov.in"
+ },
+ {
+  "id": "ka-mah-rules",
+  "t": "Major Accident Hazards Control (Karnataka) Rules, 1994",
+  "yr": 1994,
+  "j": "Karnataka",
+  "d": [
+   "Chemical",
+   "Process Safety",
+   "Factories"
+  ],
+  "a": "DFBISH / FBISH Karnataka (Chief Inspector of Factories)",
+  "s": "In force (transition)",
+  "sum": "Karnataka's MAH control rules under the Factories Act: site notification, safety report, safety audit, on-site emergency plan and off-site plan inputs for installations above threshold quantities. Read with MSIHC Rules 1989 and the Karnataka Factories (Safety Audit) Rules 2024 (periodic safety audits by accredited auditors for hazardous factories).",
+  "key": [
+   "Safety report updates on modification; audit findings closure reported to the Chief Inspector"
+  ],
+  "url": "https://labour.karnataka.gov.in"
+ },
+ {
+  "id": "ka-bocw-amend-2024",
+  "t": "BOCW (Karnataka Amendment) Rules, 2024",
+  "yr": 2024,
+  "j": "Karnataka",
+  "d": [
+   "Construction",
+   "Welfare/Labour"
+  ],
+  "a": "Labour Department Karnataka; FBISH; alongside BBMP/BDA bylaws",
+  "s": "In force (transition)",
+  "sum": "2024 amendment to the Building and Other Construction Workers (Karnataka) Rules, 2006 — enforced by FBISH and the Labour Department. Verify the amended provisions (registration, welfare, safety chapters) on the Labour Department gazette before citing.",
+  "key": [
+   "Read with Karnataka BOCW Rules 2006 technical chapters and OSH Code Ch. XIII"
+  ],
+  "url": "https://labour.karnataka.gov.in"
+ },
+ {
+  "id": "ka-boiler-rules-1982",
+  "t": "Karnataka Boiler Rules, 1982",
+  "yr": 1982,
+  "j": "Karnataka",
+  "d": [
+   "Pressure/Boilers"
+  ],
+  "a": "Chief Inspector of Boilers, FBISH Karnataka",
+  "s": "In force",
+  "sum": "State boiler rules (registration, inspection fees, attendants, repairs) under the Boilers Act — now read with the Boilers Act 2025 and Indian Boiler Regulations 1950.",
+  "key": [],
+  "url": "https://labour.karnataka.gov.in"
+ },
+ {
+  "id": "tn-boiler-rules",
+  "t": "Tamil Nadu Boiler Rules (Directorate of Boilers, Tamil Nadu)",
+  "yr": 0,
+  "j": "Tamil Nadu",
+  "d": [
+   "Pressure/Boilers"
+  ],
+  "a": "Directorate of Boilers, Tamil Nadu",
+  "s": "In force",
+  "sum": "State boiler rules administered by the Directorate of Boilers (registration, annual inspection, boiler attendants/BOE examinations, repairers) under the Boilers Act 2025 / IBR 1950.",
+  "key": [],
+  "url": "https://dish.tn.gov.in"
+ },
+ {
+  "id": "bis-ptw-hygiene",
+  "t": "BIS industrial-hygiene & electrical safety codes: IS 3103 (industrial ventilation), IS 6665 (industrial lighting), IS 7194 (noise exposure assessment), IS 15652 (insulating mats), IS 10592 (emergency showers & eyewash), IS 4209 (chemical labs/plants), IS 11457 Pt 1 (fire safety of chemical plants), IS 17859 (GHS classification, labelling & SDS)",
+  "yr": 0,
+  "j": "India – Central",
+  "d": [
+   "Health",
+   "Electrical",
+   "Chemical",
+   "Fire",
+   "Factories"
+  ],
+  "a": "Bureau of Indian Standards",
+  "s": "In force",
+  "sum": "Standards that give the technical content behind state Factories Rules on ventilation (TN Rule 17 / KA Rule 19), lighting, noise, electrical panel protection, emergency showers and chemical plant fire safety; IS 17859 aligns Indian SDS/labels with UN GHS.",
+  "key": [
+   "IS 15652 insulating mats replace IS 5424 — required in front of all LT/HT panels",
+   "IS 7194 supports hearing-conservation programmes (85 dB(A) action level)"
+  ],
+  "url": "https://www.bis.gov.in"
+ },
+ {
+  "id": "bis-construction-2",
+  "t": "BIS construction safety series (CED 46) & SP 70: IS 8989 (concrete-framed structures), IS 5121 (piling), IS 5916 (hot bituminous work), IS 13415 (protective barriers), IS 5175 & IS 11057 (safety nets), IS 11972 (sewer/confined space), IS 10245 Pts 1–4 (SCBA/airline), IS 11006 (flashback arrestors), IS 16819 (machinery safety design), IS 1991 Pts 1–10 (grinding wheels), IS 2762 (wire-rope slings)",
+  "yr": 0,
+  "j": "India – Central",
+  "d": [
+   "Construction",
+   "PPE/Equipment",
+   "Lifting & Cranes",
+   "Tools & Tackles"
+  ],
+  "a": "Bureau of Indian Standards",
+  "s": "In force",
+  "sum": "Additional Indian Standards referenced by the state matrix: SP 70 (2001) BIS Handbook on Construction Safety Practices; formwork/centering, piling, bitumen, barriers, nets, breathing apparatus, flashback arrestors, machinery design, abrasive wheels and wire-rope slings.",
+  "key": [],
+  "url": "https://www.bis.gov.in"
+ },
+ {
+  "id": "bis-ppe-2",
+  "t": "BIS PPE certification set (ISI mark required under TN Rule 61-O / KA Rule 65 & 88): IS 2925, IS 15298 Pts 2–4, IS 5983 & IS 8520, IS 6994, IS 4770 & IS 13774, IS 9167 & IS 6229, IS 9473, IS 15322, IS 15809, IS 15748, IS 10592",
+  "yr": 0,
+  "j": "India – Central",
+  "d": [
+   "PPE/Equipment",
+   "Factories",
+   "Construction"
+  ],
+  "a": "Bureau of Indian Standards",
+  "s": "In force",
+  "sum": "Helmets; safety footwear; eye protectors; mechanical gloves; electrical insulating gloves; hearing protectors; filtering half masks; gas filters and combined cartridges; high-visibility clothing; heat & flame protective clothing; emergency showers and eyewash stations.",
+  "key": [],
+  "url": "https://www.bis.gov.in"
  }
 ]

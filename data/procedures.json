@@ -59,6 +59,7 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.24 (devices for cutting off power) & s.37 (precautions before applying heat) – legacy basis; IS 17893:2023 Work Permit System code of practice (7 permit types); IS 11006 flashback arrestors",
     "OSH Code 2020 s.6 (safe systems of work); Ch. XII hazardous processes",
     "OISD-STD-105 Work Permit System (benchmark)",
     "Factories Act s.36 / state Factories Rules – certificate for confined space; MSIHC Rule 4",
@@ -66,10 +67,12 @@
     "NBC 2016 Part 7 Sec. 4 – safety management"
    ],
    "ka": [
+    "Karnataka Factories Rules 1969 Rule 129 Schedule XVI (chemical works): written permits, blinding/disconnection, purging, gas-free certificate",
     "Karnataka Factories Rules 1969 (confined space certificate; hot work in hazardous areas)",
     "Karnataka BOCW Rules 2006 – site safety plan"
    ],
    "tn": [
+    "TN Factories Rules 1950 Rule 95 Schedule XVI (chemical works): written permits, mechanical isolation (blinding/disconnecting pipelines), gas-free certification by competent person",
     "TN Factories Rules 1950 – Rule on dangerous fumes/certificate of safety",
     "TN BOCW Rules 2006"
    ],
@@ -146,14 +149,17 @@
   ],
   "refs": {
    "india": [
+    "IS 17893:2023 hot-work permit; IS 11006 flashback arrestors; Factories Act s.37",
     "OISD-STD-105; IS 818 safety in welding; IS 3016 fire precautions in welding/cutting; IS 2190 extinguishers",
     "Petroleum Rules 2002 Rule 118; Gas Cylinders Rules 2016 (storage, handling)",
     "Factories Act s.37/38; BOCW Central Rules 1998 fire protection chapter; NBC Part 7"
    ],
    "ka": [
+    "KA Rule 129 Sch. XVI hot-work protocol",
     "Karnataka Factories Rules (fire precautions, flammable gas); KSFES NOC conditions"
    ],
    "tn": [
+    "TN Rule 95 Sch. XVI hot-work protocol",
     "TN Factories Rules 1950; TN BOCW Rules 2006 (fire protection)"
    ],
    "osha": [
@@ -225,14 +231,17 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.36/36A: certified manhole, purge/ventilate, test O2 & toxic gases, breathing apparatus with rescue lifeline; portable hand lamps ≤ 24 V; IS 11972 (sewer/confined space); IS 10245 Pts 1–4 (SCBA/airline); IS 17893:2023 Annex C permit & gas log (O2 19.5–23.5%, LEL < 5%, 0% hot work)",
     "Factories Act 1948 s.36 (now OSH Code s.6 + state rules) – no entry unless certificate by competent person / breathing apparatus",
     "OISD-STD-105 confined space permit; DGFASLI guidance on confined space entry; IS 15656 (hazard identification)",
     "BOCW Central Rules 1998 (tunnelling, excavation ventilation)"
    ],
    "ka": [
+    "KA Rule 129 Sch. XVI: continuous standby attendant, forced ventilation, formal sign-off",
     "Karnataka Factories Rules 1969 – precautions against dangerous fumes (certificate of safety)"
    ],
    "tn": [
+    "TN Rule 95 Sch. XVI Para 18: continuous standby attendant, forced ventilation, formal sign-off",
     "TN Factories Rules 1950 – certificate of safety before entry (Form – verify)"
    ],
    "osha": [
@@ -301,14 +310,17 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.24 striking gear/devices for cutting off power; IS 5216; IS 17893:2023 electrical permit",
     "CEA Safety Regulations 2023 – work on electrical lines/apparatus (permit, earthing, isolation)",
     "IS 5216 safety procedures in electrical work; Factories Act s.22 (work on or near machinery in motion) via state rules",
     "OISD-STD-105 electrical isolation permit"
    ],
    "ka": [
+    "KA Rule 129 Sch. XVI isolation",
     "Karnataka Factories Rules – precautions in handling machinery; CEIG Karnataka"
    ],
    "tn": [
+    "TN Rule 95 Sch. XVI isolation",
     "TN Factories Rules 1950; CEIG Tamil Nadu"
    ],
    "osha": [
@@ -381,14 +393,17 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.32 (fencing/handrails/harness where liable to fall > 2 m; 1.8 m practice); IS 3521:2021 Pts 1–5 (harness, lanyards/absorbers, SRL, vertical rails, connectors); IS 5175 & IS 11057 safety nets; IS 17893:2023 WAH permit",
     "BOCW Central Rules 1998 (safety belts, nets, guardrails, ladders); state BOCW Rules KA/TN 2006",
     "IS 3521 (harness), IS 3696 Pt 2 (ladders), IS 4014, IS 13416 Pt 1 (falls); NBC Part 7",
     "OSH Code 2020 s.6; Factories Act s.32/33 (floors, pits, openings)"
    ],
    "ka": [
+    "Karnataka Factories Rules Rule 65 & Rule 88B; Karnataka BOCW Rules 2006 (fall protection, scaffold inspection, safety nets)",
     "Karnataka BOCW Rules 2006 – fall prevention, ladders, hoists"
    ],
    "tn": [
+    "TN Factories Rules Rule 61-O & 61-B (certified harnesses, helmets with nape straps, competent-person inspection of belts); TN BOCW Rules 2006 Rules 188–205 (scaffolds & ladders)",
     "TN BOCW Rules 2006 – fall protection"
    ],
    "osha": [
@@ -456,14 +471,17 @@
   ],
   "refs": {
    "india": [
+    "IS 5175 / IS 11057 safety nets; IS 13415 protective barriers; SP 70",
     "IS 3696 Pt 1 (scaffolds code of safety), IS 4014 Pt 1 & 2 (steel tubular scaffolding), IS 2750 (steel scaffolding)",
     "BOCW Central Rules 1998 & KA/TN BOCW Rules 2006 – scaffolding chapter (inspection, platforms, guardrails)",
     "NBC 2016 Part 7"
    ],
    "ka": [
+    "Karnataka Factories Rules Rule 88B; Karnataka BOCW Rules 2006",
     "Karnataka BOCW Rules 2006 – scaffolds"
    ],
    "tn": [
+    "TN BOCW Rules 2006 Rules 188–205",
     "TN BOCW Rules 2006 – scaffolds; TN CDBR 2019 site conditions"
    ],
    "osha": [
@@ -531,14 +549,17 @@
   ],
   "refs": {
    "india": [
+    "SP 70 (2001) BIS Handbook on Construction Safety Practices; IS 13415/13416",
     "IS 3764 Excavation work – code of safety; IS 4081 blasting; BOCW Central Rules 1998 excavation & tunnelling chapter; KA/TN BOCW Rules",
     "CEA Safety Regulations 2023 – clearances from overhead/underground lines; Electricity Act s.161 accident reporting",
     "NBC Part 7; IRC:SP:55 (roadworks traffic)"
    ],
    "ka": [
+    "BOCW (Karnataka Amendment) Rules 2024",
     "Karnataka BOCW Rules 2006; BESCOM/BWSSB/GAIL utility permission (Bengaluru)"
    ],
    "tn": [
+    "TN BOCW Rules 2006 (excavation, cofferdams)",
     "TN BOCW Rules 2006; TANGEDCO/CMWSSB utility permissions"
    ],
    "osha": [
@@ -609,15 +630,18 @@
   ],
   "refs": {
    "india": [
+    "IS 2762 wire-rope slings",
     "Factories Act s.28/29 (hoists, lifting machines – now OSH Code s.6 + state rules) – 12-monthly test by competent person",
     "BOCW Central Rules 1998 – lifting appliances & gear chapter; KA/TN BOCW Rules 2006",
     "IS 13367 Pt 1 safe use of cranes; IS 4573 mobile cranes; IS 807, IS 3177; IS 2266/2762 wire ropes & slings; IS 6216 chain slings",
     "CEA Safety Regulations 2023 clearances; state lifts & escalators acts (hoists)"
    ],
    "ka": [
+    "KA Rules 58 & 59 (Forms 6 & 7): annual certification of hoists, lifts, EOT cranes, chain pulley blocks, wire ropes via e-Surakshate",
     "Karnataka Factories Rules 1969 (lifting machines/tackles test); Karnataka Lifts Act 2012 (hoists where applicable)"
    ],
    "tn": [
+    "TN Rules 55 & 55A (Forms 8 & 9): annual examination of hoists, lifts, cranes, slings, tackles by DISH-approved competent person",
     "TN Factories Rules 1950 Rule 55A; TN Lifts and Escalators Act 1997"
    ],
    "osha": [
@@ -684,14 +708,17 @@
   ],
   "refs": {
    "india": [
+    "SP 70; IS 13415 protective barriers",
     "IS 4130 Demolition of buildings – code of safety; NBC 2016 Part 7 Sec. 3; BOCW Central Rules 1998 demolition chapter; KA/TN BOCW Rules",
     "Environment (C&D) Waste Management Rules 2025; Hazardous & Other Wastes Rules 2016 (asbestos waste); state Factories Rules asbestos schedules",
     "Municipal demolition permission (BBMP / Greater Chennai Corporation)"
    ],
    "ka": [
+    "BOCW (Karnataka Amendment) Rules 2024; BBMP/BDA bylaws",
     "Karnataka BOCW Rules 2006; BBMP building bye-laws; KSPCB dust norms"
    ],
    "tn": [
+    "TN BOCW Rules 2006 (demolition); CMDA/DTCP",
     "TN BOCW Rules 2006; TN CDBR 2019; TN Factories Rules Sch. XX (asbestos, 2025); TNPCB"
    ],
    "osha": [
@@ -758,14 +785,17 @@
   ],
   "refs": {
    "india": [
+    "IS 15652 insulating mats (replaces IS 5424) in front of all LT/HT panels; IS 3043 double earthing & earth-pit logging; IS/IEC 60079 Zones 0/1/2; IS 17893:2023 electrical permit",
     "Electricity Act 2003 s.53/161; CEA (Measures relating to Safety and Electric Supply) Regulations 2023 (clearances, earthing, work on lines, accident notice)",
     "IS 3043 earthing; IS 732 wiring; IS 5216 electrical work safety; IS 13252; IS/IEC 60309 plugs; IS 3646 lighting; IS 2309/IEC 62305 lightning",
     "BOCW Central Rules 1998 electrical chapter; KA/TN BOCW Rules; state wireman/supervisor licensing rules"
    ],
    "ka": [
+    "CEIG Karnataka periodic inspections; DG set approvals",
     "CEIG Karnataka approvals; BESCOM line shutdown/ shrouding requests; Karnataka Electricity Reforms Act licensing"
    ],
    "tn": [
+    "CEIG Tamil Nadu periodic inspections; DG set approvals",
     "CEIG Tamil Nadu approvals; TANGEDCO shutdown/ shrouding; TN Electrical Licensing Board (wireman/supervisor)"
    ],
    "osha": [
@@ -834,6 +864,7 @@
   ],
   "refs": {
    "india": [
+    "Factories Act Ch. IVA ss.41A–41H (Site Appraisal Committee, disclosure, on-site plan, OHC, Second Schedule PELs); IS 17859 (GHS classification, labelling, SDS); IS 4209; IS 11457 Pt 1; IS 14489; PESO Southern Circle Chennai (TN) / Sub-circle Mangaluru-Bengaluru (KA)",
     "MSIHC Rules 1989; Chemical Accidents (EPPR) Rules 1996; Public Liability Insurance Act 1991",
     "Factories Act Ch. IVA / Sch. II PELs (via state rules & OSH Code Ch. XII); OSH Code s.6, s.12 (notifiable diseases)",
     "Hazardous & Other Wastes Rules 2016; EP Act s.9; Water/Air Acts (SPCB consent)",
@@ -841,9 +872,11 @@
     "IS/ISO 11014 SDS; IS 15656 HAZOP (hazard identification); IS 4379 cylinder colour"
    ],
    "ka": [
-    "Karnataka Factories Rules 1969 dangerous operations schedules & Rule 110; KSPCB HW authorisation; DFBISH MAH registry; Karnataka Safety Audit Rules 2024"
+    "KA Rules 88-A to 88-P (H&S policy, OHC, ambulance van, Safety Committee 88-B, chemical disclosure); KA Rule 129 dangerous operations (26+ schedules); Major Accident Hazards Control (Karnataka) Rules 1994",
+    "Karnataka Factories Rules 1969 dangerous operations schedules & Rule 129; KSPCB HW authorisation; DFBISH MAH registry; Karnataka Safety Audit Rules 2024"
    ],
    "tn": [
+    "TN Rules 61-F to 61-T (site appraisal 61-F, SDS 61-H, OHC & ambulance van 61-O/61-P, decontamination 61-Q, medical exams 61-N); TN Rule 95 dangerous operations (30+ schedules incl. Sch. XVI chemical works); TN CIMAH Rules 1994 (third-party audits, off-site inputs)",
     "TN Factories Rules 1950 Rule 95 Schedules (incl. Sch. XX asbestos 2025); DISH TN MAH units; TNPCB HW authorisation"
    ],
    "osha": [
@@ -910,14 +943,17 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.38; IS 3844 & IS 13039 hydrants/hose reels; IS 2189 FDAS; IS 11457 Pt 1",
     "NBC 2016 Part 4 (fire & life safety) & Part 7; IS 2190, IS 15683 (extinguishers); IS 13039 (hydrants), IS 15105 (sprinklers), IS 2189 (fire alarm); IS 3844 (high-rise)",
     "Factories Act s.38 (fire precautions – via state rules); OSH Code s.6; BOCW Central Rules 1998 fire protection chapter",
     "Petroleum Rules 2002; Gas Cylinders Rules 2016; MSIHC Rule 13 on-site emergency plan"
    ],
    "ka": [
+    "KA Factories Rule 66 (fire); KSFES Fire NOC",
     "Karnataka Fire Force Act 1964; KSFES NOC conditions; Karnataka Factories Rules fire provisions; BBMP bye-laws"
    ],
    "tn": [
+    "TN Factories Rule 61-A (fire); TNFRS Fire NOC",
     "TN Fire Service Act 1985; TNFRS fire licence/NOC; TN CDBR 2019; TN Factories Rules fire provisions"
    ],
    "osha": [
@@ -989,9 +1025,11 @@
     "NBC Part 4; IS 15656; IS 14489"
    ],
    "ka": [
+    "MAH Control (Karnataka) Rules 1994 (on/off-site plans)",
     "KSDMA district plans; Karnataka Factories Rules on-site emergency plan approval (DFBISH); KSFES"
    ],
    "tn": [
+    "TN CIMAH Rules 1994 (off-site emergency inputs)",
     "TNSDMA district plans (cyclone/flood – Chennai, coastal); DISH TN MAH drills; TNFRS"
    ],
    "osha": [
@@ -1195,14 +1233,17 @@
   ],
   "refs": {
    "india": [
+    "BIS/ISI-certified PPE: helmets IS 2925; footwear IS 15298 Pts 2–4; eye IS 5983 & IS 8520; gloves IS 6994; electrical gloves IS 4770 & IS 13774; hearing IS 9167 & IS 6229; filtering half masks IS 9473; gas filters IS 15322; hi-vis IS 15809; heat & flame clothing IS 15748; showers/eyewash IS 10592; fall arrest IS 3521:2021 Pts 1–5",
     "OSH Code 2020 s.6 (employer to provide PPE free); Factories Act s.35 (eye) via rules; BOCW Central Rules 1998 PPE rules (helmets, belts, footwear); KA/TN BOCW Rules",
     "BIS: IS 2925, IS 15298, IS 5983, IS 9167, IS 9473, IS 3521, IS 6994, IS 15809; Quality Control Orders for helmets/footwear/eyewear",
     "Karnataka/TN Factories Rules – PPE for dangerous operations"
    ],
    "ka": [
+    "KA Factories Rule 65 / Rule 88: PPE must carry BIS certification",
     "Karnataka Factories Rules 1969 (PPE in scheduled operations); Karnataka BOCW Rules"
    ],
    "tn": [
+    "TN Factories Rule 61-O: PPE must carry BIS certification",
     "TN Factories Rules 1950 (PPE in Sch. operations); TN BOCW Rules"
    ],
    "osha": [
@@ -1527,6 +1568,7 @@
   ],
   "refs": {
    "india": [
+    "IS 7194 assessment of noise exposure; workroom 8-h TWA 85–90 dB(A); ambient industrial 75/70 dB(A)",
     "Factories Act Sch. II noise 90 dB(A) (via state rules; OSH Code exposure limits); Noise Pollution Rules 2000; EP Rules Sch. VI (DG sets, construction equipment limits)",
     "Noise-induced hearing loss is a notifiable disease (Third Schedule); BOCW Central Rules 1998 (noise & vibration chapter)"
    ],
@@ -1599,7 +1641,7 @@
     "Hazardous & Other Wastes Rules 2016 (asbestos waste); BOCW Rules (dust)"
    ],
    "ka": [
-    "Karnataka Factories Rules 1969 (Rule 110 schedules)"
+    "Karnataka Factories Rules 1969 (Rule 129 schedules)"
    ],
    "tn": [
     "TN Factories Rules 1950 Rule 95 & Sch. XX"
@@ -1661,13 +1703,16 @@
   ],
   "refs": {
    "india": [
+    "Factories Act Ch. IV ss.21–31 (fencing, machinery in motion, young persons, hoists, lifting machines, revolving machinery, pressure plant); IS 16819 (safety of machinery design); IS 1991 Pts 1–10 (abrasive wheels)",
     "Factories Act s.21–s.33 (fencing, machinery in motion, young persons, self-acting machines, casing) – via OSH Code s.6 and state rules",
     "IS 9474 guarding of machinery; IS 1991; BOCW Central Rules (fencing of motors, hoists)"
    ],
    "ka": [
+    "KA Rule 56 Schedules I–VII (power presses, woodworking, rubber/plastic mills, centrifugals)",
     "Karnataka Factories Rules 1969 (fencing, maintenance of machinery)"
    ],
    "tn": [
+    "TN Rule 53 Schedules I–VIII (textile machinery, cotton openers, woodworking, rubber mills, power presses, shears, guillotines)",
     "TN Factories Rules 1950 (fencing, machinery)"
    ],
    "osha": [
@@ -1726,13 +1771,16 @@
   ],
   "refs": {
    "india": [
+    "IS 11006 flashback arrestors",
     "Gas Cylinders Rules 2016 (PESO); SMPV(U) Rules 2016; IS 4379; IS 818; IS 3016; Petroleum Rules (LPG per LPG rules)",
     "Factories Act s.37 (explosive/inflammable gas) via rules"
    ],
    "ka": [
+    "PESO Sub-circle Mangaluru/Bengaluru",
     "Karnataka Factories Rules; KSFES"
    ],
    "tn": [
+    "PESO Southern Circle Chennai",
     "TN Factories Rules; TNFRS"
    ],
    "osha": [
@@ -1862,13 +1910,16 @@
   ],
   "refs": {
    "india": [
+    "IS 8989 safety code for erection of concrete-framed structures (formwork & centering); SP 70",
     "IS 14687 Falsework for concrete structures – guidelines; IS 456; IS 3696; BOCW Central Rules 1998 (concrete work, formwork); NBC Part 7",
     "KA/TN BOCW Rules"
    ],
    "ka": [
+    "BOCW (Karnataka Amendment) Rules 2024",
     "Karnataka BOCW Rules 2006"
    ],
    "tn": [
+    "TN BOCW Rules 2006 (concrete formwork)",
     "TN BOCW Rules 2006"
    ],
    "osha": [
@@ -1928,12 +1979,15 @@
   ],
   "refs": {
    "india": [
+    "SP 70; IS 13416",
     "IS 7205 Safety code for erection of structural steelwork; IS 800; BOCW Central Rules (structural frame erection); KA/TN BOCW Rules"
    ],
    "ka": [
+    "BOCW (Karnataka Amendment) Rules 2024",
     "Karnataka BOCW Rules 2006"
    ],
    "tn": [
+    "TN BOCW Rules 2006 (structural steel erection)",
     "TN BOCW Rules 2006"
    ],
    "osha": [
@@ -1996,13 +2050,16 @@
   ],
   "refs": {
    "india": [
+    "IS 7969; HOWM Forms 1/3/4/8/9/10; TSDFs: Gummidipoondi & Virudhunagar (TN), Dobbaspet & Harohalli (KA); Form V by 30 Sep",
     "Environment (C&D) Waste Management Rules 2025; Hazardous & Other Wastes Rules 2016; E-Waste (Management) Rules 2022; Battery Waste Management Rules 2022; Plastic Waste Rules 2016; Solid Waste Rules 2016; Bio-Medical Waste Rules 2016",
     "Air Act, Water Act, EP Act, Noise Rules 2000, EIA 2006; OSH Code s.24 welfare; BOCW welfare rules"
    ],
    "ka": [
+    "KSPCB XGN portal; lake & buffer-zone norms (Bellandur, Varthur, Peenya); OCEMS for 17 categories; STP dual-piping reuse in Bengaluru",
     "KSPCB consents; BBMP SWM bye-laws & C&D rules; Karnataka BOCW Rules welfare"
    ],
    "tn": [
+    "TNPCB OCMMS portal; ZLD for dyeing/bleaching/tannery clusters; G.O. Ms. 213 & 127 river buffer bans (Cauvery, Bhavani, Palar, Tamirabarani)",
     "TNPCB; Greater Chennai Corporation C&D/SWM bye-laws; TN BOCW Rules welfare"
    ],
    "osha": [
@@ -2065,14 +2122,17 @@
   ],
   "refs": {
    "india": [
+    "IS 3103 industrial ventilation; IS 6665 industrial lighting; IS 10592 emergency showers/eyewash; Bio-Medical Waste Rules 2016 (OHC)",
     "OSH Code 2020 s.6 (annual health exam), s.12 (notifiable diseases), s.24 (welfare), s.23 (welfare officer); OSH Central Rules 2026 (health exam, welfare standards)",
     "Factories Act ss.11–20 (health), ss.42–50 (welfare), s.45 first aid – via state rules; BOCW Rules welfare & first aid; Code on Social Security (ESI medical)",
     "Karnataka/TN Factories Rules dangerous-operations medical schedules; TN Rule 63-B first-aid training"
    ],
    "ka": [
+    "KA Rule 19 (ventilation/temperature); KA Rules 88-A–88-P (OHC, ambulance van)",
     "Karnataka Factories Rules 1969 (first aid, OHC, welfare, medical exams); Karnataka BOCW Rules"
    ],
    "tn": [
+    "TN Rule 17 (ventilation/temperature); TN Rules 61-N/61-O/61-P (medical exams, OHC, ambulance van)",
     "TN Factories Rules 1950 (first aid Rule 63-B, OHC, welfare, medical exams); TN BOCW Rules"
    ],
    "osha": [
@@ -2135,13 +2195,16 @@
   ],
   "refs": {
    "india": [
+    "IS 14489 audit benchmark for TN & KA statutory safety audits",
     "OSH Code 2020 s.6, s.22, s.23, s.24; OSH Central Rules 2026 (Safety Officer duties, committee); Factories Act s.40B/41G legacy",
     "Karnataka Factories (Safety Audit) Rules 2024; MSIHC Rule 12; IS 14489; IS 3786; BOCW rules (safety officer/committee for 500+)"
    ],
    "ka": [
+    "KA Rule 88-B Safety Committee; Karnataka Factories Safety Audit Rules 2024; MAH Control (Karnataka) Rules 1994",
     "DFBISH notifications for safety officer qualifications; Karnataka Safety Audit Rules 2024"
    ],
    "tn": [
+    "TN CIMAH Rules 1994 third-party audits",
     "TN Factories Rules safety officer rules (Rule 76-series – verify); DISH TN circulars"
    ],
    "osha": [
@@ -2258,12 +2321,15 @@
   ],
   "refs": {
    "india": [
+    "Factories Act s.31 pressure plant; IS 2825",
     "Boilers Act 2025; Indian Boiler Regulations 1950; Factories Act s.31 (pressure plant) via state rules (Rule 61 KA/TN); SMPV(U) Rules 2016; IS 2825 unfired pressure vessels; IS 7938 air receivers"
    ],
    "ka": [
+    "KA Rule 61 (Form 8): ultrasonic/hydrostatic certification of pressure vessels & air receivers; Rule 65-B thermic-fluid heaters & ovens; Karnataka Boiler Rules 1982",
     "Karnataka Boiler Rules; DFBISH Boiler Inspectorate; Karnataka Factories Rules Rule 61"
    ],
    "tn": [
+    "TN Rule 56 (Form 8-A): external/internal exam 6–12 months, hydrostatic test 2–4 years; Rules 61-D/61-E ovens, driers, thermic-fluid heaters; TN Boiler Rules (Directorate of Boilers)",
     "Director of Boilers TN; TN Factories Rules Rule 61"
    ],
    "osha": [
@@ -2319,6 +2385,7 @@
   ],
   "refs": {
    "india": [
+    "Atomic Energy Act 1962; AERB e-LORA portal (industrial radiography, nucleonic gauges, X-ray baggage/quality scanners); IS 17893:2023 radiography permit",
     "Atomic Energy (Radiation Protection) Rules 2004; AERB Safety Code for Industrial Radiography (AERB/RF-IR/SC-1); AERB RSO requirements; OSH Code s.6"
    ],
    "ka": [
@@ -2466,7 +2533,7 @@
     "DGFASLI foundry guidance; IS 2925/IS 15298 PPE; IS 3043 earthing of furnaces; Hazardous Waste Rules (spent foundry sand, slag classification)"
    ],
    "ka": [
-    "Karnataka Factories Rules 1969 Rule 110 schedules (foundry/lead/chrome/sand-blasting); KSPCB consent for cupola/induction furnaces (stack norms)"
+    "Karnataka Factories Rules 1969 Rule 129 schedules (foundry/lead/chrome/sand-blasting); KSPCB consent for cupola/induction furnaces (stack norms)"
    ],
    "tn": [
     "TN Factories Rules 1950 Rule 95 schedules; TNPCB cupola/furnace emission norms (Coimbatore cluster guidelines)"
@@ -2542,13 +2609,16 @@
   ],
   "refs": {
    "india": [
+    "Factories Act Ch. IVA; IS 11457 Pt 1; IS 17859; IS 4209",
     "MSIHC Rules 1989 (Rules 4–18: site notification, safety report, safety audit, on-site plan, MSDS); Chemical Accidents (EPPR) Rules 1996; PLI Act 1991; OSH Code Ch. XII; Factories Act Ch. IVA via rules",
     "OISD-STD-105 (permits), 118 (layouts), 163 (PSM), 116/117 (fire), 244 (terminals), 129 (tank inspection); IS 15656 (HAZOP), IS 7689 (static), IS/IEC 60079, IS 803 (tanks), IS 2825 (vessels), SMPV(U) 2016, Petroleum Rules 2002; Boilers Act 2025; PNGRB T4S for pipelines"
    ],
    "ka": [
+    "Major Accident Hazards Control (Karnataka) Rules 1994; KA Rules 88-A–88-P",
     "DFBISH MAH registry & safety-report approval; Karnataka Factories (Safety Audit) Rules 2024; KSPCB consent & HW authorisation; KSDMA district off-site plans"
    ],
    "tn": [
+    "TN CIMAH Rules 1994; TN Rules 61-F–61-T",
     "DISH TN MAH units (Manali/Ennore/Cuddalore clusters) – safety report, mock drills with District Crisis Group; TNPCB; TN Factories Rules Rule 61 (pressure plant)"
    ],
    "osha": [
@@ -2618,14 +2688,17 @@
   ],
   "refs": {
    "india": [
+    "IS 11457 Pt 1 (fire safety of petroleum/chemical plants)",
     "Petroleum Rules 2002 (licensing, underground/above-ground tanks, safety distances); PESO approved tank fabricators; Petroleum Act 1934",
     "IS 803, IS 10987, IS 2825; OISD-STD-129, 118, 244, 117, 116; CPCB vapour recovery guidelines (Stage I/II) for retail outlets; HOWM Rules (tank bottom sludge – Schedule I waste); EP Act s.9 (spill reporting); Water Act (groundwater)",
     "MSIHC Rules where thresholds exceeded; Fire NOC (KSFES/TNFRS)"
    ],
    "ka": [
+    "PESO Sub-circle Mangaluru/Bengaluru",
     "KSPCB consent/HW authorisation; KSFES NOC; Karnataka Ground Water Act (contamination); DFBISH (factory tanks)"
    ],
    "tn": [
+    "PESO Southern Circle Chennai",
     "TNPCB; TNFRS; DISH TN; Chennai Metropolitan Area Groundwater Act (contamination/extraction)"
    ],
    "osha": [
@@ -2763,12 +2836,15 @@
   ],
   "refs": {
    "india": [
+    "IS 2762 wire-rope slings",
     "Factories Act s.29 via state rules (12-monthly examination; register); BOCW Central Rules 1998 & KA/TN BOCW Rules (lifting gear test/examination – 6-monthly verify); IS 2266, IS 6216, IS 3832, IS 13367; OSH Code s.6"
    ],
    "ka": [
+    "KA Rules 58/59 Forms 6/7",
     "Karnataka Factories Rules 1969 lifting tackles register/forms; Karnataka BOCW Rules"
    ],
    "tn": [
+    "TN Rules 55/55A Forms 8/9",
     "TN Factories Rules 1950 Rule 55A forms; TN BOCW Rules"
    ],
    "osha": [
@@ -2836,13 +2912,16 @@
   ],
   "refs": {
    "india": [
+    "IS 1991 Pts 1–10 abrasive grinding wheels; IS 16819",
     "Factories Act s.21–s.33 via state rules (grinding wheels, guarding); BOCW Central/state rules (tools, electrical); CEA Safety Regs (portable apparatus); IS 732; IS/IEC 62841; IS 9474",
     "Sch. II PELs (silica) for cutting; OSH Code s.6"
    ],
    "ka": [
+    "KA Rule 56 schedules",
     "Karnataka Factories Rules 1969; Karnataka BOCW Rules"
    ],
    "tn": [
+    "TN Rule 53 schedules",
     "TN Factories Rules 1950; TN BOCW Rules"
    ],
    "osha": [
@@ -2916,9 +2995,11 @@
     "OSH Code s.6, s.11 (crane collapse = dangerous occurrence, 12 h notice)"
    ],
    "ka": [
+    "KA Rules 58/59 Forms 6/7 (annual certification)",
     "Karnataka BOCW Rules 2006; Karnataka Factories Rules 1969; BBMP conditions for cranes over roads"
    ],
    "tn": [
+    "TN Rules 55/55A Forms 8/9; TN BOCW Rules 2006 (tower cranes)",
     "TN BOCW Rules 2006; TN Factories Rules 1950 Rule 55A; CMDA/GCC conditions"
    ],
    "osha": [
@@ -3063,6 +3144,7 @@
   ],
   "refs": {
    "india": [
+    "IS 15652 insulating mats; IS 3043",
     "Electricity Act 2003 s.53, s.161; CEA (Measures relating to Safety and Electric Supply) Regulations 2023 (work on lines/apparatus, earthing, permits, clearances, competent persons, accident notice); IS 5216, IS 3043, IS 10028, IS 1646, IS 4770 (gloves); state electrical licensing rules"
    ],
    "ka": [
@@ -3285,9 +3367,11 @@
     "MSIHC Rules 1989 (Schedules 1–3 thresholds; Rules 5,7,10,12,13,14,17); Chemical Accidents Rules 1996; Gas Cylinders Rules 2016 (chlorine tonners/cylinders); SMPV(U) Rules 2016 (bulk ammonia); IS 4263 (chlorine), IS 4544 (ammonia); Factories Act via rules (chlorine schedule; Sch. II PELs); OSH Code Ch. XII, s.11/s.12; PLI Act"
    ],
    "ka": [
+    "MAH Control (Karnataka) Rules 1994",
     "DFBISH MAH registry; KSPCB; KSDMA district off-site plans (e.g., Bidadi/Peenya water-treatment chlorine units)"
    ],
    "tn": [
+    "TN CIMAH Rules 1994",
     "DISH TN; CMWSSB chlorination plants; TNPCB; TNSDMA"
    ],
    "osha": [
@@ -3435,12 +3519,15 @@
   ],
   "refs": {
    "india": [
+    "IS 5121 safety code for piling and deep foundations",
     "BOCW Central Rules 1998 & KA/TN BOCW Rules (excavation, lifting appliances, electrical); IS 2911 (pile foundations – construction), IS 3764, IS 13367; CEA clearances; Noise Rules 2000; HOWM (bentonite sludge)"
    ],
    "ka": [
+    "BOCW (Karnataka Amendment) Rules 2024",
     "Karnataka BOCW Rules 2006; KSPCB bentonite/slurry disposal; BBMP"
    ],
    "tn": [
+    "TN BOCW Rules 2006",
     "TN BOCW Rules 2006; TNPCB; CMDA conditions"
    ],
    "osha": [
@@ -3585,7 +3672,7 @@
     "Factories Act via state rules: dangerous-operations schedules (sand-blasting; cellulose/solvent spraying; lead; chromium), Sch. II PELs (silica, lead, solvents, isocyanates), s.37 (flammable vapour); OSH Code s.6, s.12 (silicosis, asthma); Petroleum Rules (solvents Class A/B); IS/IEC 60079; HOWM (spent abrasive, paint waste); IS 15656"
    ],
    "ka": [
-    "Karnataka Factories Rules 1969 Rule 110 (sand-blasting, spray painting schedules); KSPCB VOC/air consent"
+    "Karnataka Factories Rules 1969 Rule 129 (sand-blasting, spray painting schedules); KSPCB VOC/air consent"
    ],
    "tn": [
     "TN Factories Rules 1950 Rule 95 (sand-blasting, spraying, lead schedules); TNPCB"
@@ -3729,6 +3816,7 @@
   ],
   "refs": {
    "india": [
+    "IS 5916 safety code for construction involving hot bituminous materials",
     "IRC:SP:55; IRC:SP:98 / MoRTH Specifications; MV Act 1988; BOCW rules; Petroleum Rules 2002 (cutbacks/kerosene); Air Act/SPCB HMP consent; Noise Rules; IS 3764 (drain excavation); OSH Code s.6"
    ],
    "ka": [
@@ -3803,6 +3891,7 @@
   ],
   "refs": {
    "india": [
+    "IS 4209 code of safety in chemical laboratories and plants",
     "Factories Act via state rules (laboratories within factories – hazardous process provisions, Sch. II PELs); OSH Code s.6; HOWM Rules 2016; Bio-Medical Waste Rules 2016; DBT biosafety guidelines; Gas Cylinders Rules 2016; MSIHC (quantities rarely exceed thresholds); IS 15656"
    ],
    "ka": [
@@ -4222,9 +4311,11 @@
     "NBC 2016 Part 4; IS 13039, IS 15105, IS 2189, IS 2190, IS 15683, IS 3844, IS 1641/1642/1644, IS 12349, IS 15325; TAC rules; Factories Act s.38 via state rules; OSH Code s.6; BOCW rules (fire protection); state fire acts/NOC conditions"
    ],
    "ka": [
+    "KA Factories Rule 66",
     "Karnataka Fire Force Act 1964; KSFES NOC renewal inspections; BBMP high-rise fire conditions"
    ],
    "tn": [
+    "TN Factories Rule 61-A",
     "TN Fire Service Act 1985; TNFRS fire licence/NOC; TN CDBR 2019 fire provisions"
    ],
    "osha": [

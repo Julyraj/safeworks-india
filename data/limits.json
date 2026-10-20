@@ -190,5 +190,33 @@
  {
   "k": "Working over water",
   "v": "Lifejacket ≥ 150 N for work-wear; lifebuoys with 30 m line at ≤ 50 m intervals; rescue boat manned during work; coast guard 1554"
+ },
+ {
+  "k": "IS 17893:2023 gas-test limits (confined space)",
+  "v": "Oxygen 19.5–23.5% · LEL < 5% for entry · 0% LEL for hot work · toxic gases below PEL/TLV; log readings with time and tester"
+ },
+ {
+  "k": "Factories Act s.36A",
+  "v": "Portable electric hand lamps inside confined spaces limited to 24 V"
+ },
+ {
+  "k": "Fall-protection trigger (India)",
+  "v": "Factories Act s.32 practice: fall > 2 m (1.8 m under standard corporate/construction protocols)"
+ },
+ {
+  "k": "TN/KA statutory test cycles (forms)",
+  "v": "TN: lifting Forms 8/9 annual; pressure vessels Form 8-A 6–12 m exam, hydro 2–4 yr · KA: lifting Forms 6/7 annual (e-Surakshate); pressure vessels Form 8"
+ },
+ {
+  "k": "Noise (matrix)",
+  "v": "Industrial zone ambient 75 dB(A) day / 70 night · factory workrooms 8-h TWA 85–90 dB(A)"
+ },
+ {
+  "k": "TN river-protection G.O.s",
+  "v": "G.O. Ms. No. 213 & 127 — polluting industries banned within 1–5 km of Cauvery, Bhavani, Palar, Tamirabarani"
+ },
+ {
+  "k": "KSPCB OCEMS",
+  "v": "Online continuous effluent/emission monitoring mandatory for the 17 highly polluting industry categories; STP dual-piping reuse for commercial/industrial complexes in Bengaluru"
  }
 ]

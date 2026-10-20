@@ -186,7 +186,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const store={get(k,d){try{const v=localStorage.getItem("sw:"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("sw:"+k,JSON.stringify(v))}catch(e){}}};
 const ICONS={home:'<svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>',reg:'<svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8"/></svg>',proc:'<svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>',ck:'<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="m2 6 1 1 2-2M2 12l1 1 2-2M2 18l1 1 2-2"/></svg>',permit:'<svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="m9 14 2 2 4-4"/></svg>',inc:'<svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>',forms:'<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 10h16M9 10v9"/></svg>',rep:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',talk:'<svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/></svg>',em:'<svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/><circle cx="12" cy="12" r="3"/></svg>',num:'<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h6"/></svg>',gl:'<svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3z"/><path d="M5 17h14"/></svg>'};
 // Merge expansion datasets
-REGS.push(...REGS2);PROCS.push(...PROCS2);CHECKLISTS.push(...CHECKLISTS2,...CHECKLISTS3);FORMS.push(...FORMS2,...FORMS3);REPORTING.push(...REPORTING2);NUMBERS.push(...NUMBERS2);GLOSSARY.push(...GLOSSARY2);TALKS.push(...TALKS2,...TALKS3);
+REGS.push(...REGS2,...REGS4);PROCS.push(...PROCS2);CHECKLISTS.push(...CHECKLISTS2,...CHECKLISTS3);FORMS.push(...FORMS2,...FORMS3,...FORMS4);REPORTING.push(...REPORTING2);NUMBERS.push(...NUMBERS2,...NUMBERS4);GLOSSARY.push(...GLOSSARY2);TALKS.push(...TALKS2,...TALKS3);KEYWORDS.push(...KEYWORDS4);EMERGENCY.push(...EMERGENCY4);
 GLOSSARY.forEach(([k,v])=>KEYWORDS.push([k,"Acronyms & bodies",v]));
 const UNSAFE_COUNT=UNSAFE.acts.reduce((n,c)=>n+c.items.length,0)+UNSAFE.conditions.reduce((n,c)=>n+c.items.length,0);
 const PROTO_COUNT=PROTOCOLS.lsr.length+PROTOCOLS.standing.length+PROTOCOLS.emergency.length;
@@ -197,7 +197,8 @@ ICONS.eye='<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2
 ICONS.rules='<svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
 ICONS.aid='<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M9 6V4h6v2M12 10v6M9 13h6"/></svg>';
 ICONS.key='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/><path d="m20.5 18.5 2 2"/></svg>';
-const VIEWS=[["Overview",[["home","Dashboard","home"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
+ICONS.matrix='<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 16h16M10 4v16M16 4v16"/></svg>';
+const VIEWS=[["Overview",[["home","Dashboard","home"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["matrix","TN vs Karnataka matrix","matrix",MATRIX.domains.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
 const STATE={regJ:"All",regD:"All",regS:"All",proc:null,procCat:"All",ck:null,ckCat:"All",q:"",sector:null,kwCat:"All",faCat:"All",protoTab:"lsr",unsafeTab:"acts"};
 const JUR=["All","India – Central","Karnataka","Tamil Nadu","USA (OSHA)","International","UK / EU"];
 const DOMS=["All","Factories","Construction","Chemical","Process Safety","Storage Tanks","Environment","Energy/Carbon/ESG","Electrical","Fire","Lifting & Cranes","Tools & Tackles","Foundry & Metals","Pressure/Boilers","Welfare/Labour","Management System","PPE/Equipment","Health","Mines","Oil & Gas","Transport","Radiation"];
@@ -227,6 +228,7 @@ function home(){
   <a class="tile" href="#protocols"><span class="big">${PROTO_COUNT}</span><span class="lbl">safety & emergency protocols</span></a>
   <a class="tile" href="#firstaid"><span class="big">${FIRSTAID.topics.length}</span><span class="lbl">first-aid topics</span></a>
   <a class="tile" href="#keywords"><span class="big">${KEYWORDS.length}</span><span class="lbl">keywords & glossary</span></a>
+  <a class="tile" href="#matrix"><span class="big">TN·KA</span><span class="lbl">state regulatory matrix</span></a>
  </div>
  <div class="two">
   <div class="card"><h3>What changed recently (India)</h3>
@@ -252,6 +254,7 @@ function home(){
     <li>For audits and registers: use <a href="#forms">Forms & registers</a> and the statutory checklists (factory / construction site).</li>
     <li>Daily briefings: pick a <a href="#talks">Toolbox talk</a>; copy it to WhatsApp or print it from your browser.</li>
     <li>Anything with a figure: cross-check in <a href="#numbers">Limits & thresholds</a>. Items marked “verify” need the gazetted text.</li>
+    <li>Working across both states: the <a href="#matrix">TN vs Karnataka matrix</a> puts the central law, the Tamil Nadu rule, the Karnataka rule and the BIS standards side by side for nine domains, with form numbers and portals.</li>
     <li>Briefings and observations: the <a href="#protocols">Safety protocols</a> (Life-Saving Rules, site rules, emergency protocols), the <a href="#unsafe">Unsafe acts & conditions</a> master list and the <a href="#observe">Observation card</a>; medical response in <a href="#firstaid">First aid</a>.</li>
     <li>New site or plant type: start from the <a href="#sectors">Sector guide</a> (foundry, chemical plant, terminal, power, warehouse, mining, water, heavy industry…); for carbon/ESG obligations use the <a href="#carbon">Carbon & ESG desk</a>.</li>
    </ol>
@@ -501,6 +504,21 @@ function bindCarbon(){
  $("#c-reset").addEventListener("click",()=>{store.set("carbon",{});route()});
 }
 
+
+/* ---------- TN vs KA MATRIX ---------- */
+function matrix(){
+ return `<div><h2>Tamil Nadu vs Karnataka — regulatory & enforcement matrix</h2><p class="lead">Side-by-side view of who enforces what in the two states, then nine domains with the central law, the Tamil Nadu rule, the Karnataka rule and the mandatory BIS / technical standards. Rule and form numbers are as cited in the state rules; confirm against the current consolidated text before a statutory filing.</p></div>
+ <div class="tbl"><table><thead><tr><th>Regulatory domain</th><th>National central law (both states)</th><th>Tamil Nadu — rules & authority</th><th>Karnataka — rules & authority</th></tr></thead><tbody>${MATRIX.table.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("")}</tbody></table></div>
+ <div class="row" style="justify-content:space-between"><h3>Domains</h3><button class="btn sm" id="mxCopy">Copy full matrix</button></div>
+ <div class="list">${MATRIX.domains.map(d=>`<div class="item" id="mx-${d.n}"><div class="hd"><div class="t"><span style="font-family:var(--mono);color:var(--accent);font-size:12px;margin-right:8px">${String(d.n).padStart(2,"0")}</span>${esc(d.t)}</div><div class="chips">${d.procs.map(id=>{const p=PROCS.find(x=>x.id===id);return p?`<a class="chip sm" style="cursor:pointer" href="#procedures" data-proc="${p.id}">${esc(p.t)}</a>`:""}).join("")}</div></div>
+  <div class="refs" style="margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
+   <div class="box"><h4>Central law</h4><ul>${d.central.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div class="box"><h4>Tamil Nadu</h4><ul>${d.tn.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div class="box"><h4>Karnataka</h4><ul>${d.ka.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div class="box"><h4>BIS / technical standards</h4><ul>${d.bis.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+  </div></div>`).join("")}</div>`;
+}
+
 /* ---------- SAFETY PROTOCOLS ---------- */
 function protocols(){
  const tab=STATE.protoTab;
@@ -618,6 +636,8 @@ function searchView(q){
  PROTOCOLS.emergency.forEach(x=>{if(hit(x.t)||hit(x.trigger)||x.steps.some(hit))R.push({k:"Emergency protocol",t:x.t,s:x.trigger,go:{v:"protocols"}})});
  FIRSTAID.topics.forEach(x=>{if(hit(x.t)||x.recognise.some(hit)||x.do.some(hit))R.push({k:"First aid",t:x.t,s:x.recognise[0],go:{v:"firstaid"}})});
  KEYWORDS.forEach(([k,c,v])=>{if(hit(k)||hit(v))R.push({k:"Keyword",t:k,s:v,go:{v:"keywords"}})});
+ MATRIX.domains.forEach(d=>{const all=[...d.central,...d.tn,...d.ka,...d.bis];if(hit(d.t)||all.some(hit))R.push({k:"State matrix",t:d.t,s:all.find(hit)||d.central[0],go:{v:"matrix"}})});
+ MATRIX.table.forEach(r=>{if(r.some(hit))R.push({k:"State matrix",t:r[0],s:"TN: "+r[2]+" · KA: "+r[3],go:{v:"matrix"}})});
  return `<div><h2>Search: “${esc(q)}”</h2><p class="lead">${R.length} result${R.length===1?"":"s"}</p></div><div class="sr">${R.slice(0,80).map((r,i)=>`<div class="r" data-sr="${i}"><span class="k">${esc(r.k)}</span><div><div style="font-weight:600">${esc(r.t)}</div><div class="meta" style="margin-top:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.s)}</div></div></div>`).join("")||'<div class="empty">Nothing found. Try a shorter term (e.g. “scaffold”, “Form XI”, “48 hours”).</div>'}</div>`;
 }
 let SR=[];
@@ -639,6 +659,7 @@ function route(){
   case "numbers":v.innerHTML=numbers();break;
   case "sectors":v.innerHTML=sectors();bindSectors();break;
   case "protocols":v.innerHTML=protocols();bindProtocols();break;
+  case "matrix":v.innerHTML=matrix();$("#mxCopy").addEventListener("click",()=>copy(["TAMIL NADU vs KARNATAKA — REGULATORY & ENFORCEMENT MATRIX","",...MATRIX.table.map(r=>r[0]+" | Central: "+r[1]+" | TN: "+r[2]+" | KA: "+r[3]),"",...MATRIX.domains.map(d=>[d.n+". "+d.t,"Central: "+d.central.join("; "),"Tamil Nadu: "+d.tn.join("; "),"Karnataka: "+d.ka.join("; "),"BIS: "+d.bis.join("; ")].join("\n")).flatMap(x=>[x,""])].join("\n")));break;
   case "unsafe":v.innerHTML=unsafe();bindUnsafe();break;
   case "firstaid":v.innerHTML=firstaid();bindFirstaid();break;
   case "keywords":v.innerHTML=keywords();bindKeywords();break;
@@ -663,6 +684,7 @@ function bindSearch(){const q=STATE.q.toLowerCase();const items=[];const v=$("#v
  else if(k==="Protocol"||k==="Emergency protocol"){STATE.protoTab=k==="Emergency protocol"?"emergency":(PROTOCOLS.lsr.some(x=>x.t===title)?"lsr":"standing");go("#protocols")}
  else if(k==="Unsafe act"||k==="Unsafe condition"){STATE.unsafeTab=k==="Unsafe act"?"acts":"conditions";go("#unsafe")}
  else if(k==="First aid"){STATE.faCat="All";go("#firstaid")}
+ else if(k==="State matrix"){go("#matrix")}
  else{const map={Form:"forms",Deadline:"reporting",Limit:"numbers","Toolbox talk":"talks"};go("#"+map[k])}}))}
 window.addEventListener("hashchange",()=>{if(location.hash!=="#procedures")STATE.proc=null;if(location.hash!=="#checklists")STATE.ck=null;if(location.hash!=="#sectors")STATE.sector=null;STATE.q="";$("#q").value="";route()});
 let qt;$("#q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{STATE.q=e.target.value.trim();route()},180)});

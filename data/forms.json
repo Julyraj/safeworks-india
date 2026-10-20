@@ -271,5 +271,82 @@
   "j": "India – Central",
   "when": "Daily cards; monthly trend to safety committee",
   "note": "Use the Observation card tool in this app"
+ },
+ {
+  "t": "TN Forms 8 & 9 – annual examination of hoists, lifts, cranes, slings and lifting tackles (Rules 55 & 55A)",
+  "law": "Tamil Nadu Factories Rules 1950",
+  "j": "Tamil Nadu",
+  "when": "Annually (12 months) by a DISH-approved Competent Person",
+  "note": "Register of lifting machines & tackles kept at the factory; produce on inspection"
+ },
+ {
+  "t": "TN Form 8-A – pressure vessels & air receivers (Rule 56)",
+  "law": "Tamil Nadu Factories Rules 1950",
+  "j": "Tamil Nadu",
+  "when": "External/internal examination every 6–12 months; hydrostatic test every 2–4 years",
+  "note": "Competent person report; safety valve setting recorded"
+ },
+ {
+  "t": "TN Rules 61-D / 61-E – ovens, driers, thermic-fluid heaters test",
+  "law": "Tamil Nadu Factories Rules 1950",
+  "j": "Tamil Nadu",
+  "when": "Periodic testing per rule",
+  "note": ""
+ },
+ {
+  "t": "TN Rules 61-F to 61-T – site appraisal, SDS (61-H), OHC & ambulance van (61-O/61-P), decontamination (61-Q), medical examinations (61-N)",
+  "law": "Tamil Nadu Factories Rules 1950 (hazardous processes chapter)",
+  "j": "Tamil Nadu",
+  "when": "Before commencement / periodic per rule",
+  "note": "Medical examination registers for dangerous operations (Rule 95 schedules)"
+ },
+ {
+  "t": "KA Forms 6 & 7 – annual certification of hoists, lifts, EOT cranes, chain pulley blocks and wire ropes (Rules 58 & 59)",
+  "law": "Karnataka Factories Rules 1969",
+  "j": "Karnataka",
+  "when": "Annually by Competent Person; filed via e-Surakshate portal",
+  "note": ""
+ },
+ {
+  "t": "KA Form 8 – pressure vessels & air receivers testing (Rule 61)",
+  "law": "Karnataka Factories Rules 1969",
+  "j": "Karnataka",
+  "when": "External/internal examination and ultrasonic/hydrostatic certification per rule",
+  "note": ""
+ },
+ {
+  "t": "KA Rule 65-B – thermic-fluid heaters and ovens testing",
+  "law": "Karnataka Factories Rules 1969",
+  "j": "Karnataka",
+  "when": "Periodic per rule",
+  "note": ""
+ },
+ {
+  "t": "KA Rules 88-A to 88-P – health & safety policy, OHC, ambulance van, safety committee (88-B), chemical disclosure",
+  "law": "Karnataka Factories Rules 1969 (hazardous processes chapter)",
+  "j": "Karnataka",
+  "when": "Before commencement / ongoing",
+  "note": "Dangerous operations medical registers under Rule 129 schedules"
+ },
+ {
+  "t": "HW Form 1 (authorisation), Form 3 (daily generation log), Form 4 (annual return by 30 June), Form 8 (hazardous-waste label), Form 9 (TREM card), Form 10 (manifest)",
+  "law": "Hazardous and Other Wastes Rules 2016",
+  "j": "India – Central",
+  "when": "Form 4 by 30 June; Form 10 with every consignment",
+  "note": "Disposal only to authorised TSDFs — Gummidipoondi / Virudhunagar (TN); Dobbaspet / Harohalli (KA)"
+ },
+ {
+  "t": "CTE / CTO on state portals",
+  "law": "Water Act 1974; Air Act 1981",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "CTE before construction; CTO before production (Red/Orange/Green)",
+  "note": "TNPCB – OCMMS portal; KSPCB – XGN portal"
+ },
+ {
+  "t": "IS 17893:2023 permit formats – Cold Work, Hot Work, Confined Space (Annex C), Excavation, Electrical, Work at Height, Radiography",
+  "law": "IS 17893:2023 (code of practice)",
+  "j": "India – Central",
+  "when": "Per task",
+  "note": "Use the Permit builder; gas-test log per Annex C"
  }
 ]
