@@ -1,0 +1,407 @@
+[
+ {
+  "t": "Hierarchy of Controls",
+  "pts": [
+   "Eliminate the hazard first; PPE is the last resort",
+   "Substitute: lower-risk chemical, prefab, lighter bags",
+   "Engineering: guards, LEV, edge rails, RCDs",
+   "Administrative: permits, procedures, rotation",
+   "PPE: only when the above are exhausted; wear it correctly"
+  ]
+ },
+ {
+  "t": "Falls from Height",
+  "pts": [
+   "Falls are the top killer in construction worldwide",
+   "Use guardrails and covers before harnesses",
+   "Tie off 100% to a rated anchor, never to scaffold tubes",
+   "Inspect harness before each use; report any fall",
+   "Ladders are for access, not prolonged work"
+  ]
+ },
+ {
+  "t": "Struck by Plant & Vehicles",
+  "pts": [
+   "Stay out of swing/travel zones; eye contact with operator",
+   "Banksman for all reversing in congested areas",
+   "Walk on marked pedestrian routes",
+   "Hi-vis always; class 3 at night",
+   "Never ride on loads or in buckets"
+  ]
+ },
+ {
+  "t": "Electrical Safety on Site",
+  "pts": [
+   "Every circuit through a 30 mA RCD; test weekly",
+   "Damaged cable = tag out and report",
+   "Keep plant and ladders away from overhead lines",
+   "Never touch a victim in contact with live electricity — isolate first",
+   "Only licensed electricians connect to DBs"
+  ]
+ },
+ {
+  "t": "Excavation Collapse",
+  "pts": [
+   "One cubic metre of soil weighs about 1.5–2 tonnes",
+   "No entry > 1.5 m without shoring/sloping/box",
+   "Spoil and plant at least 1 m from the edge",
+   "Ladder every 7.5 m; inspect daily and after rain",
+   "Treat every underground cable as live"
+  ]
+ },
+ {
+  "t": "Hot Work & Fire",
+  "pts": [
+   "Permit first; clear combustibles 11 m",
+   "Fire watch with extinguisher during and 30–60 min after",
+   "Gas test for 0% LEL near process/tanks",
+   "Flashback arrestors on both ends; acetylene ≤ 1 bar",
+   "Know the nearest extinguisher, exit and assembly point"
+  ]
+ },
+ {
+  "t": "Confined Space",
+  "pts": [
+   "Never enter without permit, gas test and attendant",
+   "O2 19.5–23.5%, LEL < 10%, H2S < 10 ppm, CO < 25 ppm",
+   "Isolate by blinding, not by closing valves",
+   "Rescuers die too — never enter to rescue without SCBA and retrieval",
+   "Evacuate on alarm or dizziness"
+  ]
+ },
+ {
+  "t": "Lockout / Tagout",
+  "pts": [
+   "Isolate every energy source, not just the stop button",
+   "One person, one lock, one key",
+   "Test for dead with a proved tester",
+   "Release stored energy: pressure, springs, raised parts",
+   "Only you remove your lock"
+  ]
+ },
+ {
+  "t": "Heat Stress",
+  "pts": [
+   "Drink 250 ml every 15–20 min, before you feel thirsty",
+   "Rest in shade; heavy work early/late",
+   "New workers need 5–7 days to acclimatise",
+   "Confusion/no sweating = heat stroke: cool first, call 108",
+   "Look out for your buddy"
+  ]
+ },
+ {
+  "t": "Manual Handling",
+  "pts": [
+   "Use plant or trolleys; split loads",
+   "Max 25 kg single-person; team lift above",
+   "Plan the route; bend knees; keep load close; no twisting",
+   "Report pain early",
+   "Cement bags: wear gloves; wash skin"
+  ]
+ },
+ {
+  "t": "Scaffolds",
+  "pts": [
+   "Green tag only; red tag means do not use",
+   "Full boards, guardrails, toe boards, ties",
+   "Never remove a tie or brace",
+   "Use the ladder access, not the frames",
+   "Report any damage or missing part"
+  ]
+ },
+ {
+  "t": "Lifting Operations",
+  "pts": [
+   "Lift plan and signaller for every lift",
+   "Never stand under a load",
+   "Tag lines to control swing",
+   "Watch overhead lines: 3 m LT / 6 m HT clearance",
+   "Stop if the LMI alarms or wind rises"
+  ]
+ },
+ {
+  "t": "Chemical Safety & SDS",
+  "pts": [
+   "Read the label and SDS sections 2, 7, 8 before use",
+   "Right gloves and goggles for the chemical",
+   "Never mix; store incompatibles apart",
+   "Spill: isolate, PPE, contain, report",
+   "Wash before eating; no food in work areas"
+  ]
+ },
+ {
+  "t": "Dust & Silica",
+  "pts": [
+   "Dry cutting concrete/stone releases silica — use water or LEV",
+   "FFP3/P100 respirator for silica; fit-tested, clean-shaven",
+   "Silicosis is incurable; it appears years later",
+   "No dry sweeping; vacuum or wet",
+   "Change out of dusty clothes before going home"
+  ]
+ },
+ {
+  "t": "Noise",
+  "pts": [
+   "If you must shout at 1 m, protection is needed",
+   "Hearing loss is permanent and painless",
+   "Plugs/muffs in marked zones; fit them properly",
+   "Maintain silencers and enclosures",
+   "Attend your annual hearing test"
+  ]
+ },
+ {
+  "t": "PPE Basics",
+  "pts": [
+   "Helmet with chin strap at height; boots; hi-vis — always",
+   "Inspect PPE daily; replace damaged free of charge",
+   "Right PPE for the task: goggles vs face shield vs welding helmet",
+   "Respirator fit: no beards for tight-fit masks",
+   "PPE never replaces a guard or a permit"
+  ]
+ },
+ {
+  "t": "Housekeeping",
+  "pts": [
+   "Clean as you go; trips are the most common injury",
+   "Nails out of timber; tie wire in bins",
+   "Keep walkways and exits clear",
+   "Segregate waste; no burning",
+   "Store materials stable, not above 1.5 m by hand"
+  ]
+ },
+ {
+  "t": "Emergency Response",
+  "pts": [
+   "Know the alarm sound and your assembly point",
+   "Raise alarm first, fight fire only if trained and safe",
+   "Call 112 / 101 / 108; give location and nature",
+   "Never use lifts in fire",
+   "Head-count: tell your supervisor you are out"
+  ]
+ },
+ {
+  "t": "Near Miss Reporting",
+  "pts": [
+   "Every near miss is a free lesson",
+   "No blame for reporting",
+   "Report within the shift to supervisor",
+   "Fix the cause, not the person",
+   "Celebrate the reports, trend them monthly"
+  ]
+ },
+ {
+  "t": "Monsoon Safety",
+  "pts": [
+   "Inspect excavations and scaffolds after every rain",
+   "Lightning: stop WAH and crane work",
+   "Keep electrical DBs covered and cables raised",
+   "Slips: clean mud, use grip boots",
+   "Dengue/malaria: no stagnant water on site"
+  ]
+ },
+ {
+  "t": "Women's Safety & Respect at Work",
+  "pts": [
+   "Zero tolerance for harassment; ICC contact displayed",
+   "Night work: transport and security are your right",
+   "Report concerns confidentially",
+   "Separate facilities must be clean and lockable",
+   "Everyone shares responsibility for a respectful site"
+  ]
+ },
+ {
+  "t": "Working Near Overhead Lines",
+  "pts": [
+   "Assume every line is live",
+   "Keep tippers, booms, scaffold tubes and ladders well clear",
+   "Use goal posts and a spotter",
+   "If contact occurs: stay in the cab, jump clear only if on fire — keep others away",
+   "Ask for a shutdown or shrouding"
+  ]
+ },
+ {
+  "t": "Molten Metal – Water Is the Enemy",
+  "pts": [
+   "Any moisture in charge, ladle or floor can cause a steam explosion",
+   "Preheat ladles; keep floors dry; never put water near a pour",
+   "Nobody in the pour route except the crew",
+   "Aluminised clothing, face shield, spats, metatarsal boots",
+   "Burn: cool with running water 20 min, go to OHC"
+  ]
+ },
+ {
+  "t": "Forklifts & Pedestrians",
+  "pts": [
+   "Trucks stay in aisles; people stay on walkways",
+   "Make eye contact before crossing a truck's path",
+   "Forks low, horn at corners, seat belt on",
+   "Never stand under or ride on a raised load",
+   "Report racking impacts the same day"
+  ]
+ },
+ {
+  "t": "Lifting Gear – Check Before You Rig",
+  "pts": [
+   "ID tag, WLL and this quarter's colour — no tag, no lift",
+   "Look for broken wires, stretch, cracks, cuts",
+   "Sling angle matters: wider angle, less capacity",
+   "Hook latch closed; shackle pin seated; never side-load",
+   "Damaged gear: tag it, hand it in, it gets destroyed"
+  ]
+ },
+ {
+  "t": "Angle Grinder Rules",
+  "pts": [
+   "Guard on, correct disc, RPM rating checked",
+   "Cutting disc cuts; grinding disc grinds — never swap",
+   "Two hands, side handle, let it stop before putting down",
+   "Face shield plus glasses; FR clothing for sparks",
+   "Damaged cable or disc = tag out"
+  ]
+ },
+ {
+  "t": "Tank Entry",
+  "pts": [
+   "Blind the lines — a closed valve is not isolation",
+   "Test the air at top, middle and bottom",
+   "Attendant stays; rescue gear rigged before entry",
+   "Pyrophoric scale: keep it wet",
+   "Any alarm or odour change: everybody out"
+  ]
+ },
+ {
+  "t": "Combustible Dust",
+  "pts": [
+   "A dust layer you can write your name in can explode",
+   "Vacuum, never blow down with air",
+   "Report sparks, hot bearings, smouldering immediately",
+   "No hot work until the area is cleaned and the process stopped",
+   "Keep Ex covers and seals closed"
+  ]
+ },
+ {
+  "t": "Chlorine & Ammonia Leaks",
+  "pts": [
+   "Escape respirator on you at all times in the area",
+   "Alarm sounds: move upwind/crosswind to the assembly point",
+   "Only the ERT with SCBA approaches a leak",
+   "Never spray water on a chlorine cylinder leak",
+   "Know the shelter-in-place room"
+  ]
+ },
+ {
+  "t": "Battery Rooms & Solar DC",
+  "pts": [
+   "Hydrogen builds up where batteries charge — no sparks, ventilate",
+   "Solar strings are live whenever there is daylight",
+   "Isolate DC and AC before touching connectors",
+   "Swollen or hot Li-ion cell: evacuate, isolate, call ERT",
+   "Rooftop PV work is work at height"
+  ]
+ },
+ {
+  "t": "Tower Crane Zone",
+  "pts": [
+   "Never walk or work under a load",
+   "Only the signaller talks to the operator",
+   "Tag lines on every load",
+   "Stop lifting when the anemometer says so",
+   "After a storm, no lifts until the crane is inspected"
+  ]
+ },
+ {
+  "t": "Blasting Day",
+  "pts": [
+   "Three long sirens: clear the zone and go to the shelter",
+   "Sentries report clear before firing",
+   "After the blast, only the shot-firer goes in first",
+   "See a misfire or loose explosive? Don't touch, report",
+   "Hand back every cartridge and detonator"
+  ]
+ },
+ {
+  "t": "Bitumen Burns",
+  "pts": [
+   "Hot bitumen is 150–180 °C — splash means deep burns",
+   "Water into hot bitumen = eruption",
+   "Face shield, gauntlets, long sleeves, heat-resistant boots",
+   "Burn: cool with water 20 minutes, leave bitumen on skin, go to hospital",
+   "Earth the tanker before transfer"
+  ]
+ },
+ {
+  "t": "Working Over Water",
+  "pts": [
+   "Lifejacket on and clipped within 2 m of the edge",
+   "Know where the lifebuoy and rescue boat are",
+   "No jumping between vessels; use the gangway",
+   "Watch the tide and the sky",
+   "Man overboard: throw, shout, keep eyes on them"
+  ]
+ },
+ {
+  "t": "Carbon Counts Too",
+  "pts": [
+   "Fuel and power you log becomes our Scope 1 and 2",
+   "Refrigerant top-ups are emissions — record every kg",
+   "Idling plant burns money and carbon",
+   "Segregated waste can be recycled — that is EPR",
+   "Accurate meters today keep auditors happy tomorrow"
+  ]
+ },
+ {
+  "t": "Top 10 Unsafe Acts We See",
+  "pts": [
+   "Working without a permit or after it expires",
+   "Removing or bypassing guards and alarms",
+   "Not tying off at height; tying to scaffold tubes",
+   "Standing under loads or in the swing radius",
+   "Using damaged tools, cables or slings",
+   "Shortcuts: jumping, climbing frames, riding hoists",
+   "Phone use while operating plant or driving",
+   "Hot work without fire watch and clearing combustibles",
+   "Entering trenches or confined spaces without protection",
+   "Not reporting hazards and near misses — report them today"
+  ]
+ },
+ {
+  "t": "Spot the Unsafe Condition",
+  "pts": [
+   "Missing guardrail or hole cover",
+   "Trench without shoring; spoil at the edge",
+   "Damaged cable; open DB; no RCD",
+   "Blocked exit; empty extinguisher",
+   "Leaking drum; unlabelled container",
+   "Unsecured cylinder; combustibles near hot work",
+   "Expired crane certificate; damaged sling",
+   "Poor lighting; slippery floor",
+   "If you see it — fix it, barricade it, or report it"
+  ]
+ },
+ {
+  "t": "Life-Saving Rules",
+  "pts": [
+   "Valid permit before high-risk work",
+   "Never bypass safety controls",
+   "Isolate and test before you touch",
+   "Confined space: permit, gas test, attendant",
+   "Protect yourself from falls",
+   "Plan every lift; stay out of the load path",
+   "Keep out of the line of fire",
+   "Drive safely; fit for work; right PPE",
+   "Stop unsafe work and report"
+  ]
+ },
+ {
+  "t": "First Aid – What Everyone Should Know",
+  "pts": [
+   "DRSABCD: danger first, then response, then call 108",
+   "Not breathing: push hard and fast in the centre of the chest, 100–120/min; get the AED",
+   "Severe bleeding: press hard and keep pressing",
+   "Burns: cool running water for 20 minutes; nothing else on it",
+   "Snake bite: keep still, splint, hospital — no tourniquet, no cutting",
+   "Chemical in eye: flush 20 minutes and go to hospital",
+   "Know your first-aider, the box location and the ambulance plan"
+  ]
+ }
+]

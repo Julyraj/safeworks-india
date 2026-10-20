@@ -1,0 +1,194 @@
+[
+ {
+  "k": "Fall protection trigger height",
+  "v": "India: BOCW/state rules & site practice 1.8–2 m (verify state rule) · OSHA construction 6 ft (1.83 m); general industry 4 ft (1.22 m) · UK: any height with risk"
+ },
+ {
+  "k": "Guardrail",
+  "v": "Top rail 0.95–1.1 m (OSHA 42 in ± 3), mid-rail, toe board ≥ 150 mm (OSHA 3.5 in); withstand 90 kg (200 lb) outward/downward"
+ },
+ {
+  "k": "Anchor point (fall arrest)",
+  "v": "≥ 22 kN (5,000 lb) per person or engineered 2× max arrest force"
+ },
+ {
+  "k": "Fall clearance (1.8 m shock-absorbing lanyard)",
+  "v": "≈ 6 m below anchor: 1.8 free fall + 1.2 deceleration + 1.5 harness/stretch + 1 safety"
+ },
+ {
+  "k": "Ladder",
+  "v": "4:1 angle; extend 1 m (3 ft) above landing; 3-point contact; no work from top 3 rungs"
+ },
+ {
+  "k": "Scaffold",
+  "v": "Inspect before use, every 7 days, after weather/alteration; mobile tower height ≤ 3× base outdoor / 3.5× indoor; boards ≥ 38 mm; lift ≤ 2 m; OSHA 4:1 height-to-base, guardrails > 10 ft"
+ },
+ {
+  "k": "Excavation protective systems",
+  "v": "India/IS 3764: ≥ 1.5 m depth · OSHA: ≥ 5 ft (1.52 m); ladder if ≥ 4 ft within 25 ft travel; PE design > 20 ft (6 m); spoil ≥ 2 ft (0.6 m) OSHA / ≥ 1 m India practice"
+ },
+ {
+  "k": "Confined space atmosphere",
+  "v": "O2 19.5–23.5% · Flammables < 10% LEL (0% for hot work) · H2S < 10 ppm (TLV) · CO < 25 ppm (TLV; OSHA PEL 50) · Test top/middle/bottom; retest after breaks"
+ },
+ {
+  "k": "Hot work",
+  "v": "Combustibles cleared 11 m (35 ft); fire watch during + ≥ 30 min (NFPA 51B; 60 min and 3 h monitoring in process areas); acetylene ≤ 1 bar (15 psi)"
+ },
+ {
+  "k": "Overhead line clearance (India, CEA)",
+  "v": "Typical working clearance: up to 11 kV – 3 m; 33 kV – 3–4 m; 66 kV – 4 m; 132 kV – 4.5–5 m; 220 kV – 5.5–6 m; 400 kV – 7 m (verify CEA 2023 table) · OSHA cranes: 10 ft to 50 kV, + 0.4 in/kV (or 20 ft without voltage known)"
+ },
+ {
+  "k": "Gas cylinder storage",
+  "v": "Oxygen ≥ 6 m from fuel gas or 1.5 m 30-min fire wall; upright, chained, caps on; PESO licence above thresholds"
+ },
+ {
+  "k": "Noise",
+  "v": "Occupational: 85 dB(A) action level, 90 dB(A) 8-h limit (India Sch. II; OSHA PEL) · Ambient: industrial 75/70, commercial 65/55, residential 55/45, silence 50/40 dB(A) day/night · DG set 75 dB(A) @ 1 m"
+ },
+ {
+  "k": "Vibration (UK/EU – good practice)",
+  "v": "HAV: EAV 2.5 m/s² A(8), ELV 5 m/s² · WBV: EAV 0.5 m/s², ELV 1.15 m/s²"
+ },
+ {
+  "k": "Lighting (IS 3646 / OSHA 1926.56)",
+  "v": "General site 50–100 lux; work areas 200 lux; detailed 300–500 lux · OSHA minimum 5 fc general, 10 fc indoor/warehouse, 30 fc offices"
+ },
+ {
+  "k": "Manual handling",
+  "v": "Good practice ≤ 25 kg single lift (NIOSH load constant 23 kg) · Statutory maxima in state Factories Rules (commonly adult male 50 kg, adult female 30 kg – verify) · Cement 50 kg bags = team lift or mechanical"
+ },
+ {
+  "k": "Heat (ACGIH WBGT action limits, acclimatised, °C)",
+  "v": "Light work: 31 (continuous) · Moderate: 28 · Heavy: 25.5 · Very heavy: 25 · Unacclimatised ≈ 3 °C lower · Water 250 ml every 15–20 min"
+ },
+ {
+  "k": "Silica / asbestos PELs",
+  "v": "Respirable crystalline silica 0.05 mg/m³ (OSHA; ACGIH TLV 0.025) · Asbestos 0.1 f/cc 8-h TWA (OSHA), 1 f/cc 30-min excursion"
+ },
+ {
+  "k": "Statutory tests (India)",
+  "v": "Lifting machines & tackles 12 months; hoists/lifts 6 months; pressure vessels external 6 m / internal 12 m / hydraulic 4 yr (state rules – verify); boiler annual; extinguishers monthly check/annual service; RCD weekly; earth pits quarterly; harness 6 months; safety audit annual (MAH/Karnataka rules); safety report 3-yearly; on-site plan rehearsal 6 months; fire drill 6 months"
+ },
+ {
+  "k": "Statutory thresholds (OSH Code – verify in rules)",
+  "v": "Establishment 10+ workers · Contract labour 50+ · Safety Committee 500+ (hazardous lower) · Safety Officer: factory 500+, hazardous factory 250+, construction 250+, mine 100+ · Welfare officer 250+ · Canteen 100+ · Crèche 50+ · Ambulance room/OHC per state rules (often 500+) · First-aid box 1 per 150"
+ },
+ {
+  "k": "Working hours (OSH Code / Central Rules)",
+  "v": "8 h/day, 48 h/week; spread-over 12 h; OT at 2× wages; quarterly OT cap per rules (Karnataka Factories amendment 145 h); rest ≥ 30 min per 5 h; weekly holiday"
+ },
+ {
+  "k": "Waste",
+  "v": "Hazardous waste on-site storage ≤ 90 days; Form 4 by 30 June; Form V by 30 Sept; C&D large generator ≥ 20,000 m² (2025 Rules)"
+ },
+ {
+  "k": "Reporting clocks",
+  "v": "India: death forthwith; injury ≥ 48 h / dangerous occurrence 12 h (Central); MSIHC 48 h; electrical 48 h; boiler 24 h; ESIC 24 h; EC fatal 7 days · OSHA: fatality 8 h; hospitalisation 24 h · UK RIDDOR: without delay / 10 d / 15 d"
+ },
+ {
+  "k": "Fire extinguishers (IS 2190)",
+  "v": "Travel distance ≤ 15 m (Class A) / 10–15 m (B/C); at least 1 per 100–200 m² floor; 2 × 9 kg at hot work; inspect monthly, service annually, hydro test 3–5 yearly"
+ },
+ {
+  "k": "Welfare (BOCW/state rules)",
+  "v": "Latrines 1 per 20 up to 100, then 1 per 25 (verify); separate for women; drinking water point per 150; rest shelter; crèche 50+; canteen 100+ (OSH Code) / 250+ (some state rules)"
+ },
+ {
+  "k": "Lifting gear discard (ISO 4309 / EN 818 / ASME B30)",
+  "v": "Wire rope: broken wires above table (e.g. 6 in one lay length), diameter loss > 7–10%, kinks/birdcage/corrosion · Chain: stretch > 5%, wear > 10%, cracks · Hooks: throat opening +15%, twist > 10° · Shackles: pin wear > 10% · Textile slings: any cut, label missing, heat/chemical damage"
+ },
+ {
+  "k": "Lifting gear examination (India / UK)",
+  "v": "Factories Act s.29 (state rules): test & thorough examination ≤ 12 months, register · BOCW rules: lifting gear 6-monthly (verify) · LOLER: accessories & lifting persons 6-monthly, other appliances 12-monthly · Tower crane: after each erection/climb + 12-monthly"
+ },
+ {
+  "k": "Sling angle capacity",
+  "v": "Two-leg sling capacity ≈ 2× leg WLL at 0° (vertical), ≈ 1.7× at 60° included, ≈ 1.4× at 90°, ≈ 1.0× at 120°; never exceed 120° included angle"
+ },
+ {
+  "k": "Tower crane wind limits (typical – follow manufacturer)",
+  "v": "Stop lifting ≈ 9–10 m/s (≈ 36 km/h) at hook; large-surface loads lower; out-of-service: free-slew, hook up, trolley in; inspect after storm"
+ },
+ {
+  "k": "Forklift",
+  "v": "Load centre 600 mm (24 in); capacity reduces with attachments/height; travel with forks 150–200 mm off floor, tilted back; indoor speed ≤ 8–10 km/h; operator re-evaluation every 3 years (OSHA)"
+ },
+ {
+  "k": "Racking (EN 15635)",
+  "v": "Damage: green (within tolerance), amber (reduce load / repair within 4 weeks), red (unload immediately, isolate); weekly visual, annual expert inspection; sprinkler clearance ≥ 450 mm"
+ },
+ {
+  "k": "Abrasive wheels / grinders",
+  "v": "Wheel RPM ≥ tool RPM; bench grinder work-rest ≤ 3 mm, tongue guard ≤ 6 mm; ring test before mounting; never side-grind with cutting disc; pneumatic cleaning ≤ 30 psi with chip guard"
+ },
+ {
+  "k": "Molten metal / foundry",
+  "v": "Ladle preheat ≥ 100 °C (dry); fill ≤ 90%; no water within pour zone; ladle gear inspected daily, tested 6-monthly; CO TLV 25 ppm (OSHA PEL 50); silica PEL 0.05 mg/m³; Mn TLV 0.02 mg/m³ (respirable)"
+ },
+ {
+  "k": "Tank farm / storage",
+  "v": "Dyke ≥ 100–110% of largest tank; static bonding ≤ 10 Ω; fill rate ≤ 1 m/s until submerged, ≤ 7 m/s after; API 653 external 5-yr, internal ≤ 20-yr; API 2350 high-high trip ≈ 95%; PESO licence thresholds: Class A > 30 L, Class B > 2,500 L (bulk)"
+ },
+ {
+  "k": "UST leak detection (benchmark 40 CFR 280)",
+  "v": "Monthly monitoring (ATG/interstitial/SIR) or annual tightness test + inventory control; piping: line leak detector annual test; CP tested every 3 years (quarterly rectifier checks); closure: empty, clean, remove or fill, site assessment"
+ },
+ {
+  "k": "Tank cleaning atmosphere",
+  "v": "Hot work 0% LEL; entry < 10% LEL; benzene TLV 0.5 ppm (ACGIH) / PEL 1 ppm (OSHA); H2S < 10 ppm; O2 19.5–23.5%; pyrophoric deposits kept wet"
+ },
+ {
+  "k": "Combustible dust",
+  "v": "Housekeeping limit: layer > 0.8 mm (1/32 in) over > 5% of area or 90 m² = deflagration hazard; DHA revalidation 5 years; Zones 20/21/22; metal powders – Class D agents, no water"
+ },
+ {
+  "k": "Toxic gases (TLV / IDLH)",
+  "v": "Chlorine 0.5 ppm TLV (1 ppm OSHA PEL), IDLH 10 ppm · Ammonia 25 ppm TLV, 35 ppm STEL, IDLH 300 ppm, flammable 15–28% · H2S 10 ppm TLV (1 ppm ACGIH 2010 revision), IDLH 100 ppm · CO 25 ppm TLV, IDLH 1,200 ppm"
+ },
+ {
+  "k": "Arc-flash / shock boundaries (NFPA 70E Table 130.4 – verify current edition)",
+  "v": "50–150 V: limited 1.07 m, restricted avoid contact · 151–750 V: limited 1.07 m, restricted 0.3 m · 751 V–15 kV: limited 1.52 m, restricted 0.66 m · Arc-flash boundary where incident energy = 1.2 cal/cm²; PPE category by label"
+ },
+ {
+  "k": "Battery rooms / ESS",
+  "v": "Hydrogen < 1% v/v (25% LEL); lead-acid room ventilation per IEC 62485-2; Li-ion storage/transport SoC ≤ 30–50%; UN 38.3 tested; NFPA 855 separations (verify); Li-ion fire: copious water, expect re-ignition"
+ },
+ {
+  "k": "Tunnelling atmosphere/ventilation (OSHA 1926.800)",
+  "v": "≥ 200 cfm (5.7 m³/min) fresh air per person; ≥ 30 ft/min (0.15 m/s) velocity; CH4: 10% LEL (0.5%) increase ventilation, 20% LEL (1%) withdraw; O2 ≥ 19.5%; CO ≤ 25 ppm"
+ },
+ {
+  "k": "Blasting vibration (DGMS Circular 7/1997 – verify)",
+  "v": "PPV mm/s by frequency (< 8 / 8–25 / > 25 Hz): domestic houses not owned by operator 5/10/15; industrial buildings 10/20/25; objects of historical importance 2/5/10; owner's structures higher limits"
+ },
+ {
+  "k": "Bitumen handling",
+  "v": "Typical temperatures 150–180 °C; never introduce water to hot bitumen; burns – cool with water ≥ 20 min, do not remove bitumen from skin; store cutbacks as Class B petroleum"
+ },
+ {
+  "k": "Breathing air (blasting/painting)",
+  "v": "EN 12021 / Grade D: CO ≤ 10 ppm (OSHA) / ≤ 15 ppm (EN), CO2 ≤ 500 ppm (EN), oil ≤ 0.5 mg/m³, odour-free; CO alarm on supply"
+ },
+ {
+  "k": "Legionella control",
+  "v": "Hot water stored ≥ 60 °C, delivered ≥ 50 °C; cold < 20 °C; cooling-tower clean/disinfect ≥ 6-monthly; Legionella ≥ 100 cfu/L review, ≥ 1,000 cfu/L immediate disinfection; records 5 years"
+ },
+ {
+  "k": "Carbon / ESG clocks",
+  "v": "CCTS verified report ≤ 4 months after FY end (31 Jul); CCC issuance 30 Sep 2026 (first cycle); targets FY2025-26 & 2026-27 vs FY2023-24 base; BRSR Core assurance all top 1,000 from FY2026-27, value chain ≥ 2% partners; CBAM definitive 1 Jan 2026, certificate sales 1 Feb 2027, first declaration 30 Sep 2027, de minimis 50 t/yr; Form V 30 Sep; HW Form 4 30 Jun; EPR returns 30 Jun (verify per portal)"
+ },
+ {
+  "k": "Emission factors (defaults – replace with scheme-specified)",
+  "v": "Grid electricity 0.727 tCO2/MWh (CEA v20, FY2023-24; check v21) · Diesel ≈ 2.68 kg CO2/L · Petrol ≈ 2.3 kg/L · LPG ≈ 3.0 kg/kg · Natural gas ≈ 1.9 kg/SCM · Furnace oil ≈ 3.1 kg/kg · Indian non-coking coal ≈ 1.6–1.9 t/t · Clinker ≈ 0.52 t CO2/t · R-134a GWP 1,430 (AR4) / 1,300 (AR5); R-410A ≈ 2,088; SF6 22,800 (AR4) / 23,500 (AR5)"
+ },
+ {
+  "k": "Drone rules (India)",
+  "v": "≤ 120 m AGL; VLOS; green zone or permission; no flight over crowds; remote pilot certificate for micro (commercial) and above; UIN; incident reporting to DGCA"
+ },
+ {
+  "k": "Working over water",
+  "v": "Lifejacket ≥ 150 N for work-wear; lifebuoys with 30 m line at ≤ 50 m intervals; rescue boat manned during work; coast guard 1554"
+ }
+]

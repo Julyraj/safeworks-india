@@ -1,0 +1,1357 @@
+[
+ [
+  "Hazard",
+  "Core concepts",
+  "A source with the potential to cause harm (energy, substance, condition, behaviour)."
+ ],
+ [
+  "Risk",
+  "Core concepts",
+  "Combination of the likelihood of harm and its severity; rated on a matrix before and after controls."
+ ],
+ [
+  "Risk assessment",
+  "Core concepts",
+  "Systematic process to identify hazards, evaluate risk and decide controls (HIRA/JSA/HAZOP)."
+ ],
+ [
+  "ALARP",
+  "Core concepts",
+  "As Low As Reasonably Practicable — reduce risk until further reduction is grossly disproportionate to cost."
+ ],
+ [
+  "Hierarchy of controls",
+  "Core concepts",
+  "Elimination → substitution → engineering → administrative → PPE; the order of preference for controls."
+ ],
+ [
+  "Unsafe act",
+  "Core concepts",
+  "A behaviour that departs from safe practice and can cause an incident (e.g., removing a guard)."
+ ],
+ [
+  "Unsafe condition",
+  "Core concepts",
+  "A physical state of the workplace or equipment that can cause an incident (e.g., missing guardrail)."
+ ],
+ [
+  "Near miss",
+  "Core concepts",
+  "An unplanned event that did not cause injury or damage but could have; a free lesson."
+ ],
+ [
+  "Incident / accident",
+  "Core concepts",
+  "Incident: any unplanned event that did or could cause harm; accident: an incident with injury/damage."
+ ],
+ [
+  "Dangerous occurrence",
+  "Core concepts",
+  "Listed serious event (collapse, explosion, fire, pressure burst, release) reportable even without injury (OSH Code s.11)."
+ ],
+ [
+  "Lost-time injury (LTI)",
+  "Core concepts",
+  "Work injury causing absence beyond the day of injury (India: absence ≥ 48 h triggers statutory notice)."
+ ],
+ [
+  "Recordable injury",
+  "Core concepts",
+  "OSHA: injury needing medical treatment beyond first aid, restricted work, days away, loss of consciousness or death."
+ ],
+ [
+  "First-aid case",
+  "Core concepts",
+  "Minor treatment (cleaning, dressing, cold pack) with no further medical care; recorded in the first-aid register."
+ ],
+ [
+  "Fatality",
+  "Core concepts",
+  "Death from a work-related injury or illness; reported forthwith to ICF, police and family."
+ ],
+ [
+  "Occupational disease",
+  "Core concepts",
+  "Illness caused by work exposure (silicosis, NIHL, dermatitis, lead poisoning); notifiable under OSH Code s.12."
+ ],
+ [
+  "Competent person",
+  "Core concepts",
+  "Person with training, knowledge and experience (and statutory recognition where required) to perform a task or inspection."
+ ],
+ [
+  "Authorised person",
+  "Core concepts",
+  "Person appointed in writing to perform a specific duty (e.g., HT switching, permit issue)."
+ ],
+ [
+  "Appointed person (lifting)",
+  "Core concepts",
+  "Person responsible for planning lifting operations (BS 7121)."
+ ],
+ [
+  "Duty of care",
+  "Core concepts",
+  "Legal obligation to take reasonable care to avoid harm to others; employer's general duties (OSH Code s.6)."
+ ],
+ [
+  "Occupier / employer",
+  "Core concepts",
+  "Person with ultimate control of the factory/establishment (legally accountable under OSH Code)."
+ ],
+ [
+  "Principal employer",
+  "Core concepts",
+  "The establishment that engages contractors; liable for contract workers' welfare and safety if the contractor defaults."
+ ],
+ [
+  "Safe system of work",
+  "Core concepts",
+  "Formal procedure resulting from systematic examination of a task to identify hazards and define safe methods."
+ ],
+ [
+  "Method statement (SWMS)",
+  "Core concepts",
+  "Step-by-step description of how a task will be done safely, with hazards and controls."
+ ],
+ [
+  "Job Safety Analysis (JSA/JHA)",
+  "Core concepts",
+  "Breaking a job into steps, identifying hazards per step, assigning controls."
+ ],
+ [
+  "HIRA",
+  "Core concepts",
+  "Hazard Identification and Risk Assessment — the site/plant-level risk register."
+ ],
+ [
+  "HAZOP",
+  "Core concepts",
+  "Hazard and Operability study — guide-word-based review of process deviations (IEC 61882)."
+ ],
+ [
+  "LOPA / SIL",
+  "Core concepts",
+  "Layer of Protection Analysis quantifies risk reduction needed; Safety Integrity Level rates safety instrumented functions."
+ ],
+ [
+  "Bow-tie",
+  "Core concepts",
+  "Diagram linking threats, preventive barriers, the top event, mitigative barriers and consequences."
+ ],
+ [
+  "What-if / checklist analysis",
+  "Core concepts",
+  "Brainstorm-based hazard review for simpler processes."
+ ],
+ [
+  "Residual risk",
+  "Core concepts",
+  "Risk remaining after controls; must be within acceptance criteria."
+ ],
+ [
+  "Risk matrix",
+  "Core concepts",
+  "Grid of likelihood vs severity used to rate risk (e.g., 5×5)."
+ ],
+ [
+  "Swiss-cheese model",
+  "Core concepts",
+  "Accidents occur when holes in successive layers of defence align (Reason)."
+ ],
+ [
+  "Heinrich's triangle",
+  "Core concepts",
+  "Ratio model: many unsafe acts/near misses for each serious injury."
+ ],
+ [
+  "Root cause analysis",
+  "Core concepts",
+  "Finding the underlying management-system causes of an incident (5-Why, fishbone, TapRooT, ICAM)."
+ ],
+ [
+  "CAPA",
+  "Core concepts",
+  "Corrective And Preventive Action — fix the cause, prevent recurrence, verify effectiveness."
+ ],
+ [
+  "Just culture",
+  "Core concepts",
+  "Fair response distinguishing human error, at-risk behaviour and reckless behaviour."
+ ],
+ [
+  "Stop Work Authority",
+  "Core concepts",
+  "Right and duty of every worker to halt unsafe work without reprisal."
+ ],
+ [
+  "Line of fire",
+  "Core concepts",
+  "Position where a person could be struck by a moving object, released energy or falling material."
+ ],
+ [
+  "Pinch point / nip point",
+  "Core concepts",
+  "Place where a body part can be caught between moving and fixed parts, or between rotating parts."
+ ],
+ [
+  "Stored energy",
+  "Core concepts",
+  "Energy retained after shutdown: pressure, springs, gravity, capacitors, thermal, chemical."
+ ],
+ [
+  "SIMOPS",
+  "Core concepts",
+  "Simultaneous operations — interacting tasks needing coordination (e.g., hot work above confined-space entry)."
+ ],
+ [
+  "Leading / lagging indicators",
+  "Metrics",
+  "Leading: inspections, training, near-miss reports, observations; lagging: injuries, LTIFR, severity rate."
+ ],
+ [
+  "LTIFR",
+  "Metrics",
+  "Lost Time Injury Frequency Rate = LTIs × 1,000,000 ÷ hours worked (IS 3786)."
+ ],
+ [
+  "TRIR / TRCF",
+  "Metrics",
+  "Total Recordable Incident Rate = recordables × 200,000 ÷ hours (OSHA) or × 1,000,000 (TRCF)."
+ ],
+ [
+  "Severity rate",
+  "Metrics",
+  "Days lost × 1,000,000 ÷ hours worked (IS 3786)."
+ ],
+ [
+  "Frequency-severity incidence",
+  "Metrics",
+  "Combined index √(FR × SR) sometimes used in Indian safety awards."
+ ],
+ [
+  "Man-hours without LTI",
+  "Metrics",
+  "Running count of hours since the last lost-time injury; a morale indicator, not a safety measure."
+ ],
+ [
+  "Safety observation",
+  "Behaviour & culture",
+  "Structured watching of work with feedback on safe and at-risk behaviours (BBS)."
+ ],
+ [
+  "Behaviour-based safety (BBS)",
+  "Behaviour & culture",
+  "Programme that observes and reinforces safe behaviours and removes barriers to them."
+ ],
+ [
+  "ABC model",
+  "Behaviour & culture",
+  "Antecedent–Behaviour–Consequence: consequences that are soon, certain and positive drive behaviour."
+ ],
+ [
+  "Safety culture / climate",
+  "Behaviour & culture",
+  "Shared values and practices about safety (culture) and the current perception of them (climate)."
+ ],
+ [
+  "Felt leadership",
+  "Behaviour & culture",
+  "Visible, consistent management involvement in safety (walks, conversations)."
+ ],
+ [
+  "Toolbox talk",
+  "Behaviour & culture",
+  "Short daily briefing at the workface on tasks, hazards and controls."
+ ],
+ [
+  "Induction",
+  "Behaviour & culture",
+  "Mandatory orientation on site hazards, rules and emergency arrangements before first entry."
+ ],
+ [
+  "Horseplay",
+  "Behaviour & culture",
+  "Rough or boisterous behaviour at work; prohibited as an unsafe act."
+ ],
+ [
+  "Fitness for duty",
+  "Behaviour & culture",
+  "Being physically and mentally able to work safely — no fatigue, intoxication or impairing illness."
+ ],
+ [
+  "Human factors",
+  "Behaviour & culture",
+  "How people, tasks, equipment and organisation interact; designing for human limitations."
+ ],
+ [
+  "Fatigue management",
+  "Behaviour & culture",
+  "Controlling hours, shift patterns and rest to prevent impaired alertness."
+ ],
+ [
+  "Permit to Work (PTW)",
+  "Permits & isolation",
+  "Formal written authorisation for high-risk non-routine work with specified precautions."
+ ],
+ [
+  "Hot work permit",
+  "Permits & isolation",
+  "Permit for welding, cutting, grinding or any spark/flame-producing task."
+ ],
+ [
+  "Cold work permit",
+  "Permits & isolation",
+  "Permit for work without ignition sources but with other hazards (e.g., line breaking)."
+ ],
+ [
+  "Confined space entry permit",
+  "Permits & isolation",
+  "Permit recording isolation, gas test, attendant, rescue and duration for entry."
+ ],
+ [
+  "Permit-to-dig",
+  "Permits & isolation",
+  "Authorisation to excavate after utility clearance and hazard review."
+ ],
+ [
+  "Energised electrical work permit",
+  "Permits & isolation",
+  "NFPA 70E authorisation for justified live work with arc-flash controls."
+ ],
+ [
+  "Lockout / Tagout (LOTO)",
+  "Permits & isolation",
+  "Locking and tagging energy isolating devices so equipment cannot be energised during work."
+ ],
+ [
+  "Isolation certificate",
+  "Permits & isolation",
+  "Record of each isolation point, lock/tag number and verification, attached to the permit."
+ ],
+ [
+  "Double block and bleed",
+  "Permits & isolation",
+  "Two closed valves with an open bleed between them — positive process isolation."
+ ],
+ [
+  "Spade / blind / spectacle blind",
+  "Permits & isolation",
+  "Solid plate inserted in a flange to positively isolate a pipeline."
+ ],
+ [
+  "Gas test / gas-free certificate",
+  "Permits & isolation",
+  "Measurement of O2, LEL, toxic gases before/during work; certificate that a space is safe for entry or hot work."
+ ],
+ [
+  "LEL / UEL",
+  "Permits & isolation",
+  "Lower/upper explosive limits — flammable concentration range in air; work limits set as % of LEL."
+ ],
+ [
+  "Bump test",
+  "Permits & isolation",
+  "Daily check that a gas detector responds to test gas; calibration is the periodic accuracy adjustment."
+ ],
+ [
+  "Attendant / standby person",
+  "Permits & isolation",
+  "Person outside a confined space who monitors entrants and summons rescue; never enters."
+ ],
+ [
+  "Fire watch",
+  "Permits & isolation",
+  "Person who watches for fire during and after hot work with an extinguisher ready."
+ ],
+ [
+  "Override / bypass register",
+  "Permits & isolation",
+  "Log of authorised, time-limited disabling of safety devices with compensating measures."
+ ],
+ [
+  "Try-step",
+  "Permits & isolation",
+  "Attempting to start equipment after isolation to verify zero energy."
+ ],
+ [
+  "Guardrail",
+  "Construction",
+  "Top rail (0.95–1.1 m), mid-rail and toe board protecting an open edge."
+ ],
+ [
+  "Toe board",
+  "Construction",
+  "Upstand ≥ 150 mm at platform edges preventing tools/materials falling."
+ ],
+ [
+  "Fall arrest / fall restraint",
+  "Construction",
+  "Arrest: stops a fall in progress (harness, energy absorber); restraint: prevents reaching the edge."
+ ],
+ [
+  "Anchor point",
+  "Construction",
+  "Rated attachment (≥ 22 kN) for lanyards/lifelines."
+ ],
+ [
+  "Self-retracting lifeline (SRL)",
+  "Construction",
+  "Inertia-reel device that locks on sudden pull, limiting free fall."
+ ],
+ [
+  "Fall clearance",
+  "Construction",
+  "Distance needed below the anchor for a fall to be arrested without hitting a lower level."
+ ],
+ [
+  "Suspension trauma",
+  "Construction",
+  "Circulatory collapse from hanging motionless in a harness; rescue within 10–15 min."
+ ],
+ [
+  "Scaffold tag",
+  "Construction",
+  "Green (safe to use) / red (do not use) card at each access point with inspection date."
+ ],
+ [
+  "Sole board / base plate",
+  "Construction",
+  "Timber board and steel plate spreading scaffold standard loads on the ground."
+ ],
+ [
+  "Standards / ledgers / transoms",
+  "Construction",
+  "Vertical tubes / horizontal longitudinal tubes / horizontal transverse tubes of a scaffold."
+ ],
+ [
+  "Ties",
+  "Construction",
+  "Connections anchoring a scaffold to the structure against overturning (≈ every 4 m × 6 m)."
+ ],
+ [
+  "Bracing",
+  "Construction",
+  "Diagonal tubes giving a scaffold or formwork stiffness against sway."
+ ],
+ [
+  "Mobile tower",
+  "Construction",
+  "Prefabricated rolling scaffold; height ≤ 3× (outdoor)/3.5× (indoor) base without outriggers."
+ ],
+ [
+  "MEWP",
+  "Construction",
+  "Mobile Elevating Work Platform (scissor/boom lift); harness with restraint lanyard in boom types."
+ ],
+ [
+  "Fragile roof",
+  "Construction",
+  "Roof surface (AC sheets, roof lights) that cannot bear a person's weight."
+ ],
+ [
+  "Edge protection",
+  "Construction",
+  "Collective barrier at a leading edge or slab perimeter (EN 13374)."
+ ],
+ [
+  "Hole cover",
+  "Construction",
+  "Secured, load-rated, labelled cover over a floor/roof opening."
+ ],
+ [
+  "Debris net / catch platform",
+  "Construction",
+  "Netting or fan protecting people below from falling material."
+ ],
+ [
+  "Excavation",
+  "Construction",
+  "Any man-made cut in the ground; trench = depth greater than width, width ≤ 4.5 m."
+ ],
+ [
+  "Shoring / trench box / sloping / benching",
+  "Construction",
+  "Protective systems: supports, prefabricated box, angled walls or stepped walls preventing collapse."
+ ],
+ [
+  "Spoil",
+  "Construction",
+  "Excavated material; keep ≥ 1 m from the edge."
+ ],
+ [
+  "Competent-person inspection (excavation)",
+  "Construction",
+  "Daily and post-rain inspection of excavation stability and protective system."
+ ],
+ [
+  "Underground services",
+  "Construction",
+  "Buried cables/pipes located by drawings, scanning (CAT & Genny) and trial holes."
+ ],
+ [
+  "Goal posts",
+  "Construction",
+  "Height barriers at overhead-line crossings for plant."
+ ],
+ [
+  "Formwork / falsework",
+  "Construction",
+  "Moulds for concrete / temporary structure supporting them until the concrete is self-supporting."
+ ],
+ [
+  "Striking (formwork)",
+  "Construction",
+  "Removing formwork after the concrete reaches required strength; premature striking causes collapse."
+ ],
+ [
+  "Temporary works",
+  "Construction",
+  "Structures needed during construction only (scaffolds, falsework, props, cofferdams); designed and coordinated (BS 5975)."
+ ],
+ [
+  "Working platform (piling)",
+  "Construction",
+  "Engineered ground mat supporting rigs; certified before use."
+ ],
+ [
+  "Banksman / signaller / spotter",
+  "Construction",
+  "Person directing vehicle or crane movements with signals/radio."
+ ],
+ [
+  "Traffic management plan",
+  "Construction",
+  "Layout of site/public traffic controls, routes, signs, pedestrian segregation (IRC:SP:55)."
+ ],
+ [
+  "Hoarding",
+  "Construction",
+  "Site perimeter fence/screen (≥ 2 m) protecting the public."
+ ],
+ [
+  "Hot-mix plant",
+  "Construction",
+  "Asphalt batching plant with burner, dryer drum and bag-house; SPCB-consented."
+ ],
+ [
+  "Lift plan",
+  "Lifting",
+  "Written plan: load, radius, crane capacity, ground, rigging, exclusion, signaller."
+ ],
+ [
+  "Load chart",
+  "Lifting",
+  "Manufacturer's table of rated capacity by boom length, radius and configuration."
+ ],
+ [
+  "SWL / WLL",
+  "Lifting",
+  "Safe Working Load (assessed for the lift) / Working Load Limit (marked by manufacturer)."
+ ],
+ [
+  "Load moment indicator (LMI/ASLI)",
+  "Lifting",
+  "Device warning and cutting out when a crane approaches overload."
+ ],
+ [
+  "Anti-two-block",
+  "Lifting",
+  "Device preventing the hook block from contacting the boom tip."
+ ],
+ [
+  "Outriggers",
+  "Lifting",
+  "Extendable crane legs with pads spreading load to the ground; must be fully extended and level."
+ ],
+ [
+  "Tag line",
+  "Lifting",
+  "Rope attached to a load to control swing; held by a person outside the drop zone."
+ ],
+ [
+  "Sling angle",
+  "Lifting",
+  "Included angle between sling legs; capacity drops as the angle widens (≤ 90° preferred)."
+ ],
+ [
+  "Choke / basket / vertical hitch",
+  "Lifting",
+  "Sling configurations with different capacity factors."
+ ],
+ [
+  "Shackle / master link / eyebolt",
+  "Lifting",
+  "Rigging hardware; load in line, pin seated, rated for the load."
+ ],
+ [
+  "Thorough examination",
+  "Lifting",
+  "Detailed inspection by a competent person at statutory intervals (12 m India; 6 m accessories under LOLER/BOCW)."
+ ],
+ [
+  "Colour code (lifting gear/tools)",
+  "Lifting",
+  "Quarterly tape colour showing the item was inspected this period."
+ ],
+ [
+  "Pick-and-carry crane (hydra)",
+  "Lifting",
+  "Articulated mobile crane common in India; prone to overturn — level ground, boom low, no persons within 5 m."
+ ],
+ [
+  "Builder's hoist",
+  "Lifting",
+  "Material/passenger hoist on construction sites; licensed under state lifts acts where applicable."
+ ],
+ [
+  "EOT crane",
+  "Lifting",
+  "Electric Overhead Travelling crane on gantry rails in factories."
+ ],
+ [
+  "Tandem lift",
+  "Lifting",
+  "Two cranes lifting one load; critical lift requiring engineered plan."
+ ],
+ [
+  "Critical lift",
+  "Lifting",
+  "Lift > 75–85% capacity, tandem, near lines, over live plant or with personnel — needs enhanced plan and approval."
+ ],
+ [
+  "RCD / ELCB / GFCI",
+  "Electrical",
+  "Residual current device tripping at 30 mA leakage to protect against electrocution."
+ ],
+ [
+  "Earthing / grounding",
+  "Electrical",
+  "Connecting exposed metal to earth so faults trip protection (IS 3043)."
+ ],
+ [
+  "Bonding",
+  "Electrical",
+  "Connecting conductive parts together to prevent static or potential differences."
+ ],
+ [
+  "Test for dead",
+  "Electrical",
+  "Proving a circuit is de-energised with a tester proved before and after."
+ ],
+ [
+  "Arc flash",
+  "Electrical",
+  "Explosive release of energy from an electrical fault; incident energy (cal/cm²) determines PPE."
+ ],
+ [
+  "Approach boundaries",
+  "Electrical",
+  "Limited, restricted and arc-flash boundaries around live parts (NFPA 70E)."
+ ],
+ [
+  "Line clearance",
+  "Electrical",
+  "Minimum distance plant/persons must keep from overhead lines (CEA table / OSHA 10 ft to 50 kV)."
+ ],
+ [
+  "Flameproof / Ex equipment",
+  "Electrical",
+  "Equipment certified for hazardous areas (IEC 60079; Zones 0/1/2 gas, 20/21/22 dust)."
+ ],
+ [
+  "Hazardous area classification",
+  "Electrical",
+  "Zoning of areas by likelihood of explosive atmosphere to select Ex equipment."
+ ],
+ [
+  "Step and touch potential",
+  "Electrical",
+  "Voltage across the ground or between hand and feet near a fault/earth; stay ≥ 10 m from downed lines."
+ ],
+ [
+  "Portable appliance test (PAT)",
+  "Electrical",
+  "Periodic electrical safety test of portable tools (3-monthly on sites)."
+ ],
+ [
+  "Lightning protection system",
+  "Electrical",
+  "Air terminals, down conductors and earths protecting structures (IS/IEC 62305)."
+ ],
+ [
+  "Fire triangle / tetrahedron",
+  "Fire",
+  "Fuel, oxygen, heat (and chain reaction) needed for fire; remove one to extinguish."
+ ],
+ [
+  "Fire classes",
+  "Fire",
+  "A solids, B liquids, C gases, D metals, E/electrical, F/K cooking oils (India IS 2190 uses A/B/C/D + electrical)."
+ ],
+ [
+  "PASS",
+  "Fire",
+  "Pull pin, Aim at base, Squeeze, Sweep — extinguisher use."
+ ],
+ [
+  "Flash point / auto-ignition",
+  "Fire",
+  "Lowest temperature a liquid gives ignitable vapour / temperature at which it ignites without a spark."
+ ],
+ [
+  "Flashback arrestor",
+  "Fire",
+  "Device on oxy-fuel lines stopping flame travelling back to the cylinder."
+ ],
+ [
+  "Fire watch",
+  "Fire",
+  "See permits; also post-hot-work monitoring (≥ 30–60 min)."
+ ],
+ [
+  "Impairment (fire systems)",
+  "Fire",
+  "Planned or emergency out-of-service period for fire protection, requiring compensating measures."
+ ],
+ [
+  "Fire NOC",
+  "Fire",
+  "No Objection Certificate from the State Fire Service confirming fire-safety compliance (KSFES/TNFRS)."
+ ],
+ [
+  "Wet riser / dry riser",
+  "Fire",
+  "Charged / empty vertical fire main in buildings for fire-service use."
+ ],
+ [
+  "Combustible dust",
+  "Fire",
+  "Finely divided solid that can form an explosive cloud (flour, wood, metal, coal)."
+ ],
+ [
+  "BLEVE",
+  "Fire",
+  "Boiling Liquid Expanding Vapour Explosion — rupture of a heated pressurised liquid container (LPG)."
+ ],
+ [
+  "Deflagration vent",
+  "Fire",
+  "Panel that opens to relieve dust/gas explosion pressure (NFPA 68)."
+ ],
+ [
+  "SDS / MSDS",
+  "Chemical & process",
+  "16-section Safety Data Sheet (GHS) / MSIHC Schedule 9 format — hazards, handling, PPE, first aid."
+ ],
+ [
+  "GHS",
+  "Chemical & process",
+  "Globally Harmonized System for classifying and labelling chemicals (pictograms, signal words, H/P statements)."
+ ],
+ [
+  "PEL / TLV / STEL / Ceiling",
+  "Chemical & process",
+  "Exposure limits: 8-h average (PEL/TLV-TWA), 15-min short-term (STEL), never-exceed (C)."
+ ],
+ [
+  "IDLH",
+  "Chemical & process",
+  "Immediately Dangerous to Life or Health concentration — requires SCBA/airline."
+ ],
+ [
+  "Toxic release",
+  "Chemical & process",
+  "Escape of a toxic gas/vapour (chlorine, ammonia, H2S) requiring shelter-in-place or evacuation."
+ ],
+ [
+  "Major Accident Hazard (MAH)",
+  "Chemical & process",
+  "Installation exceeding MSIHC threshold quantities with safety report and emergency plans."
+ ],
+ [
+  "On-site / off-site emergency plan",
+  "Chemical & process",
+  "Occupier's plan inside the fence / District Collector's plan for the surrounding area."
+ ],
+ [
+  "Process Safety Management",
+  "Chemical & process",
+  "System of 14 elements (OSHA PSM) / 20 elements (CCPS RBPS) to prevent catastrophic releases."
+ ],
+ [
+  "Mechanical integrity",
+  "Chemical & process",
+  "Inspection, testing and maintenance programme keeping equipment fit for service."
+ ],
+ [
+  "Management of Change (MoC)",
+  "Chemical & process",
+  "Review of any change before implementation."
+ ],
+ [
+  "PSSR",
+  "Chemical & process",
+  "Pre-Start-up Safety Review after construction, turnaround or change."
+ ],
+ [
+  "Relief valve / rupture disc",
+  "Chemical & process",
+  "Devices protecting equipment from overpressure; tested at set intervals."
+ ],
+ [
+  "Dyke / bund",
+  "Chemical & process",
+  "Containment wall around tanks holding ≥ 100–110% of the largest tank."
+ ],
+ [
+  "Overfill protection",
+  "Chemical & process",
+  "High-level alarm and automatic shut-off on tanks (API 2350)."
+ ],
+ [
+  "Static electricity",
+  "Chemical & process",
+  "Charge generated by flow/friction that can ignite flammables; controlled by bonding, earthing, flow limits."
+ ],
+ [
+  "Inerting / nitrogen blanketing",
+  "Chemical & process",
+  "Replacing air with inert gas to prevent explosion; creates asphyxiation hazard."
+ ],
+ [
+  "Pyrophoric",
+  "Chemical & process",
+  "Material igniting spontaneously in air (iron sulphide scale); keep wet."
+ ],
+ [
+  "Incompatible chemicals",
+  "Chemical & process",
+  "Substances that react dangerously when mixed (acids + hypochlorite → chlorine; oxidisers + fuels)."
+ ],
+ [
+  "Hazardous waste",
+  "Chemical & process",
+  "Waste listed in HOWM Rules schedules; stored ≤ 90 days, manifested to authorised facilities."
+ ],
+ [
+  "TREM card",
+  "Chemical & process",
+  "Transport Emergency Card carried by dangerous-goods vehicles (CMV Rule 132)."
+ ],
+ [
+  "UN number / hazard class",
+  "Chemical & process",
+  "Four-digit dangerous-goods identifier and class 1–9 for transport placarding."
+ ],
+ [
+  "Occupational hygiene",
+  "Occupational health",
+  "Anticipation, recognition, evaluation and control of workplace health hazards (chemical, physical, biological, ergonomic)."
+ ],
+ [
+  "Health surveillance",
+  "Occupational health",
+  "Periodic medical checks for exposed workers (audiometry, spirometry, blood lead, chest X-ray)."
+ ],
+ [
+  "Certifying surgeon / Factory Medical Officer",
+  "Occupational health",
+  "Doctor recognised under Factories/state rules to examine workers in dangerous operations."
+ ],
+ [
+  "Occupational Health Centre (OHC)",
+  "Occupational health",
+  "Statutory medical facility in hazardous-process factories staffed per headcount."
+ ],
+ [
+  "Silicosis",
+  "Occupational health",
+  "Incurable lung disease from respirable crystalline silica (cutting concrete/stone, sandblasting, foundries)."
+ ],
+ [
+  "Asbestosis / mesothelioma",
+  "Occupational health",
+  "Lung fibrosis / cancer from asbestos fibres; AC sheet work needs controls."
+ ],
+ [
+  "Noise-induced hearing loss (NIHL)",
+  "Occupational health",
+  "Permanent hearing damage from exposure ≥ 85 dB(A); notifiable disease."
+ ],
+ [
+  "Hand-arm vibration syndrome (HAVS)",
+  "Occupational health",
+  "Nerve/vascular damage from vibrating tools (white finger)."
+ ],
+ [
+  "Heat stress / WBGT",
+  "Occupational health",
+  "Heat load on the body / Wet Bulb Globe Temperature index used to set work-rest cycles."
+ ],
+ [
+  "Acclimatisation",
+  "Occupational health",
+  "Gradual (5–7 day) increase in heat exposure for new/returning workers."
+ ],
+ [
+  "Respirator fit test",
+  "Occupational health",
+  "Qualitative/quantitative test proving a tight-fitting mask seals on the wearer's face."
+ ],
+ [
+  "Assigned protection factor",
+  "Occupational health",
+  "Level of protection a respirator type provides when properly fitted (e.g., FFP3 = 20, half-mask P3 = 20, PAPR = 40)."
+ ],
+ [
+  "Dermatitis",
+  "Occupational health",
+  "Skin inflammation from cement, solvents, epoxy, wet work."
+ ],
+ [
+  "Sensitiser",
+  "Occupational health",
+  "Substance causing allergic response after exposure (isocyanates, epoxy, chromates)."
+ ],
+ [
+  "Carcinogen (CMR)",
+  "Occupational health",
+  "Carcinogenic, mutagenic or reprotoxic substance (benzene, Cr VI, asbestos, silica)."
+ ],
+ [
+  "Biological monitoring",
+  "Occupational health",
+  "Measuring a substance or metabolite in blood/urine (blood lead, urinary phenol)."
+ ],
+ [
+  "Ergonomics",
+  "Occupational health",
+  "Fitting the job to the worker: posture, force, repetition, workstation design."
+ ],
+ [
+  "Manual handling",
+  "Occupational health",
+  "Lifting, carrying, pushing, pulling by hand; assessed with TILE/NIOSH equation."
+ ],
+ [
+  "Musculoskeletal disorder (MSD)",
+  "Occupational health",
+  "Injury of muscles, tendons, joints from manual handling or repetitive work."
+ ],
+ [
+  "Psychosocial risk",
+  "Occupational health",
+  "Stress, violence, harassment, excessive hours (ISO 45003)."
+ ],
+ [
+  "Welfare facilities",
+  "Occupational health",
+  "Drinking water, toilets, washing, rest shelter, canteen, crèche required by OSH Code s.24/BOCW rules."
+ ],
+ [
+  "Legionella",
+  "Occupational health",
+  "Bacteria in warm water systems causing Legionnaires' disease; controlled by temperature/biocide/cleaning."
+ ],
+ [
+  "Vector control",
+  "Occupational health",
+  "Preventing mosquito/rodent-borne disease at sites and camps."
+ ],
+ [
+  "DRSABCD",
+  "Emergency & first aid",
+  "Danger, Response, Send for help, Airway, Breathing, CPR, Defibrillation."
+ ],
+ [
+  "CPR",
+  "Emergency & first aid",
+  "Cardiopulmonary resuscitation: 30 compressions (5–6 cm, 100–120/min) : 2 breaths."
+ ],
+ [
+  "AED",
+  "Emergency & first aid",
+  "Automated External Defibrillator — delivers a shock for cardiac arrest; use as early as possible."
+ ],
+ [
+  "Recovery position",
+  "Emergency & first aid",
+  "Side-lying position protecting the airway of an unconscious breathing casualty."
+ ],
+ [
+  "Triage",
+  "Emergency & first aid",
+  "Sorting casualties by urgency when numbers exceed resources (immediate/urgent/delayed/dead)."
+ ],
+ [
+  "Tourniquet",
+  "Emergency & first aid",
+  "Band tightened above a limb wound to stop catastrophic bleeding; note the time."
+ ],
+ [
+  "Haemostatic dressing",
+  "Emergency & first aid",
+  "Gauze impregnated with clotting agent for wound packing."
+ ],
+ [
+  "Golden hour",
+  "Emergency & first aid",
+  "First hour after trauma when definitive care most improves survival."
+ ],
+ [
+  "MIST handover",
+  "Emergency & first aid",
+  "Mechanism, Injuries, Signs, Treatment — concise handover to ambulance/hospital."
+ ],
+ [
+  "Antivenom",
+  "Emergency & first aid",
+  "Hospital-only treatment for venomous snakebite; polyvalent ASV in India."
+ ],
+ [
+  "Post-exposure prophylaxis (PEP)",
+  "Emergency & first aid",
+  "Vaccination/medication after exposure (rabies, HIV, hepatitis B)."
+ ],
+ [
+  "Shelter-in-place",
+  "Emergency & first aid",
+  "Staying indoors with doors/windows closed and ventilation off during a toxic release."
+ ],
+ [
+  "Assembly point / muster point",
+  "Emergency & first aid",
+  "Pre-designated safe location for head-count after evacuation."
+ ],
+ [
+  "Incident Controller / Site Main Controller",
+  "Emergency & first aid",
+  "Person commanding the scene / overall site response in the on-site emergency plan."
+ ],
+ [
+  "Mutual aid",
+  "Emergency & first aid",
+  "Agreement between neighbouring plants to share emergency resources."
+ ],
+ [
+  "Mock drill",
+  "Emergency & first aid",
+  "Rehearsal of the emergency plan (fire 6-monthly; chemical annual with District Crisis Group)."
+ ],
+ [
+  "108 / 112 / 101 / 100 / 1077 / 1554",
+  "Emergency & first aid",
+  "Ambulance / unified emergency / fire / police / district disaster control room / coast guard (India)."
+ ],
+ [
+  "OSH Code 2020",
+  "Indian legal",
+  "Occupational Safety, Health and Working Conditions Code — main workplace-safety statute since 21 Nov 2025."
+ ],
+ [
+  "Inspector-cum-Facilitator (ICF)",
+  "Indian legal",
+  "Enforcement officer under the OSH Code (formerly Inspector of Factories/Labour)."
+ ],
+ [
+  "Form XI",
+  "Indian legal",
+  "Notice of accident/dangerous occurrence under the OSH (Central) Rules 2026 (death forthwith; others 12 h)."
+ ],
+ [
+  "Factories Act 1948 (legacy)",
+  "Indian legal",
+  "Repealed by the OSH Code but its section numbers and state rules still shape practice."
+ ],
+ [
+  "State Factories Rules",
+  "Indian legal",
+  "Karnataka Factories Rules 1969 / Tamil Nadu Factories Rules 1950 — technical standards in transition."
+ ],
+ [
+  "BOCW",
+  "Indian legal",
+  "Building and Other Construction Workers Act/Rules — construction safety, welfare board, 1% cess."
+ ],
+ [
+  "Welfare Board (BOCW)",
+  "Indian legal",
+  "State board funding benefits for registered construction workers from cess."
+ ],
+ [
+  "Contract labour licence",
+  "Indian legal",
+  "All-India licence for contractors with 50+ workers under OSH Code Ch. XI."
+ ],
+ [
+  "Shram Suvidha",
+  "Indian legal",
+  "Central labour portal for registration, LIN and returns."
+ ],
+ [
+  "DISH / DFBISH",
+  "Indian legal",
+  "Directorate of Industrial Safety & Health (TN) / Dept of Factories, Boilers, Industrial Safety & Health (Karnataka)."
+ ],
+ [
+  "CEIG",
+  "Indian legal",
+  "Chief Electrical Inspector to Government — approvals, lifts, electrical accidents."
+ ],
+ [
+  "PESO",
+  "Indian legal",
+  "Petroleum and Explosives Safety Organisation — licences for petroleum, explosives, cylinders, pressure vessels."
+ ],
+ [
+  "SPCB (KSPCB/TNPCB)",
+  "Indian legal",
+  "State Pollution Control Board — consents, hazardous waste, EPR enforcement."
+ ],
+ [
+  "MSIHC Rules",
+  "Indian legal",
+  "Manufacture, Storage and Import of Hazardous Chemical Rules 1989 — MAH regime."
+ ],
+ [
+  "Safety Officer",
+  "Indian legal",
+  "Statutory appointment (OSH Code s.23) in factories/sites above headcount thresholds with prescribed qualifications."
+ ],
+ [
+  "Safety Committee",
+  "Indian legal",
+  "Joint employer–worker committee (OSH Code s.22) meeting at least quarterly."
+ ],
+ [
+  "Welfare Officer",
+  "Indian legal",
+  "Statutory appointment where 250+ workers."
+ ],
+ [
+  "Annual return",
+  "Indian legal",
+  "Yearly statutory filing of employment, accidents and compliance data."
+ ],
+ [
+  "Safety audit",
+  "Indian legal",
+  "Periodic systematic review (IS 14489; MSIHC Rule 12; Karnataka Safety Audit Rules 2024)."
+ ],
+ [
+  "Consent to Establish / Operate",
+  "Indian legal",
+  "SPCB permissions before construction and before operation under Air/Water Acts."
+ ],
+ [
+  "Environmental Clearance",
+  "Indian legal",
+  "Prior approval under EIA Notification 2006 for listed projects (construction ≥ 20,000 m²)."
+ ],
+ [
+  "Hazardous process",
+  "Indian legal",
+  "Process listed in the First Schedule with special obligations (disclosure, health surveillance, safety committee)."
+ ],
+ [
+  "Dangerous operation",
+  "Indian legal",
+  "Operation listed in state rules schedules requiring medical examination and special precautions."
+ ],
+ [
+  "Employee's Compensation",
+  "Indian legal",
+  "No-fault compensation for work injury/disease under the Code on Social Security 2020."
+ ],
+ [
+  "ESI",
+  "Indian legal",
+  "Employees' State Insurance — medical and cash benefits; accident report in 24 h."
+ ],
+ [
+  "POSH",
+  "Indian legal",
+  "Prevention of Sexual Harassment Act 2013 — Internal Committee mandatory."
+ ],
+ [
+  "Night work (women)",
+  "Indian legal",
+  "Permitted with consent and safeguards (transport, CCTV, batch size) under OSH Code s.43/state rules."
+ ],
+ [
+  "OSHA",
+  "International",
+  "US Occupational Safety and Health Administration; 29 CFR 1910 (general industry), 1926 (construction)."
+ ],
+ [
+  "NIOSH",
+  "International",
+  "US research institute setting recommended exposure limits and IDLH values."
+ ],
+ [
+  "ANSI / ASSP",
+  "International",
+  "US consensus standards bodies (Z359 fall protection, Z10 OHSMS, A10 construction)."
+ ],
+ [
+  "NFPA",
+  "International",
+  "National Fire Protection Association codes (70E electrical safety, 51B hot work, 855 ESS)."
+ ],
+ [
+  "ISO 45001",
+  "International",
+  "International OHS management-system standard (replaced OHSAS 18001)."
+ ],
+ [
+  "ISO 14001",
+  "International",
+  "Environmental management-system standard."
+ ],
+ [
+  "ILO",
+  "International",
+  "International Labour Organization — conventions (C155, C167, C174) and codes of practice."
+ ],
+ [
+  "HSE (UK)",
+  "International",
+  "Health and Safety Executive — regulator and source of free guidance (HSG, INDG, L-series)."
+ ],
+ [
+  "CDM 2015",
+  "International",
+  "UK Construction (Design and Management) Regulations — client/designer/contractor duties."
+ ],
+ [
+  "LOLER / PUWER",
+  "International",
+  "UK lifting equipment / work equipment regulations."
+ ],
+ [
+  "RIDDOR",
+  "International",
+  "UK incident reporting regulations."
+ ],
+ [
+  "Seveso / COMAH",
+  "International",
+  "EU/UK major-accident regimes — model for MSIHC."
+ ],
+ [
+  "IOGP Life-Saving Rules",
+  "International",
+  "Nine (2018) industry rules: bypassing safety controls, confined space, driving, energy isolation, hot work, line of fire, mechanical lifting, work authorisation, working at height."
+ ],
+ [
+  "GHG Protocol / Scope 1-2-3",
+  "Environment & carbon",
+  "Corporate carbon accounting standard; direct, purchased energy, value-chain emissions."
+ ],
+ [
+  "CCTS / CCC",
+  "Environment & carbon",
+  "India's Carbon Credit Trading Scheme / Carbon Credit Certificate (1 tCO2e)."
+ ],
+ [
+  "BRSR",
+  "Environment & carbon",
+  "SEBI Business Responsibility and Sustainability Report for top 1,000 listed entities."
+ ],
+ [
+  "CBAM",
+  "Environment & carbon",
+  "EU carbon border levy on steel, aluminium, cement, fertiliser, hydrogen, electricity imports."
+ ],
+ [
+  "EPR",
+  "Environment & carbon",
+  "Extended Producer Responsibility for plastics, e-waste, batteries, tyres, used oil."
+ ],
+ [
+  "C&D waste",
+  "Environment & carbon",
+  "Construction and demolition waste; segregated and recycled under the 2025 Rules."
+ ],
+ [
+  "Environmental aspect / impact",
+  "Environment & carbon",
+  "Element of activity interacting with the environment / the resulting change (ISO 14001)."
+ ],
+ [
+  "Spill kit",
+  "Environment & carbon",
+  "Absorbents, booms, PPE and bags for containing oil/chemical spills."
+ ],
+ [
+  "Form V",
+  "Environment & carbon",
+  "Annual environmental statement to the SPCB by 30 September."
+ ],
+ [
+  "PPE",
+  "PPE",
+  "Personal protective equipment — the last line of defence after other controls."
+ ],
+ [
+  "Hi-vis (class 2/3)",
+  "PPE",
+  "High-visibility clothing; class 3 for night and high-speed traffic."
+ ],
+ [
+  "FR / arc-rated clothing",
+  "PPE",
+  "Flame-resistant clothing; arc-rated garments carry a cal/cm² rating."
+ ],
+ [
+  "FFP2 / FFP3 / N95 / P100",
+  "PPE",
+  "Filtering facepiece respirator classes (EN 149 / NIOSH)."
+ ],
+ [
+  "SCBA / airline respirator",
+  "PPE",
+  "Self-contained breathing apparatus / supplied-air respirator for IDLH or oxygen-deficient atmospheres."
+ ],
+ [
+  "Chin strap",
+  "PPE",
+  "Helmet strap required for work at height and in wind."
+ ],
+ [
+  "Metatarsal guard",
+  "PPE",
+  "Foot protection over the instep for foundry/heavy-material work."
+ ],
+ [
+  "Energy-absorbing lanyard",
+  "PPE",
+  "Lanyard with a tear-out pack limiting arrest force to ≤ 6 kN."
+ ],
+ [
+  "Cut-resistant gloves",
+  "PPE",
+  "Gloves rated EN 388 levels A–F for blade cuts."
+ ],
+ [
+  "Chemical-resistant gloves",
+  "PPE",
+  "Gloves with breakthrough time rated for specific chemicals (EN 374)."
+ ],
+ [
+  "Face shield",
+  "PPE",
+  "Protection against splash/sparks; worn over safety glasses, not instead."
+ ],
+ [
+  "Welding shade",
+  "PPE",
+  "Lens darkness number (9–13 arc welding; 5 cutting)."
+ ],
+ [
+  "Hearing protection (SNR)",
+  "PPE",
+  "Ear plugs/muffs rated by Single Number Rating attenuation."
+ ]
+]

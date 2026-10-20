@@ -1,0 +1,985 @@
+[
+ {
+  "id": "cl-daily",
+  "t": "Daily Site Safety Inspection",
+  "cat": "Construction",
+  "items": [
+   "Site perimeter hoarding/fencing intact; gates manned; visitor/worker register in use",
+   "Access routes clear, ≥ 1 m wide, lit; pedestrian walkways segregated from plant",
+   "Housekeeping: no debris, protruding nails, tie-wire; waste segregated in labelled bins",
+   "Excavations barricaded (hard barrier ≥ 1.2 m), ladders in place, daily inspection signed",
+   "Scaffolds tagged green; guardrails, toe boards, ties present; boards sound",
+   "Edge protection and opening covers in place on all floors; covers labelled and secured",
+   "Lifting: crane certificates valid; load chart in cab; rigging gear colour-coded; exclusion zone barricaded",
+   "Electrical: DBs closed and locked; RCD tested this week; cables elevated/protected; no damaged plugs",
+   "Hot work permits displayed; extinguishers at hot work; fire watch posted",
+   "Fire: extinguishers in place, charged, accessible; exits clear; no smoking except designated area",
+   "Chemicals/fuels: labelled, bunded, SDS available; cylinders upright, chained, caps on",
+   "Plant & vehicles: pre-start checks done; reversing alarms working; banksman for reversing",
+   "PPE: all persons wearing helmet, boots, hi-vis; task PPE per permit (harness, goggles, respirators)",
+   "Welfare: drinking water cool and sufficient; toilets clean; rest shelter shaded; first-aid box stocked; first-aider on shift",
+   "Toolbox talk held and signed; permits for today's high-risk tasks issued",
+   "Weather: heat level posted; wind/rain plan activated if required",
+   "Emergency: assembly point signage; emergency numbers displayed; ambulance/vehicle available",
+   "Public interface: footpath/road signage per IRC:SP:55; dust suppression running; no mud on road",
+   "New workers (< 30 days) identified and supervised; no under-18 in hazardous work",
+   "Open findings from yesterday closed or escalated"
+  ]
+ },
+ {
+  "id": "cl-scaffold",
+  "t": "Scaffold Inspection (before use / 7-day / after weather)",
+  "cat": "Construction",
+  "items": [
+   "Scaffold tag present, dated, signed by competent inspector; design drawing available for non-standard scaffold",
+   "Base: sole boards on soft ground; base plates; standards plumb; no sinking",
+   "Standards, ledgers, transoms at correct spacing per design/IS 4014; couplers tight, correct type (right-angle for load-bearing)",
+   "Ties installed per pattern (≈ every 4 m vertical × 6 m horizontal or as design), none removed",
+   "Bracing: ledger/façade bracing continuous; plan bracing where required",
+   "Working platforms fully boarded, boards ≥ 38 mm thick, overhang 50–150 mm, no gaps/trip hazards",
+   "Guardrails: top rail 0.95–1.1 m, mid-rail, toe boards ≥ 150 mm on all open sides; brick guards where material stored",
+   "Safe access: ladders secured, 1 m above landing, through trapdoors closed when not in use; stair towers where frequent use",
+   "Loading within class; no accumulation of materials; SWL posted",
+   "Clearance from overhead lines maintained; scaffold earthed if near electrical/lightning risk",
+   "Mobile towers: castors locked, outriggers fitted, height-to-base within limit; no persons during movement",
+   "Suspended cradles: ropes, hoists, limit switches, secondary safety line, counterweights verified; daily test",
+   "Weather: inspected after rain/high wind; sheeting/netting load considered in ties",
+   "Materials: tubes undamaged, boards not split/warped, couplers lubricated and tested",
+   "Red tag applied immediately to any non-compliant scaffold and access blocked"
+  ]
+ },
+ {
+  "id": "cl-excavation",
+  "t": "Excavation Daily Inspection (competent person)",
+  "cat": "Construction",
+  "items": [
+   "Permit-to-dig valid; utility survey/drawings and scan results attached; services marked on ground",
+   "Depth, soil type and protective system match plan (sloping/benching/shoring/trench box); no unprotected sides ≥ 1.5 m",
+   "No tension cracks, bulging, sloughing, water seepage; sides stable after rain",
+   "Spoil, materials and plant ≥ 1 m from edge (or ≥ depth); stop blocks for vehicles",
+   "Hard barricade and signage around excavation; lighting at night; pedestrian crossings with handrails",
+   "Ladders every 7.5 m of travel, extending 1 m above, secured",
+   "Dewatering working; discharge to settlement; no undermining of adjacent structures/roads",
+   "Atmosphere tested where > 1.2 m deep near sewers/landfill/fuel; ventilation provided",
+   "Overhead line clearance for excavator boom maintained; goal posts at crossings",
+   "Banksman present for machine excavation; no one in bucket swing radius",
+   "Shoring/trench box undamaged, properly installed, extends above trench bottom per design",
+   "Emergency rescue plan and equipment available (ladder, rope, harness)",
+   "Inspection recorded in register with findings and actions"
+  ]
+ },
+ {
+  "id": "cl-demolition",
+  "t": "Demolition Pre-Start & Daily",
+  "cat": "Construction",
+  "items": [
+   "Structural survey and demolition method statement (sequence, props, exclusion zones) approved by engineer; local-body demolition permission on file",
+   "Pre-demolition hazardous-materials survey done; asbestos, lead paint, PCBs, residual chemicals removed by licensed agency before demolition",
+   "All services disconnected and capped (electricity, gas, water, sewer, telecom) — certificates from utilities; temporary site supply separate",
+   "Hoarding/scaffold with debris netting, catch platforms; pedestrian diversion and signage; traffic police permission where road affected",
+   "Exclusion zone set (≥ 1.5 × structure height for mechanical) and manned; neighbours notified; vibration/noise monitoring near sensitive structures",
+   "Top-down sequence followed; no load-bearing element removed before loads above; props installed per plan",
+   "Floors not overloaded with debris; enclosed chutes; openings guarded; no persons below drop zones",
+   "Mechanical demolition: cab FOPS, water spray for dust, operator licensed, nobody within reach radius",
+   "Tanks/vessels gas-freed before hot cutting; gas-free certificate attached",
+   "Asbestos-cement handled wet and whole, double-bagged, labelled; P3 respirators and disposable coveralls; waste to authorised TSDF with manifest",
+   "C&D waste segregated; covered transport; records under 2025 Rules; no burning",
+   "Structure monitored for movement/cracks; stop and evacuate on unexpected movement",
+   "End of shift: no unstable partially demolished elements left; site secured, lit, fenced"
+  ]
+ },
+ {
+  "id": "cl-lifting",
+  "t": "Crane / Lifting Operation Pre-Lift",
+  "cat": "Construction",
+  "items": [
+   "Lift plan prepared and briefed; appointed person on site",
+   "Crane test certificate (12-monthly) and lifting-gear examination certificates valid; register updated",
+   "Operator licence/authorisation; signaller/rigger trained; radios tested",
+   "Load weight verified (incl. rigging); radius measured; load chart capacity ≥ load with margin (≤ 75–85% for critical lifts)",
+   "Ground bearing checked; outriggers fully extended on pads/mats; crane level (≤ 1%); distance from excavations adequate",
+   "LMI/ASLI functional; anti-two-block; anemometer; wind within limit; no lightning",
+   "Overhead lines: clearance verified or line de-energised/shrouded; spotter assigned",
+   "Rigging: slings/shackles inspected, SWL adequate for angle, edge protection, hook latches, tag lines fitted",
+   "Exclusion zone barricaded; no personnel under load path; landing area prepared with dunnage",
+   "Trial lift done; brakes/controls tested; communication confirmed",
+   "Hydra/pick-and-carry: firm level ground, boom retracted, load low, no persons within 5 m",
+   "Hoists: gates interlocked, SWL displayed, daily check signed, no persons on material hoist",
+   "Post-lift: gear stowed, area cleared, defects reported"
+  ]
+ },
+ {
+  "id": "cl-confined",
+  "t": "Confined Space Pre-Entry",
+  "cat": "Industrial",
+  "items": [
+   "Space identified in register; permit-required classification confirmed; entry permit issued and displayed",
+   "All inlets/outlets isolated by blind/spade/disconnect (not valves alone); energy LOTO applied; isolation register signed",
+   "Space drained, cleaned, purged, ventilated with fresh air (not O2); ventilation running continuously",
+   "Gas test from outside at top/middle/bottom: O2 19.5–23.5%, LEL < 10% (0% for hot work), H2S < 10 ppm, CO < 25 ppm; readings recorded with time",
+   "Detector bump-tested today; calibration in date; entrants carry personal monitors",
+   "Attendant assigned, trained, at entrance, with entrant log and communication; no other duties",
+   "Rescue plan tested; tripod/winch/retrieval line fitted for vertical entry; rescue team contact confirmed",
+   "Lighting intrinsically safe/24 V; tools suitable; no cylinders inside (except SCBA)",
+   "Entrants medically fit, trained, wearing harness with line attached where feasible",
+   "Communication method agreed (voice/radio/line signals); emergency signal known",
+   "Permit duration, re-test interval and conditions briefed to crew; crew signed",
+   "Hot work inside only with separate hot-work permit and 0% LEL",
+   "Entry/exit head-count procedure in place; permit close-out and de-isolation sequence understood"
+  ]
+ },
+ {
+  "id": "cl-hotwork",
+  "t": "Hot Work Pre-Start",
+  "cat": "Fire & Emergency",
+  "items": [
+   "Hot-work permit issued for location, time window and specific equipment",
+   "Combustibles removed within 11 m or protected with fire blankets; floor/wall openings sealed; drains covered",
+   "Gas test where flammables possible: 0% LEL in process areas; result recorded; retest interval set",
+   "Fire extinguishers (type and number per permit) within reach and checked; water/hose where feasible",
+   "Fire watch assigned with no other duties, briefed on alarm/communication; continues ≥ 30–60 min after",
+   "Equipment inspected: welding cables/earth clamp, regulators, hoses, flashback arrestors both ends, cylinder securing",
+   "Welder certified for the job; ventilation/fume extraction in place; respirator where coated/stainless",
+   "Adjacent work checked (no confined-space entry below, no flammable transfer nearby); screens erected",
+   "Spark/slag containment for work at height; exclusion zone below barricaded",
+   "PPE: welding helmet/goggles, leather gloves/jacket, FR coveralls, boots; no synthetic clothing",
+   "Permit conditions briefed to crew; crew signed",
+   "Close-out: area inspected (incl. below/behind), slag cooled, permit closed, fire watch log signed"
+  ]
+ },
+ {
+  "id": "cl-loto",
+  "t": "Lockout / Tagout Verification",
+  "cat": "Electrical",
+  "items": [
+   "Equipment-specific energy control procedure available and followed",
+   "All energy sources identified: electrical, hydraulic, pneumatic, mechanical/stored, thermal, chemical, gravity",
+   "Affected employees notified; equipment shut down normally",
+   "Each isolation point locked and tagged (breaker/disconnect/valve/blind); group lock box used for multiple workers",
+   "Stored energy released/restrained: pressure bled, capacitors discharged, parts blocked, springs restrained",
+   "Zero energy verified: start attempted and returned to OFF; proved voltage tester used on all phases; gauges read zero",
+   "Tags show name, date, reason, contact; locks are personal single-key",
+   "Shift handover procedure followed (incoming lock before outgoing removed)",
+   "Guards reinstalled and tools removed before release; head-count done",
+   "Locks removed only by owner; absent-owner removal per written procedure with supervisor authorisation",
+   "Periodic inspection of this procedure done within 12 months"
+  ]
+ },
+ {
+  "id": "cl-wah",
+  "t": "Work at Height / Fall Protection",
+  "cat": "Construction",
+  "items": [
+   "Task planned to avoid WAH where possible; collective protection (guardrails, nets, covers) preferred",
+   "Edge protection on all open edges: top rail, mid-rail, toe board; openings covered and labelled",
+   "Anchor points rated (≥ 22 kN) or engineered; lifelines installed by competent person",
+   "Harness (IS 3521/EN 361) and lanyard/SRL inspected pre-use; 6-monthly inspection tag in date; no fall history",
+   "Fall clearance calculated (≈ 6 m for 1.8 m lanyard); 100% tie-off with twin lanyards when moving",
+   "Ladders: angle 4:1, secured, 1 m above landing, 3-point contact, no work from top 3 rungs, not near electricity",
+   "MEWP: operator trained/licensed, daily check done, outriggers on firm ground, harness with restraint lanyard in boom type, ground controls known",
+   "Fragile roof survey done; crawling boards/staging; no work on wet AC sheets",
+   "Dropped-object controls: tool lanyards, debris netting, exclusion zone below",
+   "Weather within limits (wind < 40 km/h, no lightning/heavy rain)",
+   "Rescue plan in place; equipment and trained persons available to retrieve suspended worker < 15 min",
+   "Permit (where required) issued; toolbox talk done"
+  ]
+ },
+ {
+  "id": "cl-electrical",
+  "t": "Temporary Electrical Installation (Weekly)",
+  "cat": "Electrical",
+  "items": [
+   "Installation by licensed electrician; layout drawing current",
+   "All DBs lockable, labelled, IP-rated, mounted off ground, doors closed; CO2 extinguisher nearby",
+   "Every final circuit protected by 30 mA RCD; RCD test button operated this week and logged",
+   "Earthing: earth pits tested (quarterly) with resistance recorded; earth continuity to DBs/plant",
+   "Cables: armoured/double-insulated, elevated or protected at crossings, no taped joints, no damage",
+   "Plugs/sockets industrial type (IS/IEC 60309); no domestic multi-plugs",
+   "Portable tools PAT-tested (3-monthly) and tagged; 110 V or double-insulated with RCD",
+   "Lighting adequate (≥ 100 lux general, 24 V in wet/confined areas)",
+   "DG set: earthed, enclosed, exhaust safe, bunded fuel, no refuelling while running, extinguisher",
+   "Overhead line clearances marked; goal posts at crossings; no storage under lines",
+   "Welding sets: earth return clamped near work; cables undamaged; VRD recommended",
+   "Electrical rooms locked; danger signs; rubber mats; no storage inside",
+   "Defects tagged out and reported"
+  ]
+ },
+ {
+  "id": "cl-fire",
+  "t": "Fire Safety (Monthly)",
+  "cat": "Fire & Emergency",
+  "items": [
+   "Fire NOC/licence valid; conditions complied",
+   "Extinguishers: correct type/location per IS 2190, pressure OK, pin/seal intact, tag dated, accessible, serviced annually",
+   "Hydrants/hose reels: pressure, hoses, nozzles, cabinet; fire pump weekly test logged; water tank full",
+   "Detection/alarm: panel healthy, weekly test logged; manual call points accessible; PA working",
+   "Exits/escape routes: unobstructed, doors open outward and unlocked, exit signs lit; emergency lighting tested",
+   "Storage: flammables in cabinets/stores with quantities within limits; cylinders segregated; no combustibles near electrical rooms",
+   "Hot work permits in use; fire watch practice observed",
+   "Housekeeping: waste removed daily; oily rags in closed metal bins; no storage in stairwells",
+   "Labour camp: cooking in designated LPG areas, extinguishers, spacing between huts, exits",
+   "Construction high-rise: riser charged to within two floors of work level; extinguishers each floor; fire tender access clear",
+   "Fire wardens appointed per zone; list displayed; drill done within last 6 months; drill report actions closed",
+   "Emergency numbers (101/112) and assembly point signage displayed"
+  ]
+ },
+ {
+  "id": "cl-chemical",
+  "t": "Chemical Storage & Handling",
+  "cat": "Chemical",
+  "items": [
+   "Chemical inventory current; MSIHC threshold screening done; MAH status known and notifications/safety report current",
+   "SDS (16-section) for every chemical at point of use and store; local-language hazard summary",
+   "Containers labelled (GHS pictogram, signal word, hazards); secondary containers labelled; no food containers",
+   "Segregation by compatibility; oxidisers away from flammables; acids from bases/cyanides/hypochlorite",
+   "Bunding ≥ 110% of largest container; bund drain valve closed; no leaks",
+   "Ventilation adequate; flameproof electricals in flammable stores; earthing/bonding for transfers",
+   "Flammable cabinets within capacity; quantities at point of use minimal; PESO licence where required",
+   "Eyewash/safety shower within 10 s travel, tested weekly, water clean",
+   "Spill kits stocked for chemicals present; drains protected; spill procedure displayed",
+   "PPE matrix displayed and in use (gloves type, goggles, respirators); hygiene facilities",
+   "Hazardous waste segregated, labelled, in bunded roofed store ≤ 90 days; manifests filed; Form 4 return done",
+   "Health surveillance up to date for dangerous operations; exposure monitoring results within limits",
+   "Emergency plan covers chemical scenarios; drill done; neighbours/District Crisis Group informed (MAH)"
+  ]
+ },
+ {
+  "id": "cl-ppe",
+  "t": "PPE Compliance Audit",
+  "cat": "Health",
+  "items": [
+   "PPE hazard assessment documented per area/task and current",
+   "PPE certified to IS/EN/ANSI standards; ISI mark where QCO applies (helmets, footwear, eyewear)",
+   "Issue register signed; replacement available free of charge; sizes stocked",
+   "Helmets with chin straps for WAH; no cracked/expired helmets",
+   "Safety footwear worn by all; condition acceptable",
+   "Eye/face protection matched to task (goggles for chemicals/grinding; shield for grinding/welding)",
+   "Hearing protection in zones ≥ 85 dB(A); signage present",
+   "Respirators: correct type, fit-tested, clean-shaven for tight-fit, cartridges in date",
+   "Gloves matched to hazard (cut, chemical, electrical); none used near rotating machinery",
+   "Harnesses inspected and tagged (6-monthly); stored correctly; none with fall history",
+   "Hi-vis worn near plant/roads; class 3 at night",
+   "FR/arc-rated clothing for electrical and hot work; no synthetics",
+   "Visitors given PPE; enforcement observed; non-compliance recorded and addressed"
+  ]
+ },
+ {
+  "id": "cl-welfare",
+  "t": "Welfare Facilities (OSH Code s.24 / BOCW / state rules)",
+  "cat": "Health",
+  "items": [
+   "Drinking water: cool, potable, within 100 m of work, tested monthly, 1 point per 150 workers, 'drinking water' signage in local language",
+   "Latrines and urinals: 1 per 20–25 workers (separate for women), clean, lit, water and soap available, doors lockable",
+   "Washing facilities; bathing where needed; changing rooms",
+   "Rest shelter: shaded, ventilated, seating; lunch room",
+   "Canteen where 100+ workers (OSH Code) – hygiene, FSSAI registration, potable water",
+   "Crèche where 50+ workers (OSH Code) – trained attendant, hygiene, feeding room",
+   "First-aid: boxes stocked (1 per 150), first-aiders on each shift, ambulance room/OHC where thresholds met, AED",
+   "Labour accommodation: ventilated, safe electrical, fire precautions, sanitation, waste collection, pest control, potable water",
+   "Welfare officer appointed where 250+ workers",
+   "Working hours, OT and rest within limits; wage slips; weekly off",
+   "Women's facilities and night-work conditions compliant; ICC under POSH constituted",
+   "Grievance mechanism and worker participation (safety committee) functioning"
+  ]
+ },
+ {
+  "id": "cl-statutory-factory",
+  "t": "Factory Statutory Compliance (Karnataka / Tamil Nadu)",
+  "cat": "Industrial",
+  "items": [
+   "Registration/licence under OSH Code s.3 (or legacy Factories licence) valid; Shram Suvidha/state portal details updated (Central Rules: by 8 Nov 2026)",
+   "Approved plans match current layout; any expansion/new machinery approved (where state rules require)",
+   "Occupier and manager particulars notified; notice of change within 7 days",
+   "Safety Officer appointed where threshold met (OSH Code s.23 / state rules) and notified; qualifications on file",
+   "Safety Committee constituted (OSH Code s.22); meets quarterly or as rules; minutes kept",
+   "Welfare officer (250+), medical officer/OHC for hazardous units; certifying surgeon arrangements",
+   "Lifting machines/tackles: competent-person test every 12 months; hoists/lifts every 6 months; register (Form per state rules)",
+   "Pressure vessels: external/internal exams and hydraulic tests per Rule 61 (KA/TN); boilers certified (Boilers Act 2025)",
+   "Electrical installation: CEIG approval (HT), periodic inspection; earth tests; lightning protection",
+   "Dangerous operations schedules: medical examinations, PPE, exposure monitoring; records",
+   "Hazardous process / MAH: MSIHC site notification, safety report (3-yearly update), on-site emergency plan (6-monthly rehearsal), safety audit (annual; Karnataka Safety Audit Rules 2024), PLI insurance",
+   "Fire NOC valid; fire systems tested; drills 6-monthly",
+   "Pollution: CTE/CTO valid; HW authorisation; Form V by 30 Sept; HW Form 4 by 30 June; e-waste/battery returns",
+   "Registers: adult workers, attendance, leave with wages, accidents, dangerous occurrences, health, OT; annual/unified return filed",
+   "Accident reporting procedure with timelines known; forms ready; previous accidents reported on time",
+   "Working hours/OT/women night-work compliance; notice of periods of work displayed; holidays per state Act",
+   "Child/adolescent prohibition; age proof records",
+   "Contract labour: licence (50+), principal employer registration, welfare for contractors",
+   "Lift licences (Karnataka 2012 Act / TN 1997 Act); PESO licences (petroleum, cylinders, explosives); radiography AERB",
+   "Labour Welfare Fund contributions paid (KA by 15 Jan; TN by 31 Jan); ESI/EPF/EC insurance current"
+  ]
+ },
+ {
+  "id": "cl-statutory-construction",
+  "t": "Construction Site Statutory Compliance (Karnataka / Tamil Nadu)",
+  "cat": "Construction",
+  "items": [
+   "Establishment registered under OSH Code s.3 (legacy BOCW registration) with Registering Officer; certificate displayed",
+   "BOCW cess (1% of construction cost) assessed and paid; worker registration with State Welfare Board; benefits facilitated",
+   "Building plan sanction / planning permission (BBMP/BDA/CMDA/DTCP); commencement certificate; EC if ≥ 20,000 m²; six-monthly EC compliance",
+   "Fire NOC provisional (KSFES/TNFRS) for applicable buildings",
+   "CTE from KSPCB/TNPCB (where applicable); C&D waste plan under 2025 Rules; dust/noise conditions",
+   "Site safety plan, HIRA and emergency action plan prepared; Safety Officer (250+ workers per OSH Code s.23 / 500+ legacy – verify) appointed; Safety Committee",
+   "Contractor licences (50+ contract workers); principal employer registration; contractor insurance (EC/WC, PLI)",
+   "Workers inducted; ID cards; age verification; no child/adolescent; inter-state migrant obligations",
+   "Welfare: water, toilets, rest shelters, first aid, canteen/crèche thresholds, accommodation standards",
+   "Lifting appliances tested (12-monthly) and gear (6-monthly where rule requires); register; operator licences; hoists licensed where state lifts act applies",
+   "Scaffold inspection register (7-day); excavation inspection register (daily); electrical installation by licensed electrician with RCD; earth tests",
+   "PESO licence for diesel storage > 2,500 L; cylinder storage; explosives (if blasting) with DM permission",
+   "Utility NOCs: BESCOM/TANGEDCO line shutdown/shrouding; BWSSB/CMWSSB; GAIL/AG&P gas; telecom",
+   "Traffic management plan with police permission for road works; IRC:SP:55 signage",
+   "Accident/dangerous-occurrence reporting procedure and forms (Form XI / state form) ready; register of accidents",
+   "Working hours/OT/women night-work compliance; wage and attendance registers; weekly off",
+   "Labour Welfare Fund, ESI/EPF compliance; POSH ICC",
+   "Monsoon/cyclone/heat plans in place per state DMA advisories"
+  ]
+ },
+ {
+  "id": "cl-environment",
+  "t": "Environmental Compliance (Monthly)",
+  "cat": "Environment",
+  "items": [
+   "CTE/CTO valid; conditions reviewed; renewal applied ≥ 120 days before expiry",
+   "Stack/effluent monitoring per consent; OCEMS online where applicable; results within limits",
+   "Hazardous waste: authorisation valid; storage ≤ 90 days; manifests; Form 3 record; Form 4 return (30 June)",
+   "C&D waste: segregation, authorised disposal/recycling, records; 2025 Rules portal registration/returns for large projects",
+   "E-waste and battery waste to registered recyclers; records",
+   "Dust: barricading, sprinkling, covered transport, wheel wash; ambient AQ within limits where monitored",
+   "Noise: boundary within zone limits; no night construction noise without permission; DG enclosures",
+   "Water: dewatering through settlement; no oil/silt discharge; STP functioning; rainwater harvesting",
+   "Fuel/chemical storage bunded; spill kits; no soil contamination",
+   "Environmental statement Form V (30 Sept) and EC six-monthly compliance filed",
+   "Spill/release incidents reported to SPCB where required; corrective actions closed",
+   "Tree cutting permission (Forest/Tree Officer) where applicable; green cover restored",
+   "Environmental training/awareness done; complaints register maintained"
+  ]
+ },
+ {
+  "id": "cl-emergency",
+  "t": "Emergency Preparedness",
+  "cat": "Fire & Emergency",
+  "items": [
+   "Written emergency/on-site plan current (approved for MAH); scenarios cover fire, release, collapse, medical, flood/cyclone, heat, earthquake, bomb threat",
+   "Emergency control centre equipped (phones, radios, drawings, SDS, wind sock, contact lists); power backup",
+   "Alarm codes known; siren tested weekly; PA system working",
+   "Assembly points (upwind alternatives) signed; head-count lists per contractor; visitor log usable",
+   "ERT trained (quarterly) and rostered each shift; roles displayed; SMC/IC deputies named",
+   "First-aiders each shift; ambulance within 15 min; hospital tie-ups listed with capabilities; AED",
+   "Fire-fighting systems operable; spill kits; SCBA sets inspected monthly; rescue equipment",
+   "Emergency contacts board at gate/ECC current (112, 101, 108, police, DEOC 1077, SPCB, ICF, Electrical Inspector, utilities, poison centre)",
+   "Drills: fire 6-monthly, chemical mock drill annual with District Crisis Group (MAH), night-shift drill; reports and actions closed",
+   "Shelter-in-place rooms identified for toxic release; procedure briefed",
+   "Natural hazard plans: cyclone/flood (IMD alerts), heat wave, lightning; crane securing procedure",
+   "Mutual-aid agreements and neighbour notification arrangements in place",
+   "Statutory notification flowchart and pre-filled forms available"
+  ]
+ },
+ {
+  "id": "cl-heat",
+  "t": "Heat Stress Daily Check (Summer)",
+  "cat": "Health",
+  "items": [
+   "Heat level (IMD/WBGT/heat index) checked and posted at gate",
+   "Work schedule adjusted (heavy work early/late; red level restrictions)",
+   "Cool potable water within 100 m; cups/bottles; ORS available; consumption encouraged every 15–20 min",
+   "Shaded rest areas with ventilation; rest breaks per WBGT/workload table",
+   "New/returning workers on acclimatisation schedule (ramp over 5–7 days) and identified",
+   "Buddy system in place; supervisors watching for symptoms",
+   "First-aiders briefed on heat stroke response (cool first, call 108); ice/cold water available",
+   "Light clothing, helmet neck flaps; cooling vests for FR/respirator work",
+   "Confined/hot spaces: shorter rotations, ventilation",
+   "Heat illness cases recorded and reviewed"
+  ]
+ },
+ {
+  "id": "cl-training",
+  "t": "Training & Competence Audit",
+  "cat": "Management",
+  "items": [
+   "Training needs matrix by role current",
+   "All persons on site inducted (register, ID, test); refresher within 12 months",
+   "Statutory certificates valid: crane operators, riggers, scaffold inspectors, electricians (state licence), first-aiders, fire wardens, boiler attendants, RSO/radiographers, confined-space, WAH, forklift",
+   "Toolbox talks daily with attendance; topics match day's risks",
+   "Permit signatories trained and authorised; register of authorised persons",
+   "Supervisors trained in legal duties, HIRA, incident investigation",
+   "Language-appropriate materials (Kannada/Tamil/Hindi/others) used",
+   "Drills counted and recorded as training",
+   "Training effectiveness evaluated (observations, quiz); gaps addressed",
+   "Records retained ≥ 3 years"
+  ]
+ },
+ {
+  "id": "cl-contractor",
+  "t": "Contractor Mobilisation",
+  "cat": "Management",
+  "items": [
+   "Pre-qualification approved; contract HSE clauses signed",
+   "Contractor licence under OSH Code (50+ workers) / registration; EPF/ESI codes; EC/WC & PLI insurance valid",
+   "Contractor HSE plan, HIRA/method statements approved; safety officer/supervisor named",
+   "Workers registered with BOCW board (where applicable); ID cards; age proof; medical fitness",
+   "Induction completed; PPE issued; language needs addressed",
+   "Equipment: inspection/test certificates (cranes, gear, scaffolds, electrical tools), operator licences",
+   "Interface/SIMOPS matrix agreed; permit system briefed; stop-work authority explained",
+   "Welfare arrangements verified (water, toilets, rest, accommodation); wage payment process",
+   "Emergency plan and reporting (1-hour internal) briefed",
+   "Kick-off meeting minutes signed"
+  ]
+ },
+ {
+  "id": "cl-incident",
+  "t": "Incident Response & Notification (use at time of incident)",
+  "cat": "Management",
+  "items": [
+   "Casualties rescued, first aid given, 108/112 called; hazard isolated; area secured",
+   "Internal report to safety officer and site head within 1 hour; incident number assigned",
+   "Scene preserved (fatal/serious) until inspector permits; photos/measurements taken; witnesses listed",
+   "Classification done (fatal / lost-time ≥ 48 h / dangerous occurrence / disease / environmental / electrical / boiler / chemical major accident)",
+   "Statutory notices sent and acknowledgements kept: ICF (death forthwith; others 12 h Form XI / state timeline), police & family (fatal), DM/SDO, Electrical Inspector (48 h), Boiler Inspector (24 h), MSIHC authority (48 h), SPCB (forthwith/Form 11), PESO (forthwith), ESIC (24 h), EC Commissioner (fatal 7 days), client/corporate",
+   "Investigation team appointed; RCA within 72 h; CAPA with owners/dates",
+   "Family support, compensation process initiated (ESI/EC/insurance)",
+   "Lessons communicated (safety alert, toolbox talk); registers updated; KPI recalculated"
+  ]
+ },
+ {
+  "id": "cl-night",
+  "t": "Night Shift / Women Night Work Conditions",
+  "cat": "Management",
+  "items": [
+   "Lighting ≥ 50 lux general, 100–200 lux task; portable towers fuelled; emergency lighting",
+   "Supervisor, first-aider and ERT member on shift; vehicle for emergency available",
+   "Women's written consent on file; free transport with security guard; driver verified; route planned; vehicle tracked",
+   "CCTV at entry/exit and workplace; security patrols; separate toilets/rest rooms",
+   "Minimum batch size per state rule met; ICC under POSH constituted and displayed",
+   "No high-risk lone work; lone-worker check-ins logged",
+   "Shift hours within limits; rest between shifts; fatigue monitored",
+   "Night toolbox talk done; hi-vis class 3 worn",
+   "Traffic routes lit; reflective barriers; reversing controls",
+   "Snake/insect first-aid and hospital identified"
+  ]
+ },
+ {
+  "id": "cl-foundry",
+  "t": "Foundry / Hot-Metal Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "Charge materials dry, no sealed containers/cylinders/wet scrap; covered storage",
+   "Ladles dried and preheated; lining thickness OK; trunnions, bails, hooks and slings inspected; lifting gear test within date",
+   "Induction furnace: cooling-water flow/temperature/pressure alarms and interlock tested; earth-leakage detector OK; lining wear within limit",
+   "Cupola: CO monitors working; charging interlocks; tap-hole tools ready",
+   "Pouring floor dry; pits/drains covered; no water lines near pour; spill sand and run-out plan ready",
+   "Pour route clear; exclusion zone marked; signaller assigned; crane load test/limit switches OK",
+   "Moulds/cores dry and vented; clamps/weights adequate; no moisture ingress",
+   "LEV running at shakeout, fettling, sand plant; silica controls (wet/enclosed) in place; no dry sweeping",
+   "Binder/chemical area: SDS, LEV, PPE, spill kit; amine scrubber operating",
+   "Heat stress: WBGT checked; rest area/water/ORS; cooling vests issued",
+   "PPE issued and worn: aluminised/FR clothing, face shield, metatarsal boots, spats, gloves, P3 respirators in dust zones, hearing protection",
+   "Medical surveillance current (foundry/lead/chrome/sand-blasting schedules); audiometry; blood lead where applicable",
+   "Burn kit, running-water point and burns-centre contact available; CO alarm response known",
+   "Previous shift defects closed; furnace log signed"
+  ]
+ },
+ {
+  "id": "cl-psm",
+  "t": "Process Safety Management Audit (Chemical Plant / Tank Farm)",
+  "cat": "Chemical",
+  "items": [
+   "Process safety information current: as-built P&IDs, SDS, reactivity matrix, safe operating limits, relief design basis",
+   "PHA (HAZOP) done at design and within last 5 years; actions closed; LOPA/SIL for safeguards; bow-ties for MAH scenarios",
+   "Operating procedures for all modes incl. emergency; operators trained and assessed; shift handover logs",
+   "Alarm management: critical alarms rationalised; override/bypass register with authorisation and expiry",
+   "Mechanical integrity: RBI/inspection plans; vessels, piping, relief valves, tanks (API 653/IS 803), hoses within due dates; CP readings",
+   "SIS proof tests per SIL; F&G detectors calibrated; ESD/EIV tested; deluge/foam systems tested",
+   "Loading/unloading: earthing interlocks, overfill protection (API 2350), dead-man controls, chocks, TREM cards; driver briefing",
+   "Tank farm: dyke integrity and drain valves closed; vents/flame arresters clean; level instruments; no vegetation/storage in dyke; hot-work control",
+   "Inerting/nitrogen: O2 monitoring at vents; signage; confined-space controls for inerted vessels",
+   "MoC register in use; PSSR records for last start-ups; temporary changes closed",
+   "Contractor control: pre-qualification, PTW compliance, line-breaking procedures",
+   "Emergency: on-site plan rehearsed 6-monthly; off-site drill with District Crisis Group annual; MSIHC site notification/safety report updated (3-yearly); PLI insurance valid",
+   "Safety audit (MSIHC Rule 12 / Karnataka Safety Audit Rules 2024) within last 12 months; findings closed",
+   "Process safety KPIs (API 754 Tier 1–4) reviewed monthly; incidents investigated with RCA"
+  ]
+ },
+ {
+  "id": "cl-tanks",
+  "t": "Storage Tank (AST/UST) Operation & Integrity",
+  "cat": "Chemical",
+  "items": [
+   "PESO licence (where applicable), approved drawings and fire NOC valid; tank labelled (product, capacity, hazard)",
+   "Dyke/bund intact, impervious, capacity adequate, drain valve closed and locked, no storage/vegetation inside",
+   "High-level alarm and automatic shut-off tested (monthly); dip/gauge calibration current",
+   "Vents, flame arresters, PV valves inspected and clean; no blockage",
+   "Inventory reconciliation done daily/weekly; unexplained loss investigated",
+   "UST: interstitial/leak sensors tested; ATG functional; tightness test within schedule; monitoring wells sampled; cathodic protection readings quarterly within range",
+   "AST: external inspection monthly; API 653/IS 803 external by competent person within 5 years; internal inspection within interval; settlement/corrosion noted",
+   "Earthing/bonding verified (≤ 10 Ω static) at fill points; bonding clamps serviceable",
+   "Fill-point area: spill kit, extinguishers (2 × 9 kg DCP min), no ignition sources, signage, lockable fill caps",
+   "Tanker transfer procedure in use: wheel chocks, earth before connect, attendant present, no mobile phones, dead-man where fitted",
+   "Water bottoms drawn and disposed as hazardous waste; sludge records",
+   "Spill response plan displayed; SPCB reporting contacts; absorbents stocked",
+   "Chemical tanks: materials compatible; scrubbers working; segregated bunds; eyewash/shower within 10 s",
+   "Decommissioned tanks recorded on site plan; soil/groundwater results on file"
+  ]
+ },
+ {
+  "id": "cl-tankclean",
+  "t": "Tank Cleaning & Gas-Free Entry",
+  "cat": "Chemical",
+  "items": [
+   "Isolation certificate: all lines blinded (numbered register), valves locked, mixers/heaters electrically isolated, CP off where required",
+   "Product removed; water flush done; sludge estimate and disposal route (manifest to TSDF) arranged",
+   "Ventilation running (Ex-rated); steaming/inerting controlled (static, temperature)",
+   "Atmosphere tested at multiple levels: LEL 0% (hot work) / < 10% (entry), benzene and H2S within limits, O2 19.5–23.5%; readings logged with time; retest interval set",
+   "Gas-free certificate issued by competent tester; confined-space and hot-work permits separate and displayed",
+   "Rescue: tripod/winch at manway, attendant posted, SCBA at entry, ERT informed",
+   "RPE plan: airline/SCBA until gas-free; OV respirators only when below limits",
+   "Pyrophoric deposits kept wet; removal plan; no dry scaling",
+   "Hydro-blasting: hoses/couplings rated and inspected; dump valves; exclusion zone; face shields",
+   "Lead/benzene exposure controls and medical surveillance where relevant",
+   "Hot work inside only after certificate and with continuous monitoring and fire watch; residues cleared within 11 m",
+   "Return to service: blind register reconciled, tools counted out, vents/alarms/flame arresters reinstated, leak test done, records filed"
+  ]
+ },
+ {
+  "id": "cl-tackles",
+  "t": "Lifting Gear Store & Inspection",
+  "cat": "Construction",
+  "items": [
+   "Lifting gear register current: ID, WLL, certificate no., last test/examination date, colour code, status",
+   "Thorough examination by competent person within 12 months (6-monthly for accessories where rules/LOLER apply); certificates on file",
+   "Quarterly colour code applied only after inspection; chart displayed; expired colours not in use",
+   "Wire-rope slings: no broken wires above limit, no kinks/birdcage/corrosion, ferrules sound, thimbles present",
+   "Chain slings: no stretch (> 5%), wear (> 10%), cracks, bent links; master links and hooks OK",
+   "Webbing/round slings: labels legible, no cuts/abrasion/chemical or heat damage, stitching intact",
+   "Shackles: correct pins, no wear/deformation, moused where required; hooks: latches work, throat not opened, no twist",
+   "Chain blocks/lever hoists: brake holds, load chain lubricated, hooks swivel, rated beam clamps used; tirfors: shear pins, rope condition",
+   "Spreader/lifting beams with design certificate and WLL marked",
+   "Homemade/unrated gear (rebar, scaffold tube, unrated eyebolts) absent from site",
+   "Damaged gear tagged, quarantined and destroyed; log kept",
+   "Riggers trained; sling angle/capacity charts displayed; edge protectors available",
+   "Issue/return log in use; monthly reconciliation done"
+  ]
+ },
+ {
+  "id": "cl-tools",
+  "t": "Hand & Power Tool Inspection (Quarterly / Pre-use)",
+  "cat": "Construction",
+  "items": [
+   "Tool register updated; inspection colour code current; defective tools tagged and quarantined",
+   "Guards fitted and functional (grinder ≥ 180° guard, saw retractable guard, bench grinder work-rest ≤ 3 mm, tongue guard ≤ 6 mm)",
+   "Abrasive discs: correct type (cut vs grind), size, RPM ≥ tool, undamaged, within expiry; mounted by trained person; ring test for wheels",
+   "Electrical: cable/plug intact, no joints, double-insulated or 110 V, RCD in circuit, PAT tag within 3 months (site)",
+   "Switches/dead-man triggers work; no taped-on triggers; side handles fitted",
+   "Pneumatic: whip-checks on couplings, hoses undamaged, pressure ≤ rated, chip guards for cleaning ≤ 30 psi",
+   "Powder-actuated tools: licensed operators only, sequential trigger, cartridges locked, logbook",
+   "Battery tools: packs undamaged, charged on non-combustible surface with OEM charger",
+   "Hand tools: no mushroomed heads, split handles, loose heads; insulated tools for electrical; non-sparking for flammable areas",
+   "Dust control available for concrete/stone cutting (water/LEV); respirators issued",
+   "Vibration exposure managed: trigger-time limits, rotation, low-vibration tools",
+   "PPE: face shield + glasses for grinding, hearing protection, gloves (not near rotating parts)",
+   "Users trained on tools in use; manuals available"
+  ]
+ },
+ {
+  "id": "cl-towercrane",
+  "t": "Tower Crane Daily / Weekly",
+  "cat": "Construction",
+  "items": [
+   "Competent-person test certificate after latest erection/climb and within 12 months in cab; erection records on file",
+   "Daily: structure/ties visual, mast bolts no looseness, slew ring noise, ropes and sheaves, hook latch, trolley travel",
+   "Limit switches (hoist upper, trolley in/out, slew), load-moment indicator and overload cut-out tested; anemometer reading",
+   "Brakes (hoist, trolley, slew) tested; cab controls; emergency stop",
+   "Anti-collision/zoning system set for current layout; verified with other cranes",
+   "Wind within manufacturer limit; lightning forecast checked; out-of-service procedure known (free-slew, hook up, power off)",
+   "Operator certified, medically fit, rested; signallers/slingers identified; radio check",
+   "Exclusion zone under jib and load paths; no loads over public roads/occupied areas without permission",
+   "Access ladder/platforms safe; harness used for climbing; rescue-from-cab plan available",
+   "Electrical: supply cable undamaged, earthing, lightning protection connected",
+   "Weekly/monthly items: tie torque, counterweights, hydraulic leaks (luffing), rope lubrication, slew-ring bolts; logged",
+   "Night security: power isolated, access locked, no suspended load",
+   "Aviation obstruction light working (where required); AAI height NOC on file"
+  ]
+ },
+ {
+  "id": "cl-forklift",
+  "t": "Forklift Pre-Use & Warehouse Weekly",
+  "cat": "Industrial",
+  "items": [
+   "Operator authorised (training/evaluation within 3 years), medically fit, licence for road use",
+   "Pre-use: tyres, forks (no cracks/bent, heel wear < 10%), mast chains, hydraulics (no leaks), brakes, steering, horn, lights, reversing alarm/camera, seat belt, overhead guard",
+   "Capacity plate legible; attachments rated/de-rated; load centre understood",
+   "Traffic plan: walkways marked, crossings, mirrors, speed limit signs; no pedestrians in truck aisles during picking",
+   "Floors sound, dry, free of debris; lighting adequate; dock plates/levellers secured; wheel chocks/vehicle restraints in use",
+   "Racking: SWL notices per bay; no amber/red damage in service; column guards; weekly visual done; annual expert inspection within date",
+   "Stacking stable; no overhang; damaged pallets removed; sprinkler clearance ≥ 450 mm",
+   "Charging area: ventilation, no ignition, eyewash, spill kit, PPE; LPG cylinders stored outdoors; CO levels OK for engine trucks indoors",
+   "Refuelling outdoors with engine off; fire extinguisher at bay",
+   "Parking: forks down, key removed, not blocking exits/fire equipment",
+   "Incidents/near-misses (impacts, tip-overs) reported and reviewed",
+   "Fire: exits clear, extinguishers in place, no storage against electrical panels"
+  ]
+ },
+ {
+  "id": "cl-substation",
+  "t": "HT Permit-to-Work Checklist",
+  "cat": "Electrical",
+  "items": [
+   "Switching schedule written and checked by second authorised person; single-line diagram current",
+   "All sources isolated incl. incomer, bus-coupler, generator, inverter/solar; utility shutdown confirmed (line clear number)",
+   "Isolators open, breakers racked out, locked and tagged; caution/danger boards hung",
+   "Capacitive charge discharged; proved dead with detector tested before and after on all phases",
+   "Portable earths applied at point of work (both sides for cables); earth register entry made",
+   "Work zone barricaded; adjacent live equipment screened/locked; insulating mats in place",
+   "Permit issued with boundaries, earth locations, PPE; authorised person present throughout",
+   "Live testing (if any) under energised-work permit; arc-flash labels read; PPE category available",
+   "Tools counted; insulated tools; no metal ladders; lighting adequate",
+   "Emergency: first-aider with CPR/AED training on site; rescue hook; extinguishers (CO2) available; 108 and Electrical Inspector contacts known",
+   "Restoration: earths removed and counted, persons withdrawn, permit cancelled, enclosures closed, energised remotely/sequence followed",
+   "Records: switching log, permit, earth register, test results filed"
+  ]
+ },
+ {
+  "id": "cl-battery",
+  "t": "Battery Room / BESS / Solar Inspection",
+  "cat": "Electrical",
+  "items": [
+   "Battery room ventilation functional; hydrogen < 1% (detector/alarm tested); no ignition sources; signage",
+   "Acid-resistant floor/bund intact; eyewash/shower tested; spill kit, neutraliser, PPE available",
+   "Terminals clean/tight; no corrosion; cell voltages/SG recorded; insulated tools; no metal objects on cells",
+   "Li-ion BESS: BMS alarms clear, temperatures normal, no swelling/odour; off-gas/smoke detection and suppression tested; clearances maintained; SoC within storage limits",
+   "Fire plan posted: isolation points, extinguishing strategy, fire-service information sheet with chemistry",
+   "Solar PV: DC isolators accessible/labelled, rapid-shutdown/firefighter signage, cable condition, connectors not degraded, no arcing/hot spots (thermography)",
+   "Roof access: anchors/lifelines inspected, edge protection, fragile-roof markings; WAH permit for cleaning/maintenance",
+   "Lightning/surge protection tested; earth continuity of frames",
+   "Inverter room: ventilation, CO2 extinguisher, no storage; insulation tests on file (IEC 62446)",
+   "EV chargers: cables/connectors undamaged, RCD test monthly, emergency stop works, fire detection in enclosed parking",
+   "Battery waste: damaged cells quarantined outdoors in sand/metal container; hand-over to registered recycler with records",
+   "Statutory: CEIG approval/inspection for installations above thresholds; fire NOC conditions"
+  ]
+ },
+ {
+  "id": "cl-dust",
+  "t": "Combustible Dust Monthly Inspection",
+  "cat": "Chemical",
+  "items": [
+   "Dust Hazard Analysis current (revalidated within 5 years / on change); dust test data (Kst, MIE) on file",
+   "Housekeeping: no layers > 0.8 mm on floors/beams/ducts/lights (> 5% area); vacuums rated for combustible dust; no blow-down with compressed air",
+   "Equipment: covers/seals tight; no leaks at transfer points; dust collectors emptied and filters serviced",
+   "Explosion protection: vent panels unobstructed and inspected; suppression/isolation systems in service and tested; spark detection functional",
+   "Ignition control: bearing-temperature monitors working; magnets/metal detectors in place; Ex equipment inspected (IEC 60079-17); no non-Ex portable equipment in Zone 21/22",
+   "Bonding/earthing straps intact; continuity tested quarterly",
+   "Hot-work permits specify shutdown and cleaning; records reviewed",
+   "Silo/bulk storage: temperature/CO monitoring; entry permits; no bridging practices",
+   "Metal powders: Class D extinguishers; no water suppression; segregated collection",
+   "Training done; dust-fire response understood (no jets, do not disturb layers)",
+   "Incidents/near-misses (smouldering, sparks) recorded and reported as dangerous occurrences where applicable"
+  ]
+ },
+ {
+  "id": "cl-toxicgas",
+  "t": "Chlorine / Ammonia / H2S System Weekly",
+  "cat": "Chemical",
+  "items": [
+   "Gas detectors calibrated and alarm tested; action levels set (TLV / 2–5× TLV); audible/visual alarms work; wind sock visible",
+   "Scrubber/neutralisation or deluge system tested; ESD valves exercised",
+   "Cylinders/tonners secured, caps/valve protection on, test dates valid, full/empty segregated; store ventilated and shaded",
+   "Changeover procedure followed with two trained persons; new gaskets/pigtails; leak test done",
+   "Emergency kits (A/B/C or ammonia kit) complete; SCBA sets (≥ 2) inspected monthly; escape respirators issued to all in area",
+   "Shelter-in-place rooms identified; evacuation routes upwind/crosswind marked; assembly points alternative",
+   "Relief valves within replacement interval; vents to safe height; no liquid traps without relief (ammonia)",
+   "PTW/LOTO used for maintenance; purge procedure; gas test before line-break",
+   "MSIHC documents current (site notification, safety report, on-site plan rehearsed 6-monthly); off-site drill with District Crisis Group within 12 months; PLI insurance",
+   "Medical surveillance (spirometry) for exposed workers; hospital tie-up for toxic exposure",
+   "H2S areas: sumps/manholes treated as confined spaces; personal monitors; no lone work; biogas LEL monitoring",
+   "Drill done within last quarter; findings closed"
+  ]
+ },
+ {
+  "id": "cl-tunnel",
+  "t": "Tunnel / Shaft Shift Inspection",
+  "cat": "Construction",
+  "items": [
+   "Tally system: all persons tagged in; count matches; communication links tested",
+   "Ventilation running per design; airflow measured; no recirculation; stand-by fan available",
+   "Gas readings logged (CH4, CO, H2S, O2); within action levels; detectors calibrated",
+   "Ground support installed to design at face/crown; monitoring within trigger levels; no unsupported ground",
+   "Dewatering working; pumps on standby; flood alarm and bulkheads ready",
+   "Self-rescuers carried; refuge chambers stocked (air, water, comms); escape routes lit and unobstructed",
+   "Shaft: hoist/cage certificate valid; daily inspection done; banksman top and bottom; gates interlocked; drop-zone clear",
+   "TBM: cutter-head/erector exclusion zones; conveyor guards; e-stops; chamber intervention permit if planned",
+   "Vehicles/locos: lights, speed limits, refuge niches; diesel exhaust/CO within limits",
+   "Fire: extinguishers/foam at TBM and electrical; combustibles minimised; hot-work permits",
+   "Explosives (D&B): shot-firer, magazine, misfire procedure; blasting fumes clearance time observed",
+   "Compressed air (if any): attendant, medical lock, pressure/exposure logs, medical fitness records",
+   "Surface: settlement readings within limits; shaft fencing/lighting; public protection",
+   "Emergency drill within last 3 months; fire service liaison current"
+  ]
+ },
+ {
+  "id": "cl-piling",
+  "t": "Piling Rig Daily",
+  "cat": "Construction",
+  "items": [
+   "Working platform certificate valid; platform inspected today (after rain); edge distances from excavations OK",
+   "Rig daily check: tracks, hydraulics, mast/kelly, ropes, brakes, e-stops, lights, anti-entanglement guards; defects actioned",
+   "Operator trained/authorised; banksman assigned; radios working",
+   "Mast raising/lowering only per manual with exclusion zone; wind within limit",
+   "Nobody in auger/kelly zone during rotation; auger cleaner used; no hand cleaning",
+   "Open bores covered/collared and barricaded; lighting at night",
+   "Rebar cages: designed lifting points, spreader, tag lines; lifting plan; service crane and gear certified",
+   "Tremie/casing handling with proper lifting gear; concrete pump boom clearances",
+   "Bentonite/polymer: bunded, SDS, PPE, slip hazards cleaned; disposal route",
+   "Utility clearance/overhead line clearance confirmed",
+   "Noise/vibration monitoring where required; hearing protection worn",
+   "Pile cutting: wet methods/hydraulic cropper; silica RPE"
+  ]
+ },
+ {
+  "id": "cl-blasting",
+  "t": "Blasting Pre-Shot",
+  "cat": "Construction",
+  "items": [
+   "Licences valid: magazine, possession/use, transport van, shot-firer certificate; police/DM intimation done; permitted hours",
+   "Blasting plan approved: charge per delay, burden/spacing/stemming, controlled blasting near structures",
+   "Pre-blast survey of structures within influence zone on file; seismograph positioned at nearest structure",
+   "Explosives and detonators issued against register; stored separately in day boxes; counts verified",
+   "Weather: no lightning/electrical storm; wind considered for dust/fumes",
+   "Exclusion radius set; sentries at all approaches with radios; signs; shelters ready for crew",
+   "Siren sequence briefed; all sentries report clear by radio before firing",
+   "Stray-current/RF checks for electric detonators; leads shunted until connection; firing from shelter",
+   "Post-blast: wait time observed; shot-firer inspects alone; misfire procedure ready; fumes cleared before approach",
+   "Unused explosives returned and reconciled same day; discrepancies reported",
+   "Seismograph results recorded and compared with limits",
+   "Flyrock control (mats/stemming) verified; adjacent works stopped"
+  ]
+ },
+ {
+  "id": "cl-painting",
+  "t": "Abrasive Blasting & Spray Painting Pre-Start",
+  "cat": "Industrial",
+  "items": [
+   "Abrasive is silica-free (garnet/steel grit/copper slag) with certificate; no sand",
+   "Old coating surveyed for lead/chromate; controls and waste route defined",
+   "Blast helmet supplied-air system: breathing-air quality tested (CO alarm working), filters in date, hoses/couplings with safety pins/whip-checks, dead-man control tested",
+   "Blast pot and hoses inspected; pressure vessel certificate valid",
+   "Enclosure/screens and ventilation/dust collection in place; exclusion zone; drains protected",
+   "Painting: spray booth/LEV running; Zone 1/2 Ex equipment; earthing/bonding of airless unit; solvent quantities minimal in cabinets",
+   "Isocyanate/epoxy controls: air-fed RPE, skin cover, decontamination, exclusion of other trades until cured; health surveillance current",
+   "Confined-space permit for tank interiors; LEL monitoring; Ex lighting; forced ventilation",
+   "Hot-work exclusion (no welding within 15 m of spraying); fire watch and extinguishers",
+   "WAH/scaffold or rope-access controls in place",
+   "Injection-injury emergency procedure known; first aid/hospital tie-up",
+   "Waste: spent abrasive, tins, rags, thinners segregated as hazardous; manifests"
+  ]
+ },
+ {
+  "id": "cl-water",
+  "t": "Working Over / Near Water",
+  "cat": "Construction",
+  "items": [
+   "Edge protection or nets over water installed where feasible",
+   "Lifejackets (≥ 150 N, auto-inflate, light, whistle) worn by all within 2 m of edge/on vessels; inspected this shift",
+   "Rescue boat manned and running, positioned down-current; crew trained; man-overboard drill within last month",
+   "Lifebuoys with 30 m lines at ≤ 50 m intervals; throw bags; ladders/scramble nets to water",
+   "Tide/current/weather checked; stop criteria known; flood/dam-release alerts monitored",
+   "Vessels certified; stability for crane lifts verified; moorings inspected; navigation lights; port permissions",
+   "Gangways with handrails; boarding only when vessel secured; no jumping between vessels",
+   "Cofferdam: water level monitored; pumps on standby; evacuation alarm/route",
+   "Night work: lighting over water; extra rescue cover",
+   "Diving (if any): under contractor's diving procedures; intakes/pumps isolated (LOTO)",
+   "Swimming ability recorded; hypothermia and water-borne disease precautions briefed",
+   "Emergency contacts: port authority/coast guard (1554), hospital"
+  ]
+ },
+ {
+  "id": "cl-roadworks",
+  "t": "Road Works Daily (Traffic & Bitumen)",
+  "cat": "Construction",
+  "items": [
+   "Traffic management plan on site; police permission; layout per IRC:SP:55 (advance warning, taper, buffer, work, termination)",
+   "Signs/cones/barriers in place, clean, reflective; checked at shift start and night",
+   "Flaggers trained, equipped (paddles, radios, class 3 hi-vis); positioned safely",
+   "Plant: reversing alarms/cameras, beacons, banksman; paver/roller exclusion zones",
+   "Bitumen: tank temperature within limits; no water contact possible; earthing of tankers; dry-break couplings; operator at valve; burn kit and cool-water point; burns-centre contact",
+   "Cutback/kerosene stored as Class B petroleum; licence if > 2,500 L; extinguishers",
+   "Hot-mix plant: consent valid; burner interlocks tested; bag-house temperatures; conveyor guards; dust suppression; housekeeping",
+   "Milling/cutting dust controlled (water); silica RPE; hearing protection",
+   "Utility survey for drain/kerb excavation; trench protection ≥ 1.5 m",
+   "Heat: water, shade, rest cycle; hydration encouraged",
+   "Night work: lighting, fatigue management, extra marshals",
+   "Intrusions/near-misses recorded; traffic controls removed in reverse order at end"
+  ]
+ },
+ {
+  "id": "cl-lab",
+  "t": "Laboratory Monthly Safety",
+  "cat": "Chemical",
+  "items": [
+   "Chemical inventory current; quantities within limits; segregated storage; flammables in cabinets",
+   "SDS accessible; containers labelled; peroxide-formers dated/tested",
+   "Fume hoods: flow alarm/face velocity OK; annual test within date; sash positions; hoods uncluttered",
+   "Biosafety cabinets certified annually; autoclave validated; sharps containers not overfilled",
+   "Eyewash/shower tested weekly (log); first-aid kit with HF antidote where HF used",
+   "Gas cylinders secured, regulators correct, leak checks; cryogen room O2 monitor",
+   "Electrical: PAT, no overloaded sockets, equipment guarded (presses, ovens, furnaces)",
+   "Waste streams segregated, labelled, manifested; no accumulation",
+   "Housekeeping, exits clear, extinguishers (CO2/ABC) in place, spill kits stocked",
+   "No food/drink; PPE worn (coat, goggles, gloves); long hair tied",
+   "Training records current; no lone working on hazardous procedures",
+   "Incidents/near-misses reviewed; corrective actions closed"
+  ]
+ },
+ {
+  "id": "cl-bio",
+  "t": "Camp & Site Health / Vector Control Weekly",
+  "cat": "Health",
+  "items": [
+   "Potable water: chlorination/testing (monthly bacteriological, residual chlorine daily); tanks cleaned; dispensers clean",
+   "Toilets/bathing: clean, water, soap, lighting, waste disposal; drains clear",
+   "No stagnant water (tyres, drums, excavations, AC trays); larvicide applied; fogging in season; nets/repellents available",
+   "Canteen: FSSAI registration, hygiene audit, food handler medicals, safe storage temperatures",
+   "Accommodation: ventilation, spacing, bedding hygiene, fire precautions, electrical safety",
+   "Waste collection daily; no open dumping; pest/rodent control",
+   "First-aid kits stocked; bite protocol displayed; antivenom/rabies PEP hospital identified; tetanus prophylaxis available",
+   "Health screening at induction; vaccination records (tetanus, hepatitis B for first-aiders/waste handlers)",
+   "OHC bio-medical waste segregated and handed to authorised facility",
+   "Cooling towers/water systems: treatment logs and sampling within schedule (if applicable)",
+   "Outbreak plan available; isolation room ready; health authority contacts",
+   "Sick-call trends reviewed; clusters reported"
+  ]
+ },
+ {
+  "id": "cl-security",
+  "t": "Site Security Audit (Quarterly)",
+  "cat": "Management",
+  "items": [
+   "Security agency PSARA-licensed; guard antecedents verified; training records (emergency, first aid)",
+   "Perimeter fencing/hoarding intact; lighting working; CCTV coverage and 30-day retention verified",
+   "Access control: ID/biometric, visitor log, escorts, vehicle passes; induction before entry enforced",
+   "Material gate passes and registers reconciled; scaffold/formwork theft checks",
+   "Hazardous stores (explosives, fuel, chemicals, cylinders) locked, logged, CCTV; key control",
+   "Fire exits never locked; checked daily (log); emergency access roads clear",
+   "Public protection: covered walkways, debris nets, no storage on footpaths, traffic marshals at exits",
+   "POSH ICC constituted and displayed; grievance channel working; anti-violence policy communicated",
+   "Threat/bomb-call procedure and evacuation drill done within 12 months",
+   "Police liaison contacts current; incident reports/FIR copies filed",
+   "Night checks: cranes/hoists isolated, excavations fenced, lighting",
+   "Audit findings from last quarter closed"
+  ]
+ },
+ {
+  "id": "cl-ghg",
+  "t": "GHG Inventory & CCTS Data Readiness",
+  "cat": "Management",
+  "items": [
+   "Organisational/operational boundary documented; site and source list complete",
+   "Base year set (FY2023-24 for CCTS); recalculation policy",
+   "Activity data: fuel (invoices/meters), electricity (bills/meters), refrigerant purchases/leaks, process inputs, production volumes — monthly, reconciled with finance",
+   "Emission factors documented with sources (IPCC 2006, CEA grid v20 0.727 tCO2/MWh FY2023-24 or BEE-specified); GWP set stated",
+   "Calculations in controlled workbook/system with version control and QA/QC checks",
+   "Scope 1/2 totals and intensity (per tonne, per ₹ crore) computed; Scope 3 screening done",
+   "CCTS obligated entity: monitoring plan approved; ACVA appointed; verified report submitted within 4 months of FY end (31 July); registry account active; GEI target and gap analysis",
+   "CBAM (exporters): CN code mapping; installation-level data pack; verification; EU importer data shared before 30 Sep declaration",
+   "Abatement plan with projects, owners, savings, timelines",
+   "Uncertainty and completeness assessed; management sign-off recorded",
+   "Evidence files retained ≥ 5 years for assurance",
+   "BRSR Principle 6 extracts reconcile with inventory"
+  ]
+ },
+ {
+  "id": "cl-esg",
+  "t": "ESG / BRSR Compliance Readiness",
+  "cat": "Management",
+  "items": [
+   "BRSR applicability confirmed (top 1,000); BRSR Core assurance tier identified (FY2026-27: all top 1,000); assurance provider engaged",
+   "Governance: board/committee oversight; policies for 9 NGRBC principles; materiality assessment current",
+   "OSH KPIs (LTIFR, fatalities, recordable injuries, complaints) reconcile with statutory registers and OSH Code annual return",
+   "Hours worked data auditable (attendance systems incl. contractors)",
+   "Environmental KPIs with evidence: energy (bills/meters), water (meters/logs), waste (manifests), air emissions (stack reports), GHG (inventory)",
+   "Social KPIs: training hours, wages/gender, grievances, POSH complaints, contractor welfare",
+   "Value-chain partners (≥ 2% purchases/sales) identified; data requests/assessment plan for FY2026-27",
+   "EC Act: designated-consumer status checked; energy manager appointed; energy audit and annual return filed; PAT/CCTS alignment",
+   "EPR: registrations on CPCB portals (plastic, e-waste, battery, tyre, used oil) as applicable; recycler agreements; returns filed; certificates on file",
+   "Form V (30 Sep) and HW Form 4 (30 Jun) filed; consents valid",
+   "ESG claims reviewed for substantiation (no unverifiable 'net-zero'/'green' claims)",
+   "Annual calendar and evidence repository maintained; prior-year assurance findings closed"
+  ]
+ },
+ {
+  "id": "cl-firesys",
+  "t": "Fire Systems ITM (Weekly / Monthly / Annual)",
+  "cat": "Fire & Emergency",
+  "items": [
+   "Weekly: diesel pump 30-min run; electric pump churn; jockey pressure; fuel level; batteries",
+   "Weekly: control valves open and supervised/locked; water tank level ≥ minimum; alarm panel healthy",
+   "Monthly: extinguishers (pressure, seal, tag, access); emergency lighting flick test; fire doors/closers; hydrant cabinets stocked",
+   "Monthly: sprinkler heads not painted/obstructed; storage ≥ 450 mm below; foam system visual; detectors clean",
+   "Quarterly: hydrant flow at remote points; main drain test; alarm audibility; gas-suppression cylinder weight/pressure",
+   "Annual: pump flow/pressure test; full system tests incl. deluge; 100% detector test; foam concentrate lab test; extinguisher service; emergency lighting 3-h test; passive fire-stopping survey",
+   "5-yearly: internal pipe inspection; gauge calibration; hose hydro test; 10-yearly CO2/clean-agent cylinder hydro test; extinguisher hydro test 3–5 yr",
+   "Construction high-rise: riser charged within two floors of top; floor extinguishers; tender access clear",
+   "Impairment log: active impairments listed with compensating measures (fire watch, hot-work ban) and restoration tests",
+   "Fire NOC/licence valid; insurer survey findings closed",
+   "ERT drills monthly (hydrant/hose/pump); evacuation drill 6-monthly",
+   "AMC reports and defect trends reviewed"
+  ]
+ },
+ {
+  "id": "cl-legionella",
+  "t": "Cooling Tower / Water System Monthly",
+  "cat": "Health",
+  "items": [
+   "Written scheme/risk assessment current; responsible person named; schematic with dead legs",
+   "Treatment parameters within range (conductivity, pH, biocide residual); dosing equipment calibrated",
+   "Tower condition: drift eliminators intact, basin clean, pack not fouled, no leaks; bleed-off working",
+   "TVC sampled monthly; Legionella quarterly (towers); results within action levels; actions recorded",
+   "Cleaning/disinfection done within schedule (6-monthly or as risk); certificates on file; disinfectant neutralised before discharge",
+   "Hot water ≥ 60 °C stored / ≥ 50 °C at outlets; cold < 20 °C; sentinel tap temperatures logged",
+   "Infrequently used outlets flushed weekly; shower heads descaled quarterly",
+   "Dosing chemicals: bunded, labelled, SDS, PPE, eyewash; no incompatible storage",
+   "Confined-space controls for basin/tank entry; WAH for tower access",
+   "Shutdown/restart procedures applied for idle systems; firewater tanks on recirculation/chlorination schedule",
+   "Operators trained; records kept 5 years",
+   "Any pneumonia cluster reported to health authority; system isolated pending investigation"
+  ]
+ },
+ {
+  "id": "cl-firstaid",
+  "t": "First-Aid Box & Emergency Medical Readiness (Weekly)",
+  "cat": "Health",
+  "items": [
+   "First-aid boxes: number adequate (≥ 1 per 150 workers factory / ≈ 1 per 100 construction – verify), located within 2 min of every work area, marked, accessible, not locked",
+   "Contents complete per state schedule (dressings, bandages, eye pads, gloves, antiseptic, burn dressings/cling film, eye wash, ORS, scissors, CPR shield); nothing expired; sealed after restock",
+   "First-aider on this shift (incl. night) certified and present; names/photos displayed; contact numbers at boxes",
+   "AED present, battery/pads in date, weekly self-test OK; pocket masks; spine board with head blocks and collar; stretcher; splints",
+   "Eyewash/safety shower near corrosives tested this week; plumbed water clean; bottle eyewash in date",
+   "Special antidotes stocked where hazards exist (calcium gluconate gel for HF; cyanide kit; oxygen at OHC)",
+   "Ambulance/vehicle available 24×7 with driver; route and hospital contacts displayed; hospital tie-ups confirmed (trauma, burns, snakebite antivenom)",
+   "First-aid treatment register maintained and reviewed; injuries linked to incident reports",
+   "OHC (where required): medical officer/nurse roster, equipment, medicines in date, bio-medical waste segregation",
+   "Emergency numbers (108/112/101/100, poison centre 1800-116-117) displayed at gate, OHC and boxes",
+   "Drill within last quarter: CPR/AED, bleeding control, spinal immobilisation, chemical eye wash, snakebite",
+   "Heat-season items: ORS, ice packs, cool water, shade; monsoon: snakebite protocol briefed"
+  ]
+ },
+ {
+  "id": "cl-observation",
+  "t": "Safety Observation Walk (Unsafe Acts & Conditions)",
+  "cat": "Management",
+  "items": [
+   "Permits displayed and valid for high-risk work observed; crew briefed",
+   "Guards, interlocks, e-stops in place and not bypassed",
+   "PPE worn correctly for the task; harness tied off to rated anchors",
+   "Edge protection, hole covers, scaffold tags, ladders secured",
+   "Excavations protected, barricaded, ladders in place; spoil ≥ 1 m",
+   "No one under suspended loads or in swing radius; signaller in control",
+   "Electrical: RCDs, cable condition, DBs closed; no plant near lines",
+   "Hot work controls: combustibles cleared, fire watch, extinguishers",
+   "Chemicals labelled, stored safely, SDS available; cylinders secured",
+   "Housekeeping, walkways and exits clear; lighting adequate",
+   "Vehicles: seat belts, speed, banksman, keys out when unattended",
+   "Welfare: water, shade, rest breaks; first-aid access",
+   "Positive behaviours recognised on the spot; at-risk behaviours discussed with the person (why?)",
+   "Observations recorded on cards; imminent dangers stopped and corrected before leaving"
+  ]
+ }
+]

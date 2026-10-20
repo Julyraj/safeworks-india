@@ -1,0 +1,690 @@
+{
+ "principles": [
+  [
+   "DRSABCD",
+   "Danger – Response – Send for help (108/112) – Airway – Breathing – CPR – Defibrillation. Use it in every emergency; your own safety first."
+  ],
+  [
+   "Primary survey",
+   "Life threats in order: catastrophic bleeding → airway → breathing → circulation → disability (consciousness) → exposure/environment."
+  ],
+  [
+   "Call early",
+   "Call 108/112 before starting CPR if alone with an adult; send a runner to guide the ambulance to the exact gate."
+  ],
+  [
+   "Recovery position",
+   "Unconscious but breathing: on the side, head tilted back, mouth downward, knee bent to stabilise; monitor breathing every minute."
+  ],
+  [
+   "Consent & records",
+   "Introduce yourself; get consent from a conscious casualty; record time, findings, treatment, vital signs; hand over using MIST (Mechanism, Injuries, Signs, Treatment)."
+  ],
+  [
+   "Infection control",
+   "Gloves, barrier mask/face shield for breaths, sharps in containers, hand hygiene; needle-stick: wash, report, post-exposure protocol."
+  ]
+ ],
+ "topics": [
+  {
+   "id": "fa-cpr",
+   "t": "Cardiac arrest – CPR & AED (adult)",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Unresponsive and not breathing normally (gasping = not breathing)",
+    "Check ≤ 10 seconds"
+   ],
+   "do": [
+    "Call 108/112, send for the AED",
+    "30 chest compressions: centre of chest, 5–6 cm deep, 100–120/min, full recoil; then 2 breaths (1 s each, chest rise) — ratio 30:2",
+    "Hands-only CPR if unable/unwilling to give breaths",
+    "AED as soon as it arrives: switch on, follow voice prompts, attach pads to bare dry chest, nobody touches during analysis/shock, resume CPR immediately after",
+    "Continue until the casualty breathes normally, help takes over, or you are exhausted; swap rescuers every 2 min"
+   ],
+   "dont": [
+    "Don't delay compressions to find a pulse",
+    "Don't stop to check unless the casualty moves/breathes"
+   ],
+   "hospital": "Always — every arrest goes to hospital by ambulance"
+  },
+  {
+   "id": "fa-cpr-child",
+   "t": "CPR – child & infant",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Unresponsive, not breathing normally"
+   ],
+   "do": [
+    "Child (1 yr–puberty): 5 initial rescue breaths, then 30:2 (15:2 with two trained rescuers); compress 1/3 chest depth (~5 cm) with one or two hands",
+    "Infant (< 1 yr): 5 initial breaths, then 30:2 (15:2 two rescuers); two fingers or two-thumb encircling, 4 cm depth; cover mouth and nose with your mouth",
+    "If alone, do 1 min of CPR before calling 108 (unless a phone is at hand)",
+    "AED with paediatric pads/mode if available; adult pads if not (child > 1 yr)"
+   ],
+   "dont": [
+    "Don't use abdominal thrusts on infants (choking)"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-choke",
+   "t": "Choking",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Clutching throat, cannot speak/cough/breathe, cyanosis"
+   ],
+   "do": [
+    "Mild (can cough): encourage coughing; stay with them",
+    "Severe adult/child: 5 back blows between shoulder blades (heel of hand), then 5 abdominal thrusts (fist above navel, pull inward and upward); alternate 5 and 5",
+    "Infant: 5 back blows (face down along forearm) then 5 chest thrusts (two fingers); no abdominal thrusts",
+    "Unresponsive: start CPR; check mouth before breaths and remove visible objects"
+   ],
+   "dont": [
+    "Don't do blind finger sweeps"
+   ],
+   "hospital": "After abdominal thrusts (internal injury check) or if symptoms persist"
+  },
+  {
+   "id": "fa-bleed",
+   "t": "Severe bleeding",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Spurting/pooling blood, soaked dressings, pale/cold/clammy, confusion"
+   ],
+   "do": [
+    "Gloves; expose the wound; apply firm direct pressure with a sterile pad; if it soaks through, add more on top — don't remove",
+    "Limb life-threatening bleed not controlled by pressure: apply a tourniquet 5–7 cm above the wound (not over a joint), tighten until bleeding stops, note the time, do not loosen",
+    "Junctional wounds (groin/armpit/neck): pack the wound with haemostatic or plain gauze and hold pressure ≥ 3 min",
+    "Lay the casualty down, raise legs, keep warm (shock); nothing by mouth",
+    "Embedded objects: do not remove; pad around them"
+   ],
+   "dont": [
+    "Don't apply a tourniquet for minor bleeding",
+    "Don't remove the first dressing"
+   ],
+   "hospital": "Always for severe bleeding, tourniquet use, or embedded objects"
+  },
+  {
+   "id": "fa-shock",
+   "t": "Shock (circulatory)",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Pale, cold, clammy skin; rapid weak pulse; fast breathing; thirst; dizziness; confusion; collapse"
+   ],
+   "do": [
+    "Treat the cause (bleeding, burns, allergic reaction)",
+    "Lay flat; raise legs 20–30 cm if no injury prevents; loosen tight clothing; keep warm (blanket under and over)",
+    "Reassure; monitor breathing and response every few minutes; recovery position if unconscious",
+    "Call 108"
+   ],
+   "dont": [
+    "Don't give food or drink",
+    "Don't apply direct heat"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-anaphylaxis",
+   "t": "Anaphylaxis (severe allergic reaction)",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Swelling of face/lips/tongue, wheeze/difficulty breathing, hives, collapse after sting, food, drug or chemical exposure"
+   ],
+   "do": [
+    "Call 108",
+    "Adrenaline auto-injector (0.5 mg IM, outer thigh, adult) if the casualty has one or the OHC stocks it; repeat after 5 min if no improvement",
+    "Lie flat with legs raised; sit up if breathing is difficult; do not stand them up suddenly",
+    "CPR if unresponsive and not breathing"
+   ],
+   "dont": [
+    "Don't wait to see if it improves"
+   ],
+   "hospital": "Always, even after improvement (rebound reactions)"
+  },
+  {
+   "id": "fa-heart",
+   "t": "Heart attack",
+   "cat": "Life-threatening",
+   "recognise": [
+    "Central chest pressure/pain spreading to arm/jaw/back, sweating, nausea, breathlessness; may be mild in diabetics/women"
+   ],
+   "do": [
+    "Call 108; keep calm and rested in a half-sitting 'W' position",
+    "If available and not allergic/bleeding risk: chew one aspirin 300 mg (or as advised by the ambulance)",
+    "Assist with their own prescribed nitrate spray/tablet if they have it",
+    "AED on standby; CPR if they collapse"
+   ],
+   "dont": [
+    "Don't let them walk or drive"
+   ],
+   "hospital": "Always, by ambulance"
+  },
+  {
+   "id": "fa-stroke",
+   "t": "Stroke",
+   "cat": "Life-threatening",
+   "recognise": [
+    "FAST: Face drooping, Arm weakness, Speech difficulty, Time to call 108; also sudden confusion, vision loss, severe headache, loss of balance"
+   ],
+   "do": [
+    "Call 108 immediately; note the time symptoms started (treatment is time-critical)",
+    "Keep comfortable, head and shoulders slightly raised; recovery position if unconscious",
+    "Reassure; loosen clothing; monitor breathing"
+   ],
+   "dont": [
+    "Nothing by mouth (swallowing may be affected)"
+   ],
+   "hospital": "Always, stroke-ready hospital"
+  },
+  {
+   "id": "fa-burn",
+   "t": "Thermal burns & scalds",
+   "cat": "Injuries",
+   "recognise": [
+    "Red, blistered, charred or white/leathery skin; pain (may be absent in deep burns)"
+   ],
+   "do": [
+    "Stop the burning (stop-drop-roll; smother flames); remove from steam/heat",
+    "Cool with cool (not ice-cold) running water for 20 minutes — effective up to 3 hours after the burn",
+    "Remove clothing, watches, rings not stuck to the skin",
+    "Cover loosely with cling film (lengthwise) or a clean non-fluffy dressing; keep the casualty warm",
+    "Bitumen/molten metal: cool, leave the material on the skin, cover; hospital will remove"
+   ],
+   "dont": [
+    "No ice, butter, toothpaste, ointments, cotton wool",
+    "Don't burst blisters",
+    "Don't cool large burns so long that the casualty becomes cold (hypothermia risk)"
+   ],
+   "hospital": "Burn larger than the casualty's palm, any full-thickness burn, burns to face/hands/feet/genitals/joints, circumferential burns, inhalation (smoke, hoarse voice), electrical or chemical burns, children"
+  },
+  {
+   "id": "fa-chemburn",
+   "t": "Chemical burns & splashes (skin and eyes)",
+   "cat": "Chemical",
+   "recognise": [
+    "Pain, redness, blistering after contact; eye pain, redness, watering, inability to open"
+   ],
+   "do": [
+    "Protect yourself (gloves, goggles); brush off dry powder before wetting",
+    "Remove contaminated clothing while flushing",
+    "Flush with copious running water ≥ 20 min (alkalis and HF longer); eyes: hold lids open, flush from the nose outward for ≥ 15–20 min and continue en route to hospital; remove contact lenses",
+    "Hydrofluoric acid: after flushing, apply 2.5% calcium gluconate gel and massage continuously; hospital urgently (even small HF burns can be fatal)",
+    "Take the SDS/label with the casualty"
+   ],
+   "dont": [
+    "Don't neutralise with other chemicals",
+    "Don't delay flushing to find the SDS"
+   ],
+   "hospital": "All chemical eye injuries; HF, phenol, strong acid/alkali burns; any burn larger than a coin"
+  },
+  {
+   "id": "fa-elec",
+   "t": "Electric shock & electrical burns",
+   "cat": "Injuries",
+   "recognise": [
+    "Contact with electricity; burns at entry/exit; unconsciousness; irregular pulse; muscle pain"
+   ],
+   "do": [
+    "Isolate the supply first; for LV use a dry non-conductive object to separate; HT – stay ≥ 10 m away and wait for isolation",
+    "Check response/breathing; CPR/AED immediately if not breathing",
+    "Cool and cover burns; treat shock; immobilise if fallen"
+   ],
+   "dont": [
+    "Don't touch the casualty while in contact with the source",
+    "Don't assume a 'minor' shock is harmless"
+   ],
+   "hospital": "All shocks from mains/HT: cardiac monitoring; all electrical burns"
+  },
+  {
+   "id": "fa-fracture",
+   "t": "Fractures, dislocations & spinal injury",
+   "cat": "Injuries",
+   "recognise": [
+    "Pain, swelling, deformity, loss of function, grating; spinal: neck/back pain, numbness/tingling, weakness after a fall or high-energy impact"
+   ],
+   "do": [
+    "Keep still; support the injured part in the position found (hands, padding, splint to the body or adjacent limb)",
+    "Open fracture: cover with a sterile dressing; control bleeding without pressing on bone",
+    "Check circulation beyond the injury (colour, warmth, pulse) before and after splinting",
+    "Suspected spinal injury: do not move unless in danger or airway at risk; hold the head in line (manual in-line stabilisation); log-roll with 3–4 people only if essential; unconscious + breathing → careful recovery position maintaining alignment",
+    "Cold pack over clothing for swelling"
+   ],
+   "dont": [
+    "Don't straighten, push back or 'test' the limb",
+    "Don't give food/drink (surgery likely)"
+   ],
+   "hospital": "All suspected fractures, dislocations and spinal injuries by ambulance (spinal board/collar for spinal)"
+  },
+  {
+   "id": "fa-head",
+   "t": "Head injury & concussion",
+   "cat": "Injuries",
+   "recognise": [
+    "Blow to the head; headache, nausea/vomiting, dizziness, confusion, drowsiness, unequal pupils, seizure, clear fluid from nose/ear, loss of consciousness (even brief)"
+   ],
+   "do": [
+    "Rest; monitor response (AVPU) every 10 min; apply cold pack to bruising; control scalp bleeding with pressure",
+    "Suspect neck injury with any significant head injury — keep head still",
+    "Recovery position if unconscious and breathing"
+   ],
+   "dont": [
+    "No alcohol, sedatives or painkillers that mask symptoms",
+    "Don't leave alone for 24 h; don't return to work the same day after loss of consciousness"
+   ],
+   "hospital": "Any loss of consciousness, vomiting, worsening headache, drowsiness, seizure, fluid from ears/nose, unequal pupils, blood-thinner use, or mechanism of fall > 1 m"
+  },
+  {
+   "id": "fa-eye",
+   "t": "Eye injuries (foreign body, welding flash, penetrating)",
+   "cat": "Injuries",
+   "recognise": [
+    "Pain, watering, redness, light sensitivity; arc eye appears 6–12 h after unprotected welding exposure"
+   ],
+   "do": [
+    "Loose foreign body: don't rub; blink; flush with clean water/saline from nose outward; lift the upper lid over the lower",
+    "Embedded object/penetrating injury: do not remove or press; cover with a rigid shield/cup, cover both eyes to limit movement, lie the casualty down",
+    "Welding flash (arc eye): cool compress, dark room, eye drops only on medical advice, medical assessment",
+    "Chemical: see chemical splash — flush 20 min"
+   ],
+   "dont": [
+    "Don't remove embedded objects",
+    "Don't let the casualty rub"
+   ],
+   "hospital": "Embedded objects, chemical splash, persistent pain/vision change, arc eye not settling in 24 h"
+  },
+  {
+   "id": "fa-amput",
+   "t": "Amputation & severed parts",
+   "cat": "Injuries",
+   "recognise": [
+    "Traumatic loss of finger/hand/limb"
+   ],
+   "do": [
+    "Control bleeding (pressure, then tourniquet if needed; note the time); treat shock; 108",
+    "Severed part: rinse gently if dirty, wrap in sterile gauze moistened with saline, seal in a plastic bag, place the bag in a container of ice-water (not directly on ice); label with name/time; send with the casualty",
+    "Partial amputation: splint in position; do not twist"
+   ],
+   "dont": [
+    "Don't put the part directly on ice or in water"
+   ],
+   "hospital": "Immediately — reattachment is time-critical (hours)"
+  },
+  {
+   "id": "fa-crush",
+   "t": "Crush injury & entrapment",
+   "cat": "Injuries",
+   "recognise": [
+    "Trapped under load/structure/soil; pain, swelling, numbness; risk of crush syndrome after release"
+   ],
+   "do": [
+    "Call 108/112; make the scene safe; if trapped < 15 min, release quickly if safe; if trapped ≥ 15 min, do not release until a medical team is present (crush syndrome can cause cardiac arrest on release)",
+    "Control bleeding; treat shock; keep warm; monitor",
+    "Give nothing by mouth; record time of entrapment"
+   ],
+   "dont": [
+    "Don't apply a tourniquet to a crushed limb unless catastrophic bleeding"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-inject",
+   "t": "High-pressure injection injury (airless paint, hydraulic fluid, grease gun)",
+   "cat": "Injuries",
+   "recognise": [
+    "Small puncture wound, often painless at first; swelling later; history of high-pressure jet"
+   ],
+   "do": [
+    "Treat as a surgical emergency even if it looks trivial: 108/hospital immediately",
+    "Elevate; cover loosely; take the SDS of the fluid"
+   ],
+   "dont": [
+    "Don't squeeze, apply cold, or dismiss"
+   ],
+   "hospital": "Always — surgical decompression within hours prevents amputation"
+  },
+  {
+   "id": "fa-suspension",
+   "t": "Fall arrest / suspension trauma",
+   "cat": "Injuries",
+   "recognise": [
+    "Worker hanging in harness; faintness, nausea, numb legs after minutes"
+   ],
+   "do": [
+    "Rescue within 10–15 min; keep them conscious; encourage leg movement/standing in loops",
+    "After rescue: ABC; treat injuries; lay flat (HSE: no need to keep upright); monitor; spinal precautions if indicated"
+   ],
+   "dont": [
+    "Don't leave hanging while 'waiting for the ambulance'"
+   ],
+   "hospital": "All suspension events"
+  },
+  {
+   "id": "fa-wound",
+   "t": "Minor wounds, splinters, sprains & strains",
+   "cat": "Minor",
+   "recognise": [
+    "Cuts, abrasions, puncture wounds; sprain: pain/swelling at a joint; strain: muscle pain"
+   ],
+   "do": [
+    "Wash hands/gloves; clean the wound with running water; remove loose dirt; antiseptic; sterile dressing; record in the first-aid register",
+    "Splinters: remove with clean tweezers if protruding; otherwise leave for medical removal",
+    "Sprains: PRICE — Protect, Rest, Ice (15–20 min, wrapped), Compression, Elevation; medical if unable to bear weight or deformity",
+    "Check tetanus vaccination status for contaminated wounds (rusty metal, soil)"
+   ],
+   "dont": [
+    "Don't use cotton wool on open wounds",
+    "Don't apply heat in the first 48 h for sprains"
+   ],
+   "hospital": "Deep/gaping wounds (may need stitches within 6–8 h), puncture wounds, bites, signs of infection, tetanus risk"
+  },
+  {
+   "id": "fa-heat",
+   "t": "Heat exhaustion & heat stroke",
+   "cat": "Environmental",
+   "recognise": [
+    "Exhaustion: heavy sweating, cramps, headache, dizziness, nausea, pale clammy skin. Stroke (emergency): confusion, hot skin (dry or wet), temperature > 40 °C, collapse, seizures"
+   ],
+   "do": [
+    "Move to shade/cool area; lie down; loosen clothing",
+    "Exhaustion: cool with water spray/fanning, cold packs; sips of water/ORS; rest; no return to work that day",
+    "Stroke: call 108; cool aggressively — immersion in cool water or continuous dousing with fanning; ice packs to neck, armpits, groin; recovery position if unconscious"
+   ],
+   "dont": [
+    "Don't give fluids to a confused/unconscious casualty",
+    "Don't give salt tablets"
+   ],
+   "hospital": "Any heat stroke; heat exhaustion not improving in 30 min"
+  },
+  {
+   "id": "fa-cold",
+   "t": "Hypothermia",
+   "cat": "Environmental",
+   "recognise": [
+    "Shivering, confusion, slurred speech, drowsiness after cold water immersion, cold storage, high altitude"
+   ],
+   "do": [
+    "Move to shelter; remove wet clothing; insulate (blankets, foil) incl. head; warm the trunk gradually",
+    "Conscious: warm sweet drinks; handle gently (rough handling can trigger arrhythmia)",
+    "CPR if not breathing — continue for longer than usual"
+   ],
+   "dont": [
+    "No alcohol; no direct heat (hot water bottles on skin); don't rub limbs"
+   ],
+   "hospital": "Moderate/severe cases"
+  },
+  {
+   "id": "fa-drown",
+   "t": "Drowning",
+   "cat": "Environmental",
+   "recognise": [
+    "Rescued from water; not breathing or coughing/breathless"
+   ],
+   "do": [
+    "Rescue safely (reach, throw, boat); remove from water, keep horizontal if possible",
+    "Not breathing: 5 initial rescue breaths, then CPR 30:2; AED (dry chest first)",
+    "Breathing: recovery position; remove wet clothing; warm",
+    "Hospital for all submersion victims (secondary drowning hours later)"
+   ],
+   "dont": [
+    "Don't try to drain water from the lungs",
+    "Don't do abdominal thrusts"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-snake",
+   "t": "Snake bite",
+   "cat": "Bites & stings",
+   "recognise": [
+    "Fang marks, pain/swelling (viper); drooping eyelids, difficulty swallowing/breathing, blurred vision (cobra/krait); bleeding from gums (viper); dark urine"
+   ],
+   "do": [
+    "R.I.G.H.T.: Reassure; Immobilise the limb with a splint and keep still (as for a fracture); Get to hospital with antivenom by 108; Tell the doctor the symptoms and time",
+    "Remove rings/tight items; keep the limb below heart level; carry the casualty — don't let them walk",
+    "Monitor breathing; support ventilation (bag-valve mask) if trained and breathing fails"
+   ],
+   "dont": [
+    "No tourniquet, cutting, sucking, ice, electric shock, herbal pastes, alcohol",
+    "Don't waste time catching the snake"
+   ],
+   "hospital": "Always — antivenom only in hospital; even painless bites (krait) can be fatal"
+  },
+  {
+   "id": "fa-sting",
+   "t": "Scorpion, bee/wasp, spider & centipede",
+   "cat": "Bites & stings",
+   "recognise": [
+    "Local pain/swelling; scorpion red flags: profuse sweating, vomiting, rapid heart rate, breathlessness, priapism; multiple bee stings → systemic reaction"
+   ],
+   "do": [
+    "Remove bee stings by scraping (card/nail); cold pack 10–15 min; elevate; antihistamine/paracetamol per OHC",
+    "Scorpion: cold pack, immobilise, hospital — doctor may give prazosin; monitor breathing",
+    "Watch for anaphylaxis — see anaphylaxis"
+   ],
+   "dont": [
+    "Don't squeeze stings",
+    "Don't apply tourniquets"
+   ],
+   "hospital": "Scorpion with systemic signs; > 10 bee stings; stings in mouth/throat; any anaphylaxis"
+  },
+  {
+   "id": "fa-animal",
+   "t": "Dog, monkey & other animal bites (rabies)",
+   "cat": "Bites & stings",
+   "recognise": [
+    "Bite, scratch or lick on broken skin by dog, cat, monkey, bat, cattle"
+   ],
+   "do": [
+    "Wash the wound with soap and running water for 15 min; apply povidone-iodine",
+    "Cover loosely; do not suture",
+    "Hospital the same day for rabies post-exposure vaccination ± immunoglobulin (category II/III) and tetanus"
+   ],
+   "dont": [
+    "Don't delay PEP — rabies is 100% fatal once symptoms start",
+    "Don't apply chilli, lime or herbal remedies"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-inhal",
+   "t": "Chemical inhalation (chlorine, ammonia, CO, H2S, solvent, smoke)",
+   "cat": "Chemical",
+   "recognise": [
+    "Coughing, breathlessness, chest tightness, burning eyes/throat, headache, dizziness, confusion, collapse"
+   ],
+   "do": [
+    "Rescuer safety first: SCBA for H2S/unknown atmospheres; otherwise move the casualty to fresh air upwind",
+    "Sit upright if breathing is difficult; loosen clothing; oxygen if trained and available",
+    "Not breathing: CPR with a barrier device (avoid mouth-to-mouth for cyanide/pesticides); AED",
+    "Eye/skin exposure: flush",
+    "CO: 100% oxygen; hospital even if recovered (delayed effects); chlorine/NOx/phosgene: observe 24–48 h for delayed lung oedema"
+   ],
+   "dont": [
+    "Don't enter a confined space or gas cloud without BA"
+   ],
+   "hospital": "All significant inhalations; take the SDS"
+  },
+  {
+   "id": "fa-ingest",
+   "t": "Chemical ingestion & poisoning",
+   "cat": "Chemical",
+   "recognise": [
+    "History of swallowing chemical; burns around mouth; vomiting; drowsiness; odour"
+   ],
+   "do": [
+    "Call 108 and the National Poisons Information Centre (AIIMS 1800-116-117); identify the substance (SDS/label, container)",
+    "Conscious: rinse the mouth, spit out; do not induce vomiting; small sips of water only if advised",
+    "Unconscious: recovery position; CPR with barrier if needed",
+    "Pesticide (organophosphate) on skin/clothes: remove clothing, wash with soap and water; rescuer gloves"
+   ],
+   "dont": [
+    "Don't induce vomiting (especially corrosives, solvents)",
+    "Don't give milk/charcoal unless advised by the poison centre"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-asthma",
+   "t": "Asthma attack & breathing difficulty",
+   "cat": "Medical",
+   "recognise": [
+    "Wheeze, cough, tight chest, difficulty speaking, blue lips (severe)"
+   ],
+   "do": [
+    "Sit upright, lean forward slightly; calm reassurance",
+    "Help use their reliever inhaler (blue): 1 puff every 30–60 s up to 10 puffs, with spacer if available",
+    "Call 108 if no improvement after 10 puffs, worsening, or unable to speak; repeat inhaler while waiting"
+   ],
+   "dont": [
+    "Don't lie them flat"
+   ],
+   "hospital": "Severe or not improving"
+  },
+  {
+   "id": "fa-seizure",
+   "t": "Seizure / fits",
+   "cat": "Medical",
+   "recognise": [
+    "Sudden collapse with jerking, stiffness, frothing, incontinence; confusion afterwards"
+   ],
+   "do": [
+    "Protect from injury: clear space, cushion the head, loosen tight clothing; time the seizure",
+    "After jerking stops: recovery position; check breathing; stay until fully recovered",
+    "Call 108 if first seizure, lasts > 5 min, repeats, injury, in water, pregnancy, or does not recover in 10 min"
+   ],
+   "dont": [
+    "Don't restrain; don't put anything in the mouth; don't give drink until fully alert"
+   ],
+   "hospital": "As above; employees with epilepsy need fitness review for safety-critical tasks"
+  },
+  {
+   "id": "fa-diabetes",
+   "t": "Diabetic emergency (low blood sugar)",
+   "cat": "Medical",
+   "recognise": [
+    "Known diabetic; sweating, trembling, hunger, confusion, aggression, drowsiness"
+   ],
+   "do": [
+    "Conscious and able to swallow: sugar — glucose tablets, sweet drink, 3–4 sweets; repeat in 10 min; then a snack",
+    "Unconscious: recovery position; nothing by mouth; call 108",
+    "Glucagon injection if available and trained"
+   ],
+   "dont": [
+    "No food/drink if unconscious"
+   ],
+   "hospital": "If not recovering in 15 min or unconscious"
+  },
+  {
+   "id": "fa-faint",
+   "t": "Fainting",
+   "cat": "Medical",
+   "recognise": [
+    "Brief loss of consciousness, pale, after standing long in heat/crowd"
+   ],
+   "do": [
+    "Lie flat, raise legs; fresh air; loosen clothing; check for injuries from the fall",
+    "Sit up slowly after recovery; fluids; rest"
+   ],
+   "dont": [
+    "Don't let them stand quickly"
+   ],
+   "hospital": "Not recovering in 2 min, repeated episodes, chest pain, injury, or history of heart disease"
+  },
+  {
+   "id": "fa-nose",
+   "t": "Nosebleed, dental & minor emergencies",
+   "cat": "Minor",
+   "recognise": [
+    "Bleeding from nose; knocked-out tooth"
+   ],
+   "do": [
+    "Nosebleed: sit, lean forward, pinch the soft part of the nose for 10–15 min; cold pack on bridge; no sniffing/blowing for hours",
+    "Knocked-out adult tooth: hold by the crown, rinse (don't scrub), re-insert if possible or keep in milk; dentist within 1 h",
+    "Foreign body in ear/nose: don't probe; medical"
+   ],
+   "dont": [
+    "Don't tilt the head back for a nosebleed"
+   ],
+   "hospital": "Nosebleed > 30 min, after head injury, or on blood thinners"
+  },
+  {
+   "id": "fa-lightning",
+   "t": "Lightning strike",
+   "cat": "Environmental",
+   "recognise": [
+    "Collapse during storm; burns (fern pattern), ruptured eardrums, confusion"
+   ],
+   "do": [
+    "Safe to touch; move to shelter if the storm continues",
+    "CPR/AED first — cardiac/respiratory arrest from lightning is often reversible; multiple casualties: treat the 'dead' first (reverse triage)",
+    "Treat burns and fractures; spinal precautions if thrown"
+   ],
+   "dont": [
+    "Don't delay CPR"
+   ],
+   "hospital": "Always"
+  },
+  {
+   "id": "fa-needle",
+   "t": "Needle-stick / bloodborne exposure",
+   "cat": "Medical",
+   "recognise": [
+    "Puncture with used sharp; blood splash to eyes/mouth/broken skin"
+   ],
+   "do": [
+    "Wash with soap and running water (don't scrub); flush eyes/mouth with water; let it bleed briefly",
+    "Report immediately; medical assessment within 2 h for post-exposure prophylaxis (HIV/HBV); test source if possible",
+    "Record; review sharps disposal"
+   ],
+   "dont": [
+    "Don't squeeze or apply bleach to the wound"
+   ],
+   "hospital": "Always"
+  }
+ ],
+ "programme": [
+  {
+   "h": "Statutory basis (India)",
+   "items": [
+    "OSH Code 2020 s.24 (welfare) and Central/State rules; legacy Factories Act s.45: first-aid boxes ≥ 1 per 150 workers, each in charge of a trained person where > 150 workers; ambulance room with prescribed staff/equipment where > 500 workers",
+    "BOCW Central Rules 1998 / KA & TN BOCW Rules 2006: first-aid boxes at the site (≈ 1 per 100 workers – verify), trained first-aider per box, ambulance room where > 500 workers, ambulance/vehicle arrangement, stretcher",
+    "State Factories Rules (Karnataka 1969 / Tamil Nadu 1950): schedules listing box contents by class/size, first-aid register, OHC with factory medical officer by headcount band for hazardous units, TN Rule 63-B approved trainers (St John Ambulance, Red Cross, TN Apex Skill Development Centre for Health Care)",
+    "OSHA 1926.50 / 1910.151: trained first-aid person where no infirmary/clinic within ~3–4 min (life-threatening) / 15 min; eyewash/shower where corrosives"
+   ]
+  },
+  {
+   "h": "People",
+   "items": [
+    "Certified first-aiders (St John Ambulance / Indian Red Cross / approved centre; 3-year validity, refresher) — good practice 1 per 50 workers and at least one on every shift incl. night",
+    "Names, photos and locations displayed; helmet sticker/armband",
+    "OHC: factory medical officer, nurse, dresser as per state rules; emergency drills quarterly",
+    "Hospital tie-ups: trauma, burns, poison, snakebite (antivenom stock confirmed), cardiac; travel time < 30 min; map at gate"
+   ]
+  },
+  {
+   "h": "Equipment",
+   "items": [
+    "First-aid boxes per statutory schedule (see list), green/white cross, weatherproof, sealed, inspected weekly with checklist; contents replenished",
+    "AED (recommended for ≥ 200 persons or remote sites), pocket masks, gloves, spine board with head blocks and collar, scoop stretcher, splints, burn dressings/cling film, eyewash bottles (and plumbed eyewash/shower where corrosives), ORS, ice packs, thermometer, BP monitor/pulse oximeter (OHC), oxygen (OHC)",
+    "Special antidotes where the hazard exists: calcium gluconate gel (HF), cyanide kit (hydroxocobalamin), atropine (organophosphate – medical use), chlorine/ammonia first-aid oxygen",
+    "Transport: ambulance (own/tie-up ≤ 15 min) or dedicated vehicle with driver on every shift; communication (radio/phone list)"
+   ]
+  },
+  {
+   "h": "Box contents (typical statutory list – check your state schedule)",
+   "items": [
+    "Sterile dressings: small, medium, large (6/6/6); sterile eye pads (6); triangular bandages (6); roller bandages 5 cm & 10 cm; adhesive dressings/band-aids (24+); safety pins; scissors; tweezers; disposable gloves (12 pairs); CPR face shield",
+    "Antiseptic solution/wipes; burn dressings/gel; cling film; cotton wool (not for open wounds); crepe bandage; eye wash (sterile saline 500 ml ×2); ORS sachets; sling; splints; cold pack; thermometer; torch; first-aid guidance card; register and pen",
+    "Not in box (OHC/doctor only): oral medicines beyond paracetamol/antacid per policy, injections, antivenom"
+   ]
+  },
+  {
+   "h": "Records & review",
+   "items": [
+    "First-aid treatment register (statutory) with name, time, injury, treatment, by whom, referral",
+    "Weekly box inspection log; monthly summary to safety committee; link minor injuries to near-miss trends",
+    "Review after every serious injury: response time, equipment gaps, ambulance delay",
+    "Annual refresher drill: CPR/AED, bleeding control, spinal immobilisation, chemical eye wash, snakebite"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,275 @@
+[
+ {
+  "t": "Form I – Application for registration of establishment",
+  "law": "OSH (Central) Rules 2026 / state OSH rules",
+  "j": "India – Central",
+  "when": "Within 60 days of becoming applicable; existing registrations update by 8 Nov 2026",
+  "note": "Online via Shram Suvidha (central sphere) or state portal; certificate issued in Form III within 7 days"
+ },
+ {
+  "t": "Form XI – Notice of accident / dangerous occurrence",
+  "law": "OSH (Central) Rules 2026 Rule 7",
+  "j": "India – Central",
+  "when": "Death: forthwith; injury ≥ 48 h absence & dangerous occurrences: within 12 h",
+  "note": "To Inspector-cum-Facilitator and District Magistrate/SDO; police and family for fatal. States issue equivalent forms under their OSH rules"
+ },
+ {
+  "t": "Notice of accident / dangerous occurrence (legacy)",
+  "law": "Factories Act s.88/88A; Karnataka Factories Rules 1969 / TN Factories Rules 1950",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Fatal: immediate (phone/online) + written within prescribed hours; non-fatal > 48 h: 24 h; dangerous occurrence: as rule",
+  "note": "Commonly 'Form 18' in both states — verify current form number and online submission on DFBISH/DISH portal"
+ },
+ {
+  "t": "Notice of poisoning or occupational disease",
+  "law": "OSH Code s.12 / Factories Act s.89 (Third Schedule)",
+  "j": "India – Central",
+  "when": "Medical practitioner: forthwith; employer: as prescribed",
+  "note": "Diseases include silicosis, asbestosis, NIHL, lead/chrome/benzene poisoning, dermatitis, byssinosis"
+ },
+ {
+  "t": "Register of adult workers / attendance / leave with wages / overtime / wages",
+  "law": "OSH Code s.33, Code on Wages; state rules",
+  "j": "India – Central",
+  "when": "Maintained continuously; electronic permitted",
+  "note": "Unified formats under Central Rules; legacy state form numbers differ"
+ },
+ {
+  "t": "Register of accidents & dangerous occurrences; first-aid register; register of health examinations (dangerous operations)",
+  "law": "OSH Code / state Factories & BOCW rules",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Continuous; produce on inspection",
+  "note": "Health records for carcinogen exposure retained long-term (verify rule – typically ≥ 30 years)"
+ },
+ {
+  "t": "Annual / unified return",
+  "law": "OSH Code s.33 & Central Rules; state rules",
+  "j": "India – Central",
+  "when": "By date prescribed (commonly 1 Feb / 31 Jan for previous year – verify)",
+  "note": "Includes accident statistics, headcount, hours, welfare"
+ },
+ {
+  "t": "Register of lifting machines, chains, ropes & tackles; competent-person test certificate",
+  "law": "State Factories Rules (KA/TN) & BOCW Rules",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Test every 12 months (lifting), 6 months (hoists/lifts, accessories in BOCW)",
+  "note": "Form numbers per state rules (e.g. TN Rule 55A forms) — verify"
+ },
+ {
+  "t": "Pressure vessel / plant examination report",
+  "law": "State Factories Rules Rule 61 (KA/TN)",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "External 6-monthly, internal 12-monthly, hydraulic test 4-yearly (verify)",
+  "note": "By competent person recognised by Chief Inspector"
+ },
+ {
+  "t": "Safety Officer appointment notification; Safety Committee constitution",
+  "law": "OSH Code s.22/s.23; state rules",
+  "j": "India – Central",
+  "when": "On appointment; changes notified",
+  "note": ""
+ },
+ {
+  "t": "Site notification (Schedule 7), Safety Report (Schedule 8), MSDS (Schedule 9), Major accident report (Schedule 6)",
+  "law": "MSIHC Rules 1989",
+  "j": "India – Central",
+  "when": "Site notification ≥ 3 months before; safety report before commencing & 3-yearly update; major accident 48 h",
+  "note": "To Chief Inspector of Factories (DISH/DFBISH) for factories"
+ },
+ {
+  "t": "On-site Emergency Plan; mock drill reports",
+  "law": "MSIHC Rule 13; Chemical Accidents Rules 1996",
+  "j": "India – Central",
+  "when": "Before commencement; rehearsed 6-monthly; off-site drill annual",
+  "note": "Copy to District Collector / Crisis Group"
+ },
+ {
+  "t": "Form 1/2 (HW authorisation), Form 3 (record), Form 4 (annual return), Form 10 (manifest), Form 11 (accident)",
+  "law": "Hazardous & Other Wastes Rules 2016",
+  "j": "India – Central",
+  "when": "Form 4 by 30 June; Form 11 immediately on accident",
+  "note": "SPCB online portals (KSPCB/TNPCB)"
+ },
+ {
+  "t": "Form V – Environmental Statement",
+  "law": "EP Rules 1986 Rule 14",
+  "j": "India – Central",
+  "when": "By 30 September each year",
+  "note": "For units requiring consent/authorisation"
+ },
+ {
+  "t": "Consent to Establish / Consent to Operate applications & renewals",
+  "law": "Air Act s.21; Water Act s.25/26",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "CTE before construction; CTO before operation; renew before expiry",
+  "note": "KSPCB / TNPCB online"
+ },
+ {
+  "t": "C&D waste management plan & returns",
+  "law": "Environment (C&D) Waste Management Rules 2025",
+  "j": "India – Central",
+  "when": "With building permit for large projects; annual returns on portal (from 1 Apr 2026)",
+  "note": ""
+ },
+ {
+  "t": "BOCW establishment registration; cess assessment return; worker beneficiary registration",
+  "law": "OSH Code Ch. XIII / Code on Social Security Ch. VIII; state BOCW rules",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Before commencing; cess within 30 days of completion/assessment (advance possible)",
+  "note": "KBOCWWB (Karnataka) / TN Construction Workers Welfare Board"
+ },
+ {
+  "t": "Contractor licence (all-India, 5-year) & principal employer registration",
+  "law": "OSH Code Ch. XI",
+  "j": "India – Central",
+  "when": "Before engaging 50+ contract workers",
+  "note": ""
+ },
+ {
+  "t": "Form A – Notice of electrical accident",
+  "law": "CEA Safety Regulations 2023",
+  "j": "India – Central",
+  "when": "Within 48 h of knowledge (fatal – telephone/immediate)",
+  "note": "To Electrical Inspector; preserve scene"
+ },
+ {
+  "t": "Boiler accident report",
+  "law": "Boilers Act 2025",
+  "j": "India – Central",
+  "when": "Within 24 h",
+  "note": "To Chief Inspector of Boilers"
+ },
+ {
+  "t": "PESO licences (Form XIV/XV petroleum; LE forms explosives; cylinder/SMPV forms) & accident notice",
+  "law": "Petroleum Rules 2002; Explosives Rules 2008; Gas Cylinders Rules 2016; SMPV(U) 2016",
+  "j": "India – Central",
+  "when": "Before storage; accident: forthwith",
+  "note": "Online PESO portal"
+ },
+ {
+  "t": "Fire NOC application / renewal",
+  "law": "Karnataka Fire Force Act 1964; TN Fire Service Act 1985; NBC Part 4",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Provisional at plan stage; final before occupancy; renewal per state (annual/biennial)",
+  "note": ""
+ },
+ {
+  "t": "Lift erection permission & licence",
+  "law": "Karnataka Lifts Act 2012; TN Lifts and Escalators Act 1997",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Before erection; licence before use; annual renewal",
+  "note": ""
+ },
+ {
+  "t": "ESIC Accident Report (Form 12); Employee's Compensation fatal report",
+  "law": "Code on Social Security 2020",
+  "j": "India – Central",
+  "when": "ESIC: 24 h; EC Commissioner: fatal within 7 days",
+  "note": ""
+ },
+ {
+  "t": "OSHA 300 Log / 300A Summary / 301 Incident Report",
+  "law": "29 CFR 1904",
+  "j": "USA (OSHA)",
+  "when": "301 within 7 days; 300A posted 1 Feb–30 Apr; electronic submission by 2 March",
+  "note": "Fatality 8 h; hospitalisation/amputation/eye loss 24 h (phone/online)"
+ },
+ {
+  "t": "RIDDOR F2508 report",
+  "law": "RIDDOR 2013 (UK)",
+  "j": "UK / EU",
+  "when": "Death/specified injury: without delay (10 days); over-7-day: 15 days",
+  "note": ""
+ },
+ {
+  "t": "Permit-to-work forms (hot, cold, confined space, excavation, electrical, WAH, radiography)",
+  "law": "OISD-STD-105 model; site procedure",
+  "j": "India – Central",
+  "when": "Per task; retain ≥ 1 year (3 years MAH)",
+  "note": "Use the Permit Builder in this app"
+ },
+ {
+  "t": "CCTS monitoring plan; verified GHG emission report (obligated entities)",
+  "law": "Carbon Credit Trading Scheme 2023; EC Act 2001/2022",
+  "j": "India – Central",
+  "when": "Monitoring plan before compliance year; verified report within 4 months of FY end (31 July)",
+  "note": "Verification by Accredited Carbon Verification Agency; CCC issuance/surrender via ICM registry (first issuance 30 Sep 2026)"
+ },
+ {
+  "t": "Energy audit report & annual energy return (Form 1/Form 2) – designated consumers",
+  "law": "Energy Conservation Act 2001; BEE rules",
+  "j": "India – Central",
+  "when": "Energy audit periodicity per notification (typically 3 years); annual return by date notified",
+  "note": "To State Designated Agency (KREDL Karnataka; EMC Tamil Nadu) and BEE; energy manager appointment"
+ },
+ {
+  "t": "BRSR / BRSR Core with assurance statement",
+  "law": "SEBI LODR Reg 34(2)(f)",
+  "j": "India – Central",
+  "when": "With annual report; assurance tier by market-cap rank (all top 1,000 from FY2026-27)",
+  "note": "Value-chain (≥ 2% partners) assessment/assurance from FY2026-27"
+ },
+ {
+  "t": "CBAM installation data & verification report (for EU customers)",
+  "law": "EU Regulation 2023/956 (as amended 2025/2083)",
+  "j": "UK / EU",
+  "when": "Data to importer before their annual declaration (30 Sep 2027 for 2026 imports)",
+  "note": "Importer must be an authorised declarant; default values carry 10–30% mark-ups"
+ },
+ {
+  "t": "EPR registrations & annual returns (plastic, e-waste, battery, tyre, used oil)",
+  "law": "Plastic Waste Rules 2016 (2022 EPR); E-Waste Rules 2022; Battery Waste Rules 2022; Tyre EPR 2022; HOWM 2nd Amendment 2023 (used oil, from 1 Apr 2024)",
+  "j": "India – Central",
+  "when": "Registration before placing on market/handling; annual returns per portal (usually 30 June)",
+  "note": "CPCB centralised portals; bulk consumers/generators keep hand-over records to registered recyclers"
+ },
+ {
+  "t": "Lifting gear register & test/thorough-examination certificates (slings, chains, shackles, hoists)",
+  "law": "Factories Act s.29 via state rules; BOCW rules",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Before first use; 12-monthly (6-monthly for accessories where rules require)",
+  "note": "Competent person recognised by Chief Inspector; forms per state rules"
+ },
+ {
+  "t": "Tower crane erection/climbing test certificate; crane inspection logs",
+  "law": "Factories Act s.29 via state rules; BOCW rules; OSHA 1926.1412 (US)",
+  "j": "India – Central",
+  "when": "After each erection/climb and every 12 months; daily/monthly logs",
+  "note": "Keep in cab; AAI height NOC where applicable"
+ },
+ {
+  "t": "Dust Hazard Analysis report",
+  "law": "NFPA 652 (good practice); Factories Act s.37 via state rules",
+  "j": "International",
+  "when": "Before operation; revalidate every 5 years",
+  "note": "Supports insurer/Fire NOC requirements"
+ },
+ {
+  "t": "Gas-free certificate; blind/isolation register (tank cleaning)",
+  "law": "Factories Act s.36 via state rules; OISD-STD-105; API 2015",
+  "j": "India – Central",
+  "when": "Before entry/hot work; each retest",
+  "note": "Attach to permits; retain with permit records"
+ },
+ {
+  "t": "Drone flight log & permissions",
+  "law": "Drone Rules 2021",
+  "j": "India – Central",
+  "when": "Each flight; zone permission before flight in yellow zones",
+  "note": "Digital Sky portal"
+ },
+ {
+  "t": "First-aid treatment register; first-aider certificates; box inspection log",
+  "law": "Factories Act s.45 via state rules; OSH Code s.24; BOCW rules",
+  "j": "Karnataka / Tamil Nadu",
+  "when": "Continuous; weekly box check; certificates valid 3 years",
+  "note": "Produce on inspection; link entries ≥ 48 h absence to accident notice"
+ },
+ {
+  "t": "Safety observation card / unsafe act & condition register; stop-work log",
+  "law": "OSH Code s.6, s.22 (safety committee review); ISO 45001 cl. 5.4, 10.2",
+  "j": "India – Central",
+  "when": "Daily cards; monthly trend to safety committee",
+  "note": "Use the Observation card tool in this app"
+ }
+]

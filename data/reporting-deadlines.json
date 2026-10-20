@@ -1,0 +1,226 @@
+[
+ {
+  "ev": "Fatal accident",
+  "j": "India (OSH Code – all)",
+  "to": "Inspector-cum-Facilitator (electronic + written), police station, family of deceased; District Magistrate/SDO",
+  "dl": "Forthwith (immediately)",
+  "form": "Form XI (Central Rules) / state equivalent",
+  "law": "OSH Code s.10; Central Rules 2026 Rule 7"
+ },
+ {
+  "ev": "Injury preventing work ≥ 48 hours",
+  "j": "India (OSH Code – all)",
+  "to": "Inspector-cum-Facilitator; DM/SDO",
+  "dl": "Within 12 hours (Central Rules); state rules may say 24 h",
+  "form": "Form XI / state form",
+  "law": "OSH Code s.10; Rule 7"
+ },
+ {
+  "ev": "Dangerous occurrence (no injury) – crane/hoist collapse, explosion, fire, pressure-vessel burst, structure/scaffold collapse, electrical fire, hazardous release",
+  "j": "India (OSH Code – all)",
+  "to": "Inspector-cum-Facilitator; DM/SDO",
+  "dl": "Within 12 hours",
+  "form": "Form XI",
+  "law": "OSH Code s.11; Rule 7(4)"
+ },
+ {
+  "ev": "Occupational disease (Third Schedule)",
+  "j": "India (OSH Code – all)",
+  "to": "Inspector-cum-Facilitator / Chief Inspector",
+  "dl": "Medical practitioner forthwith; employer as prescribed",
+  "form": "Notice of disease",
+  "law": "OSH Code s.12"
+ },
+ {
+  "ev": "Factory accident (legacy state rules still followed by many inspectors)",
+  "j": "Karnataka",
+  "to": "Inspector of Factories (DFBISH), DM, police (fatal)",
+  "dl": "Fatal: immediate phone/online + written (typically within 12 h – verify); non-fatal > 48 h: 24 h; dangerous occurrence: 4 h (verify)",
+  "form": "Form 18 (verify)",
+  "law": "Karnataka Factories Rules 1969"
+ },
+ {
+  "ev": "Factory accident (legacy state rules)",
+  "j": "Tamil Nadu",
+  "to": "Inspector of Factories (DISH), DM/police (fatal)",
+  "dl": "Fatal: immediate + written (typically within 4–12 h – verify); non-fatal > 48 h: 24 h",
+  "form": "Form 18 (verify)",
+  "law": "TN Factories Rules 1950"
+ },
+ {
+  "ev": "Construction site accident (legacy BOCW rules)",
+  "j": "Karnataka / Tamil Nadu",
+  "to": "Registering Officer / Inspector; police (fatal); Welfare Board (for benefits)",
+  "dl": "Fatal: within 4 h (verify); others per rule",
+  "form": "State BOCW form",
+  "law": "KA/TN BOCW Rules 2006 (now OSH Code s.10)"
+ },
+ {
+  "ev": "Major chemical accident (MSIHC)",
+  "j": "India",
+  "to": "Concerned authority (Chief Inspector of Factories) + DM/Crisis Group",
+  "dl": "Within 48 hours",
+  "form": "Schedule 6 report",
+  "law": "MSIHC Rules 1989 Rule 5"
+ },
+ {
+  "ev": "Electrical accident (fatal / non-fatal shock, fire)",
+  "j": "India",
+  "to": "Electrical Inspector (CEIG office)",
+  "dl": "Within 48 hours (fatal – immediately by phone)",
+  "form": "Form A",
+  "law": "CEA Safety Regulations 2023"
+ },
+ {
+  "ev": "Boiler / steam pipe accident",
+  "j": "India",
+  "to": "Chief Inspector of Boilers",
+  "dl": "Within 24 hours",
+  "form": "Written report",
+  "law": "Boilers Act 2025"
+ },
+ {
+  "ev": "Accident at petroleum/explosives/gas-cylinder licensed premises",
+  "j": "India",
+  "to": "Chief Controller of Explosives (PESO), police",
+  "dl": "Forthwith",
+  "form": "Written notice",
+  "law": "Petroleum Rules 2002; Explosives Rules 2008; Gas Cylinders Rules 2016"
+ },
+ {
+  "ev": "Hazardous waste accident / spill",
+  "j": "India",
+  "to": "State Pollution Control Board",
+  "dl": "Immediately",
+  "form": "Form 11",
+  "law": "HOWM Rules 2016 Rule 23"
+ },
+ {
+  "ev": "Accidental discharge of pollutant",
+  "j": "India",
+  "to": "SPCB and authorities",
+  "dl": "Forthwith",
+  "form": "Intimation",
+  "law": "EP Act 1986 s.9; Water Act s.31; Air Act s.23"
+ },
+ {
+  "ev": "Radiation incident (lost/stuck source, overexposure)",
+  "j": "India",
+  "to": "AERB",
+  "dl": "Immediately (within 24 h written)",
+  "form": "AERB incident report",
+  "law": "AE (Radiation Protection) Rules 2004"
+ },
+ {
+  "ev": "Mine/quarry accident",
+  "j": "India",
+  "to": "DGMS Regional Inspector",
+  "dl": "Forthwith",
+  "form": "Form IV-A",
+  "law": "Mines Rules / Regulations"
+ },
+ {
+  "ev": "Employee injured – ESI insured",
+  "j": "India",
+  "to": "ESIC branch office",
+  "dl": "Within 24 hours (serious) / 48 h",
+  "form": "Form 12",
+  "law": "Code on Social Security 2020 (ESI)"
+ },
+ {
+  "ev": "Fatal accident – compensation",
+  "j": "India",
+  "to": "Commissioner for Employee's Compensation",
+  "dl": "Within 7 days",
+  "form": "Report",
+  "law": "Code on Social Security 2020 (Employee's Compensation)"
+ },
+ {
+  "ev": "Lift/escalator accident",
+  "j": "Karnataka / Tamil Nadu",
+  "to": "Chief Electrical Inspector",
+  "dl": "Immediately / within 24 h",
+  "form": "Written report",
+  "law": "Karnataka Lifts Act 2012; TN Lifts and Escalators Act 1997"
+ },
+ {
+  "ev": "Work-related fatality",
+  "j": "USA (OSHA)",
+  "to": "OSHA (1-800-321-OSHA / area office / online)",
+  "dl": "Within 8 hours",
+  "form": "Phone/online; 301 within 7 days",
+  "law": "29 CFR 1904.39"
+ },
+ {
+  "ev": "In-patient hospitalisation, amputation, loss of an eye",
+  "j": "USA (OSHA)",
+  "to": "OSHA",
+  "dl": "Within 24 hours",
+  "form": "Phone/online",
+  "law": "29 CFR 1904.39"
+ },
+ {
+  "ev": "Death / specified injury / dangerous occurrence",
+  "j": "UK",
+  "to": "HSE (RIDDOR online)",
+  "dl": "Without delay; written within 10 days",
+  "form": "F2508",
+  "law": "RIDDOR 2013"
+ },
+ {
+  "ev": "Over-7-day incapacitation injury",
+  "j": "UK",
+  "to": "HSE",
+  "dl": "Within 15 days",
+  "form": "F2508",
+  "law": "RIDDOR 2013"
+ },
+ {
+  "ev": "Dust explosion / deflagration, furnace run-out, tank fire (dangerous occurrences)",
+  "j": "India (OSH Code – all)",
+  "to": "Inspector-cum-Facilitator; DM/SDO; (MSIHC authority if MAH)",
+  "dl": "Within 12 hours (Central Rules); MSIHC 48 h",
+  "form": "Form XI; Schedule 6",
+  "law": "OSH Code s.11; Rule 7; MSIHC Rule 5"
+ },
+ {
+  "ev": "Loss/theft of explosives or detonators",
+  "j": "India",
+  "to": "PESO Controller and local police",
+  "dl": "Immediately",
+  "form": "Written report",
+  "law": "Explosives Rules 2008"
+ },
+ {
+  "ev": "Legionnaires'/infectious disease cluster at site or camp",
+  "j": "Karnataka / Tamil Nadu",
+  "to": "District Health Officer / Director of Public Health",
+  "dl": "Immediately (notifiable disease)",
+  "form": "Notification per State Public Health Act",
+  "law": "TN Public Health Act 1939; Karnataka Public Health Act; Epidemic Diseases Act"
+ },
+ {
+  "ev": "Drone incident/accident",
+  "j": "India",
+  "to": "DGCA (Digital Sky) ; police if injury",
+  "dl": "Within 24 hours (verify rule)",
+  "form": "Online incident report",
+  "law": "Drone Rules 2021"
+ },
+ {
+  "ev": "CCTS: verified GHG emission report (compliance deadline, not an incident)",
+  "j": "India",
+  "to": "BEE via ICM registry",
+  "dl": "Within 4 months of FY end (31 July)",
+  "form": "Verified report (ACVA)",
+  "law": "CCTS 2023; EC Act"
+ },
+ {
+  "ev": "Radiography source stuck/lost; overexposure",
+  "j": "India",
+  "to": "AERB (24×7 emergency line) and police (for lost source)",
+  "dl": "Immediately",
+  "form": "AERB incident report within 24 h",
+  "law": "AE (Radiation Protection) Rules 2004"
+ }
+]

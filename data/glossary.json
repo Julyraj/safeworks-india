@@ -1,0 +1,346 @@
+[
+ [
+  "ALARP",
+  "As Low As Reasonably Practicable – risk reduced until further cost is grossly disproportionate"
+ ],
+ [
+  "AERB",
+  "Atomic Energy Regulatory Board (India) – licenses radiography and radiation sources"
+ ],
+ [
+  "BOCW",
+  "Building and Other Construction Workers (Act 1996, now under OSH Code; state rules and Welfare Boards continue)"
+ ],
+ [
+  "CEA",
+  "Central Electricity Authority – issues electrical safety regulations"
+ ],
+ [
+  "CEIG",
+  "Chief Electrical Inspector to Government (state) – approves HT installations, lifts, investigates electrical accidents"
+ ],
+ [
+  "CTE / CTO",
+  "Consent to Establish / Consent to Operate from State Pollution Control Board"
+ ],
+ [
+  "DFBISH",
+  "Department of Factories, Boilers, Industrial Safety & Health, Karnataka"
+ ],
+ [
+  "DISH",
+  "Directorate of Industrial Safety and Health, Tamil Nadu"
+ ],
+ [
+  "DGFASLI",
+  "Directorate General Factory Advice Service & Labour Institutes (central technical arm)"
+ ],
+ [
+  "DGMS",
+  "Directorate General of Mines Safety"
+ ],
+ [
+  "Dangerous occurrence",
+  "Listed event (collapse, explosion, fire, pressure burst, release) reportable even without injury – OSH Code s.11"
+ ],
+ [
+  "EC",
+  "Environmental Clearance (EIA Notification 2006) or Employee's Compensation"
+ ],
+ [
+  "GHS",
+  "Globally Harmonized System of classification and labelling of chemicals"
+ ],
+ [
+  "Hazardous process",
+  "Process listed in First Schedule where raw materials/products/wastes may impair health or pollute environment (Factories Act s.2(cb), retained in OSH Code)"
+ ],
+ [
+  "HIRA / JSA / JHA",
+  "Hazard Identification & Risk Assessment / Job Safety (Hazard) Analysis"
+ ],
+ [
+  "HAZOP / LOPA / SIL",
+  "Hazard and Operability study / Layer of Protection Analysis / Safety Integrity Level"
+ ],
+ [
+  "ICF",
+  "Inspector-cum-Facilitator – enforcement officer under the OSH Code (replaces Inspector of Factories/Labour)"
+ ],
+ [
+  "IDLH",
+  "Immediately Dangerous to Life or Health concentration (NIOSH)"
+ ],
+ [
+  "LEL / UEL",
+  "Lower / Upper Explosive Limit – flammable range of a gas in air"
+ ],
+ [
+  "LOTO",
+  "Lockout / Tagout – control of hazardous energy"
+ ],
+ [
+  "LTIFR / TRIR",
+  "Lost Time Injury Frequency Rate (per 1,000,000 h, IS 3786) / Total Recordable Incident Rate (per 200,000 h, OSHA)"
+ ],
+ [
+  "MAH unit",
+  "Major Accident Hazard installation – exceeds MSIHC Schedule thresholds"
+ ],
+ [
+  "MEWP",
+  "Mobile Elevating Work Platform (boom/scissor lift)"
+ ],
+ [
+  "MoC",
+  "Management of Change"
+ ],
+ [
+  "MSDS / SDS",
+  "(Material) Safety Data Sheet – MSIHC Schedule 9 / GHS 16-section"
+ ],
+ [
+  "MSIHC",
+  "Manufacture, Storage and Import of Hazardous Chemical Rules 1989"
+ ],
+ [
+  "NBC",
+  "National Building Code of India 2016"
+ ],
+ [
+  "NEP",
+  "OSHA National Emphasis Program (targeted enforcement, e.g. heat, silica, trenching)"
+ ],
+ [
+  "NOC",
+  "No Objection Certificate (fire, utilities, etc.)"
+ ],
+ [
+  "OHSMS",
+  "Occupational Health & Safety Management System (ISO 45001)"
+ ],
+ [
+  "OISD",
+  "Oil Industry Safety Directorate"
+ ],
+ [
+  "OSH Code",
+  "Occupational Safety, Health and Working Conditions Code 2020 – in force 21 Nov 2025"
+ ],
+ [
+  "PEL / TLV / REL",
+  "Permissible Exposure Limit (OSHA / Factories Act Sch. II) / Threshold Limit Value (ACGIH) / Recommended Exposure Limit (NIOSH)"
+ ],
+ [
+  "PESO",
+  "Petroleum and Explosives Safety Organisation"
+ ],
+ [
+  "PRCS",
+  "Permit-Required Confined Space (OSHA 1910.146)"
+ ],
+ [
+  "PSM / PSSR",
+  "Process Safety Management / Pre-Start-up Safety Review"
+ ],
+ [
+  "PTW",
+  "Permit to Work"
+ ],
+ [
+  "QCO",
+  "Quality Control Order – makes BIS certification (ISI mark) compulsory for products such as helmets, safety footwear"
+ ],
+ [
+  "RCA / CAPA",
+  "Root Cause Analysis / Corrective and Preventive Action"
+ ],
+ [
+  "RCD / ELCB / GFCI",
+  "Residual Current Device (30 mA) – OSHA term GFCI"
+ ],
+ [
+  "RIDDOR",
+  "UK Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013"
+ ],
+ [
+  "SIMOPS",
+  "Simultaneous Operations – interacting tasks needing coordination"
+ ],
+ [
+  "SMC / IC",
+  "Site Main Controller / Incident Controller (on-site emergency plan roles)"
+ ],
+ [
+  "SPCB",
+  "State Pollution Control Board (KSPCB, TNPCB)"
+ ],
+ [
+  "SRL",
+  "Self-Retracting Lifeline"
+ ],
+ [
+  "SWL / WLL",
+  "Safe Working Load / Working Load Limit"
+ ],
+ [
+  "TSDF",
+  "Treatment, Storage and Disposal Facility (hazardous waste)"
+ ],
+ [
+  "TREM card",
+  "Transport Emergency Card for dangerous goods (CMV Rule 132)"
+ ],
+ [
+  "WBGT",
+  "Wet Bulb Globe Temperature – heat stress index (ISO 7243)"
+ ],
+ [
+  "ACVA",
+  "Accredited Carbon Verification Agency – verifies GHG reports under CCTS (BEE accreditation)"
+ ],
+ [
+  "AST / UST",
+  "Above-ground / Underground Storage Tank"
+ ],
+ [
+  "ATG",
+  "Automatic Tank Gauging – continuous level/leak monitoring for USTs"
+ ],
+ [
+  "BEE",
+  "Bureau of Energy Efficiency – administers EC Act, PAT, CCTS, ECSBC, standards & labelling"
+ ],
+ [
+  "BRSR / BRSR Core",
+  "SEBI's Business Responsibility and Sustainability Report; Core = assured subset of KPIs"
+ ],
+ [
+  "CBAM",
+  "EU Carbon Border Adjustment Mechanism – carbon price on embedded emissions of imported cement, steel, aluminium, fertiliser, electricity, hydrogen"
+ ],
+ [
+  "CCC",
+  "Carbon Credit Certificate – 1 tCO2e under the Indian Carbon Market"
+ ],
+ [
+  "CCTS",
+  "Carbon Credit Trading Scheme 2023 – India's compliance carbon market"
+ ],
+ [
+  "CP",
+  "Cathodic protection – corrosion control for buried/immersed steel (tanks, pipelines)"
+ ],
+ [
+  "DHA",
+  "Dust Hazard Analysis (NFPA 652)"
+ ],
+ [
+  "ECSBC / ENS",
+  "Energy Conservation and Sustainable Building Code (commercial) / Eco Niwas Samhita (residential)"
+ ],
+ [
+  "EIV / ESD",
+  "Emergency Isolation Valve / Emergency Shutdown system"
+ ],
+ [
+  "EPR",
+  "Extended Producer Responsibility – take-back/recycling obligations (plastic, e-waste, batteries, tyres, used oil)"
+ ],
+ [
+  "ESCerts",
+  "Energy Saving Certificates under PAT"
+ ],
+ [
+  "F&G",
+  "Fire and gas detection system"
+ ],
+ [
+  "GEI",
+  "Greenhouse-gas Emission Intensity target (tCO2e per tonne product) under CCTS"
+ ],
+ [
+  "GHG Protocol Scopes",
+  "Scope 1 direct; Scope 2 purchased energy; Scope 3 value chain (15 categories)"
+ ],
+ [
+  "GRIHA / IGBC / LEED",
+  "Green-building rating systems recognised in India (TERI/MNRE; CII; USGBC)"
+ ],
+ [
+  "HAV / WBV",
+  "Hand-arm / whole-body vibration"
+ ],
+ [
+  "ICM",
+  "Indian Carbon Market"
+ ],
+ [
+  "IIAR",
+  "International Institute of Ammonia Refrigeration – standards for ammonia systems"
+ ],
+ [
+  "Kst / Pmax / MIE",
+  "Dust explosibility index / maximum explosion pressure / minimum ignition energy"
+ ],
+ [
+  "LMI / ASLI",
+  "Load Moment Indicator / Automatic Safe Load Indicator on cranes"
+ ],
+ [
+  "NGRBC",
+  "National Guidelines on Responsible Business Conduct – nine principles behind BRSR"
+ ],
+ [
+  "PAT",
+  "Perform, Achieve and Trade – BEE energy-efficiency trading scheme for designated consumers"
+ ],
+ [
+  "PIT",
+  "Powered Industrial Truck (forklift, reach truck, tow tractor)"
+ ],
+ [
+  "PPV",
+  "Peak Particle Velocity – blasting vibration measure (mm/s)"
+ ],
+ [
+  "PSI / PHA / PSSR",
+  "Process Safety Information / Process Hazard Analysis / Pre-Start-up Safety Review"
+ ],
+ [
+  "Pyrophoric iron sulphide",
+  "Deposit in sour-service tanks that self-ignites when dry – keep wet during cleaning"
+ ],
+ [
+  "RBI",
+  "Risk-Based Inspection (API 580/581)"
+ ],
+ [
+  "SDA",
+  "State Designated Agency under the EC Act (KREDL Karnataka; EMC Tamil Nadu)"
+ ],
+ [
+  "SIR",
+  "Statistical Inventory Reconciliation – UST leak detection method"
+ ],
+ [
+  "SoC",
+  "State of charge (batteries)"
+ ],
+ [
+  "TBM / EPB / NATM",
+  "Tunnel Boring Machine / Earth-Pressure Balance / New Austrian Tunnelling Method"
+ ],
+ [
+  "TVC",
+  "Total Viable Count – water microbiology indicator"
+ ],
+ [
+  "Type-certified drone / UIN",
+  "DGCA type certificate / Unique Identification Number for drones"
+ ],
+ [
+  "WLL / SWL",
+  "Working Load Limit (manufacturer) / Safe Working Load (as assessed for use)"
+ ]
+]

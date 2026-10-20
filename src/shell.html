@@ -1,0 +1,672 @@
+<title>SafeWorks India</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed navy rail on the left (site-control-room feel), white working surface, safety-orange accent reserved for actions and active states; semantic colours (good/warn/crit) separate from the accent. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --surface2:#eaeef1; --fg:#17222c; --muted:#5b6974; --line:#d4dbe1;
+  --accent:#d1480c; --accent-ink:#ffffff; --accent-soft:#fdeee4;
+  --nav:#0f1c2b; --nav-fg:#c9d4de; --nav-active:#1c2f45;
+  --good:#1e7a4b; --warn:#a9700e; --crit:#b3261e; --info:#1f5fa8;
+  --chip:#e6ebef; --chip-fg:#2b3942;
+  --font:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:6px; --shadow:0 1px 2px rgba(16,24,32,.06),0 4px 14px rgba(16,24,32,.06);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1419; --surface:#161e26; --surface2:#1d2730; --fg:#e4eaef; --muted:#97a5b1; --line:#2a3741;
+  --accent:#f07a35; --accent-ink:#161010; --accent-soft:#3a2416;
+  --nav:#0a1118; --nav-fg:#b9c6d1; --nav-active:#182636;
+  --good:#4fbf85; --warn:#e2b04a; --crit:#f0786e; --info:#6ea8ea;
+  --chip:#22303b; --chip-fg:#cdd7df; --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1419; --surface:#161e26; --surface2:#1d2730; --fg:#e4eaef; --muted:#97a5b1; --line:#2a3741;
+  --accent:#f07a35; --accent-ink:#161010; --accent-soft:#3a2416;
+  --nav:#0a1118; --nav-fg:#b9c6d1; --nav-active:#182636;
+  --good:#4fbf85; --warn:#e2b04a; --crit:#f0786e; --info:#6ea8ea;
+  --chip:#22303b; --chip-fg:#cdd7df; --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+  color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--nav)}
+a{color:var(--info)}
+button{font:inherit}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100%}
+.rail{background:var(--nav);color:var(--nav-fg);padding-block:18px 24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:12px;position:sticky;top:env(safe-area-inset-top,0px);height:calc(100vh - env(safe-area-inset-top,0px));overflow:auto;display:flex;flex-direction:column;gap:18px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mark{width:34px;height:34px;border-radius:7px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-weight:700;font-family:var(--mono);font-size:13px;flex:none}
+.brand h1{font-size:16px;margin:0;color:#fff;letter-spacing:.2px;text-wrap:balance}
+.brand small{display:block;font-size:11px;color:var(--nav-fg);font-family:var(--mono);letter-spacing:.3px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .grp{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7f8f9d;padding:12px 10px 4px}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);color:var(--nav-fg);text-decoration:none;font-size:14px}
+.nav a:hover{background:var(--nav-active);color:#fff}
+.nav a.on{background:var(--nav-active);color:#fff;box-shadow:inset 3px 0 0 var(--accent)}
+.nav a .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:#7f8f9d}
+.nav svg{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.railfoot{margin-top:auto;font-size:11.5px;color:#7f8f9d;line-height:1.45}
+.main{min-width:0;display:flex;flex-direction:column}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;gap:12px;align-items:center}
+.search{flex:1;display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--line);border-radius:var(--r);padding:6px 10px;min-width:0}
+.search input{flex:1;border:0;background:transparent;color:var(--fg);font:inherit;outline:none;min-width:0}
+.search input:focus-visible{outline:none}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search kbd{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.asof{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.content{padding-block:22px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px;max-width:1180px;width:100%}
+h2{font-size:22px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h3{font-size:16px;margin:0;text-wrap:balance}
+h4{font-size:13.5px;margin:0;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.lead{color:var(--muted);margin:4px 0 0;max-width:70ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:2px}
+.tile:hover{border-color:var(--accent)}
+.tile .big{font-family:var(--mono);font-size:24px;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .lbl{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--chip);color:var(--chip-fg);border-radius:999px;padding:3px 10px;font-size:12px;border:1px solid transparent;cursor:pointer;user-select:none}
+.chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip.sm{padding:1px 8px;font-size:11px;cursor:default}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.st::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.st.inforce::before{background:var(--good)} .st.transition::before{background:var(--warn)} .st.draft::before{background:var(--info)} .st.repealed::before{background:var(--crit)} .st.guidance::before{background:var(--info)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 12px;border-radius:var(--r);cursor:pointer;font-size:13.5px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:4px 9px;font-size:12.5px}
+.btn:focus-visible,.chip:focus-visible,.nav a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:0}
+.item.clk{cursor:pointer}
+.item.clk:hover{border-color:var(--accent)}
+.item .hd{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.item .t{font-weight:600;font-size:15.5px;text-wrap:balance}
+.meta{color:var(--muted);font-size:12.5px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sum{margin:8px 0 0;max-width:80ch}
+ul.keys{margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+ul.keys li::marker{color:var(--accent)}
+.note{margin-top:10px;padding:8px 12px;border-left:3px solid var(--warn);background:var(--surface2);font-size:13.5px;border-radius:0 var(--r) var(--r) 0}
+details summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;gap:8px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"";width:0;height:0;border-left:6px solid var(--muted);border-top:5px solid transparent;border-bottom:5px solid transparent;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){details summary::before{transition:none}}
+.two{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--mono);font-size:12px;color:var(--accent-ink);background:var(--accent);border-radius:4px;width:26px;height:24px;display:grid;place-items:center;font-weight:500;margin-top:2px}
+.refs{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.refs .box{background:var(--surface2);border-radius:var(--r);padding:10px 12px;font-size:13px;min-width:0}
+.refs .box h4{margin-bottom:6px}
+.refs ul{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:3px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ck{display:flex;flex-direction:column;gap:6px}
+.ck label{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);cursor:pointer}
+.ck label:has(input:checked){background:var(--surface2);text-decoration:line-through;color:var(--muted)}
+.ck input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+.bar{height:8px;background:var(--surface2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--good);width:0;transition:width .2s}
+.form{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.f input,.f select,.f textarea{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:var(--r);padding:8px 10px;font:inherit;min-width:0;width:100%}
+.f textarea{min-height:70px;resize:vertical}
+.f.wide{grid-column:1/-1}
+.out{font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;background:var(--surface2);border:1px solid var(--line);border-radius:var(--r);padding:12px;max-height:520px;overflow:auto;line-height:1.5}
+.alert{padding:10px 12px;border-radius:var(--r);font-size:13.5px;border:1px solid}
+.alert.ok{border-color:var(--good);color:var(--good)} .alert.bad{border-color:var(--crit);color:var(--crit)} .alert.wn{border-color:var(--warn);color:var(--warn)}
+.gas{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.gas .g{border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;background:var(--surface)}
+.gas .g b{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.gas .g input{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--fg);font:inherit;font-family:var(--mono);font-size:16px;padding:4px 0}
+.gas .g.bad{border-color:var(--crit)} .gas .g.ok{border-color:var(--good)}
+.gas .g small{display:block;font-size:11px;color:var(--muted)}
+.empty{color:var(--muted);padding:24px;text-align:center}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+input.num{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:var(--r);padding:5px 8px;font:inherit;font-family:var(--mono)}
+.toast{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;z-index:20;box-shadow:var(--shadow)}
+.sr{display:flex;flex-direction:column;gap:8px}
+.sr .r{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);cursor:pointer}
+.sr .r:hover{border-color:var(--accent)}
+.sr .k{font-family:var(--mono);font-size:10.5px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;padding-top:3px;white-space:nowrap}
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline .ev{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.timeline .ev .d{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500}
+.back{color:var(--muted);text-decoration:none;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+.back:hover{color:var(--accent)}
+.mtable td:first-child{font-weight:600;width:28%}
+.menu-btn{display:none}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static;height:auto;padding-block:12px;gap:10px}
+  .nav{flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:4px;scrollbar-width:thin}
+  .nav .grp{display:none}
+  .nav a{white-space:nowrap;padding:6px 10px;font-size:13px}
+  .nav a .n{display:none}
+  .railfoot{display:none}
+  .top{top:env(safe-area-inset-top,0px)}
+  .asof{display:none}
+  .timeline .ev{grid-template-columns:1fr}
+  .refs{grid-template-columns:1fr}
+}
+@media print{.rail,.top{display:none}}
+</style>
+
+<div class="app">
+<aside class="rail">
+  <div class="brand"><div class="mark">SW</div><div><h1>SafeWorks India</h1><small>Construction · Industry · Chemical</small></div></div>
+  <nav class="nav" id="nav"></nav>
+  <div class="railfoot">Regulatory snapshot as of 20 Oct 2026. Thresholds marked “verify” must be checked against the current gazetted text before use in a statutory filing.</div>
+</aside>
+<div class="main">
+  <div class="top">
+    <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search acts, procedures, checklists, forms, deadlines, glossary…" autocomplete="off"><kbd>/</kbd></div>
+    <div class="asof" id="asof">20 Oct 2026</div>
+  </div>
+  <main class="content" id="view"></main>
+</div>
+</div>
+
+<script>
+//__DATA__
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("sw:"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("sw:"+k,JSON.stringify(v))}catch(e){}}};
+const ICONS={home:'<svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>',reg:'<svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h8"/></svg>',proc:'<svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>',ck:'<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="m2 6 1 1 2-2M2 12l1 1 2-2M2 18l1 1 2-2"/></svg>',permit:'<svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="m9 14 2 2 4-4"/></svg>',inc:'<svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>',forms:'<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 10h16M9 10v9"/></svg>',rep:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',talk:'<svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/></svg>',em:'<svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/><circle cx="12" cy="12" r="3"/></svg>',num:'<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h6"/></svg>',gl:'<svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 0-3 3z"/><path d="M5 17h14"/></svg>'};
+// Merge expansion datasets
+REGS.push(...REGS2);PROCS.push(...PROCS2);CHECKLISTS.push(...CHECKLISTS2,...CHECKLISTS3);FORMS.push(...FORMS2,...FORMS3);REPORTING.push(...REPORTING2);NUMBERS.push(...NUMBERS2);GLOSSARY.push(...GLOSSARY2);TALKS.push(...TALKS2,...TALKS3);
+GLOSSARY.forEach(([k,v])=>KEYWORDS.push([k,"Acronyms & bodies",v]));
+const UNSAFE_COUNT=UNSAFE.acts.reduce((n,c)=>n+c.items.length,0)+UNSAFE.conditions.reduce((n,c)=>n+c.items.length,0);
+const PROTO_COUNT=PROTOCOLS.lsr.length+PROTOCOLS.standing.length+PROTOCOLS.emergency.length;
+Object.entries(REG_EXTRA).forEach(([id,ds])=>{const r=REGS.find(x=>x.id===id);if(r)ds.forEach(d=>{if(!r.d.includes(d))r.d.push(d)})});
+ICONS.sector='<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l6-4v17"/><path d="M11 21V12l8-3v12"/><path d="M14 13h2M14 16h2M7 9h2M7 12h2M7 15h2"/></svg>';
+ICONS.carbon='<svg viewBox="0 0 24 24"><path d="M4 18c3-8 9-11 16-12-1 7-4 13-12 14"/><path d="M4 18l6-6"/></svg>';
+ICONS.eye='<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+ICONS.rules='<svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>';
+ICONS.aid='<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M9 6V4h6v2M12 10v6M9 13h6"/></svg>';
+ICONS.key='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/><path d="m20.5 18.5 2 2"/></svg>';
+const VIEWS=[["Overview",[["home","Dashboard","home"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
+const STATE={regJ:"All",regD:"All",regS:"All",proc:null,procCat:"All",ck:null,ckCat:"All",q:"",sector:null,kwCat:"All",faCat:"All",protoTab:"lsr",unsafeTab:"acts"};
+const JUR=["All","India – Central","Karnataka","Tamil Nadu","USA (OSHA)","International","UK / EU"];
+const DOMS=["All","Factories","Construction","Chemical","Process Safety","Storage Tanks","Environment","Energy/Carbon/ESG","Electrical","Fire","Lifting & Cranes","Tools & Tackles","Foundry & Metals","Pressure/Boilers","Welfare/Labour","Management System","PPE/Equipment","Health","Mines","Oil & Gas","Transport","Radiation"];
+const STATUSES=["All","In force","In force (transition)","Draft","Repealed (subsumed)","Enforcement guidance"];
+const stCls=s=>s==="In force"?"inforce":s==="In force (transition)"?"transition":s==="Draft"?"draft":s.startsWith("Repealed")?"repealed":"guidance";
+
+function nav(cur){$("#nav").innerHTML=VIEWS.map(([g,items])=>`<div class="grp">${g}</div>`+items.map(([id,l,ic,n])=>`<a href="#${id}" class="${cur===id?"on":""}">${ICONS[ic]}<span>${l}</span>${n?`<span class="n">${n}</span>`:""}</a>`).join("")).join("")}
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+async function copy(txt){try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select and copy manually")}ta.remove()}}
+function chipbar(opts,cur,on){return `<div class="chips">${opts.map(o=>`<button type="button" class="chip ${o===cur?"on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`}
+function bindChips(el,fn){el.querySelectorAll(".chip[data-v]").forEach(c=>c.addEventListener("click",()=>fn(c.dataset.v)))}
+
+/* ---------- HOME ---------- */
+function home(){
+ const kaDraft=REGS.find(r=>r.id==="ka-osh-rules"), tn=REGS.find(r=>r.id==="tn-osh-rules");
+ return `<div><h2>Safety procedure & compliance desk</h2><p class="lead">One reference for site and plant safety in India (central, Karnataka, Tamil Nadu) mapped against OSHA, ISO, ILO, NFPA and UK/EU practice. Use the library to look things up, the tools to issue permits, work an incident and brief a crew.</p></div>
+ <div class="tiles">
+  <a class="tile" href="#regulations"><span class="big">${REGS.length}</span><span class="lbl">acts, rules & standards</span></a>
+  <a class="tile" href="#procedures"><span class="big">${PROCS.length}</span><span class="lbl">safe work procedures</span></a>
+  <a class="tile" href="#checklists"><span class="big">${CHECKLISTS.length}</span><span class="lbl">interactive checklists</span></a>
+  <a class="tile" href="#sectors"><span class="big">${SECTORS.length}</span><span class="lbl">sector guides</span></a>
+  <a class="tile" href="#reporting"><span class="big">${REPORTING.length}</span><span class="lbl">statutory reporting clocks</span></a>
+  <a class="tile" href="#talks"><span class="big">${TALKS.length}</span><span class="lbl">toolbox talks</span></a>
+  <a class="tile" href="#numbers"><span class="big">${NUMBERS.length}</span><span class="lbl">limit & threshold cards</span></a>
+  <a class="tile" href="#carbon"><span class="big">CO₂</span><span class="lbl">carbon & ESG desk</span></a>
+  <a class="tile" href="#unsafe"><span class="big">${UNSAFE_COUNT}</span><span class="lbl">unsafe acts & conditions</span></a>
+  <a class="tile" href="#protocols"><span class="big">${PROTO_COUNT}</span><span class="lbl">safety & emergency protocols</span></a>
+  <a class="tile" href="#firstaid"><span class="big">${FIRSTAID.topics.length}</span><span class="lbl">first-aid topics</span></a>
+  <a class="tile" href="#keywords"><span class="big">${KEYWORDS.length}</span><span class="lbl">keywords & glossary</span></a>
+ </div>
+ <div class="two">
+  <div class="card"><h3>What changed recently (India)</h3>
+   <div class="timeline">
+    <div class="ev"><span class="d">1 May 2025</span><span><b>Boilers Act 2025</b> replaces the 1923 Act.</span></div>
+    <div class="ev"><span class="d">8 Oct 2025</span><span><b>CCTS</b> GHG-intensity targets notified for aluminium, cement, chlor-alkali, pulp & paper (282 plants); FY2025-26 & 2026-27 vs FY2023-24 base.</span></div>
+    <div class="ev"><span class="d">21 Nov 2025</span><span>All four Labour Codes in force. <b>OSH Code 2020</b> repeals Factories Act 1948, BOCW Act 1996, Contract Labour Act 1970, Mines Act 1952, Dock Workers Act and 8 more. State Factories/BOCW Rules continue in transition.</span></div>
+    <div class="ev"><span class="d">1 Jan 2026</span><span><b>EU CBAM</b> definitive regime starts for cement, iron & steel, aluminium, fertilisers, electricity, hydrogen; certificates sold from 1 Feb 2027, first declaration 30 Sep 2027.</span></div>
+    <div class="ev"><span class="d">16 Jan 2026</span><span>CCTS targets extended to refineries, petrochemicals, textiles (7 sectors, 490 entities); iron & steel draft issued 26 Jun 2026.</span></div>
+    <div class="ev"><span class="d">23 Jan 2026</span><span>Karnataka publishes <b>draft OSH (Karnataka) Rules 2026</b> (${esc(kaDraft.s)} — verify final notification).</span></div>
+    <div class="ev"><span class="d">1 Apr 2026</span><span><b>Environment (C&D) Waste Management Rules 2025</b> take effect, replacing the 2016 rules.</span></div>
+    <div class="ev"><span class="d">10 Apr 2026</span><span>OSHA revises the <b>Heat NEP</b> (CPL 03-00-024); no final federal heat standard yet.</span></div>
+    <div class="ev"><span class="d">8 May 2026</span><span><b>OSH (Central) Rules 2026</b> notified: Form I registration, Form XI accident notice (death forthwith; others 12 h). Existing registrants update details by <b>8 Nov 2026</b>.</span></div>
+    <div class="ev"><span class="d">19 Jul 2026</span><span>Ministry of Power draft: mandatory <b>star rating</b> (ECSBC tiers) for new buildings ≥ 20,000 m².</span></div>
+    <div class="ev"><span class="d">31 Jul / 30 Sep 2026</span><span>CCTS first-cycle verified reports due; CCC issuance on the ICM registry; trading expected late 2026.</span></div>
+    <div class="ev"><span class="d">4 Sep 2026</span><span>Karnataka Shops & Commercial Establishments (Amendment) Act 2026 removes duplicate registration where OSH Code s.3 registration exists.</span></div>
+    <div class="ev"><span class="d">FY2026-27</span><span><b>BRSR Core</b> assurance extends to all top 1,000 listed entities; value-chain partners ≥ 2% assessed. TN OSH rules ${esc(tn.s.toLowerCase())} / partly notified.</span></div>
+   </div></div>
+  <div class="card"><h3>How to use this desk</h3>
+   <ol class="steps">
+    <li>Before a high-risk task: open the <a href="#procedures">procedure</a>, run the linked <a href="#checklists">checklist</a>, and issue a permit from the <a href="#permits">Permit builder</a>.</li>
+    <li>At an incident: open the <a href="#incidents">Incident navigator</a> — pick the state and event type; it lists who to notify, by when, on which form, and drafts the notice.</li>
+    <li>For audits and registers: use <a href="#forms">Forms & registers</a> and the statutory checklists (factory / construction site).</li>
+    <li>Daily briefings: pick a <a href="#talks">Toolbox talk</a>; copy it to WhatsApp or print it from your browser.</li>
+    <li>Anything with a figure: cross-check in <a href="#numbers">Limits & thresholds</a>. Items marked “verify” need the gazetted text.</li>
+    <li>Briefings and observations: the <a href="#protocols">Safety protocols</a> (Life-Saving Rules, site rules, emergency protocols), the <a href="#unsafe">Unsafe acts & conditions</a> master list and the <a href="#observe">Observation card</a>; medical response in <a href="#firstaid">First aid</a>.</li>
+    <li>New site or plant type: start from the <a href="#sectors">Sector guide</a> (foundry, chemical plant, terminal, power, warehouse, mining, water, heavy industry…); for carbon/ESG obligations use the <a href="#carbon">Carbon & ESG desk</a>.</li>
+   </ol>
+   <div class="note">Legal position in Karnataka and Tamil Nadu is in transition: the OSH Code applies, Central Rules apply only where the Centre is the appropriate Government, and until each state's OSH rules are final the state Factories Rules (KA 1969 / TN 1950) and BOCW Rules 2006 remain the working technical standard. Inspectors generally accept either the Code form or the legacy state form during this period — file both when in doubt.</div>
+  </div>
+ </div>
+ <div class="card"><h3>Quick jump — procedures</h3><div class="chips">${PROCS.map(p=>`<a class="chip" href="#procedures" data-proc="${p.id}">${esc(p.t)}</a>`).join("")}</div></div>`;
+}
+
+/* ---------- REGULATIONS ---------- */
+function regs(){
+ const list=REGS.filter(r=>(STATE.regJ==="All"||r.j===STATE.regJ)&&(STATE.regD==="All"||r.d.includes(STATE.regD))&&(STATE.regS==="All"||r.s===STATE.regS));
+ return `<div><h2>Regulations & standards</h2><p class="lead">Jurisdiction, domain and status filters. Each card lists the sections you will actually be asked about, plus the authority and an official starting link.</p></div>
+ <div class="card" style="display:flex;flex-direction:column;gap:10px"><div><h4>Jurisdiction</h4>${chipbar(JUR,STATE.regJ,"j")}</div><div><h4>Domain</h4>${chipbar(DOMS,STATE.regD,"d")}</div><div><h4>Status</h4>${chipbar(STATUSES,STATE.regS,"s")}</div></div>
+ <div class="meta">${list.length} of ${REGS.length} shown</div>
+ <div class="list">${list.map(regCard).join("")||'<div class="empty">No entries match these filters.</div>'}</div>`;
+}
+function regCard(r){return `<div class="item" id="reg-${r.id}"><div class="hd"><div><div class="t">${esc(r.t)}</div><div class="meta"><span class="tag">${esc(r.j)}</span>${r.yr?`<span class="tag">${r.yr}</span>`:""}<span class="st ${stCls(r.s)}">${esc(r.s)}</span></div></div><div class="chips">${r.d.map(d=>`<span class="chip sm">${esc(d)}</span>`).join("")}</div></div>
+<p class="sum">${esc(r.sum)}</p><div class="meta"><b>Authority:</b> ${esc(r.a)}${r.url?` · <a href="${esc(r.url)}" target="_blank" rel="noopener">official site</a>`:""}</div>
+${r.key.length?`<details><summary>Key provisions (${r.key.length})</summary><ul class="keys">${r.key.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></details>`:""}${r.note?`<div class="note">${esc(r.note)}</div>`:""}</div>`}
+
+/* ---------- PROCEDURES ---------- */
+const PCATS=["All","Construction","Industrial","Chemical","Electrical","Lifting & Tools","Fire & Emergency","Health","Carbon & ESG","Management"];
+function procs(){
+ if(STATE.proc){const p=PROCS.find(x=>x.id===STATE.proc);if(p)return procDetail(p)}
+ const list=PROCS.filter(p=>STATE.procCat==="All"||p.cat===STATE.procCat);
+ return `<div><h2>Safe work procedures</h2><p class="lead">Template SOPs with steps, PPE, stop-work triggers, records and references to India (central + Karnataka + Tamil Nadu), OSHA and international standards. Adapt each to your site risk assessment.</p></div>
+ <div class="card">${chipbar(PCATS,STATE.procCat,"c")}</div>
+ <div class="grid">${list.map(p=>`<div class="item clk" data-proc="${p.id}"><div class="t">${esc(p.t)}</div><div class="meta" style="margin-top:4px"><span class="tag">${esc(p.cat)}</span>${p.tags.map(t=>`<span class="chip sm">${esc(t)}</span>`).join("")}</div><p class="sum" style="font-size:13.5px">${esc(p.purpose)}</p><div class="meta">${p.steps.length} steps · ${p.stop.length} stop triggers</div></div>`).join("")}</div>`;
+}
+function procText(p){const L=[];L.push(p.t.toUpperCase(),"","PURPOSE: "+p.purpose,"SCOPE: "+p.scope,"","ROLES:",...p.roles.map(r=>"- "+r),"","HAZARDS:",...p.hazards.map(r=>"- "+r),"","PRE-REQUISITES:",...p.pre.map(r=>"- "+r),"","PROCEDURE:",...p.steps.map((s,i)=>(i+1)+". "+s),"","PPE:",...p.ppe.map(r=>"- "+r),"","STOP WORK IF:",...p.stop.map(r=>"- "+r),"","RECORDS:",...p.records.map(r=>"- "+r),"","REFERENCES:","India: "+p.refs.india.join("; "),"Karnataka: "+p.refs.ka.join("; "),"Tamil Nadu: "+p.refs.tn.join("; "),"OSHA/US: "+p.refs.osha.join("; "),"International: "+p.refs.intl.join("; "));return L.join("\n")}
+function procDetail(p){
+ const cl=CHECKLISTS.find(c=>c.id===p.checklist);
+ return `<a class="back" href="#procedures" data-back="proc">← All procedures</a>
+ <div class="row" style="justify-content:space-between"><div><h2>${esc(p.t)}</h2><div class="meta" style="margin-top:4px"><span class="tag">${esc(p.cat)}</span>${p.tags.map(t=>`<span class="chip sm">${esc(t)}</span>`).join("")}</div></div><div class="row"><button class="btn" id="copyProc">Copy as text</button>${cl?`<a class="btn primary" href="#checklists" data-ck="${cl.id}">Open checklist: ${esc(cl.t)}</a>`:""}</div></div>
+ <div class="two">
+  <div class="card"><h4>Purpose</h4><p class="sum">${esc(p.purpose)}</p><h4 style="margin-top:12px">Scope</h4><p class="sum">${esc(p.scope)}</p></div>
+  <div class="card"><h4>Roles</h4><ul class="keys">${p.roles.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+ </div>
+ <div class="two">
+  <div class="card"><h4>Hazards addressed</h4><ul class="keys">${p.hazards.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+  <div class="card"><h4>Pre-requisites</h4><ul class="keys">${p.pre.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+ </div>
+ <div class="card"><h3>Procedure</h3><ol class="steps" style="margin-top:10px">${p.steps.map(s=>`<li><span>${esc(s)}</span></li>`).join("")}</ol></div>
+ <div class="two">
+  <div class="card"><h4>PPE</h4><ul class="keys">${p.ppe.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+  <div class="card" style="border-color:var(--crit)"><h4 style="color:var(--crit)">Stop work immediately if</h4><ul class="keys">${p.stop.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+ </div>
+ <div class="card"><h4>Records to keep</h4><ul class="keys">${p.records.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>
+ <div class="card"><h3>Regulatory references</h3><div class="refs" style="margin-top:10px">
+  ${[["India – Central",p.refs.india],["Karnataka",p.refs.ka],["Tamil Nadu",p.refs.tn],["USA (OSHA / NFPA / ANSI)",p.refs.osha],["International / UK-EU",p.refs.intl]].map(([h,a])=>`<div class="box"><h4>${h}</h4><ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}
+ </div></div>`;
+}
+
+/* ---------- CHECKLISTS ---------- */
+const CKCATS=["All","Construction","Industrial","Chemical","Electrical","Fire & Emergency","Health","Environment","Management"];
+function checklists(){
+ if(STATE.ck){const c=CHECKLISTS.find(x=>x.id===STATE.ck);if(c)return ckDetail(c)}
+ const list=CHECKLISTS.filter(c=>STATE.ckCat==="All"||c.cat===STATE.ckCat);
+ return `<div><h2>Checklists</h2><p class="lead">Tick items as you inspect. Progress is remembered on this device only; copy the summary into your inspection register.</p></div>
+ <div class="card">${chipbar(CKCATS,STATE.ckCat,"c")}</div>
+ <div class="grid">${list.map(c=>{const st=store.get("ck:"+c.id,{});const done=Object.values(st).filter(Boolean).length;return `<div class="item clk" data-ck="${c.id}"><div class="t">${esc(c.t)}</div><div class="meta" style="margin:4px 0 8px"><span class="tag">${esc(c.cat)}</span><span>${c.items.length} items</span></div><div class="bar"><i style="width:${Math.round(done/c.items.length*100)}%"></i></div><div class="meta" style="margin-top:6px">${done}/${c.items.length} done</div></div>`}).join("")}</div>`;
+}
+function ckDetail(c){
+ const st=store.get("ck:"+c.id,{});
+ return `<a class="back" href="#checklists" data-back="ck">← All checklists</a>
+ <div class="row" style="justify-content:space-between"><div><h2>${esc(c.t)}</h2><div class="meta"><span class="tag">${esc(c.cat)}</span><span>${c.items.length} items</span></div></div><div class="row"><button class="btn" id="ckCopy">Copy summary</button><button class="btn" id="ckReset">Reset</button></div></div>
+ <div class="card" style="display:flex;flex-direction:column;gap:8px"><div class="form" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"><div class="f"><label for="ckSite">Site / area</label><input id="ckSite" value="${esc(store.get("ck:meta:"+c.id,{}).site||"")}"></div><div class="f"><label for="ckBy">Inspected by</label><input id="ckBy" value="${esc(store.get("ck:meta:"+c.id,{}).by||"")}"></div><div class="f"><label for="ckDate">Date</label><input id="ckDate" type="date" value="${esc(store.get("ck:meta:"+c.id,{}).date||new Date().toISOString().slice(0,10))}"></div></div><div class="bar"><i id="ckBar"></i></div><div class="meta" id="ckCount"></div></div>
+ <div class="ck" id="ckItems">${c.items.map((it,i)=>`<label><input type="checkbox" id="ck-${c.id}-${i}" data-i="${i}" ${st[i]?"checked":""}><span>${esc(it)}</span></label>`).join("")}</div>
+ <div class="card"><h4>Findings / actions</h4><textarea id="ckNotes" class="f" style="width:100%;min-height:90px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);padding:8px;font:inherit">${esc(store.get("ck:meta:"+c.id,{}).notes||"")}</textarea></div>`;
+}
+function bindCk(c){
+ const st=store.get("ck:"+c.id,{});const meta=store.get("ck:meta:"+c.id,{});
+ const upd=()=>{const d=Object.values(st).filter(Boolean).length;$("#ckBar").style.width=Math.round(d/c.items.length*100)+"%";$("#ckCount").textContent=`${d} of ${c.items.length} items checked`};
+ $("#ckItems").addEventListener("change",e=>{if(e.target.matches("input")){st[e.target.dataset.i]=e.target.checked;store.set("ck:"+c.id,st);upd()}});
+ ["ckSite","ckBy","ckDate","ckNotes"].forEach(id=>$("#"+id).addEventListener("input",e=>{meta[id.slice(2).toLowerCase()]=e.target.value;store.set("ck:meta:"+c.id,meta)}));
+ $("#ckReset").addEventListener("click",()=>{Object.keys(st).forEach(k=>delete st[k]);store.set("ck:"+c.id,st);$("#ckItems").querySelectorAll("input").forEach(i=>i.checked=false);upd()});
+ $("#ckCopy").addEventListener("click",()=>{const lines=[c.t.toUpperCase(),`Site: ${$("#ckSite").value}  Inspected by: ${$("#ckBy").value}  Date: ${$("#ckDate").value}`,"",...c.items.map((it,i)=>(st[i]?"[x] ":"[ ] ")+it),"",`Result: ${Object.values(st).filter(Boolean).length}/${c.items.length} compliant`,"Findings/actions:",$("#ckNotes").value||"(none)"];copy(lines.join("\n"))});
+ upd();
+}
+
+/* ---------- PERMIT BUILDER ---------- */
+const PTYPES={"Hot work":{req:["Combustibles cleared 11 m / protected","Fire watch assigned (during + ≥30–60 min after)","Extinguishers at location","Gas test 0% LEL (process areas)","Flashback arrestors / equipment inspected","Openings and drains sealed"],gas:true,ref:"OISD-STD-105; NFPA 51B; 1926 Subpart J; IS 818/3016"},"Confined space entry":{req:["Isolation by blinding/disconnection + LOTO","Purged and continuously ventilated","Gas test top/middle/bottom; continuous monitoring","Attendant posted, rescue plan & retrieval ready","Entrant log in use","No cylinders inside (except SCBA)"],gas:true,ref:"Factories Act s.36 via state rules; 1910.146; NFPA 350"},"Work at height":{req:["Collective protection (guardrails/nets/covers) in place","Rated anchors / lifelines installed","Harness & lanyard inspected (6-month tag valid)","Fall clearance calculated","Rescue plan ready (<15 min)","Weather within limits; dropped-object zone barricaded"],gas:false,ref:"BOCW rules; IS 3521; 1926 Subpart M; WAHR 2005"},"Excavation":{req:["Permit-to-dig / utility clearance; services marked","Protective system ≥1.5 m (shoring/sloping/box)","Spoil & plant ≥1 m from edge; barricade & ladders","Daily competent-person inspection","Atmosphere tested if >1.2 m near sewers/fuel","Overhead line clearance for plant"],gas:true,ref:"IS 3764; BOCW rules; 1926 Subpart P"},"Electrical (LV/HT)":{req:["Isolated, locked, tagged at all sources","Tested dead with proved tester; earthed (HT)","Isolation certificate attached","Authorised/licensed person only","Arc-flash PPE for any live testing","Utility shutdown confirmed (if external supply)"],gas:false,ref:"CEA Safety Regs 2023; IS 5216; 1910.333; NFPA 70E"},"Lifting (critical)":{req:["Lift plan & load chart check (≤75–85% capacity)","Crane & gear certificates valid","Ground/outriggers verified; wind within limit","Power-line clearance verified / spotter","Exclusion zone; signaller & tag lines","Trial lift done"],gas:false,ref:"IS 13367; BOCW rules; 1926 Subpart CC; LOLER"},"Radiography":{req:["AERB licence & RSO present","Cordon at 1 µSv/h; signs, siren","Survey meter calibrated; dosimeters worn","Source custody two-person rule","Adjacent contractors notified; night/isolated slot"],gas:false,ref:"AE (Radiation Protection) Rules 2004; AERB RF-IR/SC-1"},"Cold work / general":{req:["JSA reviewed with crew","Area barricaded as needed","Tools inspected","Adjacent work (SIMOPS) checked"],gas:false,ref:"OSH Code s.6; ISO 45001 cl. 8.1"}};
+function permits(){
+ const now=new Date();const pad=n=>String(n).padStart(2,"0");const d=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;const t=`${pad(now.getHours())}:${pad(now.getMinutes())}`;
+ return `<div><h2>Permit builder</h2><p class="lead">Fill in the permit, check the precautions, enter gas readings (validated against limits) and copy the formatted permit into your register or e-PTW. Nothing is stored on a server.</p></div>
+ <div class="card"><div class="form">
+  <div class="f"><label for="pType">Permit type</label><select id="pType">${Object.keys(PTYPES).map(k=>`<option>${k}</option>`).join("")}</select></div>
+  <div class="f"><label for="pNo">Permit no.</label><input id="pNo" placeholder="PTW-${now.getFullYear()}-0001"></div>
+  <div class="f"><label for="pSite">Site / plant</label><input id="pSite"></div>
+  <div class="f"><label for="pLoc">Exact location / equipment tag</label><input id="pLoc"></div>
+  <div class="f wide"><label for="pDesc">Description of work</label><textarea id="pDesc"></textarea></div>
+  <div class="f"><label for="pDate">Date</label><input id="pDate" type="date" value="${d}"></div>
+  <div class="f"><label for="pFrom">Valid from</label><input id="pFrom" type="time" value="${t}"></div>
+  <div class="f"><label for="pTo">Valid to (max one shift)</label><input id="pTo" type="time"></div>
+  <div class="f"><label for="pPersons">No. of persons</label><input id="pPersons" type="number" min="1" value="1"></div>
+  <div class="f"><label for="pIssuer">Issuer / area authority</label><input id="pIssuer"></div>
+  <div class="f"><label for="pReceiver">Receiver / performing authority</label><input id="pReceiver"></div>
+  <div class="f"><label for="pIso">Isolation / lock numbers</label><input id="pIso" placeholder="e.g. MCC-3 bkr 12, lock #45; blind at V-204"></div>
+  <div class="f"><label for="pFirewatch">Fire watch / attendant</label><input id="pFirewatch"></div>
+  <div class="f wide"><label for="pHaz">Additional hazards & precautions</label><textarea id="pHaz"></textarea></div>
+  <div class="f"><label for="pPPE">PPE required</label><input id="pPPE" placeholder="helmet, boots, harness, FR, goggles…"></div>
+  <div class="f"><label for="pSimops">Other live permits / SIMOPS in area</label><input id="pSimops"></div>
+ </div>
+ <div style="margin-top:14px"><h4>Precautions for this permit type</h4><div class="ck" id="pReq" style="margin-top:6px"></div></div>
+ <div id="pGasWrap" style="margin-top:14px"><h4>Gas test (enter readings)</h4><div class="gas" style="margin-top:6px">
+  <div class="g" id="gO2"><b>O₂ %</b><input id="o2" inputmode="decimal" placeholder="20.9"><small>19.5–23.5%</small></div>
+  <div class="g" id="gLel"><b>LEL %</b><input id="lel" inputmode="decimal" placeholder="0"><small>0% hot work · &lt;10% entry</small></div>
+  <div class="g" id="gH2s"><b>H₂S ppm</b><input id="h2s" inputmode="decimal" placeholder="0"><small>&lt;10 ppm</small></div>
+  <div class="g" id="gCo"><b>CO ppm</b><input id="co" inputmode="decimal" placeholder="0"><small>&lt;25 ppm</small></div>
+  <div class="g"><b>Tester / time</b><input id="gasBy" placeholder="name, 08:10"><small>retest interval per permit</small></div>
+ </div><div id="gasMsg" style="margin-top:8px"></div></div>
+ <div class="row" style="margin-top:14px"><button class="btn primary" id="pGen">Generate permit</button><button class="btn" id="pCopy">Copy permit text</button><span class="meta" id="pRef"></span></div>
+ </div>
+ <div class="card"><h4>Permit</h4><div class="out" id="pOut">Generate to preview.</div></div>`;
+}
+function bindPermits(){
+ const typeEl=$("#pType");
+ const renderReq=()=>{const t=PTYPES[typeEl.value];$("#pReq").innerHTML=t.req.map((r,i)=>`<label><input type="checkbox" id="preq-${i}"><span>${esc(r)}</span></label>`).join("");$("#pGasWrap").hidden=!t.gas;$("#pRef").textContent="Reference: "+t.ref};
+ typeEl.addEventListener("change",renderReq);renderReq();
+ const gas=()=>{const v=id=>{const x=parseFloat($("#"+id).value);return isNaN(x)?null:x};const o2=v("o2"),lel=v("lel"),h2s=v("h2s"),co=v("co");const hot=typeEl.value==="Hot work";const res=[];
+  const set=(id,ok,has)=>{const g=$("#"+id);g.classList.remove("ok","bad");if(has)g.classList.add(ok?"ok":"bad")};
+  set("gO2",o2!==null&&o2>=19.5&&o2<=23.5,o2!==null);if(o2!==null&&(o2<19.5||o2>23.5))res.push("O₂ outside 19.5–23.5% — NO ENTRY");
+  set("gLel",lel!==null&&(hot?lel===0:lel<10),lel!==null);if(lel!==null&&(hot?lel>0:lel>=10))res.push(hot?"LEL must be 0% for hot work":"LEL ≥10% — NO ENTRY");
+  set("gH2s",h2s!==null&&h2s<10,h2s!==null);if(h2s!==null&&h2s>=10)res.push("H₂S ≥10 ppm — respiratory protection / NO ENTRY");
+  set("gCo",co!==null&&co<25,co!==null);if(co!==null&&co>=25)res.push("CO ≥25 ppm — ventilate / NO ENTRY");
+  const any=[o2,lel,h2s,co].some(x=>x!==null);$("#gasMsg").innerHTML=!any?"":res.length?`<div class="alert bad">Do not issue: ${res.join("; ")}</div>`:`<div class="alert ok">Readings within limits</div>`;return res};
+ ["o2","lel","h2s","co"].forEach(id=>$("#"+id).addEventListener("input",gas));
+ const gen=()=>{const g=id=>$("#"+id).value.trim();const t=PTYPES[typeEl.value];const bad=t.gas?gas():[];const reqs=t.req.map((r,i)=>($("#preq-"+i).checked?"[x] ":"[ ] ")+r);const missing=reqs.filter(r=>r.startsWith("[ ]")).length;
+  const L=["PERMIT TO WORK — "+typeEl.value.toUpperCase(),"Permit no: "+(g("pNo")||"—"),"Site: "+g("pSite")+"   Location/equipment: "+g("pLoc"),"Date: "+g("pDate")+"   Valid: "+g("pFrom")+" to "+(g("pTo")||"—")+"   Persons: "+g("pPersons"),"","WORK: "+g("pDesc"),"","PRECAUTIONS:",...reqs,"","Isolations/locks: "+(g("pIso")||"—"),"Fire watch / attendant: "+(g("pFirewatch")||"—"),"Additional hazards & precautions: "+(g("pHaz")||"—"),"PPE: "+(g("pPPE")||"—"),"SIMOPS / other permits: "+(g("pSimops")||"—")];
+  if(t.gas)L.push("","GAS TEST: O2 "+(g("o2")||"—")+"%  LEL "+(g("lel")||"—")+"%  H2S "+(g("h2s")||"—")+" ppm  CO "+(g("co")||"—")+" ppm   by: "+(g("gasBy")||"—"),bad.length?"RESULT: FAIL — "+bad.join("; "):"RESULT: within limits");
+  L.push("","Issuer: "+(g("pIssuer")||"—")+"   Sign/time: ________","Receiver: "+(g("pReceiver")||"—")+"   Sign/time: ________","","CLOSE-OUT: area clean, tools removed, guards refitted, fire watch complete  [ ]","Closed by issuer: ________  time: ____   De-isolation authorised: [ ]","","Reference: "+t.ref,"Generated "+new Date().toLocaleString());
+  $("#pOut").textContent=L.join("\n");const warn=[];if(missing)warn.push(missing+" precaution(s) unchecked");if(bad.length)warn.push("gas test failed");if(!g("pTo"))warn.push("no expiry time");if(warn.length)toast("Permit NOT ready: "+warn.join(", "));else toast("Permit ready");return L.join("\n")};
+ $("#pGen").addEventListener("click",gen);$("#pCopy").addEventListener("click",()=>copy(gen()));
+}
+
+/* ---------- INCIDENT NAVIGATOR ---------- */
+const INC_J=["Karnataka","Tamil Nadu","India – other state / central sphere","USA (OSHA)","UK"];
+const INC_EV=["Fatal accident","Serious injury (absent ≥ 48 h / hospitalised)","Dangerous occurrence (no injury)","Occupational disease","Major chemical accident / release","Electrical accident","Boiler / pressure vessel accident","Environmental spill / discharge","Petroleum / explosives / cylinder incident","Radiation incident","Lift / hoist accident"];
+function incMatch(j,ev){
+ const rows=[];const add=(f)=>REPORTING.filter(f).forEach(r=>rows.push(r));
+ const ind=j!=="USA (OSHA)"&&j!=="UK";
+ if(j==="USA (OSHA)"){if(ev.startsWith("Fatal"))add(r=>r.ev==="Work-related fatality");else if(ev.startsWith("Serious"))add(r=>r.ev.startsWith("In-patient"));else add(r=>r.j==="USA (OSHA)");return rows}
+ if(j==="UK"){if(ev.startsWith("Fatal")||ev.startsWith("Dangerous")||ev.startsWith("Serious"))add(r=>r.j==="UK");return rows}
+ if(ev.startsWith("Fatal")){add(r=>r.ev==="Fatal accident");if(j==="Karnataka")add(r=>r.j==="Karnataka"&&r.ev.startsWith("Factory"));if(j==="Tamil Nadu")add(r=>r.j==="Tamil Nadu"&&r.ev.startsWith("Factory"));add(r=>r.ev.startsWith("Construction site"));add(r=>r.ev.startsWith("Fatal accident – comp"));add(r=>r.ev.startsWith("Employee injured"))}
+ if(ev.startsWith("Serious")){add(r=>r.ev.startsWith("Injury preventing"));if(j==="Karnataka")add(r=>r.j==="Karnataka"&&r.ev.startsWith("Factory"));if(j==="Tamil Nadu")add(r=>r.j==="Tamil Nadu"&&r.ev.startsWith("Factory"));add(r=>r.ev.startsWith("Employee injured"))}
+ if(ev.startsWith("Dangerous"))add(r=>r.ev.startsWith("Dangerous occurrence"));
+ if(ev.startsWith("Occupational"))add(r=>r.ev.startsWith("Occupational disease"));
+ if(ev.startsWith("Major chemical")){add(r=>r.ev.startsWith("Major chemical"));add(r=>r.ev.startsWith("Dangerous occurrence"));add(r=>r.ev.startsWith("Hazardous waste"));add(r=>r.ev.startsWith("Accidental discharge"))}
+ if(ev.startsWith("Electrical")){add(r=>r.ev.startsWith("Electrical accident"));add(r=>r.ev.startsWith("Dangerous occurrence"))}
+ if(ev.startsWith("Boiler")){add(r=>r.ev.startsWith("Boiler"));add(r=>r.ev.startsWith("Dangerous occurrence"))}
+ if(ev.startsWith("Environmental")){add(r=>r.ev.startsWith("Accidental discharge"));add(r=>r.ev.startsWith("Hazardous waste"))}
+ if(ev.startsWith("Petroleum")){add(r=>r.ev.startsWith("Accident at petroleum"));add(r=>r.ev.startsWith("Dangerous occurrence"))}
+ if(ev.startsWith("Radiation"))add(r=>r.ev.startsWith("Radiation"));
+ if(ev.startsWith("Lift")){add(r=>r.ev.startsWith("Lift/escalator"));add(r=>r.ev.startsWith("Dangerous occurrence"))}
+ if(ind&&(ev.startsWith("Fatal")||ev.startsWith("Serious"))&&!rows.some(r=>r.ev.startsWith("Fatal accident")||r.ev.startsWith("Injury")))add(r=>r.ev==="Fatal accident");
+ return rows;
+}
+function incidents(){
+ return `<div><h2>Incident navigator</h2><p class="lead">Pick the jurisdiction and event; the navigator lists every authority to notify with its deadline and form, then drafts the first notice. Internal escalation (safety officer, site head, client) always comes first.</p></div>
+ <div class="card"><div class="form">
+  <div class="f"><label for="iJ">Jurisdiction</label><select id="iJ">${INC_J.map(x=>`<option>${x}</option>`).join("")}</select></div>
+  <div class="f"><label for="iEv">Event</label><select id="iEv">${INC_EV.map(x=>`<option>${x}</option>`).join("")}</select></div>
+  <div class="f"><label for="iWhen">Date & time of incident</label><input id="iWhen" type="datetime-local"></div>
+  <div class="f"><label for="iEst">Establishment / site</label><input id="iEst"></div>
+  <div class="f"><label for="iReg">Registration / licence no.</label><input id="iReg"></div>
+  <div class="f"><label for="iPlace">Place in establishment</label><input id="iPlace"></div>
+  <div class="f"><label for="iPerson">Injured person(s) – name, age, sex, designation, employer</label><input id="iPerson"></div>
+  <div class="f"><label for="iInjury">Nature of injury / damage</label><input id="iInjury"></div>
+  <div class="f wide"><label for="iDesc">Brief description of how it happened</label><textarea id="iDesc"></textarea></div>
+  <div class="f"><label for="iAction">Immediate action taken (rescue, hospital, isolation)</label><input id="iAction"></div>
+  <div class="f"><label for="iBy">Reported by (name, designation, phone)</label><input id="iBy"></div>
+ </div></div>
+ <div class="card"><h3>Who to notify</h3><div id="iRows" style="margin-top:10px"></div></div>
+ <div class="card"><div class="row" style="justify-content:space-between"><h3>Draft notice</h3><button class="btn" id="iCopy">Copy notice</button></div><div class="out" id="iOut" style="margin-top:10px"></div></div>
+ <div class="card"><h4>At the scene — do this first</h4><ol class="steps" style="margin-top:8px"><li>Rescue and first aid; call 108/112; isolate the hazard; stop adjacent work.</li><li>Preserve the scene for fatal/serious incidents until the inspector permits; photograph and measure.</li><li>Inform safety officer and site head within 1 hour; assign an incident number.</li><li>Send the statutory notices below and keep acknowledgements (screenshots/email receipts).</li><li>Open the <a href="#checklists" data-ck="cl-incident">incident response checklist</a> and the <a href="#procedures" data-proc="incident">investigation procedure</a>.</li></ol></div>`;
+}
+function bindIncidents(){
+ const upd=()=>{const j=$("#iJ").value,ev=$("#iEv").value;const rows=incMatch(j,ev);const seen=new Set();const uniq=rows.filter(r=>{const k=r.ev+r.j+r.law;if(seen.has(k))return false;seen.add(k);return true});
+  $("#iRows").innerHTML=uniq.length?`<div class="tbl"><table><thead><tr><th>Notify</th><th>Deadline</th><th>Form</th><th>Basis</th></tr></thead><tbody>${uniq.map(r=>`<tr><td>${esc(r.to)}<div class="meta">${esc(r.ev)}</div></td><td><b>${esc(r.dl)}</b></td><td>${esc(r.form)}</td><td class="meta">${esc(r.law)}</td></tr>`).join("")}</tbody></table></div>${(j==="Karnataka"||j==="Tamil Nadu")?'<div class="note">Transition note: the OSH Code applies; where the state OSH rules are not final, inspectors in Karnataka and Tamil Nadu also accept the legacy state Factories/BOCW accident form. Send the OSH Code notice to the Inspector-cum-Facilitator and the legacy form to the same office when unsure — do not wait for clarification past the shortest deadline shown.</div>':""}`:'<div class="empty">No mapped notices for this combination — check the Reporting deadlines view.</div>';
+  const g=id=>$("#"+id).value.trim();const L=["NOTICE OF "+ev.toUpperCase(),"(under the Occupational Safety, Health and Working Conditions Code 2020 s.10/s.11 and applicable rules)","","To: "+uniq.map(r=>r.to).filter((v,i,a)=>a.indexOf(v)===i).join("; "),"From: "+(g("iEst")||"[establishment]")+"  Registration/licence: "+(g("iReg")||"[no.]"),"","1. Date & time of occurrence: "+(g("iWhen")||"[date time]"),"2. Place: "+(g("iPlace")||"[place]"),"3. Person(s) involved: "+(g("iPerson")||"[name, age, sex, designation, employer]"),"4. Nature of injury/damage: "+(g("iInjury")||"[nature]"),"5. Description: "+(g("iDesc")||"[how it happened]"),"6. Immediate action taken: "+(g("iAction")||"[rescue/medical/isolation]"),"7. Reported by: "+(g("iBy")||"[name, designation, phone]"),"","This notice is submitted within the statutory time. A detailed investigation report will follow.","Signature of employer/occupier/manager: ________   Date/time: ________","","Internal note — deadlines for this event:",...uniq.map(r=>"- "+r.to+": "+r.dl+" ("+r.form+")")];
+  $("#iOut").textContent=L.join("\n")};
+ ["iJ","iEv","iWhen","iEst","iReg","iPlace","iPerson","iInjury","iDesc","iAction","iBy"].forEach(id=>$("#"+id).addEventListener("input",upd));
+ $("#iCopy").addEventListener("click",()=>copy($("#iOut").textContent));upd();
+}
+
+/* ---------- SIMPLE VIEWS ---------- */
+function forms(){return `<div><h2>Forms & registers</h2><p class="lead">What has to exist on paper or on the portal, under which law, and when. Form numbers under state rules change with amendments — verify before filing.</p></div><div class="tbl"><table><thead><tr><th>Form / register</th><th>Law</th><th>Jurisdiction</th><th>When</th><th>Notes</th></tr></thead><tbody>${FORMS.map(f=>`<tr><td><b>${esc(f.t)}</b></td><td>${esc(f.law)}</td><td><span class="tag">${esc(f.j)}</span></td><td>${esc(f.when)}</td><td class="meta">${esc(f.note)}</td></tr>`).join("")}</tbody></table></div>`}
+function reporting(){return `<div><h2>Reporting deadlines</h2><p class="lead">Statutory clocks start at the moment of the incident or of knowledge. Shortest clock wins when several apply.</p></div><div class="tbl"><table><thead><tr><th>Event</th><th>Jurisdiction</th><th>Notify</th><th>Deadline</th><th>Form</th><th>Basis</th></tr></thead><tbody>${REPORTING.map(r=>`<tr><td><b>${esc(r.ev)}</b></td><td><span class="tag">${esc(r.j)}</span></td><td>${esc(r.to)}</td><td><b>${esc(r.dl)}</b></td><td>${esc(r.form)}</td><td class="meta">${esc(r.law)}</td></tr>`).join("")}</tbody></table></div>`}
+function talks(){return `<div><h2>Toolbox talks</h2><p class="lead">Five points each, sized for a 10-minute pre-task briefing. Copy and translate for the crew.</p></div><div class="grid">${TALKS.map((t,i)=>`<div class="item"><div class="hd"><div class="t">${esc(t.t)}</div><button class="btn sm" data-talk="${i}">Copy</button></div><ol class="steps" style="margin-top:10px">${t.pts.map(p=>`<li><span>${esc(p)}</span></li>`).join("")}</ol></div>`).join("")}</div>`}
+function emergency(){return `<div><h2>Emergency contacts</h2><p class="lead">National numbers are verified; state control-room landlines marked “verify” change — confirm and fill the site template, then display at the gate and in the control centre.</p></div><div class="grid">${EMERGENCY.map(g=>`<div class="item"><div class="t">${esc(g.g)}</div><div class="tbl" style="margin-top:8px;border:0"><table class="mtable">${g.items.map(([k,v])=>`<tr><td>${esc(k)}</td><td style="font-family:var(--mono);font-size:13px">${esc(v)}</td></tr>`).join("")}</table></div></div>`).join("")}</div>`}
+function numbers(){return `<div><h2>Limits & thresholds</h2><p class="lead">The figures that come up in every inspection, side by side across India, OSHA and international practice. “Verify” means the current gazetted table should be checked before use.</p></div><div class="tbl"><table class="mtable"><tbody>${NUMBERS.map(n=>`<tr><td>${esc(n.k)}</td><td>${esc(n.v)}</td></tr>`).join("")}</tbody></table></div>`}
+function glossary(){return `<div><h2>Glossary</h2></div><div class="tbl"><table class="mtable"><tbody>${GLOSSARY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div>`}
+
+/* ---------- SECTOR GUIDES ---------- */
+function sectors(){
+ if(STATE.sector){const s=SECTORS.find(x=>x.id===STATE.sector);if(s)return sectorDetail(s)}
+ return `<div><h2>Sector guides</h2><p class="lead">One page per type of site: the hazards that matter, the statutory items an inspector will ask for in Karnataka/Tamil Nadu, and the regulations, procedures and checklists bundled for it.</p></div>
+ <div class="grid">${SECTORS.map(s=>`<div class="item clk" data-sector="${s.id}"><div class="t">${esc(s.t)}</div><p class="sum" style="font-size:13.5px">${esc(s.desc)}</p><div class="meta">${s.regs.length} regs · ${s.procs.length} procedures · ${s.cks.length} checklists</div></div>`).join("")}</div>`;
+}
+function sectorDetail(s){
+ const R=s.regs.map(id=>REGS.find(r=>r.id===id)).filter(Boolean), P=s.procs.map(id=>PROCS.find(p=>p.id===id)).filter(Boolean), C=s.cks.map(id=>CHECKLISTS.find(c=>c.id===id)).filter(Boolean);
+ return `<a class="back" href="#sectors" data-back="sector">← All sectors</a>
+ <div><h2>${esc(s.t)}</h2><p class="lead">${esc(s.desc)}</p></div>
+ <div class="two">
+  <div class="card" style="border-color:var(--crit)"><h4 style="color:var(--crit)">Hazards that drive the programme</h4><ul class="keys">${s.hazards.map(h=>`<li>${esc(h)}</li>`).join("")}</ul></div>
+  <div class="card"><h4>Statutory essentials (KA / TN)</h4><ul class="keys">${s.statutory.map(h=>`<li>${esc(h)}</li>`).join("")}</ul></div>
+ </div>
+ <div class="card"><h3>Regulations & standards (${R.length})</h3><div class="list" style="margin-top:10px">${R.map(r=>`<a class="item clk" href="#regulations" data-reg="${r.id}" style="display:block;text-decoration:none;color:inherit;padding:10px 14px"><div class="t" style="font-size:14px">${esc(r.t)}</div><div class="meta"><span class="tag">${esc(r.j)}</span><span class="st ${stCls(r.s)}">${esc(r.s)}</span></div></a>`).join("")}</div></div>
+ <div class="two">
+  <div class="card"><h3>Procedures (${P.length})</h3><div class="chips" style="margin-top:10px">${P.map(p=>`<a class="chip" href="#procedures" data-proc="${p.id}">${esc(p.t)}</a>`).join("")}</div></div>
+  <div class="card"><h3>Checklists (${C.length})</h3><div class="chips" style="margin-top:10px">${C.map(c=>`<a class="chip" href="#checklists" data-ck="${c.id}">${esc(c.t)}</a>`).join("")}</div></div>
+ </div>`;
+}
+function bindSectors(){const v=$("#view");if(STATE.sector){v.querySelector("[data-back]").addEventListener("click",e=>{e.preventDefault();STATE.sector=null;route()});return}v.querySelectorAll(".item[data-sector]").forEach(it=>it.addEventListener("click",()=>{STATE.sector=it.dataset.sector;route()}))}
+
+/* ---------- CARBON & ESG DESK ---------- */
+const EF={diesel:{l:"Diesel (L)",f:2.68,u:"kg CO₂/L"},petrol:{l:"Petrol (L)",f:2.31,u:"kg CO₂/L"},lpg:{l:"LPG (kg)",f:2.98,u:"kg CO₂/kg"},ng:{l:"Natural gas (SCM)",f:1.94,u:"kg CO₂/SCM"},fo:{l:"Furnace oil (kg)",f:3.13,u:"kg CO₂/kg"},coal:{l:"Coal (t)",f:1750,u:"kg CO₂/t"},grid:{l:"Grid electricity (kWh)",f:0.727,u:"kg CO₂/kWh"},re:{l:"Renewable/open-access RE (kWh, market-based)",f:0,u:"kg CO₂/kWh"},ref:{l:"Refrigerant leaked (kg) × GWP",f:1430,u:"kg CO₂e/kg (R-134a AR4)"}};
+function carbon(){
+ const saved=store.get("carbon",{});
+ return `<div><h2>Carbon & ESG desk</h2><p class="lead">A quick Scope 1/2 calculator with editable factors, and the compliance map for CCTS, BRSR, CBAM, EC Act and EPR. Replace the default factors with those specified by BEE (CCTS) or your assurance provider before filing.</p></div>
+ <div class="card"><h3>Scope 1 & 2 quick calculator</h3><div class="meta" style="margin:4px 0 10px">Defaults: IPCC 2006 fuel factors; CEA CO2 Baseline Database v20 grid factor 0.727 tCO₂/MWh (FY2023-24). Enter annual quantities.</div>
+ <div class="tbl"><table><thead><tr><th>Source</th><th>Quantity</th><th>Factor</th><th>tCO₂e</th></tr></thead><tbody>${Object.entries(EF).map(([k,e])=>`<tr><td>${esc(e.l)}</td><td><input id="q-${k}" class="num" inputmode="decimal" style="width:120px" value="${esc(saved["q-"+k]||"")}"></td><td><input id="f-${k}" class="num" inputmode="decimal" style="width:100px" value="${esc(saved["f-"+k]??e.f)}"> <span class="meta">${esc(e.u)}</span></td><td class="mono" id="t-${k}">0.000</td></tr>`).join("")}</tbody></table></div>
+ <div class="form" style="margin-top:12px"><div class="f"><label for="q-out">Production output (t or units)</label><input id="q-out" inputmode="decimal" value="${esc(saved["q-out"]||"")}"></div><div class="f"><label for="q-turn">Turnover (₹ crore)</label><input id="q-turn" inputmode="decimal" value="${esc(saved["q-turn"]||"")}"></div><div class="f"><label for="q-base">GEI target (tCO₂e per unit, CCTS)</label><input id="q-base" inputmode="decimal" value="${esc(saved["q-base"]||"")}"></div></div>
+ <div class="tiles" style="margin-top:12px"><div class="tile"><span class="big" id="c-s1">0</span><span class="lbl">Scope 1 tCO₂e</span></div><div class="tile"><span class="big" id="c-s2">0</span><span class="lbl">Scope 2 location-based tCO₂e</span></div><div class="tile"><span class="big" id="c-s2m">0</span><span class="lbl">Scope 2 market-based tCO₂e</span></div><div class="tile"><span class="big" id="c-tot">0</span><span class="lbl">Scope 1+2 (location) tCO₂e</span></div><div class="tile"><span class="big" id="c-int">–</span><span class="lbl">tCO₂e per unit output</span></div><div class="tile"><span class="big" id="c-turn">–</span><span class="lbl">tCO₂e per ₹ crore (BRSR)</span></div></div>
+ <div id="c-gap" style="margin-top:10px"></div>
+ <div class="row" style="margin-top:12px"><button class="btn" id="c-copy">Copy summary</button><button class="btn" id="c-reset">Reset</button></div></div>
+ <div class="two">
+  <div class="card"><h3>CCTS – obligated entity checklist</h3><ol class="steps" style="margin-top:10px"><li>Confirm your sector/plant is in a GEI notification (aluminium, cement, chlor-alkali, pulp & paper – Oct 2025; refineries, petrochemicals, textiles – Jan 2026; iron & steel draft Jun 2026).</li><li>Submit/maintain the monitoring plan with BEE; monitor monthly against FY2023-24 baseline.</li><li>Appoint an Accredited Carbon Verification Agency; close findings.</li><li>File the verified GHG emission report within 4 months of FY end (31 July).</li><li>Receive CCCs (surplus) or buy and surrender CCCs (deficit) on the ICM registry; non-compliance → CPCB compensation at 2× average CCC price.</li><li>Plan abatement to meet the stricter FY2026-27 target; align with BRSR Principle 6 and CBAM data.</li></ol></div>
+  <div class="card"><h3>EU CBAM – exporter checklist</h3><ol class="steps" style="margin-top:10px"><li>Map products to CN codes (cement, iron & steel incl. downstream articles, aluminium, fertilisers, hydrogen).</li><li>Set up installation-level MRV: direct emissions by production process, electricity use and factor, precursor emissions.</li><li>Get third-party verification (reuse CCTS/ISO 14064 verification where possible).</li><li>Register the installation in the CBAM registry; confirm your EU customer is an authorised declarant (mandatory since 2026; pending-application grace ended 31 Mar 2026).</li><li>Deliver data before the importer's annual declaration (30 Sep 2027 for 2026 imports); certificate sales open 1 Feb 2027.</li><li>Compare default-value cost (mark-ups 10% 2026 → 30% from 2028) with verified data; document Indian carbon price paid for deductions.</li></ol></div>
+ </div>
+ <div class="two">
+  <div class="card"><h3>BRSR / BRSR Core</h3><ul class="keys"><li>Top 1,000 listed entities report BRSR with the annual report; BRSR Core assurance/assessment: all top 1,000 from FY2026-27; value-chain partners ≥ 2% from FY2026-27.</li><li>OSH KPIs (LTIFR per million hours, fatalities, high-consequence and recordable injuries, complaints) must reconcile with statutory registers and the OSH Code annual return.</li><li>Environment KPIs: Scope 1/2 totals and intensity, energy & water intensity, waste by type, air emissions, EPR fulfilment.</li><li>Keep an evidence file per KPI; assurance providers trace to source.</li></ul><div class="row" style="margin-top:10px"><a class="btn" href="#procedures" data-proc="esg">ESG procedure</a><a class="btn" href="#checklists" data-ck="cl-esg">BRSR readiness checklist</a></div></div>
+  <div class="card"><h3>Energy Conservation Act & EPR</h3><ul class="keys"><li>Designated consumers: energy manager, mandatory energy audit by accredited auditor, annual energy return to the SDA (KREDL / EMC-TN), PAT targets now merged into CCTS cycles.</li><li>Buildings: ECSBC 2024 / ENS; MoP draft (Jul 2026) would mandate star ratings for new buildings ≥ 20,000 m².</li><li>EPR: register and file returns on CPCB portals for plastic packaging, e-waste, batteries, tyres and used oil (from 1 Apr 2024); hand over only to registered recyclers and keep certificates.</li><li>Refrigerants: ODS Rules & Kigali phase-down; log purchases/leaks as Scope 1.</li></ul><div class="row" style="margin-top:10px"><a class="btn" href="#procedures" data-proc="ghg">GHG inventory procedure</a><a class="btn" href="#checklists" data-ck="cl-ghg">GHG data checklist</a><a class="btn" href="#regulations" data-reg="ccts">CCTS entry</a></div></div>
+ </div>`;
+}
+function bindCarbon(){
+ const saved=store.get("carbon",{});const g=id=>parseFloat($("#"+id).value)||0;
+ const upd=()=>{let s1=0,s2=0,s2m=0;Object.keys(EF).forEach(k=>{const t=g("q-"+k)*g("f-"+k)/1000;$("#t-"+k).textContent=t.toFixed(3);if(k==="grid")s2+=t;else if(k==="re")s2m+=t;else s1+=t});
+  const reKwh=g("q-re"),gridKwh=g("q-grid");const s2market=Math.max(0,(gridKwh-reKwh))*g("f-grid")/1000+reKwh*g("f-re")/1000;
+  $("#c-s1").textContent=s1.toFixed(1);$("#c-s2").textContent=s2.toFixed(1);$("#c-s2m").textContent=s2market.toFixed(1);$("#c-tot").textContent=(s1+s2).toFixed(1);
+  const out=g("q-out"),turn=g("q-turn"),base=g("q-base");$("#c-int").textContent=out?((s1+s2)/out).toFixed(4):"–";$("#c-turn").textContent=turn?((s1+s2)/turn).toFixed(2):"–";
+  $("#c-gap").innerHTML=(out&&base)?(((s1+s2)/out)<=base?`<div class="alert ok">Intensity ${((s1+s2)/out).toFixed(4)} ≤ GEI target ${base} — surplus ≈ ${((base-(s1+s2)/out)*out).toFixed(0)} CCC</div>`:`<div class="alert bad">Intensity ${((s1+s2)/out).toFixed(4)} above GEI target ${base} — deficit ≈ ${(((s1+s2)/out-base)*out).toFixed(0)} CCC to buy/surrender</div>`):"";
+  document.querySelectorAll("#view input").forEach(i=>saved[i.id]=i.value);store.set("carbon",saved)};
+ document.querySelectorAll("#view input").forEach(i=>i.addEventListener("input",upd));upd();
+ $("#c-copy").addEventListener("click",()=>{const L=["GHG QUICK ESTIMATE (Scope 1 & 2) – "+new Date().toLocaleDateString(),...Object.entries(EF).map(([k,e])=>`${e.l}: ${$("#q-"+k).value||0} × ${$("#f-"+k).value} ${e.u} = ${$("#t-"+k).textContent} tCO2e`),`Scope 1: ${$("#c-s1").textContent} tCO2e`,`Scope 2 (location): ${$("#c-s2").textContent} tCO2e`,`Scope 2 (market): ${$("#c-s2m").textContent} tCO2e`,`Scope 1+2: ${$("#c-tot").textContent} tCO2e`,`Intensity per unit: ${$("#c-int").textContent}; per ₹ crore: ${$("#c-turn").textContent}`,"Factors: IPCC 2006 defaults / CEA v20 grid 0.727 – replace with BEE-specified factors for CCTS filings."];copy(L.join("\n"))});
+ $("#c-reset").addEventListener("click",()=>{store.set("carbon",{});route()});
+}
+
+/* ---------- SAFETY PROTOCOLS ---------- */
+function protocols(){
+ const tab=STATE.protoTab;
+ const tabs=[["lsr","Life-Saving Rules",PROTOCOLS.lsr.length],["rules","Site safety rules",PROTOCOLS.rules.reduce((n,c)=>n+c.items.length,0)],["standing","Standing protocols",PROTOCOLS.standing.length],["emergency","Emergency protocols",PROTOCOLS.emergency.length]];
+ let body="";
+ if(tab==="lsr")body=`<div class="grid">${PROTOCOLS.lsr.map((r,i)=>`<div class="item" style="border-top:3px solid var(--accent)"><div class="meta" style="font-family:var(--mono);font-size:11px;color:var(--accent)">RULE ${String(i+1).padStart(2,"0")}</div><div class="t">${esc(r.t)}</div><p class="sum" style="font-weight:600">${esc(r.rule)}</p><div class="two" style="gap:8px;margin-top:8px"><div><h4 style="color:var(--good)">Always</h4><ul class="keys">${r.do.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div><h4 style="color:var(--crit)">Never</h4><ul class="keys">${r.never.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div>`).join("")}</div>`;
+ else if(tab==="rules")body=`<div class="grid">${PROTOCOLS.rules.map(c=>`<div class="item"><div class="t">${esc(c.cat)}</div><ul class="keys">${c.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`;
+ else if(tab==="standing")body=`<div class="list">${PROTOCOLS.standing.map(p=>`<div class="item" id="${p.id}"><div class="hd"><div><div class="t">${esc(p.t)}</div><p class="sum" style="font-size:13.5px;margin-top:4px">${esc(p.purpose)}</p></div><button class="btn sm" data-copyproto="${p.id}">Copy</button></div><ol class="steps" style="margin-top:10px">${p.steps.map(x=>`<li><span>${esc(x)}</span></li>`).join("")}</ol></div>`).join("")}</div>`;
+ else body=`<div class="grid">${PROTOCOLS.emergency.map(e=>`<div class="item" id="${e.id}" style="border-left:4px solid var(--crit)"><div class="hd"><div><div class="t">${esc(e.t)}</div><div class="meta" style="margin-top:2px"><b>Trigger:</b> ${esc(e.trigger)}</div></div><button class="btn sm" data-copyem="${e.id}">Copy</button></div><ol class="steps" style="margin-top:10px">${e.steps.map(x=>`<li><span>${esc(x)}</span></li>`).join("")}</ol><div class="meta" style="margin-top:8px;font-family:var(--mono)">Call: ${esc(e.call)}</div></div>`).join("")}</div>`;
+ return `<div><h2>Safety protocols</h2><p class="lead">The standing rules every person on site follows, the Life-Saving Rules that are non-negotiable, the management protocols that keep the system honest, and one-card emergency responses. Copy any card into your site rule book or display it at the gate.</p></div>
+ <div class="card"><div class="chips">${tabs.map(([id,l,n])=>`<button type="button" class="chip ${tab===id?"on":""}" data-tab="${id}">${l} <span style="opacity:.7;font-family:var(--mono);font-size:11px">${n}</span></button>`).join("")}</div></div>
+ ${body}`;
+}
+function bindProtocols(){const v=$("#view");v.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{STATE.protoTab=b.dataset.tab;route()}));
+ v.querySelectorAll("[data-copyproto]").forEach(b=>b.addEventListener("click",()=>{const p=PROTOCOLS.standing.find(x=>x.id===b.dataset.copyproto);copy([p.t.toUpperCase(),p.purpose,"",...p.steps.map((s,i)=>(i+1)+". "+s)].join("\n"))}));
+ v.querySelectorAll("[data-copyem]").forEach(b=>b.addEventListener("click",()=>{const e=PROTOCOLS.emergency.find(x=>x.id===b.dataset.copyem);copy(["EMERGENCY PROTOCOL: "+e.t.toUpperCase(),"Trigger: "+e.trigger,"",...e.steps.map((s,i)=>(i+1)+". "+s),"","Call: "+e.call].join("\n"))}))}
+
+/* ---------- UNSAFE ACTS & CONDITIONS ---------- */
+function unsafe(){
+ const tab=STATE.unsafeTab;const nA=UNSAFE.acts.reduce((n,c)=>n+c.items.length,0),nC=UNSAFE.conditions.reduce((n,c)=>n+c.items.length,0);
+ const tabs=[["acts","Unsafe acts (behaviours)",nA],["conditions","Unsafe conditions (workplace)",nC],["why","Why they happen & models",UNSAFE.causes.length+UNSAFE.models.length]];
+ let body="";
+ if(tab==="acts"||tab==="conditions"){const src=tab==="acts"?UNSAFE.acts:UNSAFE.conditions;body=`<div class="grid">${src.map((c,i)=>`<div class="item"><div class="hd"><div class="t">${esc(c.cat)}</div><span class="tag">${c.items.length}</span></div><ul class="keys">${c.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`}
+ else body=`<div class="two"><div class="card"><h3>Why people commit unsafe acts</h3><div class="tbl" style="margin-top:10px;border:0"><table class="mtable">${UNSAFE.causes.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table></div><div class="note">Fix the system before blaming the person: most unsafe acts are tolerated shortcuts that the job, the equipment or the supervision made the easy option.</div></div><div class="card"><h3>Accident causation models</h3><div class="tbl" style="margin-top:10px;border:0"><table class="mtable">${UNSAFE.models.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table></div></div></div>`;
+ return `<div><h2>Unsafe acts & unsafe conditions</h2><p class="lead">The master list used for observations, inspections, toolbox talks and incident classification: ${nA} unsafe acts in ${UNSAFE.acts.length} groups and ${nC} unsafe conditions in ${UNSAFE.conditions.length} groups. Open the <a href="#observe">Observation card</a> to record what you see.</p></div>
+ <div class="card"><div class="row" style="justify-content:space-between"><div class="chips">${tabs.map(([id,l,n])=>`<button type="button" class="chip ${tab===id?"on":""}" data-tab="${id}">${l} <span style="opacity:.7;font-family:var(--mono);font-size:11px">${n}</span></button>`).join("")}</div><div class="row"><button class="btn sm" id="unsafeCopy">Copy this list</button><a class="btn sm primary" href="#observe">Open observation card</a></div></div></div>
+ ${body}`;
+}
+function bindUnsafe(){const v=$("#view");v.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{STATE.unsafeTab=b.dataset.tab;route()}));$("#unsafeCopy")?.addEventListener("click",()=>{const src=STATE.unsafeTab==="conditions"?UNSAFE.conditions:UNSAFE.acts;copy((STATE.unsafeTab==="conditions"?"UNSAFE CONDITIONS":"UNSAFE ACTS")+"\n\n"+src.map(c=>c.cat.toUpperCase()+"\n"+c.items.map(x=>"- "+x).join("\n")).join("\n\n"))})}
+
+/* ---------- OBSERVATION CARD ---------- */
+function observe(){
+ const log=store.get("obs",[]);const now=new Date();const pad=n=>String(n).padStart(2,"0");
+ const opts=(src)=>src.map(c=>`<optgroup label="${esc(c.cat)}">${c.items.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
+ const stats=()=>{if(!log.length)return '<div class="empty">No observations recorded on this device yet.</div>';const byCat={};log.forEach(o=>{const k=o.type+": "+o.cat;byCat[k]=(byCat[k]||0)+1});const top=Object.entries(byCat).sort((a,b)=>b[1]-a[1]).slice(0,8);const acts=log.filter(o=>o.type==="Unsafe act").length,conds=log.filter(o=>o.type==="Unsafe condition").length,safe=log.filter(o=>o.type==="Safe behaviour").length;const open=log.filter(o=>o.status!=="Closed").length;
+  return `<div class="tiles"><div class="tile"><span class="big">${log.length}</span><span class="lbl">observations</span></div><div class="tile"><span class="big">${acts}</span><span class="lbl">unsafe acts</span></div><div class="tile"><span class="big">${conds}</span><span class="lbl">unsafe conditions</span></div><div class="tile"><span class="big">${safe}</span><span class="lbl">safe behaviours</span></div><div class="tile"><span class="big" style="color:${open?"var(--warn)":"var(--good)"}">${open}</span><span class="lbl">open actions</span></div></div><div class="tbl" style="margin-top:10px"><table><thead><tr><th>Top categories</th><th>Count</th></tr></thead><tbody>${top.map(([k,n])=>`<tr><td>${esc(k)}</td><td class="mono">${n}</td></tr>`).join("")}</tbody></table></div>`};
+ return `<div><h2>Safety observation card</h2><p class="lead">Record an unsafe act, unsafe condition or safe behaviour, rate it, note what was done on the spot and generate the card text for your register or WhatsApp group. The log stays on this device; copy it out for the safety committee.</p></div>
+ <div class="card"><div class="form">
+  <div class="f"><label for="oType">Type</label><select id="oType"><option>Unsafe act</option><option>Unsafe condition</option><option>Safe behaviour</option></select></div>
+  <div class="f"><label for="oItem">What was observed</label><select id="oItem">${opts(UNSAFE.acts)}</select></div>
+  <div class="f wide"><label for="oDesc">Details (who/what/where — no names for behaviours)</label><textarea id="oDesc"></textarea></div>
+  <div class="f"><label for="oDate">Date & time</label><input id="oDate" type="datetime-local" value="${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}"></div>
+  <div class="f"><label for="oLoc">Location / area</label><input id="oLoc"></div>
+  <div class="f"><label for="oContractor">Contractor / department</label><input id="oContractor"></div>
+  <div class="f"><label for="oObs">Observer</label><input id="oObs"></div>
+  <div class="f"><label for="oSev">Risk rating</label><select id="oSev"><option>Low</option><option>Medium</option><option selected>High</option><option>Imminent danger (work stopped)</option></select></div>
+  <div class="f"><label for="oAction">Immediate action</label><select id="oAction"><option>Corrected on the spot</option><option>Work stopped</option><option>Barricaded / tagged out</option><option>Person coached</option><option>Reported to supervisor</option><option>Recognised (safe behaviour)</option></select></div>
+  <div class="f"><label for="oCause">Likely cause</label><select id="oCause"><option>Lack of knowledge/skill</option><option>Shortcut / production pressure</option><option>Fatigue / capability</option><option>Equipment or environment inadequate</option><option>Procedure or supervision inadequate</option><option>Management system gap</option><option>N/A (safe behaviour)</option></select></div>
+  <div class="f"><label for="oCapa">Corrective action</label><input id="oCapa"></div>
+  <div class="f"><label for="oOwner">Action owner</label><input id="oOwner"></div>
+  <div class="f"><label for="oDue">Due date</label><input id="oDue" type="date"></div>
+  <div class="f"><label for="oStatus">Status</label><select id="oStatus"><option>Open</option><option>Closed</option></select></div>
+ </div><div class="row" style="margin-top:12px"><button class="btn primary" id="oSave">Save to log</button><button class="btn" id="oCopy">Copy card text</button><button class="btn" id="oExport">Copy full log (CSV)</button><button class="btn" id="oClear">Clear log</button></div>
+ <div class="out" id="oOut" style="margin-top:12px">Fill the card and press Copy or Save.</div></div>
+ <div class="card"><h3>Observation log (this device)</h3><div style="margin-top:10px" id="oStats">${stats()}</div>
+ ${log.length?`<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Type</th><th>Observation</th><th>Rating</th><th>Action</th><th>Status</th></tr></thead><tbody>${log.slice().reverse().slice(0,50).map((o,i)=>`<tr><td class="mono">${esc(o.date)}</td><td>${esc(o.type)}</td><td>${esc(o.item)}<div class="meta">${esc(o.loc)} ${esc(o.contractor)}</div></td><td>${esc(o.sev)}</td><td>${esc(o.action)}<div class="meta">${esc(o.capa)}</div></td><td><button class="btn sm" data-toggle="${log.length-1-i}">${o.status==="Closed"?"Closed ✓":"Open → close"}</button></td></tr>`).join("")}</tbody></table></div>`:""}
+ </div>`;
+}
+function bindObserve(){
+ const type=$("#oType"),item=$("#oItem");const opts=(src)=>src.map(c=>`<optgroup label="${esc(c.cat)}">${c.items.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
+ type.addEventListener("change",()=>{item.innerHTML=type.value==="Unsafe condition"?opts(UNSAFE.conditions):type.value==="Safe behaviour"?opts([{cat:"Safe behaviours",items:["Correct PPE worn and inspected","Tied off 100% at height","Permit obtained and displayed","Proper isolation verified","Good housekeeping / clean-as-you-go","Banksman used for reversing","Load controlled with tag lines","Hazard reported / work stopped appropriately","Correct manual-handling technique","Toolbox talk delivered well","Guard/safety device in use","Hydration and rest breaks taken"]}]):opts(UNSAFE.acts)});
+ const g=id=>$("#"+id).value.trim();const catOf=()=>{const o=item.selectedOptions[0];return o&&o.parentElement.tagName==="OPTGROUP"?o.parentElement.label:""};
+ const text=()=>["SAFETY OBSERVATION CARD","Type: "+g("oType")+"   Category: "+catOf(),"Observation: "+g("oItem"),"Details: "+(g("oDesc")||"—"),"Date/time: "+g("oDate")+"   Location: "+(g("oLoc")||"—")+"   Contractor/dept: "+(g("oContractor")||"—"),"Observer: "+(g("oObs")||"—")+"   Rating: "+g("oSev"),"Immediate action: "+g("oAction"),"Likely cause: "+g("oCause"),"Corrective action: "+(g("oCapa")||"—")+"   Owner: "+(g("oOwner")||"—")+"   Due: "+(g("oDue")||"—")+"   Status: "+g("oStatus")].join("\n");
+ $("#oCopy").addEventListener("click",()=>{$("#oOut").textContent=text();copy(text())});
+ $("#oSave").addEventListener("click",()=>{const log=store.get("obs",[]);log.push({type:g("oType"),cat:catOf(),item:g("oItem"),desc:g("oDesc"),date:g("oDate"),loc:g("oLoc"),contractor:g("oContractor"),obs:g("oObs"),sev:g("oSev"),action:g("oAction"),cause:g("oCause"),capa:g("oCapa"),owner:g("oOwner"),due:g("oDue"),status:g("oStatus")});store.set("obs",log);toast("Saved");route()});
+ $("#oExport").addEventListener("click",()=>{const log=store.get("obs",[]);const h=["date","type","category","observation","details","location","contractor","observer","rating","immediate_action","cause","corrective_action","owner","due","status"];const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';copy([h.join(",")].concat(log.map(o=>[o.date,o.type,o.cat,o.item,o.desc,o.loc,o.contractor,o.obs,o.sev,o.action,o.cause,o.capa,o.owner,o.due,o.status].map(q).join(","))).join("\n"))});
+ $("#oClear").addEventListener("click",()=>{const b=$("#oClear");if(b.dataset.arm){store.set("obs",[]);route()}else{b.dataset.arm="1";b.textContent="Press again to clear";setTimeout(()=>{b.dataset.arm="";b.textContent="Clear log"},3000)}});
+ document.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{const log=store.get("obs",[]);const o=log[+b.dataset.toggle];if(o){o.status=o.status==="Closed"?"Open":"Closed";store.set("obs",log);route()}}));
+}
+
+/* ---------- FIRST AID ---------- */
+const FACATS=["All","Life-threatening","Injuries","Chemical","Environmental","Bites & stings","Medical","Minor"];
+function firstaid(){
+ const list=FIRSTAID.topics.filter(t=>STATE.faCat==="All"||t.cat===STATE.faCat);
+ return `<div><h2>First aid</h2><p class="lead">Site first-aid reference aligned with ILCOR/AHA/ERC 2020–2025 resuscitation guidance and the Indian national snakebite protocol. It supports certified training (St John Ambulance, Indian Red Cross, state-approved centres) and does not replace it. In every case: Danger → Response → Send for help (108/112) → Airway → Breathing → CPR → Defibrillation.</p></div>
+ <div class="card" style="border-left:4px solid var(--crit)"><div class="row" style="justify-content:space-between"><h3>Emergency numbers</h3><button class="btn sm" id="faCopyNums">Copy</button></div><div class="chips" style="margin-top:8px"><span class="chip">Ambulance 108 / 102</span><span class="chip">Unified emergency 112</span><span class="chip">Fire 101</span><span class="chip">Police 100</span><span class="chip">Poison centre (AIIMS) 1800-116-117</span><span class="chip">District disaster 1077</span><span class="chip">Coast guard 1554</span><span class="chip">Health helpline 104</span></div></div>
+ <div class="card"><h3>Principles</h3><div class="tbl" style="margin-top:10px;border:0"><table class="mtable">${FIRSTAID.principles.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</table></div></div>
+ <div class="card"><div class="row" style="justify-content:space-between">${chipbar(FACATS,STATE.faCat,"c")}<span class="meta">${list.length} topics</span></div></div>
+ <div class="list">${list.map(t=>`<div class="item" id="${t.id}"><div class="hd"><div><div class="t">${esc(t.t)}</div><div class="meta"><span class="tag">${esc(t.cat)}</span></div></div><button class="btn sm" data-copyfa="${t.id}">Copy</button></div>
+  <div class="two" style="margin-top:10px;gap:10px">
+   <div><h4>Recognise</h4><ul class="keys">${t.recognise.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div><h4 style="color:var(--crit)">Do not</h4><ul class="keys">${t.dont.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+  </div>
+  <h4 style="margin-top:10px;color:var(--good)">Do</h4><ol class="steps" style="margin-top:6px">${t.do.map(x=>`<li><span>${esc(x)}</span></li>`).join("")}</ol>
+  <div class="note" style="border-left-color:var(--info)"><b>Hospital / 108:</b> ${esc(t.hospital)}</div></div>`).join("")}</div>
+ <div class="card"><h3>First-aid programme — statutory & good practice</h3><div class="two" style="margin-top:10px">${FIRSTAID.programme.map(p=>`<div><h4>${esc(p.h)}</h4><ul class="keys">${p.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div><div class="row" style="margin-top:12px"><a class="btn" href="#checklists" data-ck="cl-firstaid">First-aid readiness checklist</a><a class="btn" href="#procedures" data-proc="health">Occupational health procedure</a><a class="btn" href="#protocols">Emergency protocols</a></div></div>`;
+}
+function bindFirstaid(){const v=$("#view");bindChips(v,val=>{STATE.faCat=val;route()});v.querySelectorAll("[data-copyfa]").forEach(b=>b.addEventListener("click",()=>{const t=FIRSTAID.topics.find(x=>x.id===b.dataset.copyfa);copy(["FIRST AID: "+t.t.toUpperCase(),"","RECOGNISE:",...t.recognise.map(x=>"- "+x),"","DO:",...t.do.map((x,i)=>(i+1)+". "+x),"","DO NOT:",...t.dont.map(x=>"- "+x),"","HOSPITAL/108: "+t.hospital,"","Call 108 / 112. Guidance aligned with ILCOR/AHA/ERC; supports, does not replace, certified first-aid training."].join("\n"))}));$("#faCopyNums").addEventListener("click",()=>copy("EMERGENCY NUMBERS (India)\nAmbulance 108 / 102\nUnified emergency 112\nFire 101\nPolice 100\nPoison centre (AIIMS) 1800-116-117\nDistrict disaster control 1077\nCoast guard 1554\nHealth helpline 104"))}
+
+/* ---------- KEYWORDS & GLOSSARY ---------- */
+function keywords(){
+ const cats=["All",...[...new Set(KEYWORDS.map(k=>k[1]))]];
+ const list=KEYWORDS.filter(k=>STATE.kwCat==="All"||k[1]===STATE.kwCat).slice().sort((a,b)=>a[0].localeCompare(b[0]));
+ return `<div><h2>Keywords & glossary</h2><p class="lead">${KEYWORDS.length} safety terms, acronyms and authorities with one-line definitions. Filter by category or use the search box at the top.</p></div>
+ <div class="card">${chipbar(cats,STATE.kwCat,"c")}</div>
+ <div class="tbl"><table class="mtable"><tbody>${list.map(([k,c,v])=>`<tr><td>${esc(k)}<div class="meta">${esc(c)}</div></td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+function bindKeywords(){bindChips($("#view"),val=>{STATE.kwCat=val;route()})}
+
+/* ---------- SEARCH ---------- */
+function searchView(q){
+ const t=q.toLowerCase();const hit=s=>String(s).toLowerCase().includes(t);const R=[];
+ REGS.forEach(r=>{if(hit(r.t)||hit(r.sum)||r.key.some(hit)||hit(r.a))R.push({k:"Regulation",t:r.t,s:r.sum,go:{v:"regulations",reg:r.id}})});
+ PROCS.forEach(p=>{if(hit(p.t)||hit(p.purpose)||hit(p.scope)||p.steps.some(hit)||p.hazards.some(hit))R.push({k:"Procedure",t:p.t,s:p.purpose,go:{v:"procedures",proc:p.id}})});
+ CHECKLISTS.forEach(c=>{if(hit(c.t)||c.items.some(hit))R.push({k:"Checklist",t:c.t,s:c.items.find(hit)||c.items[0],go:{v:"checklists",ck:c.id}})});
+ FORMS.forEach(f=>{if(hit(f.t)||hit(f.law)||hit(f.note))R.push({k:"Form",t:f.t,s:f.law+" · "+f.when,go:{v:"forms"}})});
+ REPORTING.forEach(r=>{if(hit(r.ev)||hit(r.to)||hit(r.law))R.push({k:"Deadline",t:r.ev+" — "+r.j,s:r.to+" · "+r.dl,go:{v:"reporting"}})});
+ NUMBERS.forEach(n=>{if(hit(n.k)||hit(n.v))R.push({k:"Limit",t:n.k,s:n.v,go:{v:"numbers"}})});
+ TALKS.forEach(x=>{if(hit(x.t)||x.pts.some(hit))R.push({k:"Toolbox talk",t:x.t,s:x.pts[0],go:{v:"talks"}})});
+ SECTORS.forEach(x=>{if(hit(x.t)||hit(x.desc)||x.hazards.some(hit)||x.statutory.some(hit))R.push({k:"Sector",t:x.t,s:x.desc,go:{v:"sectors",sector:x.id}})});
+ UNSAFE.acts.forEach(c=>c.items.forEach(it=>{if(hit(it)||hit(c.cat))R.push({k:"Unsafe act",t:it,s:c.cat,go:{v:"unsafe"}})}));
+ UNSAFE.conditions.forEach(c=>c.items.forEach(it=>{if(hit(it)||hit(c.cat))R.push({k:"Unsafe condition",t:it,s:c.cat,go:{v:"unsafe"}})}));
+ PROTOCOLS.lsr.forEach(x=>{if(hit(x.t)||hit(x.rule))R.push({k:"Protocol",t:x.t,s:x.rule,go:{v:"protocols"}})});
+ PROTOCOLS.standing.forEach(x=>{if(hit(x.t)||hit(x.purpose)||x.steps.some(hit))R.push({k:"Protocol",t:x.t,s:x.purpose,go:{v:"protocols"}})});
+ PROTOCOLS.emergency.forEach(x=>{if(hit(x.t)||hit(x.trigger)||x.steps.some(hit))R.push({k:"Emergency protocol",t:x.t,s:x.trigger,go:{v:"protocols"}})});
+ FIRSTAID.topics.forEach(x=>{if(hit(x.t)||x.recognise.some(hit)||x.do.some(hit))R.push({k:"First aid",t:x.t,s:x.recognise[0],go:{v:"firstaid"}})});
+ KEYWORDS.forEach(([k,c,v])=>{if(hit(k)||hit(v))R.push({k:"Keyword",t:k,s:v,go:{v:"keywords"}})});
+ return `<div><h2>Search: “${esc(q)}”</h2><p class="lead">${R.length} result${R.length===1?"":"s"}</p></div><div class="sr">${R.slice(0,80).map((r,i)=>`<div class="r" data-sr="${i}"><span class="k">${esc(r.k)}</span><div><div style="font-weight:600">${esc(r.t)}</div><div class="meta" style="margin-top:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.s)}</div></div></div>`).join("")||'<div class="empty">Nothing found. Try a shorter term (e.g. “scaffold”, “Form XI”, “48 hours”).</div>'}</div>`;
+}
+let SR=[];
+
+/* ---------- ROUTER ---------- */
+function route(){
+ const h=(location.hash||"#home").slice(1);const v=$("#view");nav(h);
+ if(STATE.q){v.innerHTML=searchView(STATE.q);bindSearch();return}
+ switch(h){
+  case "regulations":v.innerHTML=regs();bindRegs();break;
+  case "procedures":v.innerHTML=procs();bindProcs();break;
+  case "checklists":v.innerHTML=checklists();bindCks();break;
+  case "permits":v.innerHTML=permits();bindPermits();break;
+  case "incidents":v.innerHTML=incidents();bindIncidents();break;
+  case "forms":v.innerHTML=forms();break;
+  case "reporting":v.innerHTML=reporting();break;
+  case "talks":v.innerHTML=talks();v.querySelectorAll("[data-talk]").forEach(b=>b.addEventListener("click",()=>{const t=TALKS[+b.dataset.talk];copy("TOOLBOX TALK: "+t.t+"\n"+t.pts.map((p,i)=>(i+1)+". "+p).join("\n"))}));break;
+  case "emergency":v.innerHTML=emergency();break;
+  case "numbers":v.innerHTML=numbers();break;
+  case "sectors":v.innerHTML=sectors();bindSectors();break;
+  case "protocols":v.innerHTML=protocols();bindProtocols();break;
+  case "unsafe":v.innerHTML=unsafe();bindUnsafe();break;
+  case "firstaid":v.innerHTML=firstaid();bindFirstaid();break;
+  case "keywords":v.innerHTML=keywords();bindKeywords();break;
+  case "observe":v.innerHTML=observe();bindObserve();break;
+  case "glossary":location.hash="#keywords";return;
+  case "carbon":v.innerHTML=carbon();bindCarbon();break;
+  default:v.innerHTML=home();
+ }
+ bindJumps(v);window.scrollTo({top:0});
+}
+function go(h){if(location.hash===h)route();else location.hash=h}
+function bindJumps(root){root.querySelectorAll("a[data-proc]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();STATE.proc=a.dataset.proc;STATE.q="";$("#q").value="";go("#procedures")}));root.querySelectorAll("a[data-ck]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();STATE.ck=a.dataset.ck;STATE.q="";$("#q").value="";go("#checklists")}));root.querySelectorAll("a[data-reg]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();STATE.reg=a.dataset.reg;STATE.regJ="All";STATE.regD="All";STATE.regS="All";STATE.q="";$("#q").value="";go("#regulations")}))}
+function bindRegs(){const v=$("#view");v.querySelectorAll(".chips").forEach((bar,idx)=>bar.querySelectorAll(".chip[data-v]").forEach(c=>c.addEventListener("click",()=>{if(idx===0)STATE.regJ=c.dataset.v;else if(idx===1)STATE.regD=c.dataset.v;else STATE.regS=c.dataset.v;route()})));if(STATE.reg){const el=document.getElementById("reg-"+STATE.reg);if(el){el.scrollIntoView({block:"start"});el.style.borderColor="var(--accent)";el.querySelector("details")?.setAttribute("open","")}STATE.reg=null}}
+function bindProcs(){const v=$("#view");if(STATE.proc){$("#copyProc")?.addEventListener("click",()=>copy(procText(PROCS.find(p=>p.id===STATE.proc))));v.querySelector("[data-back]").addEventListener("click",e=>{e.preventDefault();STATE.proc=null;route()});return}bindChips(v,val=>{STATE.procCat=val;route()});v.querySelectorAll(".item[data-proc]").forEach(it=>it.addEventListener("click",()=>{STATE.proc=it.dataset.proc;route()}))}
+function bindCks(){const v=$("#view");if(STATE.ck){bindCk(CHECKLISTS.find(c=>c.id===STATE.ck));v.querySelector("[data-back]").addEventListener("click",e=>{e.preventDefault();STATE.ck=null;route()});return}bindChips(v,val=>{STATE.ckCat=val;route()});v.querySelectorAll(".item[data-ck]").forEach(it=>it.addEventListener("click",()=>{STATE.ck=it.dataset.ck;route()}))}
+function bindSearch(){const q=STATE.q.toLowerCase();const items=[];const v=$("#view");v.querySelectorAll("[data-sr]").forEach(el=>el.addEventListener("click",()=>{const title=el.querySelector("div>div").textContent;const k=el.querySelector(".k").textContent;STATE.q="";$("#q").value="";
+ if(k==="Regulation"){const r=REGS.find(x=>x.t===title);STATE.reg=r?.id;go("#regulations")}
+ else if(k==="Procedure"){const p=PROCS.find(x=>x.t===title);STATE.proc=p?.id;go("#procedures")}
+ else if(k==="Checklist"){const c=CHECKLISTS.find(x=>x.t===title);STATE.ck=c?.id;go("#checklists")}
+ else if(k==="Sector"){const c=SECTORS.find(x=>x.t===title);STATE.sector=c?.id;go("#sectors")}
+ else if(k==="Keyword"||k==="Glossary"){STATE.kwCat="All";go("#keywords")}
+ else if(k==="Protocol"||k==="Emergency protocol"){STATE.protoTab=k==="Emergency protocol"?"emergency":(PROTOCOLS.lsr.some(x=>x.t===title)?"lsr":"standing");go("#protocols")}
+ else if(k==="Unsafe act"||k==="Unsafe condition"){STATE.unsafeTab=k==="Unsafe act"?"acts":"conditions";go("#unsafe")}
+ else if(k==="First aid"){STATE.faCat="All";go("#firstaid")}
+ else{const map={Form:"forms",Deadline:"reporting",Limit:"numbers","Toolbox talk":"talks"};go("#"+map[k])}}))}
+window.addEventListener("hashchange",()=>{if(location.hash!=="#procedures")STATE.proc=null;if(location.hash!=="#checklists")STATE.ck=null;if(location.hash!=="#sectors")STATE.sector=null;STATE.q="";$("#q").value="";route()});
+let qt;$("#q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{STATE.q=e.target.value.trim();route()},180)});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();$("#q").focus()}if(e.key==="Escape"&&document.activeElement===$("#q")){$("#q").value="";STATE.q="";route()}});
+route();
+})();
+</script>

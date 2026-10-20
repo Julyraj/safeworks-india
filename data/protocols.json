@@ -1,0 +1,758 @@
+{
+ "lsr": [
+  {
+   "t": "Work with a valid permit",
+   "rule": "I obtain and follow a permit before hot work, confined-space entry, excavation, electrical, critical lifts or radiography.",
+   "do": [
+    "Understand the hazards and controls on the permit",
+    "Confirm isolations and gas tests are done",
+    "Stop if conditions change"
+   ],
+   "never": [
+    "Start without a signed permit",
+    "Continue after expiry"
+   ]
+  },
+  {
+   "t": "Bypassing safety controls",
+   "rule": "I obtain authorisation before overriding or disabling safety-critical equipment.",
+   "do": [
+    "Treat guards, interlocks, alarms, trips and limit switches as life-critical",
+    "Use the override register with time limit and compensating measures"
+   ],
+   "never": [
+    "Remove a guard to keep production going",
+    "Disable a reversing alarm or LMI"
+   ]
+  },
+  {
+   "t": "Energy isolation",
+   "rule": "I verify isolation and zero energy before work begins.",
+   "do": [
+    "Isolate, lock, tag, release stored energy, test for dead",
+    "Apply my own lock; keep my key"
+   ],
+   "never": [
+    "Trust a stop button or closed valve as isolation",
+    "Remove someone else's lock"
+   ]
+  },
+  {
+   "t": "Confined space",
+   "rule": "I enter a confined space only with a permit, a tested atmosphere and an attendant.",
+   "do": [
+    "Gas-test before and during; continuous ventilation",
+    "Keep the retrieval line attached"
+   ],
+   "never": [
+    "Enter to rescue without breathing apparatus",
+    "Leave the attendant post"
+   ]
+  },
+  {
+   "t": "Working at height",
+   "rule": "I protect myself against a fall when working at height.",
+   "do": [
+    "Use guardrails, nets or covers first; harness to a rated anchor otherwise",
+    "Inspect harness and lanyard before use"
+   ],
+   "never": [
+    "Tie off to scaffold tubes or rebar",
+    "Work on a red-tagged scaffold or fragile roof"
+   ]
+  },
+  {
+   "t": "Safe mechanical lifting",
+   "rule": "I plan lifts and control the area.",
+   "do": [
+    "Lift plan, certified gear, trained operator and signaller",
+    "Barricade the zone; tag lines on loads"
+   ],
+   "never": [
+    "Walk or work under a suspended load",
+    "Exceed the load chart or lift in high wind"
+   ]
+  },
+  {
+   "t": "Line of fire",
+   "rule": "I keep myself and others out of the line of fire.",
+   "do": [
+    "Position away from moving plant, swing radius, tension ropes, pinch points, stored energy",
+    "Use barriers and spotters"
+   ],
+   "never": [
+    "Stand between a reversing vehicle and a fixed object",
+    "Put hands where you cannot see"
+   ]
+  },
+  {
+   "t": "Driving & mobile plant",
+   "rule": "I follow safe driving rules.",
+   "do": [
+    "Seat belt, speed limit, banksman for reversing, journey management for long trips",
+    "Daily pre-start check"
+   ],
+   "never": [
+    "Use a phone while driving",
+    "Drive fatigued or under the influence"
+   ]
+  },
+  {
+   "t": "Hot work",
+   "rule": "I control flammables and ignition sources.",
+   "do": [
+    "Permit, gas test, fire watch, extinguisher within reach",
+    "Clear combustibles 11 m or protect"
+   ],
+   "never": [
+    "Weld or grind near fuel, cylinders or open drains without a permit",
+    "Leave hot work without a fire watch"
+   ]
+  },
+  {
+   "t": "Excavation",
+   "rule": "I never enter an unprotected trench.",
+   "do": [
+    "Shoring, sloping or box beyond 1.5 m; permit-to-dig; daily inspection",
+    "Spoil and plant ≥ 1 m from edge"
+   ],
+   "never": [
+    "Dig near marked services without hand-digging",
+    "Work below undermined ground"
+   ]
+  },
+  {
+   "t": "Fitness for work & PPE",
+   "rule": "I arrive fit for work and wear the right PPE.",
+   "do": [
+    "Report fatigue, illness, medication that affects alertness",
+    "Wear and inspect PPE for the task"
+   ],
+   "never": [
+    "Work under the influence of alcohol or drugs",
+    "Remove PPE in a hazard zone"
+   ]
+  },
+  {
+   "t": "Stop work & report",
+   "rule": "I stop any work I believe is unsafe and report hazards, near misses and injuries.",
+   "do": [
+    "Use stop-work authority without fear of blame",
+    "Report within the shift"
+   ],
+   "never": [
+    "Hide an injury or near miss",
+    "Restart until the issue is resolved by the supervisor"
+   ]
+  }
+ ],
+ "rules": [
+  {
+   "cat": "Access & conduct",
+   "items": [
+    "No entry without induction, ID card and gate registration; visitors escorted",
+    "Follow signs, barricades, tags and instructions of marshals; never remove a barricade or tag",
+    "No alcohol, drugs or intoxicated persons; random testing may apply",
+    "No smoking except in designated areas; no open flames in camps",
+    "No mobile phones while operating plant, driving, walking in plant zones or at height",
+    "No horseplay, running, fighting or weapons",
+    "Working hours and rest as per roster; no double shifts without approval",
+    "Children not permitted on site or in work areas; no under-18 in hazardous work"
+   ]
+  },
+  {
+   "cat": "PPE",
+   "items": [
+    "Minimum: helmet with chin strap, safety boots, hi-vis — always",
+    "Task PPE per permit/method statement (harness, goggles, face shield, gloves, respirator, hearing protection)",
+    "Inspect PPE daily; replace damaged PPE free of charge",
+    "Long trousers and sleeves in chemical, welding and hot-metal areas; no synthetic clothing for hot work",
+    "Tight-fitting respirators require a clean-shaven face"
+   ]
+  },
+  {
+   "cat": "Work practices",
+   "items": [
+    "No work without a risk assessment/method statement and a daily toolbox talk",
+    "Permits for hot work, confined space, excavation, electrical, WAH, lifting (critical), radiography",
+    "Lockout before maintenance; test for dead",
+    "Keep out of the line of fire; never under suspended loads",
+    "Work at height only with collective protection or 100% tie-off",
+    "Trenches > 1.5 m shored; ladders within 7.5 m",
+    "Use the right tool, inspected and guarded; no modifications",
+    "Chemicals labelled, SDS known, stored by compatibility; no decanting to food containers",
+    "Housekeeping: clean as you go; walkways and exits clear; waste segregated",
+    "Weather rules: stop WAH/lifting at wind > 40 km/h or lightning; heat-level work restrictions"
+   ]
+  },
+  {
+   "cat": "Equipment & vehicles",
+   "items": [
+    "Only authorised, licensed and trained operators; daily pre-start checks",
+    "Site speed limit 10–20 km/h; seat belts; banksman for reversing; no passengers on plant",
+    "Lifting gear certified and colour-coded; no homemade attachments",
+    "Gas cylinders upright, chained, capped; flashback arrestors",
+    "Electrical equipment via RCD-protected industrial sockets; damaged cables tagged out",
+    "Keys removed from unattended plant; loads lowered; machines isolated at shift end"
+   ]
+  },
+  {
+   "cat": "Health & welfare",
+   "items": [
+    "Drink water every 15–20 min in heat; use rest shelters",
+    "Report injuries, however small, to the first-aider the same shift",
+    "Use toilets and washing facilities; wash before eating; no eating in chemical/dust areas",
+    "Medical examinations as scheduled for dangerous operations",
+    "Report fatigue or illness; don't work when unfit"
+   ]
+  },
+  {
+   "cat": "Environment",
+   "items": [
+    "No burning of waste; segregate waste; hazardous waste to the designated store",
+    "No discharge of oil, chemicals, silt or sewage to drains or land",
+    "Dust suppression and covered transport; no idling of plant",
+    "Noise limits and timing for night work respected"
+   ]
+  },
+  {
+   "cat": "Emergency",
+   "items": [
+    "Know the alarm, assembly point, emergency numbers and nearest extinguisher/first-aid",
+    "Raise the alarm first; fight fire only if trained and safe",
+    "Never use lifts in a fire; never re-enter until all-clear",
+    "Report to your supervisor at the assembly point for head-count"
+   ]
+  }
+ ],
+ "standing": [
+  {
+   "id": "p-stopwork",
+   "t": "Stop Work Authority",
+   "purpose": "Every person has the authority and duty to stop any work they believe is unsafe, without fear of reprisal.",
+   "steps": [
+    "Stop: say 'STOP WORK' clearly; make the area safe (do not leave equipment in a dangerous state)",
+    "Notify: tell the supervisor/permit holder what you saw and why it is unsafe",
+    "Investigate: supervisor and safety officer assess; correct the condition or change the method",
+    "Resume: only when the hazard is controlled and the crew is re-briefed; the person who stopped the work is thanked and the event is logged",
+    "Follow-up: record in the stop-work register; trend monthly; recognise good calls; discipline retaliation"
+   ]
+  },
+  {
+   "id": "p-ptw",
+   "t": "Permit to Work",
+   "purpose": "Formal written control for high-risk, non-routine work.",
+   "steps": [
+    "Request with JSA; issuer walks down the site with the receiver",
+    "Isolations, gas tests, precautions and rescue arrangements completed and recorded",
+    "Both sign; permit displayed at the job and the control point; crew briefed and signed",
+    "Validity ≤ one shift; suspend on alarms or changed conditions; re-validate with re-check",
+    "Close-out inspection by issuer; de-isolation only after closure; file"
+   ]
+  },
+  {
+   "id": "p-loto",
+   "t": "Energy Isolation (LOTO)",
+   "purpose": "Zero-energy state before any work on equipment.",
+   "steps": [
+    "Identify all energy sources from the ECP",
+    "Shut down; isolate; lock and tag each point (personal lock); group lock box for crews",
+    "Release stored energy; block/support",
+    "Test for dead/zero energy (try-start, proved tester, gauges)",
+    "Work; shift handover with lock transfer; restore only by lock owners after head-count"
+   ]
+  },
+  {
+   "id": "p-tbt",
+   "t": "Daily Toolbox Talk / Pre-task Briefing",
+   "purpose": "Align the crew on the day's tasks, hazards, controls and permit conditions.",
+   "steps": [
+    "Supervisor gathers crew at start of shift (10–15 min) at the workface",
+    "Cover: tasks, hazards from JSA, permits, PPE, weather, emergency arrangements, lessons from yesterday",
+    "Ask questions; invite concerns; confirm understanding in the crew's language",
+    "Record topic and attendance (signatures); file with the permit",
+    "Repeat for new crews joining mid-shift or when the task changes"
+   ]
+  },
+  {
+   "id": "p-report",
+   "t": "Hazard, Near-Miss & Injury Reporting",
+   "purpose": "Capture every unsafe act/condition, near miss and injury so it can be fixed before it hurts someone.",
+   "steps": [
+    "Anyone can report: verbally to supervisor, observation card, QR/app, or safety officer — within the shift",
+    "No-blame rule for reporting; anonymous option available",
+    "Safety officer classifies (unsafe act/condition/near miss/injury) and assigns action with owner and date",
+    "High-potential near misses investigated like injuries (RCA within 72 h)",
+    "Feedback to the reporter; monthly trend review at the safety committee; recognise top reporters"
+   ]
+  },
+  {
+   "id": "p-bbs",
+   "t": "Safety Observation (Behaviour-Based Safety)",
+   "purpose": "Structured observation of work practices with immediate feedback.",
+   "steps": [
+    "Observer (trained; supervisor/peer) announces the observation; observes 10–15 min using the unsafe-acts/conditions categories",
+    "Stops imminent danger immediately; otherwise completes the observation",
+    "Gives feedback: recognise safe behaviour first, then discuss at-risk behaviour and barriers (why?)",
+    "Records on the observation card (no names for behaviours; names for recognition only)",
+    "Safety team trends categories weekly; removes barriers (equipment, procedure, training); publishes results"
+   ]
+  },
+  {
+   "id": "p-walk",
+   "t": "Management Safety Walk",
+   "purpose": "Visible leadership and verification of controls.",
+   "steps": [
+    "Site head/manager walks a defined area weekly with the safety officer",
+    "Talks to workers about their task, hazards and what would make it safer",
+    "Checks a sample: permits, PPE, housekeeping, isolation, emergency equipment",
+    "Records findings with owners/dates; closes last walk's actions",
+    "Shares positives and lessons at the next safety meeting"
+   ]
+  },
+  {
+   "id": "p-visitor",
+   "t": "Visitor & Vendor Control",
+   "purpose": "Keep visitors safe and out of hazardous areas.",
+   "steps": [
+    "Register at gate; ID; brief on site rules, emergency, PPE; sign visitor induction",
+    "Issue PPE; escort at all times; restricted-area access only with permit holder",
+    "Vehicles parked outside work zones; no photography in restricted areas unless approved",
+    "Sign out; PPE returned; emergency head-count includes visitors"
+   ]
+  },
+  {
+   "id": "p-driving",
+   "t": "Driving & Journey Management",
+   "purpose": "Prevent road and site vehicle incidents.",
+   "steps": [
+    "Licensed, fit drivers; vehicle inspected; seat belts for all; speed limits; no phones",
+    "Journey plan for trips > 2 h or at night: route, rest stops every 2 h, max 10 h driving/day, check-in calls",
+    "No driving 11 pm–5 am for long trips unless approved; fatigue management",
+    "Loads secured/covered; tippers never travel raised",
+    "Incident: stop, make safe, first aid, report to supervisor and police as required"
+   ]
+  },
+  {
+   "id": "p-drugs",
+   "t": "Alcohol & Drugs",
+   "purpose": "Zero tolerance for impairment at work.",
+   "steps": [
+    "No alcohol or illegal drugs on site; prescription medication affecting alertness to be declared",
+    "Random and for-cause testing where policy applies (breath test at gate)",
+    "Impaired person removed from work safely (not sent home alone if unsafe); recorded",
+    "Support/referral for dependency; disciplinary action per policy",
+    "Contractors bound by the same rule"
+   ]
+  },
+  {
+   "id": "p-weather",
+   "t": "Adverse Weather Triggers",
+   "purpose": "Pre-agreed stop/modify rules for weather.",
+   "steps": [
+    "Wind > 40 km/h (or crane limit ≈ 9–10 m/s): stop WAH on exposed areas, crane lifts, sheeting; secure loose materials",
+    "Lightning within 10 km / thunder heard: stop WAH, crane, scaffold, roof, water and electrical work; shelter in buildings/vehicles; resume 30 min after last thunder",
+    "Heavy rain / flood warning: stop excavation entry, inspect after; divert runoff; pump readiness; stop electrical outdoor work",
+    "Heat level red (IMD/WBGT): no heavy outdoor work at peak hours; water/rest/shade; buddy system",
+    "Cyclone warning (TN coast): secure cranes, lower loads, evacuate workers from low-lying camps, follow TNSDMA orders",
+    "Dense fog/smoke: restrict vehicle movement, lights on, marshals"
+   ]
+  },
+  {
+   "id": "p-night",
+   "t": "Night & Lone Work",
+   "purpose": "Extra controls when supervision and rescue are reduced.",
+   "steps": [
+    "Task list approved for night; no prohibited lone tasks (confined space, WAH, HT, hot work)",
+    "Lighting ≥ 50 lux general / 100–200 lux task; class 3 hi-vis",
+    "Supervisor, first-aider and ERT member on shift; emergency vehicle available",
+    "Lone worker check-in every 1–2 h; escalation if missed",
+    "Women night shift: consent, transport with security, CCTV, batch size per state rules"
+   ]
+  },
+  {
+   "id": "p-pressure",
+   "t": "Pressure Testing (Hydro/Pneumatic)",
+   "purpose": "Prevent injuries from stored pressure energy.",
+   "steps": [
+    "Written test procedure; hydrotest preferred; pneumatic only with engineering approval and exclusion zone",
+    "Calibrated gauges (2), relief valve set ≤ 110% test pressure, vent lines",
+    "Barricade; nobody in line of flanges/plugs; pressurise in stages with holds; inspect at reduced pressure",
+    "Depressurise and drain before any adjustment; never tighten under pressure",
+    "Record test; release permit"
+   ]
+  },
+  {
+   "id": "p-change",
+   "t": "Management of Change",
+   "purpose": "No change without review.",
+   "steps": [
+    "Any change to process, equipment, chemical, layout, procedure, people or temporary works raises an MoC",
+    "Risk assessment; documents updated; approvals; training",
+    "Pre-start-up safety review; temporary changes time-limited",
+    "Close and audit"
+   ]
+  },
+  {
+   "id": "p-contractor",
+   "t": "Contractor Control",
+   "purpose": "Same standard for everyone on site.",
+   "steps": [
+    "Pre-qualify; contract HSE clauses; licences, insurance, worker registration",
+    "Induct every worker; approve method statements; verify equipment certificates",
+    "Daily toolbox talks; joint inspections; stop-work authority",
+    "Monthly scorecard; non-conformance notices; demobilisation close-out"
+   ]
+  },
+  {
+   "id": "p-scene",
+   "t": "Incident Scene & Notification",
+   "purpose": "Protect people, preserve evidence, meet legal clocks.",
+   "steps": [
+    "Rescue, first aid, 108/112; isolate hazards; stop adjacent work",
+    "Preserve scene for fatal/serious incidents; photos; witnesses",
+    "Internal report within 1 h; statutory notices per the Incident navigator (death forthwith; others 12 h; MSIHC 48 h; electrical 48 h; boiler 24 h)",
+    "Investigate (RCA ≤ 72 h); CAPA; lessons shared"
+   ]
+  },
+  {
+   "id": "p-consequence",
+   "t": "Consequence Management (fair and consistent)",
+   "purpose": "Respond to violations fairly, distinguishing error from recklessness.",
+   "steps": [
+    "Classify: unintentional error / at-risk shortcut tolerated by system / reckless disregard (just-culture test)",
+    "Error → coach and fix the system; at-risk → coach, remove incentive, re-train; reckless → disciplinary ladder (verbal, written, suspension, removal)",
+    "Life-Saving Rule breaches: removal from site pending investigation; supervisors accountable for tolerance",
+    "Recognise and reward safe behaviour and reporting equally visibly",
+    "Record consistently; review for fairness; apply to contractors and staff alike"
+   ]
+  }
+ ],
+ "emergency": [
+  {
+   "id": "e-fire",
+   "t": "Fire",
+   "trigger": "Smoke, flames, fire alarm",
+   "steps": [
+    "Raise the alarm: shout 'FIRE', break-glass/manual call point; call 101/112 and the control room",
+    "If trained and the fire is small: fight it with the correct extinguisher (PASS – pull, aim, squeeze, sweep), keeping an exit behind you",
+    "Otherwise evacuate: nearest exit, no lifts, close doors behind you, help others; stop plant/isolate gas and power if safe",
+    "Go to the assembly point; report to your supervisor for head-count; report missing persons to the incident controller",
+    "Do not re-enter until the all-clear; ERT receives the fire brigade with the site plan and chemical inventory"
+   ],
+   "call": "101 / 112 · Site ERT"
+  },
+  {
+   "id": "e-evac",
+   "t": "Site Evacuation",
+   "trigger": "Continuous siren / evacuation announcement",
+   "steps": [
+    "Stop work; make equipment safe (lower loads, isolate, stop vehicles) only if it takes seconds",
+    "Leave by the nearest safe route; walk; help injured and visitors; no lifts",
+    "Move to the assembly point upwind (toxic release) or away from the structure (collapse); alternative point if primary is unsafe",
+    "Head-count by supervisor/contractor; report missing persons; wait for instructions",
+    "Re-entry only on the incident controller's all-clear"
+   ],
+   "call": "112 · Incident controller"
+  },
+  {
+   "id": "e-medical",
+   "t": "Medical Emergency / Serious Injury",
+   "trigger": "Collapse, severe bleeding, unconsciousness, major injury",
+   "steps": [
+    "Danger: make the scene safe (isolate power, stop plant); call for the first-aider and 108/112; send someone to guide the ambulance",
+    "Response & airway: check response; open airway; check breathing (≤ 10 s)",
+    "Not breathing: start CPR 30:2 and send for the AED; breathing but unconscious: recovery position",
+    "Control severe bleeding with direct pressure; treat shock; keep the casualty warm; nothing by mouth",
+    "Record time, actions, vital signs; hand over to ambulance (MIST: mechanism, injuries, signs, treatment); preserve the scene; notify per incident protocol"
+   ],
+   "call": "108 / 112 · OHC / first-aider · Hospital tie-up"
+  },
+  {
+   "id": "e-gas",
+   "t": "Gas Leak / Toxic Release",
+   "trigger": "Gas alarm, odour, visible cloud, detector reading",
+   "steps": [
+    "Raise the toxic-gas alarm; stop ignition sources (flammable) and hot work",
+    "Move upwind/crosswind to the assembly point; use escape respirators; do not run through the cloud",
+    "Non-ERT persons indoors: shelter-in-place (close doors/windows, stop AC, go to upper floors), await instructions",
+    "ERT only (SCBA, suits) isolates the source and applies the emergency kit; scrubber/water curtain as appropriate",
+    "Head-count; medical triage; notify fire service, police, District authority and neighbours as per the off-site plan; MSIHC 48-h report"
+   ],
+   "call": "112 / 101 · ERT · District control room 1077"
+  },
+  {
+   "id": "e-spill",
+   "t": "Chemical / Oil Spill",
+   "trigger": "Loss of containment to ground, drain or water",
+   "steps": [
+    "Alert; isolate the source if safe (close valve, upright drum); remove ignition sources",
+    "PPE per SDS; contain with booms/absorbents/sand; block drains",
+    "Collect into labelled containers as hazardous waste; decontaminate area and PPE",
+    "Report: internal; SPCB forthwith for significant/off-site releases (HOWM Form 11; EP Act s.9)",
+    "Investigate and fix the cause (bund, valve, procedure)"
+   ],
+   "call": "ERT · SPCB regional office"
+  },
+  {
+   "id": "e-electric",
+   "t": "Electrocution / Electrical Contact",
+   "trigger": "Person in contact with electricity, electric shock, arc flash",
+   "steps": [
+    "Do NOT touch the casualty until the supply is isolated; switch off at the source or use a dry non-conductive object (LV only); HT: keep 10+ m away and call the utility/control room to isolate",
+    "Once safe: check response and breathing; CPR/AED if not breathing (electrical arrest responds well to defibrillation)",
+    "Treat burns (entry/exit wounds) by cooling and covering; treat for shock; immobilise if thrown/fallen",
+    "All electric-shock casualties to hospital for cardiac monitoring, even if they feel fine",
+    "Isolate and preserve the equipment; notify Electrical Inspector within 48 h (fatal: immediately)"
+   ],
+   "call": "108 · Electrical isolation (control room/CEIG/utility 1912)"
+  },
+  {
+   "id": "e-fall",
+   "t": "Fall from Height / Suspended Worker",
+   "trigger": "Worker fallen or hanging in harness",
+   "steps": [
+    "Call for rescue team and 108; do not let the suspended person hang: rescue within 10–15 min (MEWP, rescue kit, ladder, lower by controlled descent)",
+    "While waiting, tell them to move legs, push against a surface or stand in foot loops to keep blood circulating",
+    "After rescue, assess ABC; treat injuries; spinal precautions if fall > 2 m or mechanism suggests; lay flat and monitor (HSE: upright positioning no longer advised)",
+    "Fallen to ground: do not move unless in danger; stabilise head/neck; control bleeding; keep warm",
+    "Hospital for all falls > 2 m and all suspension events; retire the harness/lanyard; investigate"
+   ],
+   "call": "108 · Rescue team"
+  },
+  {
+   "id": "e-confined",
+   "t": "Confined Space Emergency",
+   "trigger": "Entrant collapsed, alarm, loss of communication",
+   "steps": [
+    "Attendant raises the alarm and calls the rescue team; does NOT enter",
+    "Attempt non-entry rescue: retrieval line/winch, ventilation to maximum, pass breathing air if available",
+    "Entry rescue only by trained team with SCBA and a second attendant; continuous gas monitoring",
+    "Once out: CPR/AED/oxygen as needed; treat for toxic exposure (hospital, SDS)",
+    "Preserve the space; investigate (atmosphere, isolation, permit); dangerous-occurrence notice 12 h"
+   ],
+   "call": "108 / 101 · Rescue team"
+  },
+  {
+   "id": "e-collapse",
+   "t": "Structural / Scaffold / Formwork Collapse",
+   "trigger": "Collapse, sudden movement, loud cracking",
+   "steps": [
+    "Evacuate the area and adjacent structures; sound the alarm; stop cranes and vehicles",
+    "Head-count immediately; identify trapped persons by last known location",
+    "Do not enter unstable debris; rescue only when the engineer/ERT confirms stability or with fire service USAR; shore as you go",
+    "First aid to the accessible injured; crush-injury precautions (medical team before releasing persons trapped > 15 min)",
+    "Preserve the scene; notify 12 h as dangerous occurrence; structural engineer review before any re-entry"
+   ],
+   "call": "112 / 101 (fire service rescue) · 108"
+  },
+  {
+   "id": "e-trench",
+   "t": "Excavation Collapse / Engulfment",
+   "trigger": "Trench wall failure with persons inside",
+   "steps": [
+    "Call 112/101/108; stop plant; keep everyone away from the edge — secondary collapse is likely",
+    "Do not jump in; locate the victim; if the head is clear, keep airway open and give air (hose/ventilation)",
+    "Dig by hand from the side with shoring installed progressively; never use the excavator near the victim",
+    "Treat crush/asphyxia on release; hospital",
+    "Dangerous-occurrence notice 12 h; investigate protective system failure"
+   ],
+   "call": "112 · 108"
+  },
+  {
+   "id": "e-crane",
+   "t": "Crane Overturn / Dropped Load / Contact with Power Line",
+   "trigger": "Crane instability, load drop, boom contact with lines",
+   "steps": [
+    "Clear the area; stop all other lifts; operator stays in cab if the crane contacts a live line (jump clear with feet together only if the crane is on fire)",
+    "Power line contact: keep everyone ≥ 10 m away; call the utility to de-energise; treat the ground as live",
+    "Casualties: first aid once the scene is safe; 108",
+    "Secure the crane (engineer/OEM); do not attempt to right it without a plan",
+    "Notify dangerous occurrence within 12 h; preserve LMI data and certificates"
+   ],
+   "call": "108 · Utility 1912 · Crane OEM"
+  },
+  {
+   "id": "e-vehicle",
+   "t": "Vehicle / Mobile Plant Accident",
+   "trigger": "Collision, overturn, run-over",
+   "steps": [
+    "Stop traffic; cones/marshals; switch off engines; fire risk check (fuel)",
+    "First aid: do not move casualties unless in danger; control bleeding; CPR if needed; 108",
+    "Pinned person: stabilise the vehicle (chocks/crane) before any lifting; medical team present for crush > 15 min",
+    "Police (100) for public-road accidents; preserve the scene; breath tests per policy",
+    "Report to RTO/insurer; internal investigation; dangerous occurrence if on site with injury"
+   ],
+   "call": "108 · 100"
+  },
+  {
+   "id": "e-drown",
+   "t": "Drowning / Man Overboard",
+   "trigger": "Person in water",
+   "steps": [
+    "Shout, throw a lifebuoy/line, keep eyes on the person; do not jump in unless trained with a flotation aid",
+    "Rescue boat/reach aid; pull the person out horizontally if possible",
+    "Not breathing: 5 rescue breaths then CPR 30:2 (breaths are vital in drowning); AED; remove wet clothes, keep warm",
+    "Breathing: recovery position; monitor; all submersion victims to hospital (delayed lung injury)",
+    "Coast guard 1554 for sea; report"
+   ],
+   "call": "108 · 1554 (coast guard)"
+  },
+  {
+   "id": "e-heat",
+   "t": "Heat Stroke",
+   "trigger": "Confusion, collapse, hot skin, no sweating, temperature > 40 °C",
+   "steps": [
+    "Call 108; move to shade; remove outer clothing",
+    "Cool aggressively: immerse in cool water, or douse with water and fan, ice packs to neck/armpits/groin; continue until help arrives",
+    "Conscious: sips of water/ORS; unconscious: recovery position, nothing by mouth",
+    "Monitor breathing; CPR if needed",
+    "Record heat level and work pattern; review schedule and acclimatisation"
+   ],
+   "call": "108"
+  },
+  {
+   "id": "e-snake",
+   "t": "Snake Bite",
+   "trigger": "Bite marks, swelling, pain, drooping eyelids, difficulty swallowing/breathing",
+   "steps": [
+    "Do it R.I.G.H.T.: Reassure; Immobilise the limb (splint, keep still, below heart level); Get to hospital with antivenom (108); Tell the doctor the symptoms",
+    "Remove rings, watches, tight clothing; note the time; photograph the snake only if safe — do not try to catch it",
+    "Do NOT: cut, suck, apply a tourniquet, ice, electric shock, herbal remedies, or give alcohol",
+    "Monitor breathing; if breathing weakens (neurotoxic), support with bag-valve mask if trained",
+    "Record; check the area for snakes; remove debris/rodent attractants"
+   ],
+   "call": "108 · Nearest hospital with antivenom (pre-identified)"
+  },
+  {
+   "id": "e-lightning",
+   "t": "Lightning",
+   "trigger": "Thunder heard / lightning within 10 km",
+   "steps": [
+    "Stop WAH, crane, scaffold, roof, electrical and water work; evacuate open areas, tall structures, trees, metal fences",
+    "Shelter in a building or closed metal vehicle; avoid phone lines, plumbing, open windows",
+    "If caught outside: crouch low with feet together away from tall objects; do not lie flat",
+    "Struck person: safe to touch; CPR/AED immediately (cardiac arrest is reversible); treat burns; hospital",
+    "Resume 30 min after the last thunder"
+   ],
+   "call": "108"
+  },
+  {
+   "id": "e-flood",
+   "t": "Flood / Cyclone / Storm",
+   "trigger": "IMD warning, rising water, state DMA alert",
+   "steps": [
+    "Activate the weather plan: secure cranes (free slew), lower loads, lash materials, stop WAH",
+    "Evacuate low-lying areas and camps to designated shelters; cut power to flood-prone DBs",
+    "Check excavations and cofferdams; pumps on; keep people out until inspected",
+    "Account for all persons; communication with district control room (1077)",
+    "After: inspect scaffolds, excavations, electrical and structures before resuming; snake/disease precautions"
+   ],
+   "call": "1077 · 112"
+  },
+  {
+   "id": "e-quake",
+   "t": "Earthquake",
+   "trigger": "Ground shaking",
+   "steps": [
+    "Indoors: DROP, COVER, HOLD ON under a sturdy table; away from glass; do not run outside during shaking; no lifts",
+    "Outdoors: move away from structures, scaffolds, cranes, lines; crouch",
+    "Plant operators: stop, lower loads, stay in cab until shaking stops",
+    "After: evacuate to open assembly point; expect aftershocks; check for gas leaks, fires, structural damage; do not re-enter until inspected",
+    "Head-count; first aid; report"
+   ],
+   "call": "112 · 1077"
+  },
+  {
+   "id": "e-bomb",
+   "t": "Bomb Threat / Suspicious Object",
+   "trigger": "Threat call, unattended suspicious package",
+   "steps": [
+    "Threat call: stay calm, note exact words, caller details, background sounds, time; do not hang up; alert security/site head",
+    "Do not touch or move suspicious objects; do not use radios/phones within 25 m",
+    "Evacuate as directed (route away from the object); assembly point at a safe distance",
+    "Police (100/112) and bomb squad; hand over information; follow their instructions",
+    "Return only on police all-clear; debrief"
+   ],
+   "call": "100 / 112"
+  },
+  {
+   "id": "e-unrest",
+   "t": "Civil Disturbance / Labour Unrest / Intruders",
+   "trigger": "Crowd at gate, violence, intrusion",
+   "steps": [
+    "Security secures gates; non-essential workers withdrawn to safe area; no confrontation",
+    "Inform police (100) and site head; protect lives first, property second",
+    "Safe shutdown of hazardous processes if the site may be entered; isolate fuel/chemicals; secure explosives",
+    "Account for persons; medical aid; record events (CCTV)",
+    "Management/HR engage through recognised channels; resume on police advice"
+   ],
+   "call": "100 / 112"
+  },
+  {
+   "id": "e-power",
+   "t": "Power Failure",
+   "trigger": "Loss of supply during operations",
+   "steps": [
+    "Emergency lighting and DG start; check critical loads (fire pumps, ventilation, hoists, confined-space fans)",
+    "Stop confined-space work if ventilation lost; evacuate; stop hot work in process areas if F&G lost",
+    "Persons in lifts/hoists: communicate; rescue by trained persons",
+    "Treat all circuits as live for restoration; check interlocks before restart",
+    "Log and investigate"
+   ],
+   "call": "Electrical in-charge · Utility 1912"
+  },
+  {
+   "id": "e-explosion",
+   "t": "Explosion",
+   "trigger": "Blast, dust/gas/vessel explosion",
+   "steps": [
+    "Evacuate; expect secondary explosions and fire; move upwind",
+    "Alarm; 112/101/108; ERT only with PPE assesses",
+    "Isolate fuel, gas, electricity if safe; account for persons",
+    "Triage casualties (blast lung, burns, fragments); hospital",
+    "Preserve the scene; dangerous occurrence 12 h; MSIHC 48 h"
+   ],
+   "call": "112 / 101 / 108"
+  },
+  {
+   "id": "e-radiation",
+   "t": "Radiation Source Incident",
+   "trigger": "Stuck/lost source, high survey reading",
+   "steps": [
+    "Clear the area; extend the cordon (survey meter boundary 1 µSv/h or as RSO directs)",
+    "Only RSO/qualified radiographers approach; retrieval with tongs/shielding; never touch a source",
+    "Lost source: secure the area, call AERB and police immediately; search with meters",
+    "Exposed persons: record dose, medical evaluation",
+    "Report to AERB within 24 h; investigate"
+   ],
+   "call": "AERB 24×7 · 100"
+  },
+  {
+   "id": "e-burn",
+   "t": "Burns – Bitumen / Molten Metal / Steam",
+   "trigger": "Contact with hot material",
+   "steps": [
+    "Cool with cool running water for 20 min (start immediately; effective up to 3 h); leave adhered bitumen/metal on skin",
+    "Remove clothing/jewellery not stuck to the burn; cover with cling film or non-fluffy dressing; keep warm",
+    "No ice, butter, toothpaste, ointments; do not burst blisters",
+    "Call 108 for burns larger than the palm, face/hands/genitals, full thickness, inhalation or electrical burns",
+    "Burns-centre tie-up; record; investigate"
+   ],
+   "call": "108 · Burns centre"
+  },
+  {
+   "id": "e-pandemic",
+   "t": "Infectious Disease Outbreak",
+   "trigger": "Cluster of fever/respiratory cases; health authority alert",
+   "steps": [
+    "Isolate symptomatic persons; masks; medical assessment; inform District Health Officer",
+    "Screening at gate; hygiene stations; ventilation; stagger shifts; limit gatherings",
+    "Contact tracing; quarantine arrangements in camp; sanitisation",
+    "Follow MoHFW/State advisories; communicate daily in local languages",
+    "Record; review welfare and camp density"
+   ],
+   "call": "104 (health helpline) · District Health Officer"
+  }
+ ]
+}

@@ -1,0 +1,195 @@
+[
+ {
+  "g": "National (India)",
+  "items": [
+   [
+    "Unified emergency (police/fire/ambulance)",
+    "112"
+   ],
+   [
+    "Fire",
+    "101"
+   ],
+   [
+    "Ambulance",
+    "108 / 102"
+   ],
+   [
+    "Police",
+    "100"
+   ],
+   [
+    "State disaster helpline",
+    "1070"
+   ],
+   [
+    "District disaster control room",
+    "1077"
+   ],
+   [
+    "National Poisons Information Centre, AIIMS New Delhi",
+    "1800-116-117"
+   ],
+   [
+    "Women helpline",
+    "181 / 1091"
+   ],
+   [
+    "Child helpline",
+    "1098"
+   ]
+  ]
+ },
+ {
+  "g": "Karnataka",
+  "items": [
+   [
+    "Karnataka State Fire & Emergency Services",
+    "101 / ksfes.karnataka.gov.in"
+   ],
+   [
+    "KSDMA State Emergency Operation Centre",
+    "1070 (080-22340676 – verify)"
+   ],
+   [
+    "Department of Factories, Boilers, Industrial Safety & Health (DFBISH)",
+    "labour.karnataka.gov.in"
+   ],
+   [
+    "Chief Electrical Inspector to Government",
+    "ceig.karnataka.gov.in"
+   ],
+   [
+    "KSPCB",
+    "kspcb.karnataka.gov.in"
+   ],
+   [
+    "BESCOM (Bengaluru power)",
+    "1912"
+   ],
+   [
+    "BWSSB",
+    "1916"
+   ],
+   [
+    "Karnataka BOCW Welfare Board",
+    "Labour Dept"
+   ]
+  ]
+ },
+ {
+  "g": "Tamil Nadu",
+  "items": [
+   [
+    "Tamil Nadu Fire & Rescue Services",
+    "101 / tnfrs.tn.gov.in"
+   ],
+   [
+    "TNSDMA State Emergency Operation Centre",
+    "1070 (044-28593990 – verify)"
+   ],
+   [
+    "Directorate of Industrial Safety & Health (DISH)",
+    "dish.tn.gov.in"
+   ],
+   [
+    "Chief Electrical Inspector to Government",
+    "ceig.tn.gov.in"
+   ],
+   [
+    "TNPCB",
+    "tnpcb.gov.in"
+   ],
+   [
+    "TANGEDCO (power)",
+    "1912 / 94987-94987"
+   ],
+   [
+    "CMWSSB (Chennai water)",
+    "044-45674567"
+   ],
+   [
+    "TN Construction Workers Welfare Board",
+    "Labour Welfare Dept"
+   ]
+  ]
+ },
+ {
+  "g": "Central authorities",
+  "items": [
+   [
+    "PESO (petroleum/explosives/cylinders)",
+    "peso.gov.in"
+   ],
+   [
+    "AERB (radiation)",
+    "aerb.gov.in – 24×7 emergency via AERB website"
+   ],
+   [
+    "NDMA",
+    "ndma.gov.in / 1078"
+   ],
+   [
+    "DGMS (mines)",
+    "dgms.gov.in"
+   ],
+   [
+    "CPCB",
+    "cpcb.nic.in"
+   ],
+   [
+    "Shram Suvidha / MoLE",
+    "shramsuvidha.gov.in"
+   ]
+  ]
+ },
+ {
+  "g": "Site template (fill in)",
+  "items": [
+   [
+    "Site Main Controller",
+    "________"
+   ],
+   [
+    "Incident Controller",
+    "________"
+   ],
+   [
+    "Safety Officer",
+    "________"
+   ],
+   [
+    "First-aid / OHC",
+    "________"
+   ],
+   [
+    "Nearest trauma hospital",
+    "________"
+   ],
+   [
+    "Nearest burns centre",
+    "________"
+   ],
+   [
+    "Ambulance tie-up",
+    "________"
+   ],
+   [
+    "Inspector-cum-Facilitator / Inspector of Factories",
+    "________"
+   ],
+   [
+    "Electrical Inspector",
+    "________"
+   ],
+   [
+    "District Collector / DEOC",
+    "________"
+   ],
+   [
+    "Client / corporate HSE",
+    "________"
+   ]
+  ]
+ }
+]

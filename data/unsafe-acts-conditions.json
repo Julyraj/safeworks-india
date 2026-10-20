@@ -1,0 +1,319 @@
+{
+ "acts": [
+  {
+   "cat": "Authority, permits & procedures",
+   "items": [
+    "Working without a valid permit (hot work, confined space, excavation, electrical, lifting, radiography)",
+    "Starting work before the toolbox talk / pre-task briefing",
+    "Operating plant, cranes, forklifts or vehicles without authorisation or licence",
+    "Bypassing or ignoring a stop-work instruction",
+    "Continuing after the permit has expired or conditions have changed",
+    "Not following the method statement / SOP; taking shortcuts to save time",
+    "Failing to isolate and lock out before maintenance (working on live or energised equipment)",
+    "Removing another person's lock or tag",
+    "Entering a confined space without gas test, attendant or permit",
+    "Attempting rescue in a confined space without breathing apparatus",
+    "Energising equipment without checking that everyone is clear",
+    "Working alone on a prohibited task (confined space, WAH, HT, hot work)"
+   ]
+  },
+  {
+   "cat": "Guards, safety devices & equipment",
+   "items": [
+    "Removing, disabling or bypassing a machine guard, interlock, light curtain or e-stop",
+    "Using a grinder without a guard or with the wrong disc",
+    "Using defective, damaged or uncertified tools, ladders, slings, hoses or cables",
+    "Using equipment for a purpose it was not designed for (forklift as a crane, rebar as a sling, scaffold tube as a lever)",
+    "Overloading cranes, hoists, platforms, racks or vehicles",
+    "Disconnecting reversing alarms, seat-belt interlocks, LMI or limit switches",
+    "Using a mobile phone or headphones while operating plant or walking in plant zones",
+    "Leaving a load suspended or a machine running unattended",
+    "Servicing, cleaning or un-jamming a machine while it is running",
+    "Cleaning clothing or skin with compressed air"
+   ]
+  },
+  {
+   "cat": "PPE",
+   "items": [
+    "Not wearing mandatory PPE (helmet, boots, hi-vis) on site",
+    "Wearing PPE incorrectly (chin strap undone, harness loose, goggles on the forehead, respirator with beard)",
+    "Using the wrong PPE for the hazard (dust mask for solvent vapour, cotton gloves for chemicals, safety glasses instead of face shield for grinding)",
+    "Using damaged or expired PPE (cracked helmet, frayed lanyard, harness after a fall)",
+    "Removing PPE in a hazardous area because of heat or discomfort",
+    "Not using hearing protection in a marked noise zone",
+    "Wearing loose clothing, jewellery or untied hair near rotating machinery"
+   ]
+  },
+  {
+   "cat": "Work at height & access",
+   "items": [
+    "Working at an unprotected edge, opening or on a fragile roof without fall protection",
+    "Not tying off, or tying off to an unrated anchor (scaffold tube, rebar, pipe)",
+    "Climbing scaffold frames instead of using ladders; using a red-tagged scaffold",
+    "Working from a ladder with both hands, overreaching, standing on the top rungs",
+    "Using a makeshift platform (drums, boxes, planks on blocks) to gain height",
+    "Removing scaffold ties, boards, guardrails or toe boards for convenience",
+    "Jumping from height, vehicles or platforms",
+    "Throwing tools or materials down instead of lowering them",
+    "Riding on a material hoist, crane hook or load",
+    "Working at height in high wind, rain or lightning"
+   ]
+  },
+  {
+   "cat": "Line of fire, position & posture",
+   "items": [
+    "Standing or walking under a suspended load or crane boom",
+    "Standing in the swing radius of an excavator or crane counterweight",
+    "Positioning between a reversing vehicle and a fixed object",
+    "Placing hands in pinch points (rollers, hinges, between load and structure)",
+    "Working in the path of a rope/cable under tension (tirfor, winch, tow line)",
+    "Lifting loads above the safe limit, twisting while lifting, lifting from floor level without bending knees",
+    "Reaching into or across moving machinery",
+    "Standing on the downhill side of rolling materials/pipes",
+    "Facing away from traffic in a work zone"
+   ]
+  },
+  {
+   "cat": "Fire, chemicals & energy",
+   "items": [
+    "Smoking or using open flames outside designated areas, near fuel, cylinders or chemicals",
+    "Hot work without removing or protecting combustibles, without a fire watch or extinguisher",
+    "Storing flammables in open containers or in unapproved locations",
+    "Decanting chemicals into unlabelled or food/water containers",
+    "Mixing chemicals without checking compatibility; adding water to acid",
+    "Refuelling with the engine running or near ignition sources",
+    "Leaving gas cylinders unsecured, without caps, lying flat, or in a confined space",
+    "Not earthing/bonding before transferring flammable liquids",
+    "Dry sweeping or blowing combustible dust",
+    "Washing with solvents; using petrol as a cleaner"
+   ]
+  },
+  {
+   "cat": "Electrical",
+   "items": [
+    "Working on live circuits without authorisation, isolation and test-for-dead",
+    "Using tools or extension cords with damaged insulation, taped joints or missing earth",
+    "Connecting directly to live terminals / bypassing the RCD",
+    "Using metal ladders or long conductive objects near overhead lines",
+    "Overloading sockets; running cables through water, doorways or under traffic",
+    "Opening electrical panels without authorisation; storing material in electrical rooms",
+    "Operating plant under overhead lines without a spotter and clearance"
+   ]
+  },
+  {
+   "cat": "Vehicles & mobile plant",
+   "items": [
+    "Speeding, reversing without a banksman, driving with a raised body/boom",
+    "Carrying passengers on plant or in loader buckets",
+    "Not wearing a seat belt; operating with cab doors open",
+    "Tipping on soft or unlevel ground, close to an edge, or without checking overhead",
+    "Leaving keys in unattended plant; parking on slopes without chocks",
+    "Using a phone while driving; driving fatigued or under the influence",
+    "Hydra/pick-and-carry operation with a raised load or on slopes"
+   ]
+  },
+  {
+   "cat": "Excavation, lifting & ground works",
+   "items": [
+    "Entering an unprotected trench deeper than 1.5 m",
+    "Placing spoil, materials or plant at the edge of an excavation",
+    "Digging without a permit or near marked services; using a machine within 0.5–1 m of a live cable",
+    "Lifting without a lift plan, signaller or tag lines; standing under the load",
+    "Using slings at excessive angles or over sharp edges without protection",
+    "Side-loading hooks and shackles; leaving the hook latch open",
+    "Lifting with the crane out of level or with outriggers not fully extended"
+   ]
+  },
+  {
+   "cat": "Housekeeping, health & conduct",
+   "items": [
+    "Leaving tools, materials or waste in walkways and stairways",
+    "Blocking fire exits, extinguishers, hydrants or electrical panels",
+    "Eating, drinking or smoking in chemical or dusty work areas",
+    "Not drinking water or taking rest in extreme heat",
+    "Horseplay, running, fighting, practical jokes",
+    "Reporting to work under the influence of alcohol or drugs, or sleep-deprived",
+    "Hiding or not reporting injuries, near misses or hazards",
+    "Ignoring signs, barricades, tags or warnings; removing barricades"
+   ]
+  }
+ ],
+ "conditions": [
+  {
+   "cat": "Access, housekeeping & walkways",
+   "items": [
+    "Obstructed, narrow or unlit walkways, stairs and ramps",
+    "Protruding nails, rebar ends without caps, tie-wire offcuts",
+    "Slippery surfaces (water, oil, mud, grease, ice in cold stores)",
+    "Uneven ground, open drains, unguarded floor openings and pits",
+    "Blocked or locked emergency exits; missing exit signs",
+    "Material stacked unstable, too high, or against structures",
+    "Trailing cables and hoses across walkways",
+    "Poor lighting in work areas, stairs, excavations and at night"
+   ]
+  },
+  {
+   "cat": "Work at height & structures",
+   "items": [
+    "Missing or damaged guardrails, mid-rails, toe boards",
+    "Uncovered or unmarked floor/roof openings and shafts",
+    "Scaffold without tag, ties, bracing, base plates or full boarding; red-tagged scaffold in use",
+    "Fragile roof sheets, roof lights without crawling boards or nets",
+    "Damaged or unsecured ladders; ladders at wrong angle or too short",
+    "No rated anchor points; damaged lifelines",
+    "Formwork/shoring on soft ground, props under-pinned, premature striking",
+    "Unbraced structural steel; unstable precast elements",
+    "Netting/debris screens missing on façades above public areas"
+   ]
+  },
+  {
+   "cat": "Excavation & ground",
+   "items": [
+    "Trench > 1.5 m without shoring/sloping/box",
+    "Spoil or plant within 1 m of the edge; tension cracks on the surface",
+    "No ladder/egress within 7.5 m; no barricade or night lighting",
+    "Water accumulating in excavation; undermined adjacent structures/roads",
+    "Unmarked underground services; exposed cables/pipes unsupported",
+    "Unsafe working platform for piling rigs; open bores uncovered"
+   ]
+  },
+  {
+   "cat": "Lifting & cranes",
+   "items": [
+    "Expired or missing test certificates; no load chart in cab",
+    "Damaged slings, chains, shackles; gear without ID/colour code",
+    "Crane on soft/unlevel ground; outriggers not fully extended or without pads",
+    "Hook without latch; limit switches, LMI, anemometer defective",
+    "Lifting zone not barricaded; loads over public areas",
+    "Overhead lines within the working radius without controls",
+    "Hoist gates not interlocked; SWL not displayed"
+   ]
+  },
+  {
+   "cat": "Plant, machinery & tools",
+   "items": [
+    "Missing or defective guards on belts, pulleys, gears, couplings, blades",
+    "Emergency stops missing, inaccessible or not working",
+    "Defective brakes, lights, horns, reversing alarms, mirrors, seat belts",
+    "Damaged tools: cracked discs, mushroomed chisels, loose hammer heads, split handles",
+    "Leaking hydraulics; hoses without whip-checks",
+    "Pneumatic/powder-actuated tools without guards or trained users",
+    "Uncertified pressure vessels, air receivers, boilers; safety valves not tested",
+    "Conveyors without pull-cords, nip-point guards or crossing bridges"
+   ]
+  },
+  {
+   "cat": "Electrical",
+   "items": [
+    "Damaged cables, broken plugs, exposed conductors, taped joints",
+    "No RCD/ELCB protection; RCD not tested",
+    "Open or unlocked distribution boards; DBs on the ground; no earthing",
+    "Overloaded circuits; domestic multi-plugs; temporary wiring run through water",
+    "Overhead lines within reach of plant, scaffolds or ladders; no goal posts",
+    "Temporary lighting on 230 V in wet or confined areas",
+    "Substation/electrical rooms used as stores; vermin ingress; missing arc-flash labels",
+    "DG sets without earthing, enclosures or bunded fuel storage"
+   ]
+  },
+  {
+   "cat": "Fire & explosion",
+   "items": [
+    "Combustible waste accumulation; oily rags in open bins",
+    "Flammables stored in open containers, near ignition, or in excess quantities",
+    "Gas cylinders unsecured, without caps, oxidisers next to fuel gases",
+    "Extinguishers missing, discharged, expired, blocked or wrong type",
+    "Hydrants/sprinklers impaired; fire pumps not operational; water tank low",
+    "Hot work near combustibles without screens; no fire watch",
+    "Fire exits blocked; alarm not working; no emergency lighting",
+    "Dust layers on surfaces in dust-handling plants; static-generating transfers without bonding",
+    "Labour camp huts of combustible material with open cooking"
+   ]
+  },
+  {
+   "cat": "Chemicals & hazardous atmospheres",
+   "items": [
+    "Unlabelled containers; missing SDS; incompatible chemicals stored together",
+    "Leaking drums, tanks or pipework; bunds damaged or drains open",
+    "No eyewash/shower near corrosives; spill kits missing",
+    "Confined spaces without signage, isolation, ventilation or gas monitoring",
+    "Oxygen-deficient or toxic atmospheres (inert gas purging, sewers, tanks)",
+    "Poor ventilation in painting, welding, battery charging, solvent use",
+    "Asbestos-containing materials damaged or disturbed",
+    "Dust (silica, cement, wood) without suppression; dry cutting of concrete",
+    "Radiography without cordon, signage or survey meter"
+   ]
+  },
+  {
+   "cat": "Environment & physical agents",
+   "items": [
+    "Excessive noise without zones or protection; vibration from tools",
+    "Extreme heat without shade, water or rest; inadequate ventilation in enclosed areas",
+    "Poor lighting (< 50 lux) in walkways and task areas",
+    "Monsoon: flooding of excavations, lightning exposure, slippery access",
+    "Inadequate warning systems (sirens, signage, barricades)",
+    "Uncontrolled traffic/public interface; no segregation of pedestrians"
+   ]
+  },
+  {
+   "cat": "Welfare, health & systems",
+   "items": [
+    "No potable water or insufficient drinking points; dirty toilets",
+    "First-aid box empty; no trained first-aider on shift; no ambulance arrangement",
+    "No rest shelter; no crèche/canteen where required",
+    "Untrained or uninducted workers on high-risk tasks; under-age workers",
+    "No supervision on night shift; fatigue from excessive hours",
+    "No risk assessment / method statement for the task; permit system not followed",
+    "Expired statutory certificates (lifting, pressure vessels, electrical, fire NOC)",
+    "Near misses and hazards not recorded or acted upon"
+   ]
+  }
+ ],
+ "causes": [
+  [
+   "Lack of knowledge or skill",
+   "Never trained, trained in a language not understood, new worker (< 30 days), unfamiliar equipment"
+  ],
+  [
+   "Motivation / production pressure",
+   "Incentives for speed, no consequence for shortcuts, supervisors tolerating violations"
+  ],
+  [
+   "Physical or mental capability",
+   "Fatigue, heat, illness, intoxication, poor vision/hearing, stress"
+  ],
+  [
+   "Inadequate equipment or environment",
+   "Right tool unavailable, poor lighting, bad access, defective equipment, poor design"
+  ],
+  [
+   "Inadequate procedures or supervision",
+   "No method statement, impractical procedure, no permit control, no pre-task briefing, low supervisor presence"
+  ],
+  [
+   "Management system failures",
+   "No risk assessment, no inspection/maintenance programme, poor contractor control, lessons not learned, resources not provided"
+  ]
+ ],
+ "models": [
+  [
+   "Heinrich / Bird triangle",
+   "For every serious injury there are many minor injuries, more near misses and far more unsafe acts/conditions; control the base to prevent the top"
+  ],
+  [
+   "Domino theory / Swiss-cheese (Reason)",
+   "Accidents happen when holes in multiple layers of defence line up; latent conditions (management) and active failures (acts) combine"
+  ],
+  [
+   "ILCI loss causation (Bird & Germain)",
+   "Lack of control → basic causes (personal/job factors) → immediate causes (substandard acts/conditions) → incident → loss"
+  ],
+  [
+   "Hierarchy of controls",
+   "Eliminate → substitute → engineering → administrative → PPE; conditions are usually fixed by engineering, acts by training, supervision and design that makes the safe way the easy way"
+  ],
+  [
+   "Behaviour-based safety (ABC)",
+   "Antecedents trigger behaviour; consequences (soon, certain, positive) sustain it; observe, give feedback, remove barriers, recognise safe behaviour"
+  ]
+ ]
+}

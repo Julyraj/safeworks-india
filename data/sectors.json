@@ -1,0 +1,653 @@
+[
+ {
+  "id": "sec-building",
+  "t": "Building Construction Site (Residential / Commercial / Industrial Sheds)",
+  "desc": "Multi-storey and PEB construction in Karnataka and Tamil Nadu: from excavation to handover, including public-interface duties.",
+  "hazards": [
+   "Falls from height, scaffold collapse, excavation collapse, struck-by plant/cranes, electrocution (temporary power/overhead lines), falling objects on public, heat, monsoon flooding"
+  ],
+  "statutory": [
+   "Registration under OSH Code s.3 (legacy BOCW), cess 1%, worker registration with Welfare Board",
+   "Building permit/commencement (BBMP/BDA/CMDA/DTCP), EC if ≥ 20,000 m², Fire NOC provisional, KSPCB/TNPCB CTE where applicable, C&D waste plan (2025 Rules)",
+   "Safety officer (250+ workers), safety committee, site safety plan, daily inspections, 7-day scaffold and daily excavation registers",
+   "Lifting appliances tested, hoists licensed, electrical by licensed electrician with RCDs, PESO licence for diesel > 2,500 L",
+   "Accident notice Form XI (12 h) / state form; fatal forthwith to ICF, police, family"
+  ],
+  "regs": [
+   "osh-code",
+   "bocw-act",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "nbc-2016",
+   "bis-construction",
+   "cd-waste-2025",
+   "eia-2006",
+   "ka-building",
+   "tn-cdbr",
+   "ka-fire",
+   "tn-fire",
+   "electricity",
+   "crane-codes",
+   "lifting-gear-codes",
+   "tools-codes",
+   "osha-1926",
+   "cdm-2015",
+   "ilo"
+  ],
+  "procs": [
+   "ptw",
+   "wah",
+   "scaffold",
+   "excavation",
+   "lifting",
+   "towercrane",
+   "tackles",
+   "tools",
+   "electrical",
+   "concrete",
+   "steel",
+   "demolition",
+   "traffic",
+   "housekeeping",
+   "heat",
+   "contractor",
+   "training",
+   "incident",
+   "security"
+  ],
+  "cks": [
+   "cl-daily",
+   "cl-statutory-construction",
+   "cl-scaffold",
+   "cl-excavation",
+   "cl-lifting",
+   "cl-towercrane",
+   "cl-tackles",
+   "cl-tools",
+   "cl-electrical",
+   "cl-wah",
+   "cl-welfare",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-infra",
+  "t": "Infrastructure – Roads, Bridges, Metro, Tunnels, Water Works",
+  "desc": "Linear and underground projects (NHAI/state highways, BMRCL/CMRL metro, water supply) with public traffic, utilities and marine interfaces.",
+  "hazards": [
+   "Traffic intrusion, tunnelling atmosphere/collapse, piling rig overturn, blasting flyrock/vibration, working over water, bitumen burns, utility strikes"
+  ],
+  "statutory": [
+   "BOCW/OSH Code registration per state; contractor licence; client SHE manuals (NHAI, BMRCL, CMRL)",
+   "Traffic police permissions, IRC:SP:55 signage; PESO explosives licences and DM intimation for blasting; port/coast guard for marine; CRZ",
+   "EC for highways/metro as per EIA notification; tree-cutting permissions; HMP consents",
+   "Compressed-air work medical surveillance; DGMS where quarries supply aggregates"
+  ],
+  "regs": [
+   "osh-code",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "tunnel-codes",
+   "piling-codes",
+   "blasting-codes",
+   "explosives",
+   "water-codes",
+   "road-works-codes",
+   "mv-act",
+   "electricity",
+   "crane-codes",
+   "eia-2006",
+   "noise-rules",
+   "osha-1926"
+  ],
+  "procs": [
+   "tunnelling",
+   "piling",
+   "blasting",
+   "roadworks",
+   "water",
+   "excavation",
+   "lifting",
+   "towercrane",
+   "electrical",
+   "traffic",
+   "concrete",
+   "steel",
+   "heat",
+   "emergency",
+   "incident"
+  ],
+  "cks": [
+   "cl-tunnel",
+   "cl-piling",
+   "cl-blasting",
+   "cl-roadworks",
+   "cl-water",
+   "cl-excavation",
+   "cl-lifting",
+   "cl-daily",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-factory",
+  "t": "General Engineering & Manufacturing Factory (Machining, Fabrication, Assembly)",
+  "desc": "Registered factories with machines, cranes, welding, paint shops, compressed air and warehouses — Peenya, Hosur, Oragadam, Sriperumbudur, Coimbatore clusters.",
+  "hazards": [
+   "Machine entanglement, EOT crane/forklift incidents, welding fire/fumes, paint-shop flammables/isocyanates, noise, electrical, manual handling"
+  ],
+  "statutory": [
+   "OSH Code registration (legacy Factories licence), occupier/manager notice, Safety Officer (500+; hazardous 250+), Safety Committee, welfare (canteen 100+, crèche 50+), medical examinations for dangerous operations",
+   "Lifting machines/tackles 12-monthly test; pressure vessels Rule 61; electrical CEIG inspection; Fire NOC; CTE/CTO; HW authorisation; Form V; HW Form 4; EPR for e-waste/batteries/used oil",
+   "Karnataka Safety Audit Rules 2024 where applicable; working-hours/OT/women night-work conditions"
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "ka-safety-audit",
+   "state-dangerous-ops",
+   "machinery-codes",
+   "crane-codes",
+   "lifting-gear-codes",
+   "tools-codes",
+   "pit-racking",
+   "fire-systems",
+   "electricity",
+   "ht-codes",
+   "how-rules",
+   "epr-regimes",
+   "ec-act",
+   "osha-1910",
+   "iso-45001"
+  ],
+  "procs": [
+   "committee",
+   "hira",
+   "machine",
+   "loto",
+   "lifting",
+   "tackles",
+   "tools",
+   "forklift",
+   "hotwork",
+   "painting",
+   "electrical",
+   "substation",
+   "pressure",
+   "noise",
+   "respiratory",
+   "ppe",
+   "health",
+   "firesys",
+   "housekeeping",
+   "esg"
+  ],
+  "cks": [
+   "cl-statutory-factory",
+   "cl-loto",
+   "cl-tackles",
+   "cl-tools",
+   "cl-forklift",
+   "cl-painting",
+   "cl-substation",
+   "cl-firesys",
+   "cl-ppe",
+   "cl-welfare",
+   "cl-environment",
+   "cl-esg"
+  ]
+ },
+ {
+  "id": "sec-foundry",
+  "t": "Foundry & Metal Casting / Forging / Heat Treatment",
+  "desc": "Ferrous and non-ferrous foundries (Coimbatore, Belagavi, Shimoga, Chennai), forges and heat-treatment shops.",
+  "hazards": [
+   "Molten-metal explosions and burns, furnace failures, ladle/crane failures, silica dust, CO, metal fumes, heat stress, noise, HAV"
+  ],
+  "statutory": [
+   "Dangerous-operations schedules (foundry, lead, chrome, sand-blasting): medical exams, PPE, LEV; Sch. II PELs; silicosis notifiable",
+   "Lifting gear (ladles) tested; furnaces earthed/CEIG; KSPCB/TNPCB cupola & furnace emission norms; HW authorisation (slag, spent sand classification)",
+   "Fire NOC; heat-stress plan; safety committee/officer thresholds; Karnataka safety audit where applicable"
+  ],
+  "regs": [
+   "foundry-codes",
+   "state-dangerous-ops",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "osh-code",
+   "crane-codes",
+   "lifting-gear-codes",
+   "fire-systems",
+   "how-rules",
+   "air-water",
+   "noise-rules",
+   "osha-1910",
+   "niosh-acgih"
+  ],
+  "procs": [
+   "foundry",
+   "lifting",
+   "tackles",
+   "loto",
+   "machine",
+   "respiratory",
+   "heat",
+   "noise",
+   "hotwork",
+   "cylinders",
+   "electrical",
+   "health",
+   "ppe",
+   "emergency",
+   "incident"
+  ],
+  "cks": [
+   "cl-foundry",
+   "cl-tackles",
+   "cl-lifting",
+   "cl-loto",
+   "cl-ppe",
+   "cl-heat",
+   "cl-statutory-factory",
+   "cl-chemical",
+   "cl-firesys"
+  ]
+ },
+ {
+  "id": "sec-chemical",
+  "t": "Chemical / Pharma / Petrochemical Process Plant (incl. MAH units)",
+  "desc": "Process plants handling hazardous chemicals at or above MSIHC thresholds, bulk-drug units, solvent recovery, chlor-alkali, fertilizer, refineries (Manali, Cuddalore, Mangaluru, Dharwad clusters).",
+  "hazards": [
+   "Loss of containment, fire/explosion, toxic release, runaway reactions, confined-space, static, dust, tank-farm incidents"
+  ],
+  "statutory": [
+   "MSIHC: site notification, safety report (3-yr), annual safety audit, on-site plan (6-monthly rehearsal), off-site plan/District Crisis Group drill, MSDS; PLI insurance; Chemical Accidents Rules",
+   "OSH Code Ch. XII hazardous processes; Safety Officer (250+), Safety Committee, OHC/medical officer; Karnataka Safety Audit Rules 2024",
+   "PESO licences (petroleum, cylinders, SMPV), CEIG, Boilers Act, Fire NOC, CTE/CTO with OCEMS, HW authorisation, EIA/EC; CCTS if chlor-alkali/refinery/petrochemical/fertilizer; BRSR if listed"
+  ],
+  "regs": [
+   "msihc",
+   "chem-accident-rules",
+   "pli-act",
+   "osh-code",
+   "oisd",
+   "api-ccps",
+   "tank-standards",
+   "static-electricity",
+   "toxic-gas-codes",
+   "dust-codes",
+   "pngrb",
+   "petroleum",
+   "gas-cylinders",
+   "boilers-2025",
+   "how-rules",
+   "air-water",
+   "ccts",
+   "comah-seveso",
+   "osha-1910",
+   "iso-machinery"
+  ],
+  "procs": [
+   "psm",
+   "tanks",
+   "tankclean",
+   "toxicgas",
+   "dust",
+   "chemicals",
+   "confined",
+   "hotwork",
+   "loto",
+   "moc",
+   "pressure",
+   "emergency",
+   "fire",
+   "firesys",
+   "lab",
+   "respiratory",
+   "health",
+   "committee",
+   "incident",
+   "ghg"
+  ],
+  "cks": [
+   "cl-psm",
+   "cl-tanks",
+   "cl-tankclean",
+   "cl-toxicgas",
+   "cl-dust",
+   "cl-chemical",
+   "cl-confined",
+   "cl-hotwork",
+   "cl-emergency",
+   "cl-firesys",
+   "cl-statutory-factory",
+   "cl-ghg"
+  ]
+ },
+ {
+  "id": "sec-terminal",
+  "t": "Petroleum Depot / Terminal / Fuel Station & Site Fuel Storage",
+  "desc": "Oil-marketing depots, LPG bottling, retail outlets, aviation fuel farms, and construction-site diesel installations.",
+  "hazards": [
+   "Tank/UST leaks, tanker loading fires, static, vapour clouds, overfill, LPG BLEVE, hot work in dyke"
+  ],
+  "statutory": [
+   "Petroleum Rules 2002 licences & safety distances; Gas Cylinders/SMPV Rules; OISD standards (105, 116, 117, 118, 129, 244); Fire NOC; CPCB vapour recovery; SPCB consent; HW (tank bottoms)",
+   "MSIHC where thresholds exceeded; PLI; PNGRB for pipelines/CGD; static-electricity control per IS 7689 / NFPA 77; Boilers Act for any boilers"
+  ],
+  "regs": [
+   "petroleum",
+   "gas-cylinders",
+   "tank-standards",
+   "static-electricity",
+   "oisd",
+   "pngrb",
+   "msihc",
+   "fire-systems",
+   "how-rules",
+   "ep-act",
+   "nfpa",
+   "osha-1910"
+  ],
+  "procs": [
+   "tanks",
+   "tankclean",
+   "psm",
+   "hotwork",
+   "confined",
+   "fire",
+   "firesys",
+   "traffic",
+   "electrical",
+   "chemicals",
+   "emergency",
+   "incident"
+  ],
+  "cks": [
+   "cl-tanks",
+   "cl-tankclean",
+   "cl-hotwork",
+   "cl-confined",
+   "cl-fire",
+   "cl-firesys",
+   "cl-chemical",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-power",
+  "t": "Power & Electrical – Substations, Solar/Wind Farms, Battery Storage, EV Infrastructure",
+  "desc": "Captive/utility substations, rooftop and ground-mount solar (KREDL/TEDA), BESS, DG plants, EV charging hubs.",
+  "hazards": [
+   "Electrocution, arc flash, DC arcs, battery fires/hydrogen, falls from roofs/towers, transformer oil fires, SF6"
+  ],
+  "statutory": [
+   "Electricity Act & CEA Safety Regulations 2023: CEIG approval before energising, periodic inspection, competent persons, accident notice 48 h",
+   "Fire NOC, Battery Waste Rules 2022, BIS QCO for modules/inverters, MNRE/BEE standards; BOCW/OSH Code for construction crews; AAI NOC for tall structures",
+   "CCTS/BRSR relevance for RE procurement and Scope 2"
+  ],
+  "regs": [
+   "electricity",
+   "ht-codes",
+   "battery-solar-codes",
+   "fire-systems",
+   "crane-codes",
+   "osha-1926",
+   "osha-1910",
+   "nfpa",
+   "ieee-bs",
+   "ec-act",
+   "ghg-standards"
+  ],
+  "procs": [
+   "substation",
+   "battery-solar",
+   "loto",
+   "electrical",
+   "wah",
+   "lifting",
+   "hotwork",
+   "fire",
+   "firesys",
+   "emergency",
+   "incident",
+   "ghg"
+  ],
+  "cks": [
+   "cl-substation",
+   "cl-battery",
+   "cl-loto",
+   "cl-electrical",
+   "cl-wah",
+   "cl-firesys",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-warehouse",
+  "t": "Warehousing, Logistics & Cold Storage",
+  "desc": "Distribution centres, e-commerce fulfilment, cold chains (ammonia refrigeration), container yards (Whitefield, Hoskote, Oragadam, Chennai port corridor).",
+  "hazards": [
+   "Forklift/pedestrian collisions, racking collapse, falls from mezzanines/docks, fire in high-piled storage, ammonia leaks, battery charging, manual handling"
+  ],
+  "statutory": [
+   "Shops & Establishments/OSH Code registration; Fire NOC for storage occupancy (NBC Part 4); forklift operator authorisation & RTO; PESO for LPG forklifts; MSIHC for ammonia above threshold",
+   "Welfare, working hours, women night work (Karnataka S&E 2026 amendment); e-waste/battery EPR handling"
+  ],
+  "regs": [
+   "pit-racking",
+   "fire-systems",
+   "toxic-gas-codes",
+   "ka-shops",
+   "tn-shops",
+   "osh-code",
+   "nbc-2016",
+   "osha-1910",
+   "ir-code",
+   "epr-regimes"
+  ],
+  "procs": [
+   "forklift",
+   "manual",
+   "toxicgas",
+   "fire",
+   "firesys",
+   "wah",
+   "electrical",
+   "battery-solar",
+   "housekeeping",
+   "security",
+   "emergency",
+   "night-lone"
+  ],
+  "cks": [
+   "cl-forklift",
+   "cl-toxicgas",
+   "cl-fire",
+   "cl-firesys",
+   "cl-welfare",
+   "cl-night",
+   "cl-security"
+  ]
+ },
+ {
+  "id": "sec-heavy",
+  "t": "Heavy Industry – Cement, Steel, Aluminium, Pulp & Paper, Textiles (CCTS / CBAM sectors)",
+  "desc": "Energy-intensive plants that are designated consumers under the EC Act and obligated entities under CCTS, often exporting into EU CBAM scope.",
+  "hazards": [
+   "Hot processes, kilns/furnaces, molten metal, combustible dust (coal, bagasse, cotton), conveyors, mobile plant, confined spaces (silos, digesters), chemicals (chlorine in pulp, acids), noise"
+  ],
+  "statutory": [
+   "EC Act designated consumer: energy manager, mandatory energy audit, PAT/CCTS GEI targets (cement, aluminium, pulp & paper, chlor-alkali from Oct 2025; refineries, petrochemicals, textiles from Jan 2026; iron & steel draft June 2026), verified report 31 Jul, CCC trading",
+   "CBAM data for EU customers (steel, aluminium, cement, fertiliser); BRSR/BRSR Core if listed",
+   "Factories/OSH Code, MSIHC where applicable, Mines Act for captive mines (DGMS), boilers, CEIG, SPCB OCEMS, HW/fly-ash rules, Fire NOC"
+  ],
+  "regs": [
+   "ec-act",
+   "ccts",
+   "cbam",
+   "brsr",
+   "ghg-standards",
+   "osh-code",
+   "foundry-codes",
+   "dust-codes",
+   "mines",
+   "boilers-2025",
+   "how-rules",
+   "air-water",
+   "eia-2006",
+   "msihc",
+   "state-dangerous-ops",
+   "iso-14001"
+  ],
+  "procs": [
+   "ghg",
+   "esg",
+   "foundry",
+   "dust",
+   "confined",
+   "loto",
+   "machine",
+   "lifting",
+   "forklift",
+   "respiratory",
+   "heat",
+   "noise",
+   "pressure",
+   "psm",
+   "committee"
+  ],
+  "cks": [
+   "cl-ghg",
+   "cl-esg",
+   "cl-foundry",
+   "cl-dust",
+   "cl-confined",
+   "cl-loto",
+   "cl-statutory-factory",
+   "cl-environment"
+  ]
+ },
+ {
+  "id": "sec-mining",
+  "t": "Mining, Quarrying & Aggregates",
+  "desc": "Quarries and crushers supplying construction, captive limestone/iron-ore mines.",
+  "hazards": [
+   "Blasting, bench/dump failure, HEMM collisions, silica dust, crusher entanglement, flooding"
+  ],
+  "statutory": [
+   "Mines Act/OSH Code mines provisions; DGMS regulations, manager/blaster certification, DGMS accident notices; Explosives Rules; state minor-mineral concession rules; EC/consents; CCTS indirectly (cement captive mines)"
+  ],
+  "regs": [
+   "mines",
+   "blasting-codes",
+   "explosives",
+   "osh-code",
+   "dust-codes",
+   "mv-act",
+   "eia-2006",
+   "noise-rules"
+  ],
+  "procs": [
+   "blasting",
+   "traffic",
+   "excavation",
+   "machine",
+   "respiratory",
+   "noise",
+   "dust",
+   "emergency",
+   "incident"
+  ],
+  "cks": [
+   "cl-blasting",
+   "cl-daily",
+   "cl-excavation",
+   "cl-dust",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-water",
+  "t": "Water & Wastewater Treatment Plants (STP/ETP/WTP)",
+  "desc": "Municipal and industrial treatment plants (BWSSB, CMWSSB, CETPs) with chlorine, H2S, confined spaces and electrical hazards.",
+  "hazards": [
+   "Chlorine/H2S release, confined-space sumps, drowning, biological exposure, electrical in wet areas, chemical dosing"
+  ],
+  "statutory": [
+   "MSIHC for chlorine (tonners); Gas Cylinders Rules; Water Act consents/discharge norms; Factories/OSH Code; CEA; Bio-medical/HW for sludge; Public Health Acts"
+  ],
+  "regs": [
+   "toxic-gas-codes",
+   "msihc",
+   "gas-cylinders",
+   "air-water",
+   "bio-codes",
+   "osh-code",
+   "electricity",
+   "how-rules"
+  ],
+  "procs": [
+   "toxicgas",
+   "confined",
+   "bio",
+   "legionella",
+   "electrical",
+   "chemicals",
+   "water",
+   "emergency",
+   "lab"
+  ],
+  "cks": [
+   "cl-toxicgas",
+   "cl-confined",
+   "cl-bio",
+   "cl-legionella",
+   "cl-electrical",
+   "cl-emergency"
+  ]
+ },
+ {
+  "id": "sec-corporate",
+  "t": "Corporate ESG, Carbon & Energy Office",
+  "desc": "The head-office function that consolidates site data into BRSR, CCTS, CBAM, energy returns and customer ESG questionnaires.",
+  "hazards": [
+   "Misstatement/greenwashing, missed statutory deadlines, unverifiable OSH KPIs, data inconsistencies across filings"
+  ],
+  "statutory": [
+   "SEBI BRSR/BRSR Core assurance (all top 1,000 by FY2026-27; value chain ≥ 2%); EC Act returns/audits; CCTS verified reports; EPR registrations/returns; CBAM customer data; Form V; HW Form 4; OSH Code annual return as OSH data source"
+  ],
+  "regs": [
+   "brsr",
+   "ccts",
+   "cbam",
+   "ec-act",
+   "ghg-standards",
+   "epr-regimes",
+   "ecsbc",
+   "ods-rules",
+   "iso-14001",
+   "iso-45001",
+   "ir-code",
+   "shram-suvidha"
+  ],
+  "procs": [
+   "ghg",
+   "esg",
+   "committee",
+   "moc",
+   "training",
+   "incident"
+  ],
+  "cks": [
+   "cl-ghg",
+   "cl-esg",
+   "cl-statutory-factory",
+   "cl-environment",
+   "cl-training"
+  ]
+ }
+]
