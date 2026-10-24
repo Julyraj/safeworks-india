@@ -23,6 +23,7 @@ portal/server/dist/
 portal/server/storage/
 portal/.env
 portal/server/loadtest-report-*.json
+.pytest_cache/
 portal/mobile/android/.gradle/
 portal/mobile/android/build/
 portal/mobile/android/app/build/

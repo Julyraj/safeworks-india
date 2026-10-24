@@ -6,3 +6,8 @@ portal/server/storage
 portal/mobile
 portal/.env
 *.apk
+**/__pycache__
+**/.pytest_cache
+**/*.pyc
+portal/server-ts-old
+portal/server/tests

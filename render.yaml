@@ -46,6 +46,9 @@ services:
         sync: false
       - key: DB_POOL_MAX
         value: "10"
+      # One API process: the free server has 0.1 CPU and 512 MB of memory
+      - key: WEB_CONCURRENCY
+        value: "1"
 
 databases:
   - name: safeworks-db

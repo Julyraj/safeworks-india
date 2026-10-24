@@ -1,13 +1,8 @@
 #!/bin/sh
-# Container start: optional first-time/idempotent seed, then the server (which applies migrations).
-#   SEED_ON_START=true  → master lists, company, 5 pilot sites and the first admin (only what is missing)
-#   SEED_DEMO=true      → also sample users and observations (test servers only)
+# Container start: optional seeding (SEED_ON_START / SEED_DEMO), then the API server.
 set -e
+cd "$(dirname "$0")/.."
 if [ "$SEED_ON_START" = "true" ]; then
-  if [ "$SEED_DEMO" = "true" ]; then
-    npx tsx scripts/seed.ts --demo
-  else
-    npx tsx scripts/seed.ts
-  fi
+  if [ "$SEED_DEMO" = "true" ]; then python scripts/seed.py --demo; else python scripts/seed.py; fi
 fi
-exec node dist/index.js
+exec python -m safeworks

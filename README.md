@@ -30,7 +30,7 @@ The [`portal/`](portal/) folder holds the company-wide version, a server-backed 
 - Safety officers approve the closures.
 - Admins run sites, users and passwords from a separate admin console.
 
-It has a website, an Android app (`SafeWorks-Portal.apk`, releases tagged `portal-v…`) and an admin console. Its PostgreSQL backend is load-tested for 100 people per site working at the same time. See [portal/README.md](portal/README.md) to run it.
+It has a website, an Android app (`SafeWorks-Portal.apk`, releases tagged `portal-v…`) and an admin console. The server is written in Python (FastAPI) with a PostgreSQL database, and is load-tested for 100 people per site working at the same time. See [portal/README.md](portal/README.md) to run it.
 
 ## What is inside
 

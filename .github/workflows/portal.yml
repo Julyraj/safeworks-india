@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   test:
-    name: Typecheck, build and test
+    name: Build screens, test the Python server
     runs-on: ubuntu-24.04
     services:
       postgres:
@@ -44,13 +44,28 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: portal/package-lock.json
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: portal/server/requirements*.txt
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
-      - name: Workflow and permission tests
-        run: npm test
+      - name: Install server
+        working-directory: portal/server
+        run: pip install -r requirements-dev.txt
+      - name: Workflow and permission tests (photos on disk)
+        working-directory: portal/server
+        run: python -m pytest tests -q
         env:
           TEST_DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
+      - name: Workflow and permission tests (photos in the database)
+        working-directory: portal/server
+        run: python -m pytest tests -q
+        env:
+          TEST_DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
+          STORAGE_DRIVER: db
       - name: 100-user load test (short run)
         working-directory: portal/server
         env:
@@ -59,24 +74,59 @@ jobs:
           STORAGE_DIR: ${{ runner.temp }}/storage
           RUN_JOBS: "false"
           SEED_ADMIN_PASSWORD: CiAdmin2026
-          UV_THREADPOOL_SIZE: "8"
+          WEB_CONCURRENCY: "2"
         run: |
           psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "drop schema public cascade; create schema public;"
-          npm run seed
-          psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "update users set must_change_password = false where employee_id = 'ADMIN01';"
-          node dist/index.js > server.log 2>&1 &
+          python scripts/seed.py
+          python -m safeworks > server.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:8080/api/health && break; sleep 1; done
-          BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json npx tsx scripts/loadtest.ts
+          BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json python scripts/loadtest.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: loadtest-report
-          path: portal/server/loadtest-report.json
+          path: |
+            portal/server/loadtest-report.json
+            portal/server/server.log
           if-no-files-found: ignore
+
+  docker:
+    name: Docker image (as used by Render and docker compose)
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: safeworks
+          POSTGRES_PASSWORD: safeworks
+          POSTGRES_DB: safeworks
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U safeworks" --health-interval 5s --health-timeout 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build image
+        run: docker build -f portal/Dockerfile -t safeworks-portal .
+      - name: Start like Render does (seed + demo data, photos in the database) and sign in
+        run: |
+          docker run -d --name sw --network host \
+            -e DATABASE_URL=postgres://safeworks:safeworks@localhost:5432/safeworks \
+            -e FILE_SIGNING_SECRET=ci-only-secret-0123456789abcdef0123456789abcdef \
+            -e STORAGE_DRIVER=db -e SEED_ON_START=true -e SEED_DEMO=true \
+            -e SEED_ADMIN_PASSWORD=CiAdmin2026 -e WEB_CONCURRENCY=1 safeworks-portal
+          for i in $(seq 1 90); do curl -sf http://localhost:8080/api/health && break; sleep 2; done
+          curl -sf http://localhost:8080/ | grep -q "<div id=\"root\">"
+          curl -sf http://localhost:8080/admin/ > /dev/null
+          curl -sf http://localhost:8080/library/ > /dev/null
+          curl -sf -X POST http://localhost:8080/api/auth/login -H 'content-type: application/json' \
+            -d '{"employeeId":"SO-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
+          docker inspect --format '{{.State.Health.Status}}' sw
+      - if: always()
+        run: docker logs sw 2>&1 | tail -50
 
   android:
     name: Android app (APK)
-    needs: test
+    needs: [test, docker]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     steps:

@@ -1,23 +1,15 @@
 {
   "name": "safeworks-portal",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "SafeWorks Portal: safety observation system with user portal, Android app and admin console.",
+  "description": "SafeWorks Portal: safety observation system with user portal, Android app and admin console. The API server is Python (portal/server); this file builds the web screens.",
   "workspaces": [
-    "server",
     "web"
   ],
   "scripts": {
-    "build": "npm run build -w web && npm run build -w server",
-    "migrate": "npm run migrate -w server",
-    "seed": "npm run seed -w server",
-    "seed:demo": "npm run seed:demo -w server",
-    "start": "npm run start -w server",
-    "dev:server": "npm run dev -w server",
+    "build": "npm run build -w web",
     "dev:web": "npm run dev -w web",
-    "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
-    "test": "npm test -w server",
-    "loadtest": "npm run loadtest -w server"
+    "typecheck": "npm run typecheck -w web"
   },
   "engines": {
     "node": ">=22"

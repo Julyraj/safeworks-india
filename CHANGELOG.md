@@ -1,5 +1,14 @@
 # Changelog
 
+## Portal 1.1 — 2026-10-24 — server rewritten in Python
+- The portal server (`portal/server/`) is now Python 3.12: FastAPI, asyncpg and uvicorn. The old TypeScript server is removed.
+- Same web addresses, request and response formats, database tables and password format. The website, the admin console and the installed Android app work unchanged, and an existing database and existing logins carry over.
+- Tests are now pytest: the same 12 workflow and permission tests (run with photos on disk and in the database) plus 5 HTTP-layer tests. The load test is `scripts/loadtest.py`; it can drive users from several processes (`PROCS`) and reports when the test machine itself is the bottleneck.
+- Docker image: Python runtime; Node is used only to build the screens. `WEB_CONCURRENCY` sets the number of API processes.
+- Responses carry a `Server-Timing` header; slow API requests are logged (`SLOW_MS`).
+- Uploads over 14 MB are refused even when the size is not declared up front. Database connections are kept warm and are not reset after every query.
+- Fixed: the History list on a point squeezed its text into a narrow column.
+
 ## Portal 1.0 (Phase 1 MVP) — 2026-10-24
 - New `portal/`: multi-site safety observation system with a user portal and installable web app, an Android app (Capacitor), and a separate admin console.
 - Employee ID + password login, forced change of temporary passwords, lockout after 5 wrong attempts, admin set/reset/unlock/force-change, bulk user import, audit log.

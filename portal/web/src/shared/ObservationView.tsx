@@ -228,7 +228,6 @@ export function ObservationView({ api, id, me, linkPrefix }: { api: Api; id: str
         <ol className="timeline">
           {o.timeline.map((t) => (
             <li key={t.id}>
-              <span />
               <div>
                 <div>
                   <strong>{ACTION_LABEL[t.action] ?? t.action}</strong> <span className="muted small">v{t.version}</span>

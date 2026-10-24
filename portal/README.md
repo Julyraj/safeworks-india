@@ -12,10 +12,10 @@ The design is in the *SafeWorks Portal – System Structure* document. This fold
 
 | Part | Stack |
 | --- | --- |
-| API | Node.js 22, TypeScript, Fastify (`server/`) |
+| API | Python 3.12, FastAPI, asyncpg, run by uvicorn (`server/`) |
 | Database | PostgreSQL 16, numbered SQL migrations (`server/migrations/`) |
 | Photos | Server disk (`STORAGE_DIR`) for the pilot; short-lived signed links; an S3-compatible store can replace it |
-| Portal + admin console | React + TypeScript, Vite (`web/`), one build, two entry pages |
+| Portal + admin console | React + TypeScript, Vite (`web/`), one build, two entry pages. Node is needed only to build them. |
 | Android app | Capacitor wrapper around the portal (`mobile/`) |
 
 One container serves the API, the portal, the admin console and the library. It runs on a cloud server in India or on a company server; hosting is still to be decided.
@@ -32,19 +32,23 @@ One container serves the API, the portal, the admin console and the library. It 
 
 ## Run it locally
 
-Requires Node 22 and PostgreSQL 16.
+Requires Python 3.12, PostgreSQL 16, and Node 22 (only to build the screens).
 
 ```bash
 cd portal
-npm install
-createdb safeworks            # or use docker compose below
+npm install && npm run build                # builds the screens into web/dist
+cd server
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+createdb safeworks                           # or use docker compose below
 export DATABASE_URL=postgres://USER:PASS@localhost:5432/safeworks
-npm run build
-npm run seed                   # master lists, company, 5 pilot sites, prints the first admin login
-npm start                      # http://localhost:8080  (admin console: /admin/)
+python scripts/seed.py                       # master lists, company, 5 pilot sites, prints the first admin login
+python -m safeworks                          # http://localhost:8080  (admin console: /admin/)
 ```
 
-`npm run seed:demo` adds sample users and about 180 observations. It is for testing only, and the demo password is `Safe@1234`.
+`python scripts/seed.py --demo` adds sample users and about 180 observations. It is for testing only, and the demo password is `Safe@1234`.
+
+For several CPU cores, set `WEB_CONCURRENCY` (number of API processes, e.g. `2` on a 2-vCPU server).
 
 ## Free test server (Render, about 10 minutes)
 
@@ -72,7 +76,7 @@ Photos are kept in the database (`STORAGE_DRIVER=db`), because free servers have
 cd portal
 cp .env.example .env          # set DB_PASSWORD, FILE_SIGNING_SECRET, PUBLIC_URL, SMTP_URL
 docker compose up -d --build
-docker compose exec app npm run seed
+docker compose exec app python scripts/seed.py
 ```
 
 Put HTTPS in front of port 8080 before anyone signs in, using Caddy, Nginx or the cloud load balancer. Back up the `pgdata` and `storage` volumes daily.
@@ -80,7 +84,9 @@ Put HTTPS in front of port 8080 before anyone signs in, using Caddy, Nginx or th
 ## Tests
 
 ```bash
-TEST_DATABASE_URL=postgres://USER:PASS@localhost:5432/safeworks_test npm test
+cd portal/server
+pip install -r requirements-dev.txt
+TEST_DATABASE_URL=postgres://USER:PASS@localhost:5432/safeworks_test python -m pytest tests     # wipes that database
 ```
 
 There are 12 end-to-end tests of the workflow and the permission rules:
@@ -97,14 +103,18 @@ There are 12 end-to-end tests of the workflow and the permission rules:
 - dashboards and CSV export
 - settings
 
+And 5 tests of the HTTP layer: security headers, the 14 MB upload limit (also for uploads sent without a declared size), photo-link signatures and the web-folder boundary.
+
 ## Load test
 
 ```bash
-BASE_URL=https://your-server ADMIN_ID=ADMIN01 ADMIN_PASSWORD=… USERS=100 DURATION=1800 npm run loadtest
+cd portal/server
+pip install -r requirements-dev.txt
+BASE_URL=https://your-server ADMIN_ID=ADMIN01 ADMIN_PASSWORD=… USERS=100 DURATION=1800 python scripts/loadtest.py
 # scale gate: USERS=1000 SITES=10 RAMP=120
 ```
 
-The test creates load-test users on sites `LT01…` and signs everyone in, like a shift-start rush. It then runs safety officers and supervisors through the real screens with real photo uploads. Finally it cuts uploads off mid-way and retries them, checking that no point is lost or duplicated. The pass mark is under 0.1% failed requests, 95% of screens in under 2 s, and a 2-photo upload in under 10 s. Deactivate the `LT-` users afterwards on a live system.
+The test creates load-test users on sites `LT01…` and signs everyone in, like a shift-start rush. It then runs safety officers and supervisors through the real screens with real photo uploads. Finally it cuts uploads off mid-way and retries them, checking that no point is lost or duplicated. The pass mark is under 0.1% failed requests, 95% of screens in under 2 s, and a 2-photo upload in under 10 s. Deactivate the `LT-` users afterwards on a live system. Run the test from a different machine than the server, so the two do not compete for CPU: at 1,000 users the test itself needs about one CPU core. Each response carries a `Server-Timing` header, and the report shows time inside the server next to the time seen by the test machine; API requests slower than `SLOW_MS` (default 1000) are logged.
 
 ## Android app
 
@@ -112,7 +122,7 @@ GitHub Actions builds `SafeWorks-Portal.apk` on every push to `main` (releases t
 
 ## Configuration
 
-See `.env.example` and `server/src/config.ts`. The main settings:
+See `.env.example` and `server/safeworks/config.py`. The main settings:
 
 | Setting | Purpose |
 | --- | --- |
@@ -126,3 +136,5 @@ See `.env.example` and `server/src/config.ts`. The main settings:
 | `CORS_ORIGINS` | Origins allowed for the Android app |
 | `TRUST_PROXY` | Set to `true` behind a reverse proxy |
 | `APP_TIMEZONE` | Defaults to `Asia/Kolkata` |
+| `WEB_CONCURRENCY` | Number of API processes (default 1; the Docker image uses 2) |
+| `DB_POOL_MAX` | Database connections per API process (default 20) |
