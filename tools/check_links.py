@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Check every official document link in the library (data/regulations.json → docs).
 
-    python3 tools/check_links.py [--report report.md] [--strict]
+    python3 tools/check_links.py [--report report.md] [--issue issue.md] [--strict]
+    python3 tools/check_links.py --only URL [URL …]     # check given links and print the details
 
 Each link is opened (HEAD, then a small GET if HEAD is refused) and sorted into:
   ok           – the page or PDF answered (also when only the site's certificate chain is incomplete,
                  which browsers handle but scripts reject — common on Indian government sites)
-  broken       – gone for sure: 404/410, or the site name no longer exists
-  unreachable  – could not be checked from here: time-out, 403/429/5xx, refused connection.
+  broken       – gone for sure: 404/410 while the site's home page still answers,
+                 or the site name no longer exists
+  unreachable  – could not be checked from here: time-out, 403/429/5xx, refused connection,
+                 or 404 from a site whose home page also refuses us (a block, not a missing page).
                  Several Indian government sites block or slow down visitors from abroad
                  (including GitHub's servers), so these are listed for a manual look, not as failures.
 Checks the "Official documents" links and each card's "official site" link.
@@ -23,7 +26,9 @@ import os
 import socket
 import ssl
 import sys
+import threading
 import urllib.error
+import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -50,16 +55,18 @@ def probe(url: str, insecure: bool = False) -> tuple[str, str]:
         except urllib.error.HTTPError as e:
             if e.code == 416:  # range not satisfiable: the file is there
                 return "ok", "416"
-            if e.code in (404, 410):
-                return "broken", f"HTTP {e.code}"
             last = f"HTTP {e.code}"
-            if method == "HEAD" and e.code in (400, 403, 405, 406, 429, 500, 501, 503):
-                continue  # many servers refuse HEAD; try a small GET
+            if method == "HEAD" and e.code in (400, 403, 404, 405, 406, 410, 429, 500, 501, 503):
+                continue  # many servers refuse or mishandle HEAD; confirm with a small GET
+            if e.code in (404, 410):
+                return "broken", last
             return "unreachable", last
         except urllib.error.URLError as e:
             reason = e.reason
             if isinstance(reason, socket.gaierror):
-                return "broken", "site name not found (DNS)"
+                if reason.errno == socket.EAI_NONAME:
+                    return "broken", "site name not found (DNS)"
+                return "unreachable", f"DNS lookup failed ({reason})"
             if isinstance(reason, ssl.SSLCertVerificationError):
                 if not insecure:
                     state, detail = probe(url, insecure=True)
@@ -75,13 +82,60 @@ def probe(url: str, insecure: bool = False) -> tuple[str, str]:
     return "unreachable", last or "no answer"
 
 
+_roots: dict[str, tuple[str, str]] = {}
+_roots_lock = threading.Lock()
+
+
+def root_state(url: str) -> tuple[str, str]:
+    """State of the site's home page, cached per site."""
+    p = urllib.parse.urlsplit(url)
+    root = f"{p.scheme}://{p.netloc}/"
+    with _roots_lock:
+        if root in _roots:
+            return _roots[root]
+    st = probe(root) if root.rstrip("/") != url.rstrip("/") else ("broken", "")
+    with _roots_lock:
+        _roots[root] = st
+    return st
+
+
+def check(url: str) -> tuple[str, str]:
+    state, detail = probe(url)
+    if state == "broken" and detail.startswith("HTTP"):
+        r_state, _ = root_state(url)
+        if r_state != "ok":  # the home page refuses us too: a block, not a missing page
+            return "unreachable", f"{detail}; the site's home page also refuses GitHub (probably blocks visitors from abroad)"
+    return state, detail
+
+
+def only(urls: list[str]) -> int:
+    for u in urls:
+        state, detail = check(u)
+        try:
+            req = urllib.request.Request(u, headers={"User-Agent": UA, "Accept": "*/*", "Range": "bytes=0-511"})
+            with urllib.request.urlopen(req, timeout=TIMEOUT, context=NO_VERIFY) as res:
+                head = res.read(512)
+                extra = f"final={res.geturl()} type={res.headers.get('Content-Type')} pdf={head.startswith(b'%PDF')}"
+                if not head.startswith(b"%PDF"):
+                    t = head.decode("utf-8", "replace")
+                    i = t.lower().find("<title>")
+                    extra += f" title={t[i + 7:t.lower().find('</title>')].strip()[:100]!r}" if i >= 0 else ""
+        except Exception as e:  # noqa: BLE001
+            extra = f"GET failed: {type(e).__name__}: {e}"
+        print(f"{state.upper():12} {u}\n             {detail} | {extra}", flush=True)
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", default="link-report.md")
     ap.add_argument("--issue", default="link-issue.md")
     ap.add_argument("--run-url", default="")
     ap.add_argument("--strict", action="store_true")
+    ap.add_argument("--only", nargs="+", metavar="URL")
     args = ap.parse_args()
+    if args.only:
+        return only(args.only)
 
     regs = json.loads((ROOT / "data" / "regulations.json").read_text(encoding="utf-8"))
     links: dict[str, list[str]] = {}
@@ -92,7 +146,7 @@ def main() -> int:
             links.setdefault(r["url"], []).append(f"{r['t']} — official site link on the card")
     print(f"Checking {len(links)} links…", flush=True)
     with ThreadPoolExecutor(max_workers=8) as pool:
-        results = dict(zip(links, pool.map(probe, links)))
+        results = dict(zip(links, pool.map(check, links)))
 
     groups: dict[str, list[tuple[str, str]]] = {"broken": [], "unreachable": [], "ok": []}
     for url, (state, detail) in results.items():

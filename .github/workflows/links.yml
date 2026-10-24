@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: "0 22 * * 0"
   workflow_dispatch:
+    inputs:
+      urls:
+        description: "Optional: check only these links (space separated) and print the details; no issue is changed"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -18,12 +23,19 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Check the given links
+        if: ${{ inputs.urls != '' }}
+        env:
+          URLS: ${{ inputs.urls }}
+        run: python3 tools/check_links.py --only $URLS | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Check every official document link
+        if: ${{ !inputs.urls }}
         id: check
         run: |
           python3 tools/check_links.py --report link-report.md --issue link-issue.md --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" | tee check.log
           echo "broken=$(grep -oP '^BROKEN=\K\d+' check.log)" >> "$GITHUB_OUTPUT"
       - name: Open or update the "Broken document links" issue
+        if: ${{ !inputs.urls }}
         env:
           GH_TOKEN: ${{ github.token }}
           BROKEN: ${{ steps.check.outputs.broken }}
@@ -41,6 +53,7 @@ jobs:
             gh issue close "$NUM"
           fi
       - uses: actions/upload-artifact@v4
+        if: ${{ !inputs.urls }}
         with:
           name: link-report
           path: |
