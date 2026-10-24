@@ -109,6 +109,7 @@ def check(url: str) -> tuple[str, str]:
 
 
 def only(urls: list[str]) -> int:
+    out = []
     for u in urls:
         state, detail = check(u)
         try:
@@ -122,7 +123,12 @@ def only(urls: list[str]) -> int:
                     extra += f" title={t[i + 7:t.lower().find('</title>')].strip()[:100]!r}" if i >= 0 else ""
         except Exception as e:  # noqa: BLE001
             extra = f"GET failed: {type(e).__name__}: {e}"
-        print(f"{state.upper():12} {u}\n             {detail} | {extra}", flush=True)
+        line = f"{state.upper():12} {u}\n             {detail} | {extra}"
+        print(line, flush=True)
+        out.append(line)
+    if os.environ.get("GITHUB_ACTIONS"):  # also as one annotation, readable from the run page and the API
+        msg = "\n".join(out).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::notice title=Link details::{msg}")
     return 0
 
 
