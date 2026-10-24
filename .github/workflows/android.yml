@@ -37,8 +37,9 @@ jobs:
           java-version: 21
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Environment check
+        run: |
+          echo "::notice title=Toolchain::java=$(java -version 2>&1 | head -1) | ANDROID_HOME=${ANDROID_HOME:-unset} | platforms=$(ls ${ANDROID_HOME:-/nonexistent}/platforms 2>/dev/null | tr '\n' ' ') | build-tools=$(ls ${ANDROID_HOME:-/nonexistent}/build-tools 2>/dev/null | tr '\n' ' ')"
 
       - name: Build web assets
         run: python3 build.py --no-json
