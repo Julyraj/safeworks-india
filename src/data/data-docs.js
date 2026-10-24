@@ -110,14 +110,6 @@ window.DOCS = {
    "note": "Act 37 of 1970. Subsumed into OSH Code from 21 Nov 2025."
   },
   {
-   "n": "Contract Labour (R&A) Central Rules, 1971 – PDF (MoLE)",
-   "u": "https://labour.gov.in/sites/default/files/thecontractlabour1970.pdf",
-   "k": "pdf",
-   "a": "free",
-   "share": "gazette",
-   "note": "G.S.R. 191 of 1 Feb 1971 (original text; later amendments e.g. G.S.R. 1594(E)/2017 not consolidated)."
-  },
-  {
    "n": "Inter-State Migrant Workmen Act, 1979 – PDF (India Code)",
    "u": "https://www.indiacode.nic.in/bitstream/123456789/15984/1/34.pdf",
    "k": "pdf",
@@ -448,14 +440,6 @@ window.DOCS = {
   }
  ],
  "electricity": [
-  {
-   "n": "CEA Safety & Electric Supply Regulations, 2023 – CEA notification page",
-   "u": "https://cea.nic.in/notification/central-electricity-authority-measures-relating-to-safety-and-electric-supply-regulations-2023/?lang=en",
-   "k": "page",
-   "a": "free",
-   "share": "gazette",
-   "note": "Official notification page (16 Jun 2023) with an English PDF download (1,673 KB)."
-  },
   {
    "n": "CEA Safety & Electric Supply Regulations, 2023 – Gazette PDF (CEA)",
    "u": "https://cea.nic.in/api/regulation-report/view/en/a9139e01-ca0c-4a07-8e3d-4937602c5f8f",
@@ -1015,15 +999,6 @@ window.DOCS = {
    "a": "free",
    "share": "act",
    "note": "Act record (notification N 36 EBS 2013); check here for later amendments/rules."
-  },
-  {
-   "n": "Chief Electrical Inspector to Govt, Karnataka – homepage",
-   "u": "https://ceig.karnataka.gov.in",
-   "k": "page",
-   "a": "free",
-   "share": "unknown",
-   "v": false,
-   "note": "Licensing authority; the Karnataka Lifts Rules and lift licence procedure should be here. Site blocks automated fetching; no rules PDF found."
   }
  ],
  "kspcb": [
@@ -1469,14 +1444,6 @@ window.DOCS = {
    "note": "Online factory plan approval, registration and licensing."
   },
   {
-   "n": "DISH Tamil Nadu – About the Department (functions, wings)",
-   "u": "https://dish.tn.gov.in/aboutdept.html",
-   "k": "page",
-   "a": "free",
-   "share": "unknown",
-   "note": "Department functions, enforcement role and online services."
-  },
-  {
    "n": "TN Factories Rules Form 22 – Combined Annual Return – DISH PDF",
    "u": "https://dish.tn.gov.in/assets/pdf/Combined%20Annual%20return%20form.pdf",
    "k": "pdf",
@@ -1778,13 +1745,6 @@ window.DOCS = {
    "a": "paid",
    "share": "no",
    "note": "Representative B30 volume; other B30 volumes via the catalogue"
-  },
-  {
-   "n": "ASME B31.3 Process Piping (2024) – ASME store page",
-   "u": "https://www.asme.org/codes-standards/b31-3-process-piping",
-   "k": "page",
-   "a": "paid",
-   "share": "no"
   }
  ],
  "api-ccps": [
@@ -2867,15 +2827,6 @@ window.DOCS = {
    "a": "free",
    "share": "unknown",
    "note": "Homepage only – no Acts/Rules download list exposed to automated fetch. Also: Schedule XX (asbestos) amendment PDF at dish.tn.gov.in/assets/pdf/."
-  },
-  {
-   "n": "DFBISH Karnataka – Factories, Boilers, Industrial Safety & Health",
-   "u": "https://factories.karnataka.gov.in/",
-   "k": "page",
-   "a": "free",
-   "share": "unknown",
-   "v": false,
-   "note": "Homepage only – site blocks automated fetch; Karnataka Factories Rules 1969 (Rule 129 schedules) not located online."
   }
  ],
  "ht-codes": [
@@ -3127,14 +3078,6 @@ window.DOCS = {
    "note": "Includes Appendix A (NRC prudent practices) and Appendix B references. OSHA labs topic page: https://www.osha.gov/laboratories"
   },
   {
-   "n": "DBT rDNA Research & Biocontainment Regulations/Guidelines 2017 – IBKP",
-   "u": "https://ibkp.dbtindia.gov.in/Content/Rules",
-   "k": "page",
-   "a": "free",
-   "share": "unknown",
-   "note": "DBT Indian Biosafety Knowledge Portal listing; also has BSL-2/BSL-3 containment facility guidelines (2020, 2024) and risk-group list (2021)."
-  },
-  {
    "n": "Bio-Medical Waste Management Rules, 2016 – CPCB",
    "u": "https://cpcb.nic.in/rules-3/",
    "k": "page",
@@ -3194,14 +3137,6 @@ window.DOCS = {
    "a": "free",
    "share": "act",
    "note": "Act No. 29 of 2005."
-  },
-  {
-   "n": "PSARA licensing portal & Central Model Rules 2020 – MHA",
-   "u": "https://psara.gov.in/",
-   "k": "page",
-   "a": "free",
-   "share": "gazette",
-   "note": "MHA PSARA portal, with downloads of the Act and the Private Security Agencies Central Model Rules 2020. Licensing is by State Home Departments."
   },
   {
    "n": "POSH Act 2013 (Act 14 of 2013) – India Code",

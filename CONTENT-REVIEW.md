@@ -46,6 +46,7 @@ Open labour.karnataka.gov.in / dpal.karnataka.gov.in from India and send the PDF
 - [ ] **ka-mah-rules** – correct title is probably "Control of Industrial Major Accident Hazards (Karnataka) Rules, 1994". *(secondary)*
 - [ ] **ka-factories-amend-2023, ka-bocw-rules** – the OSH Code repealed the Factories Act 1948 and BOCW Act 1996 from 21 Nov 2025; confirm what survives of the state amendments and rules. *(inference)*
 - [ ] **ka-osh-rules** – final Karnataka OSH rules not yet notified; still a draft. *(official, absence)*
+- [ ] **ka-lifts / emergency contacts** – `ceig.karnataka.gov.in` no longer exists (site name not found in the weekly link check). The card's official link now points to India Code; find the Electrical Inspectorate's current website for the emergency contacts list. *(official, link check)*
 
 ## USA / international
 

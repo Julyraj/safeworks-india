@@ -21,7 +21,7 @@ jobs:
       - name: Check every official document link
         id: check
         run: |
-          python3 tools/check_links.py --report link-report.md | tee check.log
+          python3 tools/check_links.py --report link-report.md --issue link-issue.md --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" | tee check.log
           echo "broken=$(grep -oP '^BROKEN=\K\d+' check.log)" >> "$GITHUB_OUTPUT"
       - name: Open or update the "Broken document links" issue
         env:
@@ -32,9 +32,9 @@ jobs:
           NUM=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number // empty')
           if [ "${BROKEN:-0}" -gt 0 ]; then
             if [ -n "$NUM" ]; then
-              gh issue comment "$NUM" --body-file link-report.md
+              gh issue comment "$NUM" --body-file link-issue.md
             else
-              gh issue create --title "$TITLE" --body-file link-report.md
+              gh issue create --title "$TITLE" --body-file link-issue.md
             fi
           elif [ -n "$NUM" ]; then
             gh issue comment "$NUM" --body "All document links answered in the latest weekly check. Closing."
@@ -43,4 +43,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: link-report
-          path: link-report.md
+          path: |
+            link-report.md
+            link-issue.md

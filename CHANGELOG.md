@@ -1,7 +1,7 @@
 # Changelog
 
 ## 3.3 — 2026-10-25 — official documents
-- New **Document downloads** view: 404 official documents for all 123 regulations (150 direct PDFs), from India Code, central ministries, Karnataka and Tamil Nadu departments, BIS, eCFR/govinfo, legislation.gov.uk, EUR-Lex and the standards publishers. Filter by jurisdiction, access and type, or search.
+- New **Document downloads** view: 396 official documents for all 123 regulations (149 direct PDFs), from India Code, central ministries, Karnataka and Tamil Nadu departments, BIS, eCFR/govinfo, legislation.gov.uk, EUR-Lex and the standards publishers. Filter by jurisdiction, access and type, or search.
 - Every regulation card now lists its **Official documents**: Download PDF / Open page, labelled Free, Free · login (e.g. BIS free download after registering) or Paid (e.g. ISO, NFPA, ASME), with an Internet Archive copy as a fallback.
 - Links rather than copies: Indian Acts and BIS/ISO standards are copyrighted, and a link always gives the current amended text. Documents that may be shared (Gazette rules, US public-domain, UK open licence) can also be hosted in `files/` — see `files/README.md`.
 - Weekly link check (GitHub Actions) opens an issue when an official link breaks.
