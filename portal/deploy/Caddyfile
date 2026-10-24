@@ -1,0 +1,8 @@
+# SafeWorks behind HTTPS. Caddy gets and renews the certificate for {$DOMAIN} on its own.
+{$DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 15MB
+	}
+	reverse_proxy app:8080
+}

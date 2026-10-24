@@ -1,18 +1,24 @@
 # Run SafeWorks Portal with its own PostgreSQL on any server (cloud VM in India or a company server).
+#
+# Easiest: on a fresh Ubuntu server run   sudo bash portal/deploy/install.sh   (adds HTTPS, backups and the first login).
+# By hand:
 #   cd portal && cp .env.example .env   # then edit the values
 #   docker compose up -d --build
 #   docker compose exec app python scripts/seed.py  # first time: master lists, company, 5 pilot sites, first admin login
-# Put HTTPS in front of port 8080 (e.g. Caddy, Nginx or the cloud load balancer) before anyone signs in.
+#   Put HTTPS in front of port 8080 (e.g. deploy/docker-compose.https.yml, Nginx or the cloud load balancer) before anyone signs in.
+
+name: safeworks
 
 services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    shm_size: 256mb
     environment:
       POSTGRES_USER: safeworks
       POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
       POSTGRES_DB: safeworks
-    command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=512MB"]
+    command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=${PG_SHARED_BUFFERS:-256MB}"]
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -41,8 +47,10 @@ services:
       SEED_ADMIN_ID: ${SEED_ADMIN_ID:-ADMIN01}
       # API worker processes; 2 suits a 2-vCPU server (each keeps up to DB_POOL_MAX database connections)
       WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+      DB_POOL_MAX: ${DB_POOL_MAX:-20}
     ports:
-      - "8080:8080"
+      # APP_BIND=127.0.0.1 keeps port 8080 private when HTTPS (Caddy) sits in front
+      - "${APP_BIND:-0.0.0.0}:8080:8080"
     volumes:
       - storage:/data/storage
 

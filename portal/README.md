@@ -70,7 +70,18 @@ Free-plan limits:
 
 Photos are kept in the database (`STORAGE_DRIVER=db`), because free servers have no permanent disk.
 
-## Run it on a server (Docker)
+## Run it on a server (one command)
+
+On a fresh Ubuntu server (Oracle Cloud Always Free, AWS Lightsail, DigitalOcean or a company server) with ports 80 and 443 open:
+
+```bash
+git clone https://github.com/Julyraj/safeworks-india.git
+sudo bash safeworks-india/portal/deploy/install.sh --demo     # leave out --demo for an empty company
+```
+
+It installs Docker, opens the server firewall, writes `portal/.env` with random secrets, starts SafeWorks with PostgreSQL and HTTPS (Caddy, free certificate; address `https://<server-ip>.sslip.io` unless you pass `--domain`), creates the `ADMIN01` login and sets up a daily backup to `/var/backups/safeworks`. Run it again after `git pull` to update. `deploy/restore.sh` restores a backup, which is also how to move to another server.
+
+## Run it on a server (Docker by hand)
 
 ```bash
 cd portal

@@ -1,0 +1,24 @@
+# HTTPS in front of SafeWorks with Caddy: free certificates (Let's Encrypt, ZeroSSL), renewed automatically.
+# Used by deploy/install.sh through COMPOSE_FILE in portal/.env, so plain `docker compose …` in portal/ includes it.
+# Needs DOMAIN in .env (your own domain, or <ip-with-dashes>.sslip.io) and ports 80 and 443 open to the internet.
+
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -124,6 +124,42 @@ jobs:
       - if: always()
         run: docker logs sw 2>&1 | tail -50
 
+  install-arm:
+    name: One-command install on an Arm server (like Oracle Cloud Always Free)
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install with sample data (HTTPS on localhost)
+        run: sudo bash portal/deploy/install.sh --domain localhost --demo --admin-password CiAdmin2026
+      - name: Sign in over HTTPS; port 8080 stays private
+        run: |
+          curl -fsSk https://localhost/api/health
+          curl -fsSk https://localhost/ | grep -q '<div id="root">'
+          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
+            -d '{"employeeId":"SO-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
+          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
+            -d '{"employeeId":"ADMIN01","password":"CiAdmin2026","app":"admin"}' | grep -q '"token"'
+          ss -ltn | grep -q '127.0.0.1:8080'
+          ! ss -ltn | grep -q '0.0.0.0:8080'
+      - name: Backup and restore
+        run: |
+          sudo bash portal/deploy/backup.sh
+          D=$(sudo sh -c 'ls /var/backups/safeworks/db-*.dump | tail -1')
+          P=$(sudo sh -c 'ls /var/backups/safeworks/photos-*.tar.gz | tail -1')
+          sudo env RESTORE_YES=1 bash portal/deploy/restore.sh "$D" "$P"
+          for i in $(seq 1 30); do curl -fsSk https://localhost/api/health && break; sleep 2; done
+          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
+            -d '{"employeeId":"SUP-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
+      - name: Run the installer again (update) – settings and data are kept
+        run: |
+          sudo bash portal/deploy/install.sh
+          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
+            -d '{"employeeId":"ADMIN01","password":"CiAdmin2026","app":"admin"}' | grep -q '"token"'
+          test -f /etc/cron.d/safeworks-backup
+      - if: failure()
+        working-directory: portal
+        run: sudo docker compose logs --tail 80
+
   android:
     name: Android app (APK)
     needs: [test, docker]
