@@ -1,0 +1,46 @@
+name: Check document links
+
+# Every Monday early morning India time (Sunday 22:00 UTC), and on demand from the Actions tab.
+on:
+  schedule:
+    - cron: "0 22 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  links:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check every official document link
+        id: check
+        run: |
+          python3 tools/check_links.py --report link-report.md | tee check.log
+          echo "broken=$(grep -oP '^BROKEN=\K\d+' check.log)" >> "$GITHUB_OUTPUT"
+      - name: Open or update the "Broken document links" issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BROKEN: ${{ steps.check.outputs.broken }}
+        run: |
+          TITLE="Broken document links"
+          NUM=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number // empty')
+          if [ "${BROKEN:-0}" -gt 0 ]; then
+            if [ -n "$NUM" ]; then
+              gh issue comment "$NUM" --body-file link-report.md
+            else
+              gh issue create --title "$TITLE" --body-file link-report.md
+            fi
+          elif [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --body "All document links answered in the latest weekly check. Closing."
+            gh issue close "$NUM"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: link-report.md

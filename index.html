@@ -95,6 +95,15 @@ h4{font-size:13.5px;margin:0;text-transform:uppercase;letter-spacing:.08em;color
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn.sm{padding:4px 9px;font-size:12.5px}
+.docs{margin-top:10px;display:flex;flex-direction:column;gap:7px}
+.docs .dh{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.doc{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.doc .dn{flex:1 1 180px;min-width:0;font-size:13.5px}
+.doc .btn{text-decoration:none;white-space:nowrap}
+.acc{font-family:var(--mono);font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid var(--line);white-space:nowrap}
+.acc.a-free{color:var(--good);border-color:var(--good)} .acc.a-free-login{color:var(--info);border-color:var(--info)} .acc.a-paid{color:var(--warn);border-color:var(--warn)}
+.doc .arch{font-size:12px;color:var(--muted)}
+.dlsearch{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:var(--r);padding:9px 12px;font:inherit}
 .btn:focus-visible,.chip:focus-visible,.nav a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .list{display:flex;flex-direction:column;gap:10px}
 .item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:0}
@@ -1346,6 +1355,10 @@ const EMERGENCY4 = [
 {g:"Portals & circles (TN / KA)",items:[["TN – DISH online / OCMMS (TNPCB)","dish.tn.gov.in · tnpcb.gov.in"],["KA – e-Surakshate (FBISH) / XGN (KSPCB)","labour.karnataka.gov.in · kspcb.karnataka.gov.in"],["PESO Southern Circle (Chennai) – Tamil Nadu","peso.gov.in"],["PESO Sub-circle Mangaluru / Bengaluru – Karnataka","peso.gov.in"],["AERB e-LORA","elora.aerb.gov.in"],["TSDF Tamil Nadu – Gummidipoondi / Virudhunagar","TNPCB-authorised"],["TSDF Karnataka – Dobbaspet / Harohalli","KSPCB-authorised"],["Directorate of Boilers Tamil Nadu / Boiler Inspectorate FBISH Karnataka","state portals"]]}
 ];
 
+/* Official document links per regulation id — filled from research; see files/README.md */
+const DOCS = {};
+const DOCS_CHECKED = "2026-10-25";
+
 </script>
 <script>
 (function(){
@@ -1367,9 +1380,11 @@ ICONS.aid='<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx=
 ICONS.key='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/><path d="m20.5 18.5 2 2"/></svg>';
 ICONS.matrix='<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 16h16M10 4v16M16 4v16"/></svg>';
 ICONS.sos='<svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>';
+ICONS.dl='<svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
 ICONS.app='<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>';
-const VIEWS=[["Overview",[["home","Dashboard","home"],["sos","SOS – emergency","sos"],["app","App & my data","app"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["matrix","TN vs Karnataka matrix","matrix",MATRIX.domains.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
-const STATE={regJ:"All",regD:"All",regS:"All",proc:null,procCat:"All",ck:null,ckCat:"All",q:"",sector:null,kwCat:"All",faCat:"All",protoTab:"lsr",unsafeTab:"acts"};
+const DOC_COUNT=Object.values(DOCS).reduce((n,l)=>n+l.length,0);
+const VIEWS=[["Overview",[["home","Dashboard","home"],["sos","SOS – emergency","sos"],["app","App & my data","app"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["downloads","Document downloads","dl",DOC_COUNT],["matrix","TN vs Karnataka matrix","matrix",MATRIX.domains.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
+const STATE={dlJ:"All",dlA:"All",dlK:"All",regJ:"All",regD:"All",regS:"All",proc:null,procCat:"All",ck:null,ckCat:"All",q:"",sector:null,kwCat:"All",faCat:"All",protoTab:"lsr",unsafeTab:"acts"};
 const JUR=["All","India – Central","Karnataka","Tamil Nadu","USA (OSHA)","International","UK / EU"];
 const DOMS=["All","Factories","Construction","Chemical","Process Safety","Storage Tanks","Environment","Energy/Carbon/ESG","Electrical","Fire","Lifting & Cranes","Tools & Tackles","Foundry & Metals","Pressure/Boilers","Welfare/Labour","Management System","PPE/Equipment","Health","Mines","Oil & Gas","Transport","Radiation"];
 const STATUSES=["All","In force","In force (transition)","Draft","Repealed (subsumed)","Enforcement guidance"];
@@ -1378,7 +1393,7 @@ const stCls=s=>s==="In force"?"inforce":s==="In force (transition)"?"transition"
 function nav(cur){document.body.classList.remove("menu-open");const mb=document.getElementById("menuBtn");if(mb)mb.setAttribute("aria-expanded","false");document.querySelectorAll("#tabbar [data-tab]").forEach(a=>a.classList.toggle("on",a.dataset.tab===cur&&cur!=="sos"));$("#nav").innerHTML=VIEWS.map(([g,items])=>`<div class="grp">${g}</div>`+items.map(([id,l,ic,n])=>`<a href="#${id}" class="${cur===id?"on":""}">${ICONS[ic]}<span>${l}</span>${n?`<span class="n">${n}</span>`:""}</a>`).join("")).join("")}
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
 async function copy(txt){try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select and copy manually")}ta.remove()}}
-const APP_VERSION="3.2";
+const APP_VERSION="3.3";
 const IN_APP=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 async function share(text,title){try{const P=IN_APP&&window.Capacitor.Plugins;if(P&&P.Share){await P.Share.share({title:title||"SafeWorks India",text,dialogTitle:"Share via"});return}if(navigator.share){await navigator.share({title:title||"SafeWorks India",text});return}}catch(e){if(e&&e.name==="AbortError")return}copy(text)}
 function chipbar(opts,cur,on){return `<div class="chips">${opts.map(o=>`<button type="button" class="chip ${o===cur?"on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`}
@@ -1426,6 +1441,7 @@ function home(){
     <li>At an incident: open the <a href="#incidents">Incident navigator</a> — pick the state and event type; it lists who to notify, by when, on which form, and drafts the notice.</li>
     <li>For audits and registers: use <a href="#forms">Forms & registers</a> and the statutory checklists (factory / construction site).</li>
     <li>Daily briefings: pick a <a href="#talks">Toolbox talk</a>; copy it to WhatsApp or print it from your browser.</li>
+    <li>Need the full text of a law or standard? <a href="#downloads">Document downloads</a> links every entry to its official PDF or page, marked Free, Free · login or Paid.</li>
     <li>Anything with a figure: cross-check in <a href="#numbers">Limits & thresholds</a>. Items marked “verify” need the gazetted text.</li>
     <li>On your phone: <a href="#app">install SafeWorks as an app</a> — it works offline, keeps your observations and photos on the device, and the red <a href="#sos">SOS</a> button is always one tap away.</li>
     <li>Working across both states: the <a href="#matrix">TN vs Karnataka matrix</a> puts the central law, the Tamil Nadu rule, the Karnataka rule and the BIS standards side by side for nine domains, with form numbers and portals.</li>
@@ -1448,7 +1464,32 @@ function regs(){
 }
 function regCard(r){return `<div class="item" id="reg-${r.id}"><div class="hd"><div><div class="t">${esc(r.t)}</div><div class="meta"><span class="tag">${esc(r.j)}</span>${r.yr?`<span class="tag">${r.yr}</span>`:""}<span class="st ${stCls(r.s)}">${esc(r.s)}</span></div></div><div class="chips">${r.d.map(d=>`<span class="chip sm">${esc(d)}</span>`).join("")}</div></div>
 <p class="sum">${esc(r.sum)}</p><div class="meta"><b>Authority:</b> ${esc(r.a)}${r.url?` · <a href="${esc(r.url)}" target="_blank" rel="noopener">official site</a>`:""}</div>
+${docBlock(r.id)}
 ${r.key.length?`<details><summary>Key provisions (${r.key.length})</summary><ul class="keys">${r.key.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></details>`:""}${r.note?`<div class="note">${esc(r.note)}</div>`:""}</div>`}
+
+/* ---------- DOCUMENT DOWNLOADS (official links; own copies only where the law allows sharing) ---------- */
+const ACC={"free":"Free","free-login":"Free · login","paid":"Paid"};
+const ACC_LABELS=["All","Free","Free · login","Paid"],DLKINDS=["All","PDF","Web page"];
+function docRow(d){const own=d.c?`<a class="btn sm primary" href="${esc(d.c)}" target="_blank" rel="noopener">Download our copy</a>`:"";
+ return `<div class="doc" data-a="${esc(d.a)}" data-k="${esc(d.k)}">${own}<a class="btn sm${d.k==="pdf"&&!d.c?" primary":""}" href="${esc(d.u)}" target="_blank" rel="noopener"${d.note?` title="${esc(d.note)}"`:""}>${d.k==="pdf"?"Download PDF":"Open page"}</a><span class="dn">${esc(d.n)}</span><span class="acc a-${esc(d.a)}">${esc(ACC[d.a]||d.a)}</span><a class="arch" href="https://web.archive.org/web/2026/${esc(d.u)}" target="_blank" rel="noopener" title="Saved copy on the Internet Archive — use it if the official link has moved">archived copy</a></div>`}
+function docBlock(id){const L=DOCS[id]||[];return L.length?`<div class="docs"><div class="dh">Official documents</div>${L.map(docRow).join("")}</div>`:""}
+function downloads(){
+ const list=REGS.filter(r=>(DOCS[r.id]||[]).length);
+ return `<div><h2>Document downloads</h2><p class="lead">The full texts behind the library — acts, rules, notifications and standards — straight from the official publisher, so you always get the current, amended version. Opening a document needs internet; the rest of SafeWorks works offline.</p></div>
+ <div class="card" style="display:flex;flex-direction:column;gap:10px"><input id="dlQ" class="dlsearch" type="search" placeholder="Search documents, e.g. Factories, IS 3696, BOCW, scaffold" aria-label="Search documents">
+ <div><h4>Jurisdiction</h4>${chipbar(JUR,STATE.dlJ)}</div><div><h4>Access</h4>${chipbar(ACC_LABELS,STATE.dlA)}</div><div><h4>Type</h4>${chipbar(DLKINDS,STATE.dlK)}</div></div>
+ <div class="meta" id="dlCount"></div>
+ <div class="list" id="dlList">${list.map(r=>`<div class="item dlitem" data-j="${esc(r.j)}" data-s="${esc((r.t+" "+r.a+" "+DOCS[r.id].map(d=>d.n).join(" ")).toLowerCase())}"><div class="t">${esc(r.t)}</div><div class="meta" style="margin-top:4px"><span class="tag">${esc(r.j)}</span> <a href="#regulations" data-reg="${esc(r.id)}">Summary & key provisions →</a></div><div class="docs">${DOCS[r.id].map(docRow).join("")}</div></div>`).join("")}<div class="empty" id="dlEmpty" hidden>No documents match. Clear the search or pick “All”.</div></div>
+ <div class="note"><b>Why links and not copies?</b> Indian Acts, BIS standards and ISO/NFPA/ASME standards are copyrighted, so SafeWorks points to the official publisher instead of copying the files — and a link never goes out of date when a law is amended. <b>Free · login</b> means free after registering (for example, BIS lets you download Indian Standards free after signing in to its standards portal). <b>Paid</b> standards are bought from the publisher. If an official link has moved, try <b>archived copy</b> (the Internet Archive). Links checked: ${esc(DOCS_CHECKED)}.</div>`;
+}
+function bindDownloads(){const v=$("#view");const bars=v.querySelectorAll(".card .chips");
+ const keys=["dlJ","dlA","dlK"];bars.forEach((bar,i)=>bar.querySelectorAll(".chip[data-v]").forEach(c=>c.addEventListener("click",()=>{STATE[keys[i]]=c.dataset.v;bar.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===c));apply()})));
+ const q=$("#dlQ");q.addEventListener("input",apply);
+ function apply(){const t=q.value.trim().toLowerCase(),acc=Object.keys(ACC).find(k=>ACC[k]===STATE.dlA),kind=STATE.dlK==="PDF"?"pdf":STATE.dlK==="Web page"?"page":"";let docs=0,regs=0;
+  v.querySelectorAll(".dlitem").forEach(it=>{let n=0;it.querySelectorAll(".doc").forEach(d=>{const ok=(!acc||d.dataset.a===acc)&&(!kind||d.dataset.k===kind);d.hidden=!ok;if(ok)n++});
+   const show=n>0&&(STATE.dlJ==="All"||it.dataset.j===STATE.dlJ)&&(!t||t.split(/\s+/).every(w=>it.dataset.s.includes(w)));it.hidden=!show;if(show){docs+=n;regs++}});
+  $("#dlCount").textContent=`${docs} document${docs===1?"":"s"} in ${regs} entr${regs===1?"y":"ies"}`;$("#dlEmpty").hidden=docs>0}
+ apply()}
 
 /* ---------- PROCEDURES ---------- */
 const PCATS=["All","Construction","Industrial","Chemical","Electrical","Lifting & Tools","Fire & Emergency","Health","Carbon & ESG","Management"];
@@ -1900,6 +1941,7 @@ function route(){
  if(STATE.q){v.innerHTML=searchView(STATE.q);bindSearch();return}
  switch(h){
   case "regulations":v.innerHTML=regs();bindRegs();break;
+  case "downloads":v.innerHTML=downloads();bindDownloads();break;
   case "procedures":v.innerHTML=procs();bindProcs();break;
   case "checklists":v.innerHTML=checklists();bindCks();break;
   case "permits":v.innerHTML=permits();bindPermits();break;

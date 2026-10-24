@@ -21,4 +21,12 @@ for (const f of files) {
 for (const f of fs.readdirSync(path.join(repo, "icons"))) {
   if (f.endsWith(".png")) fs.copyFileSync(path.join(repo, "icons", f), path.join(out, "icons", f));
 }
+// our own copies of shareable documents (repo/files, see files/README.md)
+const filesDir = path.join(repo, "files");
+if (fs.existsSync(filesDir)) {
+  fs.mkdirSync(path.join(out, "files"), { recursive: true });
+  for (const f of fs.readdirSync(filesDir)) {
+    if (f.toLowerCase().endsWith(".pdf")) fs.copyFileSync(path.join(filesDir, f), path.join(out, "files", f));
+  }
+}
 console.log("[library] copied SafeWorks library to dist/library");

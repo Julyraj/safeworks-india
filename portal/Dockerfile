@@ -11,6 +11,7 @@ RUN cd portal && npm ci
 COPY data data
 COPY index.html manifest.webmanifest sw.js ./
 COPY icons icons
+COPY files files
 COPY portal/web portal/web
 RUN cd portal && npm run build
 

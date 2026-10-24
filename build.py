@@ -11,7 +11,7 @@ Outputs
 import hashlib, re, pathlib, shutil, subprocess, sys
 ROOT = pathlib.Path(__file__).resolve().parent
 SRC = ROOT / "src"
-DATA_FILES = ["data-regs.js","data-procs.js","data-misc.js","data-regs2.js","data-procs2.js","data-misc2.js","data-safety3.js","data-matrix.js"]
+DATA_FILES = ["data-regs.js","data-procs.js","data-misc.js","data-regs2.js","data-procs2.js","data-misc2.js","data-safety3.js","data-matrix.js","data-docs.js"]
 
 HEAD = """<!doctype html>
 <html lang="en-IN">
@@ -33,7 +33,7 @@ HEAD = """<!doctype html>
 def build():
     shell = (SRC / "shell.html").read_text(encoding="utf-8")
     data = "\n".join((SRC / "data" / f).read_text(encoding="utf-8") for f in DATA_FILES)
-    for k in ["REGS","PROCS","CHECKLISTS","FORMS","REPORTING","TALKS","EMERGENCY","NUMBERS","GLOSSARY"]:
+    for k in ["REGS","PROCS","CHECKLISTS","FORMS","REPORTING","TALKS","EMERGENCY","NUMBERS","GLOSSARY","DOCS","DOCS_CHECKED"]:
         data = data.replace("window."+k+" =","const "+k+" =").replace("window."+k+"=","const "+k+"=")
     fragment = shell.replace("//__DATA__", data)
     (ROOT / "safeworks-india.html").write_text(fragment, encoding="utf-8")
@@ -51,6 +51,9 @@ def build():
     shutil.copy(ROOT / "manifest.webmanifest", www / "manifest.webmanifest")
     for f in (ROOT / "icons").glob("*.png"):
         shutil.copy(f, www / "icons" / f.name)
+    # our own copies of shareable documents (see files/README.md)
+    if (ROOT / "files").is_dir():
+        shutil.copytree(ROOT / "files", www / "files", ignore=shutil.ignore_patterns("README.md"))
     print(f"built index.html ({len(doc)//1024} KB), sw.js (cache {ver}), app/www")
     return fragment
 
@@ -61,7 +64,7 @@ def export_json(out):
 const fs=require('fs');const dir=process.argv[2];
 const dump=(n,v)=>fs.writeFileSync(dir+'/'+n+'.json',JSON.stringify(v,null,1));
 Object.entries(REG_EXTRA).forEach(([id,ds])=>{const r=REGS.find(x=>x.id===id);if(r)ds.forEach(d=>{if(!r.d.includes(d))r.d.push(d)})});
-dump('regulations',[...REGS,...REGS2,...REGS4]);dump('procedures',[...PROCS,...PROCS2]);dump('checklists',[...CHECKLISTS,...CHECKLISTS2,...CHECKLISTS3]);
+dump('regulations',[...REGS,...REGS2,...REGS4].map(r=>({...r,docs:DOCS[r.id]||[]})));dump('documents',{checked:DOCS_CHECKED,docs:DOCS});dump('procedures',[...PROCS,...PROCS2]);dump('checklists',[...CHECKLISTS,...CHECKLISTS2,...CHECKLISTS3]);
 dump('forms',[...FORMS,...FORMS2,...FORMS3,...FORMS4]);dump('reporting-deadlines',[...REPORTING,...REPORTING2]);dump('toolbox-talks',[...TALKS,...TALKS2,...TALKS3]);
 dump('limits',[...NUMBERS,...NUMBERS2,...NUMBERS4]);dump('glossary',[...GLOSSARY,...GLOSSARY2]);dump('keywords',[...KEYWORDS,...KEYWORDS4]);dump('emergency-contacts',[...EMERGENCY,...EMERGENCY4]);
 dump('sectors',SECTORS);dump('state-matrix',MATRIX);dump('unsafe-acts-conditions',UNSAFE);dump('protocols',PROTOCOLS);dump('first-aid',FIRSTAID);

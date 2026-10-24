@@ -56,7 +56,7 @@ jobs:
         working-directory: app/android
         env:
           VERSION_CODE: ${{ github.run_number }}
-          VERSION_NAME: 3.2.${{ github.run_number }}
+          VERSION_NAME: 3.3.${{ github.run_number }}
         run: |
           chmod +x gradlew
           set +e
@@ -81,7 +81,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="v3.2.${{ github.run_number }}"
+          TAG="v3.3.${{ github.run_number }}"
           gh release create "$TAG" SafeWorks-India.apk \
             --title "SafeWorks India $TAG (Android)" \
             --target "${{ github.sha }}" \

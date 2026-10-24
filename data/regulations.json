@@ -26,7 +26,8 @@
    "Registers, annual return (unified), inspection by ICF with web-based randomised inspection; graded penalties with compounding; employer may be prosecuted on second offence"
   ],
   "url": "https://labour.gov.in",
-  "note": "Labour is a concurrent subject: Central Rules apply where the Central Government is the appropriate Government; otherwise the State's OSH Rules apply. During transition, state Factories/BOCW Rules continue to be used where state OSH rules are not yet final."
+  "note": "Labour is a concurrent subject: Central Rules apply where the Central Government is the appropriate Government; otherwise the State's OSH Rules apply. During transition, state Factories/BOCW Rules continue to be used where state OSH rules are not yet final.",
+  "docs": []
  },
  {
   "id": "osh-central-rules",
@@ -50,7 +51,8 @@
    "Health examination, Safety Committee constitution & functions, Safety Officer qualifications, welfare standards, contract labour licence (5-year all-India licence)"
   ],
   "url": "https://labour.gov.in",
-  "note": "Where a State Government is the appropriate Government (most private factories and construction sites in Karnataka/Tamil Nadu), use the State OSH Rules; until those are final, the legacy State Factories Rules and BOCW Rules remain the working technical standard."
+  "note": "Where a State Government is the appropriate Government (most private factories and construction sites in Karnataka/Tamil Nadu), use the State OSH Rules; until those are final, the legacy State Factories Rules and BOCW Rules remain the working technical standard.",
+  "docs": []
  },
  {
   "id": "factories-act",
@@ -76,7 +78,8 @@
    "s.88 notice of accident (death / >48 h absence), s.88A dangerous occurrences, s.89 notifiable diseases (Third Schedule), s.92 penalties"
   ],
   "url": "https://www.indiacode.nic.in",
-  "note": "Map legacy obligations to OSH Code: s.88 → OSH s.10; s.41G → OSH s.22; s.40B → OSH s.23; s.36 → OSH Code + State Rules on confined spaces."
+  "note": "Map legacy obligations to OSH Code: s.88 → OSH s.10; s.41G → OSH s.22; s.40B → OSH s.23; s.36 → OSH Code + State Rules on confined spaces.",
+  "docs": []
  },
  {
   "id": "bocw-act",
@@ -98,7 +101,8 @@
    "Rule 36/38 (Central Rules) – helmets, safety belts, protective footwear; Rule 54 – scaffold inspection; Rule 65 – excavation shoring beyond 1.5 m (verify)"
   ],
   "url": "https://www.indiacode.nic.in",
-  "note": "Welfare cess (1% of construction cost, BOCW Welfare Cess Act 1996) now continues under the Code on Social Security 2020 (Ch. VIII) and State Welfare Boards."
+  "note": "Welfare cess (1% of construction cost, BOCW Welfare Cess Act 1996) now continues under the Code on Social Security 2020 (Ch. VIII) and State Welfare Boards.",
+  "docs": []
  },
  {
   "id": "ss-code",
@@ -117,7 +121,8 @@
    "Ch. VIII BOCW cess: 1–2% (currently 1%) of cost of construction, paid to State Welfare Board; registration of construction workers as beneficiaries",
    "ESI: accident report to ESIC branch office (24–48 h); medical benefit coverage"
   ],
-  "url": "https://labour.gov.in"
+  "url": "https://labour.gov.in",
+  "docs": []
  },
  {
   "id": "contract-labour",
@@ -135,7 +140,8 @@
    "Principal employer liable where contractor defaults (wages, PF, safety)",
    "Migrant workers: journey allowance, portability of benefits, toll-free helpline, annual reporting"
   ],
-  "url": "https://labour.gov.in"
+  "url": "https://labour.gov.in",
+  "docs": []
  },
  {
   "id": "ep-act",
@@ -155,7 +161,8 @@
    "s.9 – duty to report accidental discharge forthwith to authorities and mitigate",
    "Rule 14 EP Rules – Environmental Statement (Form V) by 30 September each year by units needing consent/authorisation"
   ],
-  "url": "https://moef.gov.in"
+  "url": "https://moef.gov.in",
+  "docs": []
  },
  {
   "id": "msihc",
@@ -180,7 +187,8 @@
    "Rule 15 – information to public; Rule 17 – Material Safety Data Sheet (Schedule 9) for every hazardous chemical; labelling; Rule 18 – import"
   ],
   "url": "https://moef.gov.in",
-  "note": "Draft MSIHC Rules 2024/2025 proposing GHS-aligned classification were circulated by MoEFCC; verify current status."
+  "note": "Draft MSIHC Rules 2024/2025 proposing GHS-aligned classification were circulated by MoEFCC; verify current status.",
+  "docs": []
  },
  {
   "id": "chem-accident-rules",
@@ -200,7 +208,8 @@
    "Rule 10 – Local Crisis Group at industrial pocket level; MAH units supply information",
    "Occupier must assist in off-site emergency plan, conduct full-scale mock drill at least once a year"
   ],
-  "url": "https://moef.gov.in"
+  "url": "https://moef.gov.in",
+  "docs": []
  },
  {
   "id": "how-rules",
@@ -220,7 +229,8 @@
    "Rule 23 – accident during handling: report immediately to SPCB in Form 11",
    "Co-processing / TSDF / recycler registration"
   ],
-  "url": "https://cpcb.nic.in"
+  "url": "https://cpcb.nic.in",
+  "docs": []
  },
  {
   "id": "air-water",
@@ -238,7 +248,8 @@
    "Construction sites: dust control, DG set stack height & noise limits, STP for labour colonies",
    "Non-compliance: closure directions under s.33A/31A; Jan Vishwas 2023 penalty regime"
   ],
-  "url": "https://cpcb.nic.in"
+  "url": "https://cpcb.nic.in",
+  "docs": []
  },
  {
   "id": "noise-rules",
@@ -257,7 +268,8 @@
    "DG sets: noise limit 75 dB(A) at 1 m (≤1000 kVA, EP Rules); acoustic enclosures",
    "Occupational limit (Factories Act Sch. II / OSH rules): 90 dB(A) 8-h TWA; OSHA PEL 90 dB(A), action level 85 dB(A)"
   ],
-  "url": "https://cpcb.nic.in"
+  "url": "https://cpcb.nic.in",
+  "docs": []
  },
  {
   "id": "cd-waste-2025",
@@ -278,7 +290,8 @@
    "Registration on CPCB portal; annual returns; environmental compensation for violation"
   ],
   "url": "https://moef.gov.in",
-  "note": "Local-body bye-laws (BBMP, Greater Chennai Corporation) impose dust-control, barricading and debris-transport conditions in addition."
+  "note": "Local-body bye-laws (BBMP, Greater Chennai Corporation) impose dust-control, barricading and debris-transport conditions in addition.",
+  "docs": []
  },
  {
   "id": "eia-2006",
@@ -297,7 +310,8 @@
    "Six-monthly compliance report to Regional Office of MoEFCC",
    "EC conditions are legally binding; violation → EP Act action"
   ],
-  "url": "https://parivesh.nic.in"
+  "url": "https://parivesh.nic.in",
+  "docs": []
  },
  {
   "id": "petroleum",
@@ -319,7 +333,8 @@
    "Accident in licensed premises: notify PESO Chief Controller and local police forthwith",
    "Diesel storage at construction sites (Class B): licence if > 2,500 L; bunding, spill kit, extinguishers"
   ],
-  "url": "https://peso.gov.in"
+  "url": "https://peso.gov.in",
+  "docs": []
  },
  {
   "id": "explosives",
@@ -339,7 +354,8 @@
    "Blasting: siren, 500 m exclusion (typical), misfire procedure (IS 4081), vibration limits (DGMS circular 7 of 1997 for structures)",
    "Accident notice to Chief Controller of Explosives forthwith"
   ],
-  "url": "https://peso.gov.in"
+  "url": "https://peso.gov.in",
+  "docs": []
  },
  {
   "id": "gas-cylinders",
@@ -360,7 +376,8 @@
    "SMPV(U): licence (Form III), safety relief valve testing, competent-person inspection every 5 years, fire protection",
    "Gas Cylinders (Amendment) Rules 2025 – verify changes for composite/hydrogen cylinders"
   ],
-  "url": "https://peso.gov.in"
+  "url": "https://peso.gov.in",
+  "docs": []
  },
  {
   "id": "boilers-2025",
@@ -380,7 +397,8 @@
    "Accident/explosion: report to Chief Inspector of Boilers within 24 h; do not disturb scene",
    "Operator: Boiler Attendant (1st/2nd class) / BOE depending on heating surface"
   ],
-  "url": "https://dpiit.gov.in"
+  "url": "https://dpiit.gov.in",
+  "docs": []
  },
  {
   "id": "electricity",
@@ -402,7 +420,8 @@
    "Electrical accident: notify Electrical Inspector within 48 h (Form A), fatal – immediately",
    "Earthing (IS 3043), ELCB/RCD 30 mA for portable tools (IS 732), lightning protection (IS/IEC 62305)"
   ],
-  "url": "https://cea.nic.in"
+  "url": "https://cea.nic.in",
+  "docs": []
  },
  {
   "id": "mines",
@@ -420,7 +439,8 @@
    "Benches, haul roads (gradient 1 in 16), dump slope; blasting by competent person",
    "Fatal/serious accident: notice to DGMS Regional Inspector forthwith; Form IV-A"
   ],
-  "url": "https://www.dgms.gov.in"
+  "url": "https://www.dgms.gov.in",
+  "docs": []
  },
  {
   "id": "pli-act",
@@ -437,7 +457,8 @@
   "key": [
    "Accident report to Collector; relief application within 5 years"
   ],
-  "url": "https://moef.gov.in"
+  "url": "https://moef.gov.in",
+  "docs": []
  },
  {
   "id": "dm-act",
@@ -456,7 +477,8 @@
    "District Collector powers during emergency (s.34); requisition of resources",
    "Heat action plans (TN and Karnataka) inform outdoor-work scheduling"
   ],
-  "url": "https://ndma.gov.in"
+  "url": "https://ndma.gov.in",
+  "docs": []
  },
  {
   "id": "nbc-2016",
@@ -474,7 +496,8 @@
    "Part 7 Sec. 2 – Construction practices; Sec. 3 – Demolition; Sec. 4 – Safety management (safety plan, safety officer, training, PTW, PPE)",
    "Part 4 – high-rise definition ≥ 15 m; fire NOC from State Fire Service"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "bis-construction",
@@ -501,7 +524,8 @@
    "IS 14489 – code of practice on occupational safety and health audit; IS 3786 – computation of injury frequency/severity rates",
    "IS 18001:2007 – OHSMS (Indian standard; largely replaced in practice by IS/ISO 45001)"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "bis-ppe",
@@ -522,7 +546,8 @@
    "IS 3043 – earthing; IS 732 – electrical wiring installations; IS 5216 – safety procedures in electrical work; IS 13252 – IT equipment safety",
    "IS 4379 – colour coding of gas cylinders; IS 818 – safety in welding; IS 3016 – fire precautions in welding/cutting"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "oisd",
@@ -544,7 +569,8 @@
    "OISD-STD-118 – inter-unit safety distances; OISD-STD-116 – fire protection in refineries",
    "OISD-GDN-206 – external safety audit; OISD-STD-163 – process safety management"
   ],
-  "url": "https://www.oisd.gov.in"
+  "url": "https://www.oisd.gov.in",
+  "docs": []
  },
  {
   "id": "radiation",
@@ -563,7 +589,8 @@
    "AERB Safety Code AERB/RF-IR/SC-1 – industrial radiography; e-LORA licensing",
    "Radiography generally at night or in enclosed bays; public dose limit 1 mSv/yr; worker 20 mSv/yr (avg over 5 yrs)"
   ],
-  "url": "https://www.aerb.gov.in"
+  "url": "https://www.aerb.gov.in",
+  "docs": []
  },
  {
   "id": "child-labour",
@@ -581,7 +608,8 @@
    "Penalty: imprisonment 6 months–2 years and/or fine; repeat offence stricter",
    "Construction, demolition, brick kilns, welding, chemicals listed as hazardous for adolescents"
   ],
-  "url": "https://labour.gov.in"
+  "url": "https://labour.gov.in",
+  "docs": []
  },
  {
   "id": "mv-act",
@@ -599,7 +627,8 @@
    "CEV: registration, fitness, trained operator; IRC:SP:55 – temporary traffic control; IRC 35 road markings",
    "Speed limits on site (typically 10–20 km/h) set by site rules"
   ],
-  "url": "https://morth.nic.in"
+  "url": "https://morth.nic.in",
+  "docs": []
  },
  {
   "id": "ghs-india",
@@ -616,7 +645,8 @@
    "Use 16-section SDS (ISO 11014 / ANSI Z400.1 / UN GHS Annex 4) as the working format",
    "Label: product identifier, signal word, hazard pictograms, H & P statements, supplier"
   ],
-  "url": "https://moef.gov.in"
+  "url": "https://moef.gov.in",
+  "docs": []
  },
  {
   "id": "dgfasli-policy",
@@ -635,7 +665,8 @@
    "Model Factories Rules (reference for state rules); Guidance on safety audit, HIRA, process safety",
    "Dock Workers (Safety, Health & Welfare) Regulations 1990 – port/cargo handling (subsumed into OSH Code)"
   ],
-  "url": "https://dgfasli.gov.in"
+  "url": "https://dgfasli.gov.in",
+  "docs": []
  },
  {
   "id": "shram-suvidha",
@@ -652,7 +683,8 @@
   "key": [
    "Update existing registration details within 6 months of 8 May 2026 (i.e. by 8 Nov 2026) – Central Rules"
   ],
-  "url": "https://shramsuvidha.gov.in"
+  "url": "https://shramsuvidha.gov.in",
+  "docs": []
  },
  {
   "id": "ka-factories-rules",
@@ -678,7 +710,8 @@
    "Safety Officer (Rule 100-series) qualifications; Safety Committee; occupational health centre for hazardous units (Rule 85-series)"
   ],
   "url": "https://labour.karnataka.gov.in",
-  "note": "Form numbers and timelines are state-specific — confirm against the current consolidated rules on the DFBISH site."
+  "note": "Form numbers and timelines are state-specific — confirm against the current consolidated rules on the DFBISH site.",
+  "docs": []
  },
  {
   "id": "ka-safety-audit",
@@ -697,7 +730,8 @@
    "Audit by Chief Inspector-recognised auditor; frequency (annual for hazardous, as notified for others – verify)",
    "Report in prescribed format; compliance action plan; follow IS 14489 methodology"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-factories-amend-2023",
@@ -715,7 +749,8 @@
    "Women night shift conditions: free transport with security, well-lit premises, not less than 10 women per shift (typical), anti-harassment committee",
    "Spread-over up to 12 h; compensatory rest"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-osh-rules",
@@ -734,7 +769,8 @@
    "Until final: apply Karnataka Factories Rules 1969 / Karnataka BOCW Rules 2006 technical provisions, and OSH Code sections directly",
    "Expect Form numbering aligned to Central Rules (Form XI accident notice)"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-bocw-rules",
@@ -755,7 +791,8 @@
    "Accident notice to Registering Officer/Inspector; fatal – within 4 h (verify) and police",
    "Welfare: drinking water, latrines (1 per 20 up to 100), washing, rest shed, crèche (50+ women workers), first-aid boxes, ambulance arrangement"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-shops",
@@ -772,7 +809,8 @@
    "Women night work: driver antecedent verification, route planning, vehicle monitoring (stricter than OSH rules)",
    "Working hours 9/day, 48/week; OT 2x"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-fire",
@@ -790,7 +828,8 @@
    "Industrial buildings: fire hydrant ring main, extinguishers (IS 2190), automatic detection; high-hazard – sprinklers, foam",
    "Site: fire extinguishers within 15 m of hot work; fire watch; emergency assembly point"
   ],
-  "url": "https://ksfes.karnataka.gov.in"
+  "url": "https://ksfes.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-lifts",
@@ -810,7 +849,8 @@
    "Erection permission → inspection → licence to work; renewal; AMC by licensed agency",
    "Passenger/material hoists on sites: BOCW rules + IS 4014/IS 3696 for hoistways; operator competence"
   ],
-  "url": "https://ceig.karnataka.gov.in"
+  "url": "https://ceig.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "kspcb",
@@ -828,7 +868,8 @@
    "Red/Orange/Green/White categories; consent validity by category; bank guarantee for non-compliance",
    "Diesel generator: KSPCB noise & emission norms; DG > 1 MVA needs separate consent"
   ],
-  "url": "https://kspcb.karnataka.gov.in"
+  "url": "https://kspcb.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-building",
@@ -846,7 +887,8 @@
    "Demolition permission for structures; neighbouring structure protection",
    "Occupancy certificate requires fire NOC, lift licence, KSPCB consent (STP) for large projects"
   ],
-  "url": "https://bbmp.gov.in"
+  "url": "https://bbmp.gov.in",
+  "docs": []
  },
  {
   "id": "ka-groundwater",
@@ -863,7 +905,8 @@
   "key": [
    "Dewatering discharge must not pollute drains; obtain NOC for bulk extraction"
   ],
-  "url": "https://karnataka.gov.in"
+  "url": "https://karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-labour-welfare",
@@ -877,7 +920,8 @@
   "s": "In force",
   "sum": "Annual contribution (employee/employer) by 15 Jan; holidays entitlement. Useful for site HR compliance calendar.",
   "key": [],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-boilers",
@@ -891,7 +935,8 @@
   "s": "In force",
   "sum": "State implementation of the Boilers Act 2025 / IBR: registration, annual inspection, repairs by IBR-approved repairers, boiler attendant exams.",
   "key": [],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "tn-factories-rules",
@@ -916,7 +961,8 @@
    "Safety Officer & Safety Committee rules; occupational health centre; medical examination (Form 17/18 – verify)"
   ],
   "url": "https://dish.tn.gov.in",
-  "note": "DISH TN posts every amendment GO/SRO as PDF — the 2025 amendments (SRO A-17/2025 draft, SRO A-27/2025, SRO A-29/2025) are on dish.tn.gov.in."
+  "note": "DISH TN posts every amendment GO/SRO as PDF — the 2025 amendments (SRO A-17/2025 draft, SRO A-27/2025, SRO A-29/2025) are on dish.tn.gov.in.",
+  "docs": []
  },
  {
   "id": "tn-factories-amend-2023",
@@ -931,7 +977,8 @@
   "s": "In force (transition)",
   "sum": "Passed April 2023 to permit 12-hour shifts (within 48 h/week) with consent; implementation was put on hold by the State Government following objections. With the OSH Code in force, working-hour provisions now flow from OSH Code s.25 and the (pending) TN OSH rules. Verify current position before applying 12-h rosters.",
   "key": [],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-osh-rules",
@@ -949,7 +996,8 @@
   "key": [
    "Track DISH TN and Labour Dept gazette notifications; align registers to Central Rules formats in the interim"
   ],
-  "url": "https://labour.tn.gov.in"
+  "url": "https://labour.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-bocw-rules",
@@ -969,7 +1017,8 @@
    "Scaffold inspection by responsible person before use/every 7 days & after weather; excavation shoring > 1.5 m; lifting gear test certificates; hoists",
    "Accident reporting to Inspector (Form – verify); dangerous occurrences list"
   ],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-shops",
@@ -985,7 +1034,8 @@
   "key": [
    "Women night work: transport, security, consent, 5+ women per shift (verify), POSH committee"
   ],
-  "url": "https://labour.tn.gov.in"
+  "url": "https://labour.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-fire",
@@ -1003,7 +1053,8 @@
    "Provisional NOC at planning permit; final NOC before completion certificate",
    "Industrial: hydrant system, water storage, detection, extinguishers; emergency lighting; mock drills 6-monthly"
   ],
-  "url": "https://tnfrs.tn.gov.in"
+  "url": "https://tnfrs.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-cdbr",
@@ -1021,7 +1072,8 @@
    "Special buildings, multi-storeyed buildings; structural engineer/site engineer certification",
    "Completion certificate needs fire NOC, lift licence, TNPCB consent (STP for > 50 flats or as applicable)"
   ],
-  "url": "https://tn.gov.in"
+  "url": "https://tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-lifts",
@@ -1038,7 +1090,8 @@
   "s": "In force",
   "sum": "Permission to erect and licence to operate lifts/escalators; annual inspection; accident intimation to CEIG.",
   "key": [],
-  "url": "https://ceig.tn.gov.in"
+  "url": "https://ceig.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tnpcb",
@@ -1056,7 +1109,8 @@
    "Red/Orange/Green/White categorisation; consent validity; bank guarantee",
    "Construction: barricading, sprinkling, covered trucks, wheel wash, no open burning"
   ],
-  "url": "https://tnpcb.gov.in"
+  "url": "https://tnpcb.gov.in",
+  "docs": []
  },
  {
   "id": "tn-groundwater",
@@ -1071,7 +1125,8 @@
   "s": "In force",
   "sum": "Permits for borewells/extraction in notified areas and Chennai metro; construction dewatering and water tanker sourcing conditions; rainwater harvesting compulsory (TN since 2003).",
   "key": [],
-  "url": "https://tn.gov.in"
+  "url": "https://tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-labour-welfare",
@@ -1085,7 +1140,8 @@
   "s": "In force",
   "sum": "Annual LWF contribution by 31 Jan; holiday entitlements (9 national/festival). Site HR calendar items.",
   "key": [],
-  "url": "https://labour.tn.gov.in"
+  "url": "https://labour.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-boilers",
@@ -1099,7 +1155,8 @@
   "s": "In force",
   "sum": "State implementation of Boilers Act 2025 / IBR; registration, inspection, repairers, attendants.",
   "key": [],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "tn-dish",
@@ -1118,7 +1175,8 @@
    "MAH units: safety report, on-site plan, mock drills with District Crisis Group",
    "Statutory competent persons list (lifting, pressure vessels, ventilation)"
   ],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "osh-act-1970",
@@ -1136,7 +1194,8 @@
   "key": [
    "§5(a)(2) comply with standards; §11(c) anti-retaliation; §8 inspections; §17 penalties (2026 max ≈ $16k serious / $165k willful – inflation-adjusted annually)"
   ],
-  "url": "https://www.osha.gov/laws-regs/oshact/completeoshact"
+  "url": "https://www.osha.gov/laws-regs/oshact/completeoshact",
+  "docs": []
  },
  {
   "id": "osha-1926",
@@ -1157,7 +1216,8 @@
   "key": [
    "Subpart C general (1926.20 accident prevention programs, 1926.21 training); D health (1926.50 first aid, 1926.52 noise, 1926.55 air contaminants); E PPE (1926.95–106); F fire protection; G signs/signals; H rigging/materials handling; I tools; J welding; K electrical (GFCI/AEGCP 1926.404); L scaffolds (competent person, 1926.451 – guardrails above 10 ft, 4:1 height-to-base); M fall protection (6 ft trigger; 1926.502 systems; 1926.503 training); N cranes/derricks/hoists; P excavations (protective systems ≥ 5 ft; ladder every 25 ft if ≥ 4 ft; registered PE design > 20 ft; daily competent-person inspection); Q concrete/masonry; R steel erection; S underground; T demolition; U blasting; V power transmission; W rollover/overhead protection; X ladders/stairways; Z toxic substances (asbestos 1926.1101, lead 1926.62, silica 1926.1153 – 50 µg/m³ PEL); AA confined spaces in construction (1926.1200–1213); CC cranes & derricks (1926.1400 – operator certification, 1926.1408 power-line clearance 20 ft/Table A)"
   ],
-  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926"
+  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926",
+  "docs": []
  },
  {
   "id": "osha-1910",
@@ -1182,7 +1242,8 @@
   "key": [
    "1910.22–30 walking-working surfaces & fall protection (4 ft); 1910.36–38 exit routes & Emergency Action Plans; 1910.95 noise (85 dB(A) action level, hearing conservation); 1910.119 Process Safety Management (14 elements; HHC list App. A); 1910.120 HAZWOPER; 1910.132–138 PPE (hazard assessment 1910.132(d)); 1910.134 respiratory protection (fit test, medical eval); 1910.146 permit-required confined spaces; 1910.147 control of hazardous energy (LOTO – annual periodic inspection); 1910.157 extinguishers; 1910.176–184 materials handling, 1910.178 powered industrial trucks, 1910.179 overhead cranes, 1910.184 slings; 1910.212 machine guarding; 1910.252–255 welding; 1910.301–335 electrical (1910.333 lockout/energised work); 1910.1000 air contaminants (PELs Z-tables); 1910.1001 asbestos; 1910.1025 lead; 1910.1030 bloodborne pathogens; 1910.1053 silica; 1910.1200 Hazard Communication (GHS Rev. 7 aligned 2024 update – labels, SDS, training)"
   ],
-  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910"
+  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910",
+  "docs": []
  },
  {
   "id": "osha-1904",
@@ -1200,7 +1261,8 @@
    "Recordable = death, days away, restricted/transfer, medical treatment beyond first aid, loss of consciousness, significant injury/illness",
    "Keep 5 years; employee access"
   ],
-  "url": "https://www.osha.gov/recordkeeping"
+  "url": "https://www.osha.gov/recordkeeping",
+  "docs": []
  },
  {
   "id": "osha-heat-nep",
@@ -1218,7 +1280,8 @@
    "NEP inspection checklist: heat-illness plan, water/rest/shade, acclimatisation for new & returning workers (documented ramp-up), monitoring (heat index/WBGT), training, emergency response",
    "Planning assumption: build a Heat Illness Prevention Program now (water, rest, shade, acclimatisation, buddy system)"
   ],
-  "url": "https://www.osha.gov/heat"
+  "url": "https://www.osha.gov/heat",
+  "docs": []
  },
  {
   "id": "osha-maritime-ag",
@@ -1233,7 +1296,8 @@
   "s": "In force",
   "sum": "Sector standards for shipyards, ports and agriculture — relevant for port construction, marine works and jetty projects.",
   "key": [],
-  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber"
+  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber",
+  "docs": []
  },
  {
   "id": "niosh-acgih",
@@ -1251,7 +1315,8 @@
    "IDLH values for confined space / respirator selection",
    "NIOSH Pocket Guide to Chemical Hazards – quick reference for SDS verification"
   ],
-  "url": "https://www.cdc.gov/niosh"
+  "url": "https://www.cdc.gov/niosh",
+  "docs": []
  },
  {
   "id": "ansi-assp",
@@ -1271,7 +1336,8 @@
    "Z244.1 hazardous energy control (alternative methods); Z117.1 confined space (ventilation, rescue)",
    "ASTM F2413 safety footwear; ANSI/ISEA 107 hi-vis; ANSI/ISEA 121 dropped objects"
   ],
-  "url": "https://www.assp.org/standards"
+  "url": "https://www.assp.org/standards",
+  "docs": []
  },
  {
   "id": "nfpa",
@@ -1292,7 +1358,8 @@
    "NFPA 70E: energised work permit, shock & arc-flash boundaries, qualified person; 2024 edition",
    "NFPA 10 extinguisher travel distance 75 ft (Class A), 30/50 ft (Class B)"
   ],
-  "url": "https://www.nfpa.org/codes-and-standards"
+  "url": "https://www.nfpa.org/codes-and-standards",
+  "docs": []
  },
  {
   "id": "asme",
@@ -1309,7 +1376,8 @@
   "s": "In force",
   "sum": "Design, inspection and operation standards; B30.5 mobile cranes (frequent/periodic inspection), B30.9 slings, B30.26 rigging hardware; ASME BPVC Section VIII vessels (reference for IBR/SMPV equivalence).",
   "key": [],
-  "url": "https://www.asme.org/codes-standards"
+  "url": "https://www.asme.org/codes-standards",
+  "docs": []
  },
  {
   "id": "api-ccps",
@@ -1327,7 +1395,8 @@
   "s": "In force",
   "sum": "Process-safety good practice: Tier 1–4 PSE indicators, tank entry gas-free procedures, hot work in hydrocarbon service, CCPS Risk Based Process Safety (20 elements).",
   "key": [],
-  "url": "https://www.api.org"
+  "url": "https://www.api.org",
+  "docs": []
  },
  {
   "id": "iso-45001",
@@ -1344,7 +1413,8 @@
    "Replaced OHSAS 18001 (withdrawn 2021)",
    "ISO 45003 – psychological health; ISO 45004 (2024) – performance evaluation; ISO 45006 – infectious disease"
   ],
-  "url": "https://www.iso.org/standard/63787.html"
+  "url": "https://www.iso.org/standard/63787.html",
+  "docs": []
  },
  {
   "id": "iso-14001",
@@ -1360,7 +1430,8 @@
   "s": "In force",
   "sum": "EMS: environmental aspects/impacts, compliance obligations, life-cycle perspective, operational control, emergency preparedness. Integrated with ISO 45001/9001 as IMS. ISO 31000 risk management; ISO 22301 business continuity; ISO 50001 energy.",
   "key": [],
-  "url": "https://www.iso.org/standard/60857.html"
+  "url": "https://www.iso.org/standard/60857.html",
+  "docs": []
  },
  {
   "id": "iso-machinery",
@@ -1381,7 +1452,8 @@
    "IEC 60079-10-1 area classification; Ex equipment marking; IS/IEC 60079 adopted in India",
    "ISO 7243 WBGT reference values; ISO 7933 PHS model"
   ],
-  "url": "https://www.iso.org"
+  "url": "https://www.iso.org",
+  "docs": []
  },
  {
   "id": "ilo",
@@ -1400,7 +1472,8 @@
    "ILO Code of Practice – Safety & Health in Construction: site organisation, scaffolds, lifting, excavation, demolition, electricity, welfare, heat",
    "ILO Guidelines on Occupational Safety and Health Management Systems (ILO-OSH 2001)"
   ],
-  "url": "https://www.ilo.org"
+  "url": "https://www.ilo.org",
+  "docs": []
  },
  {
   "id": "un-ghs",
@@ -1418,7 +1491,8 @@
    "Hazard classes: physical (explosives, flammables, oxidisers, gases under pressure…), health (acute tox, corrosion, sensitisation, CMR, STOT, aspiration), environmental",
    "Transport: TREM card (CMV Rule 132), placarding, driver training"
   ],
-  "url": "https://unece.org/transport/dangerous-goods"
+  "url": "https://unece.org/transport/dangerous-goods",
+  "docs": []
  },
  {
   "id": "ieee-bs",
@@ -1435,7 +1509,8 @@
   "s": "In force",
   "sum": "European/UK equipment standards that appear in EPC contracts in India; BS 5975 temporary-works coordinator model is the basis for formwork/falsework control on large projects.",
   "key": [],
-  "url": "https://www.bsigroup.com"
+  "url": "https://www.bsigroup.com",
+  "docs": []
  },
  {
   "id": "hswa",
@@ -1451,7 +1526,8 @@
   "s": "In force",
   "sum": "Goal-setting duties (s.2 employers, s.3 others, s.7 employees); risk assessment (Reg 3 MHSWR), competent persons, emergency procedures. HSE guidance (HSG65 Managing for Health & Safety; HSG150 Health & Safety in Construction; HSG250 Permit-to-Work; L153 CDM guidance) is free and widely used globally.",
   "key": [],
-  "url": "https://www.hse.gov.uk/legislation"
+  "url": "https://www.hse.gov.uk/legislation",
+  "docs": []
  },
  {
   "id": "cdm-2015",
@@ -1469,7 +1545,8 @@
    "Schedule 2 welfare; Schedule 3 construction phase plan contents",
    "Appointments in writing; design risk management (eliminate–reduce–inform)"
   ],
-  "url": "https://www.hse.gov.uk/construction/cdm/2015"
+  "url": "https://www.hse.gov.uk/construction/cdm/2015",
+  "docs": []
  },
  {
   "id": "uk-regs",
@@ -1490,7 +1567,8 @@
   "s": "In force",
   "sum": "Topic regulations with Approved Codes of Practice. LOLER: thorough examination 6-monthly (lifting persons/accessories) or 12-monthly; RIDDOR: deaths/specified injuries report without delay (within 10 days), over-7-day injuries within 15 days, dangerous occurrences, occupational diseases; Noise: lower action 80 dB(A), upper 85, limit 87; Vibration: EAV 2.5 m/s², ELV 5 m/s² (HAV).",
   "key": [],
-  "url": "https://www.hse.gov.uk/legislation"
+  "url": "https://www.hse.gov.uk/legislation",
+  "docs": []
  },
  {
   "id": "comah-seveso",
@@ -1506,7 +1584,8 @@
   "s": "In force",
   "sum": "Major accident prevention policy (MAPP), safety report (upper tier), emergency plans, public information, land-use planning — the model behind India's MSIHC Rules.",
   "key": [],
-  "url": "https://www.hse.gov.uk/comah"
+  "url": "https://www.hse.gov.uk/comah",
+  "docs": []
  },
  {
   "id": "eu-framework",
@@ -1522,7 +1601,8 @@
   "s": "In force",
   "sum": "Hierarchy of prevention principles (Art. 6), risk assessment duty, worker consultation; chemical registration/classification; explosive-atmosphere equipment; machinery CE/Essential Health & Safety Requirements (regulation applies from Jan 2027, replacing Directive 2006/42/EC).",
   "key": [],
-  "url": "https://eur-lex.europa.eu"
+  "url": "https://eur-lex.europa.eu",
+  "docs": []
  },
  {
   "id": "au-whs",
@@ -1537,7 +1617,8 @@
   "s": "In force",
   "sum": "Useful comparators: PCBU duty of care, high-risk construction work SWMS (safe work method statements), Construction Work Code of Practice; CSA Z1002 hazard identification.",
   "key": [],
-  "url": "https://www.safeworkaustralia.gov.au"
+  "url": "https://www.safeworkaustralia.gov.au",
+  "docs": []
  },
  {
   "id": "ec-act",
@@ -1559,7 +1640,8 @@
    "ECSBC (buildings) and standards & labelling (star ratings) for appliances and equipment, incl. industrial motors, pumps, transformers (BEE S&L; QCO for motors IS 12615)",
    "Penalties under s.26 – up to ₹10 lakh plus continuing penalty; adjudication by SERC"
   ],
-  "url": "https://beeindia.gov.in"
+  "url": "https://beeindia.gov.in",
+  "docs": []
  },
  {
   "id": "ccts",
@@ -1581,7 +1663,8 @@
    "Links to BRSR (Principle 6 disclosures) and to EU CBAM (verified installation data reusable)"
   ],
   "url": "https://beeindia.gov.in",
-  "note": "Sector coverage, baselines and deadlines change by notification — the statement above reflects reporting up to early Oct 2026; confirm the current GEI notification for your sector."
+  "note": "Sector coverage, baselines and deadlines change by notification — the statement above reflects reporting up to early Oct 2026; confirm the current GEI notification for your sector.",
+  "docs": []
  },
  {
   "id": "brsr",
@@ -1601,7 +1684,8 @@
    "Data must reconcile with statutory registers (OSH Code registers, Form V, HW Form 4) — assurance providers trace to source",
    "Dec 2024/2025 SEBI amendments: 'assessment or assurance' option, green credits disclosure, ESG rating providers (ERP) regulated"
   ],
-  "url": "https://www.sebi.gov.in"
+  "url": "https://www.sebi.gov.in",
+  "docs": []
  },
  {
   "id": "cbam",
@@ -1619,7 +1703,8 @@
    "Exporter actions: map products to CN codes; set up installation-level MRV (direct + indirect emissions, precursors); third-party verification; register installation in the CBAM registry; supply data to EU customers; compare default vs verified cost",
    "Overlaps: CCTS verified reports, ISO 14064, GHG Protocol; free allocation deduction shrinks to 2034"
   ],
-  "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en"
+  "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+  "docs": []
  },
  {
   "id": "ghg-standards",
@@ -1637,7 +1722,8 @@
    "Emission factors: IPCC 2006 defaults for fuels; CEA CO2 Baseline Database for Indian grid; DEFRA/IEA for international",
    "Organisational & operational boundaries; base year recalculation; uncertainty; verification (limited/reasonable assurance)"
   ],
-  "url": "https://ghgprotocol.org"
+  "url": "https://ghgprotocol.org",
+  "docs": []
  },
  {
   "id": "epr-regimes",
@@ -1655,7 +1741,8 @@
    "Industrial site duties: hand over e-waste, batteries, used oil only to registered recyclers/collectors; maintain records; annual returns on portals",
    "Environmental compensation for non-compliance; EPR certificates traded on CPCB portal"
   ],
-  "url": "https://cpcb.nic.in"
+  "url": "https://cpcb.nic.in",
+  "docs": []
  },
  {
   "id": "ecsbc",
@@ -1673,7 +1760,8 @@
    "Design-stage compliance: envelope, HVAC, lighting, renewable share; third-party certification",
    "Interacts with EIA 2006 Item 8 and state green-building incentives"
   ],
-  "url": "https://beeindia.gov.in"
+  "url": "https://beeindia.gov.in",
+  "docs": []
  },
  {
   "id": "ods-rules",
@@ -1692,7 +1780,8 @@
    "Servicing of refrigeration/AC with recovery units; technician training (good practices); record refrigerant purchases/leaks for GHG inventory",
    "Fire suppression: halon banned; alternatives (clean agents) with GWP considerations"
   ],
-  "url": "https://ozonecell.nic.in"
+  "url": "https://ozonecell.nic.in",
+  "docs": []
  },
  {
   "id": "ir-code",
@@ -1710,7 +1799,8 @@
    "Standing orders define duties, shift working, disciplinary action for safety violations",
    "Grievance committee (20+ workers) – channel for safety complaints"
   ],
-  "url": "https://labour.gov.in"
+  "url": "https://labour.gov.in",
+  "docs": []
  },
  {
   "id": "tank-standards",
@@ -1731,7 +1821,8 @@
    "UST: double-wall or lined single-wall with interstitial monitoring, automatic tank gauging, cathodic protection for steel, precision tightness test on installation and periodically, inventory reconciliation; vapour recovery Stage I/II where CPCB mandates",
    "Decommissioning: empty, clean, gas-free, inert fill or removal, soil/groundwater sampling, PESO licence surrender"
   ],
-  "url": "https://peso.gov.in"
+  "url": "https://peso.gov.in",
+  "docs": []
  },
  {
   "id": "static-electricity",
@@ -1751,7 +1842,8 @@
    "Earth resistance for static bonding ≤ 10 Ω (static), overall earthing per IS 3043",
    "Verify bonding clamps before each transfer; interlock bonding with pump start on loading gantries"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "pngrb",
@@ -1770,7 +1862,8 @@
    "Construction contractors: pipeline locating and permit before digging near RoW; ROU markers",
    "CGD/CNG stations: safety distances, gas detection, ESD, dispenser interlocks"
   ],
-  "url": "https://www.pngrb.gov.in"
+  "url": "https://www.pngrb.gov.in",
+  "docs": []
  },
  {
   "id": "toxic-gas-codes",
@@ -1788,7 +1881,8 @@
    "Chlorine: emergency kits A/B/C, scrubber/neutralisation, SCBA, leak detectors, wind sock, 1 ppm TLV / 0.5 ppm (ACGIH); IDLH 10 ppm",
    "Ammonia: 25 ppm TLV, 35 ppm STEL, IDLH 300 ppm; machinery-room ventilation and detection (IIAR 2), ESD valves, water deluge"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "dust-codes",
@@ -1807,7 +1901,8 @@
    "India: Factories Act s.37 (explosive or inflammable dust/gas) continues via state Factories Rules and OSH Code s.6; MSIHC for flammable solids",
    "Kst/Pmax testing of dusts (ASTM E1226) to size vents"
   ],
-  "url": "https://www.nfpa.org/codes-and-standards"
+  "url": "https://www.nfpa.org/codes-and-standards",
+  "docs": []
  },
  {
   "id": "lifting-gear-codes",
@@ -1826,7 +1921,8 @@
    "Discard: wire rope (ISO 4309) – broken wires above table limit (e.g. 6 in one lay length for 6-strand ropes), diameter reduction > 7–10%, kinks, corrosion, birdcaging; chain – stretch > 5%, wear > 10%, cracks; hooks – throat opening increase > 15%, twist > 10°; shackles – pin wear > 10%; webbing slings – cut, label missing, chemical/heat damage",
    "Colour-code quarterly; quarantine failed gear; unique ID traceable to certificate"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "crane-codes",
@@ -1845,7 +1941,8 @@
    "India: 12-monthly competent-person test/examination (Factories Act s.29 via state rules; BOCW rules); certificate in cab; operator competence (HMV for mobile); IS 13367 hand signals",
    "OSHA: operator certification (1926.1427), assembly/disassembly director, power-line Table A clearances, ground conditions, annual & monthly inspections (1926.1412)"
   ],
-  "url": "https://www.osha.gov/cranes-derricks"
+  "url": "https://www.osha.gov/cranes-derricks",
+  "docs": []
  },
  {
   "id": "tools-codes",
@@ -1863,7 +1960,8 @@
   "key": [
    "India: state Factories Rules (grinding wheel safety provisions – verify rule), BOCW rules (tools), CEA regs and IS 732 for portable electrical equipment; check current BIS Quality Control Orders before importing power tools"
   ],
-  "url": "https://www.osha.gov/hand-power-tools"
+  "url": "https://www.osha.gov/hand-power-tools",
+  "docs": []
  },
  {
   "id": "pit-racking",
@@ -1882,7 +1980,8 @@
    "India: forklifts on public roads need RTO registration and HMV/LMV licence; inside factory – authorisation, medical fitness, Factories Act s.7A duty",
    "Dock levellers, wheel chocks, vehicle keys control during loading"
   ],
-  "url": "https://www.osha.gov/powered-industrial-trucks"
+  "url": "https://www.osha.gov/powered-industrial-trucks",
+  "docs": []
  },
  {
   "id": "machinery-codes",
@@ -1901,7 +2000,8 @@
    "Buy-in checklist: declaration of conformity, risk assessment, manuals in English/local language, safety circuit category, guard interlocks",
    "Periodic functional test of safety devices; LOTO for maintenance"
   ],
-  "url": "https://www.iso.org"
+  "url": "https://www.iso.org",
+  "docs": []
  },
  {
   "id": "foundry-codes",
@@ -1922,7 +2022,8 @@
    "Induction furnace: water-cooling monitoring with interlock/alarm, earth-leakage detection on coil, lining wear monitoring; cupola: CO monitoring, charging door interlocks"
   ],
   "url": "https://dgfasli.gov.in",
-  "note": "Coimbatore, Belagavi, Shimoga, Chennai (Ambattur) clusters: DISH/DFBISH run periodic foundry safety drives; expect inspection focus on silica, molten-metal PPE and crane certificates."
+  "note": "Coimbatore, Belagavi, Shimoga, Chennai (Ambattur) clusters: DISH/DFBISH run periodic foundry safety drives; expect inspection focus on silica, molten-metal PPE and crane certificates.",
+  "docs": []
  },
  {
   "id": "state-dangerous-ops",
@@ -1943,7 +2044,8 @@
    "Transition: schedules continue until state OSH rules replace them; OSH Code Ch. XII and Central Rules list similar 'hazardous processes'"
   ],
   "url": "https://dish.tn.gov.in",
-  "note": "Schedule numbers differ between the two states and are amended (TN 2025); cite the current gazetted schedule in medical surveillance SOPs."
+  "note": "Schedule numbers differ between the two states and are amended (TN 2025); cite the current gazetted schedule in medical surveillance SOPs.",
+  "docs": []
  },
  {
   "id": "ht-codes",
@@ -1962,7 +2064,8 @@
    "NFPA 70E approach boundaries (verify Table 130.4): 50–150 V – limited 1.07 m, restricted avoid contact; 151–750 V – limited 1.07 m, restricted 0.3 m; 751 V–15 kV – limited 1.52 m, restricted 0.66 m; arc-flash boundary from study (1.2 cal/cm²)",
    "Electrical accident report to Electrical Inspector within 48 h (Form A); periodic inspection of HT installations (yearly/5-yearly per state CEIG rules)"
   ],
-  "url": "https://cea.nic.in"
+  "url": "https://cea.nic.in",
+  "docs": []
  },
  {
   "id": "battery-solar-codes",
@@ -1981,7 +2084,8 @@
    "MNRE/BIS QCO: modules and inverters must carry BIS certification (ALMM list for government projects)",
    "Rooftop solar installers fall under BOCW/OSH Code work-at-height duties"
   ],
-  "url": "https://www.nfpa.org/codes-and-standards"
+  "url": "https://www.nfpa.org/codes-and-standards",
+  "docs": []
  },
  {
   "id": "fire-systems",
@@ -2000,7 +2104,8 @@
    "Fire water: 2–4 h reserve for industrial risks (TAC/NBC), fire pumps diesel + electric + jockey, hydrant spacing ≤ 45 m (industrial) / 30 m (high-hazard)",
    "Impairment procedure when systems are out of service: notify fire brigade/insurer, fire watch, hot-work ban"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "tunnel-codes",
@@ -2017,7 +2122,8 @@
   "key": [
    "Metro/road tunnel contracts in Bengaluru/Chennai follow Central BOCW rules + employer specifications (BMRCL/CMRL safety manuals)"
   ],
-  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.800"
+  "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.800",
+  "docs": []
  },
  {
   "id": "piling-codes",
@@ -2035,7 +2141,8 @@
    "Working platform (piling mat) design and sign-off before rig entry; daily checks after rain",
    "Sheet piling: vibro/impact hammer exclusion, trench collapse precautions"
   ],
-  "url": "https://www.fps.org.uk"
+  "url": "https://www.fps.org.uk",
+  "docs": []
  },
  {
   "id": "blasting-codes",
@@ -2053,7 +2160,8 @@
    "DGMS PPV limits (mm/s, verify): domestic structures not owned by operator – 5 (< 8 Hz), 10 (8–25 Hz), 15 (> 25 Hz); industrial buildings – 10/20/25; historical monuments – 2/5/10",
    "Misfire wait: electric ≥ 5–30 min, fuse ≥ 30–60 min (per rules); only shot-firer approaches"
   ],
-  "url": "https://peso.gov.in"
+  "url": "https://peso.gov.in",
+  "docs": []
  },
  {
   "id": "water-codes",
@@ -2070,7 +2178,8 @@
   "key": [
    "Jetty, bridge pier and intake works in Chennai/Ennore/Mangaluru/Karwar fall under port and coastal regulations (CRZ clearance)"
   ],
-  "url": "https://dgfasli.gov.in"
+  "url": "https://dgfasli.gov.in",
+  "docs": []
  },
  {
   "id": "lab-codes",
@@ -2087,7 +2196,8 @@
   "key": [
    "QC labs in chemical/pharma plants fall under Factories/OSH Code hazardous-process rules as well"
   ],
-  "url": "https://www.osha.gov/laboratories"
+  "url": "https://www.osha.gov/laboratories",
+  "docs": []
  },
  {
   "id": "bio-codes",
@@ -2105,7 +2215,8 @@
    "Construction camps: ULB/Health Department inspections; fogging, larvicide, drainage",
    "OHC bio-medical waste: authorisation and common facility tie-up"
   ],
-  "url": "https://mohfw.gov.in"
+  "url": "https://mohfw.gov.in",
+  "docs": []
  },
  {
   "id": "security-codes",
@@ -2124,7 +2235,8 @@
    "Night security of cranes/hoists (power isolated, keys controlled); theft of scaffold components creates collapse risk",
    "Media/public communication during incidents via single spokesperson"
   ],
-  "url": "https://www.mha.gov.in"
+  "url": "https://www.mha.gov.in",
+  "docs": []
  },
  {
   "id": "drone-rules",
@@ -2142,7 +2254,8 @@
   "key": [
    "Site rule: exclusion of persons under flight path; battery (Li-Po) charging/storage controls; data privacy of imagery"
   ],
-  "url": "https://digitalsky.dgca.gov.in"
+  "url": "https://digitalsky.dgca.gov.in",
+  "docs": []
  },
  {
   "id": "road-works-codes",
@@ -2161,7 +2274,8 @@
    "Emulsion vs cutback: prefer emulsions to reduce fire risk",
    "Burn kit and burns-centre tie-up for bitumen crews"
   ],
-  "url": "https://www.irc.nic.in"
+  "url": "https://www.irc.nic.in",
+  "docs": []
  },
  {
   "id": "is-17893",
@@ -2181,7 +2295,8 @@
    "Roles: permit issuer, receiver, gas tester, isolation authority; validity, extension, suspension, close-out",
    "Companion standards: OISD-STD-105 (oil & gas), IS 818 / IS 3016 (welding & cutting), IS 11006 (flashback arrestors), IS 5216 (electrical work), IS 11972 (sewer/confined space), IS 10245 (breathing apparatus)"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "tn-cimah",
@@ -2200,7 +2315,8 @@
    "Third-party safety audit periodicity and auditor recognition by DISH",
    "Information to the public; mock drills with the District Crisis Group"
   ],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "ka-mah-rules",
@@ -2218,7 +2334,8 @@
   "key": [
    "Safety report updates on modification; audit findings closure reported to the Chief Inspector"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-bocw-amend-2024",
@@ -2235,7 +2352,8 @@
   "key": [
    "Read with Karnataka BOCW Rules 2006 technical chapters and OSH Code Ch. XIII"
   ],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "ka-boiler-rules-1982",
@@ -2249,7 +2367,8 @@
   "s": "In force",
   "sum": "State boiler rules (registration, inspection fees, attendants, repairs) under the Boilers Act — now read with the Boilers Act 2025 and Indian Boiler Regulations 1950.",
   "key": [],
-  "url": "https://labour.karnataka.gov.in"
+  "url": "https://labour.karnataka.gov.in",
+  "docs": []
  },
  {
   "id": "tn-boiler-rules",
@@ -2263,7 +2382,8 @@
   "s": "In force",
   "sum": "State boiler rules administered by the Directorate of Boilers (registration, annual inspection, boiler attendants/BOE examinations, repairers) under the Boilers Act 2025 / IBR 1950.",
   "key": [],
-  "url": "https://dish.tn.gov.in"
+  "url": "https://dish.tn.gov.in",
+  "docs": []
  },
  {
   "id": "bis-ptw-hygiene",
@@ -2284,7 +2404,8 @@
    "IS 15652 insulating mats replace IS 5424 — required in front of all LT/HT panels",
    "IS 7194 supports hearing-conservation programmes (85 dB(A) action level)"
   ],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "bis-construction-2",
@@ -2301,7 +2422,8 @@
   "s": "In force",
   "sum": "Additional Indian Standards referenced by the state matrix: SP 70 (2001) BIS Handbook on Construction Safety Practices; formwork/centering, piling, bitumen, barriers, nets, breathing apparatus, flashback arrestors, machinery design, abrasive wheels and wire-rope slings.",
   "key": [],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  },
  {
   "id": "bis-ppe-2",
@@ -2317,6 +2439,7 @@
   "s": "In force",
   "sum": "Helmets; safety footwear; eye protectors; mechanical gloves; electrical insulating gloves; hearing protectors; filtering half masks; gas filters and combined cartridges; high-visibility clothing; heat & flame protective clothing; emergency showers and eyewash stations.",
   "key": [],
-  "url": "https://www.bis.gov.in"
+  "url": "https://www.bis.gov.in",
+  "docs": []
  }
 ]
