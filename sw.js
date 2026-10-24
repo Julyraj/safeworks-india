@@ -1,5 +1,5 @@
 /* SafeWorks India service worker – offline-first app shell. CACHE_VERSION is stamped by build.py. */
-const CACHE = "safeworks-371ab7d5cc";
+const CACHE = "safeworks-9fa3563e9a";
 const CORE = [
   "./",
   "./index.html",

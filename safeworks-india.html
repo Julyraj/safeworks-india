@@ -1337,8 +1337,3155 @@ const EMERGENCY4 = [
 {g:"Portals & circles (TN / KA)",items:[["TN – DISH online / OCMMS (TNPCB)","dish.tn.gov.in · tnpcb.gov.in"],["KA – e-Surakshate (FBISH) / XGN (KSPCB)","labour.karnataka.gov.in · kspcb.karnataka.gov.in"],["PESO Southern Circle (Chennai) – Tamil Nadu","peso.gov.in"],["PESO Sub-circle Mangaluru / Bengaluru – Karnataka","peso.gov.in"],["AERB e-LORA","elora.aerb.gov.in"],["TSDF Tamil Nadu – Gummidipoondi / Virudhunagar","TNPCB-authorised"],["TSDF Karnataka – Dobbaspet / Harohalli","KSPCB-authorised"],["Directorate of Boilers Tamil Nadu / Boiler Inspectorate FBISH Karnataka","state portals"]]}
 ];
 
-/* Official document links per regulation id — filled from research; see files/README.md */
-const DOCS = {};
+/* Official document links per regulation id (n name, u link, k pdf|page, a free|free-login|paid,
+   share = may we host our own copy: gazette|act|public-domain|open-licence|no|unknown — see files/README.md;
+   c = our own copy in files/, v:false = could not be opened from the research tool). Checked weekly by tools/check_links.py. */
+const DOCS = {
+ "osh-code": [
+  {
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 37 of 2020, text 'as on 28 Nov 2025' (in force 21 Nov 2025)."
+  },
+  {
+   "n": "OSH Code, 2020 – India Code act page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/22041",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official India Code record; rules/notifications may be added here later."
+  }
+ ],
+ "osh-central-rules": [
+  {
+   "n": "Gazette of India (eGazette) – search for G.S.R. 345(E), 8 May 2026",
+   "u": "https://egazette.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage only (site blocks automated fetch). Search eGazette for Gazette ID CG-DL-E-09052026-272379 / G.S.R. 345(E) dated 8 May 2026 (Extraordinary No. 311). No direct official PDF link could be verif"
+  },
+  {
+   "n": "Ministry of Labour & Employment – homepage",
+   "u": "https://labour.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage last resort; site is script-rendered and could not be read automatically. Look under Labour Codes / Rules."
+  }
+ ],
+ "factories-act": [
+  {
+   "n": "Factories Act, 1948 – full text PDF with amendments (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/6323/1/factories_act_1948.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act 63 of 1948; footnotes include state amendments to 2016. Largely subsumed into the OSH Code, 2020 from 21 Nov 2025; state Factories Rules (Karnataka 1969 / TN 1950) not found as full offici"
+  },
+  {
+   "n": "Factories Act, 1948 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/1530?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act"
+  }
+ ],
+ "bocw-act": [
+  {
+   "n": "BOCW Act, 1996 + Central Rules, 1998 – PDF (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/9608/1/building-and-other-construction-workers-act-1996.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 27 of 1996 followed by the BOCW (RE&CS) Central Rules, 1998 (G.S.R. 689(E)). Subsumed into OSH Code from 21 Nov 2025."
+  },
+  {
+   "n": "BOCW Act, 1996 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/1989?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act"
+  },
+  {
+   "n": "Tamil Nadu BOCW (RE&CS) Rules, 2006 – PDF (TN Govt)",
+   "u": "https://cms.tn.gov.in/cms_migrated/document/rules_regulations/labemp_rules_2006.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "State rules text as published by Labour & Employment Dept, Govt of Tamil Nadu. No official full-text PDF of the Karnataka BOCW Rules, 2006 was found."
+  }
+ ],
+ "ss-code": [
+  {
+   "n": "Code on Social Security, 2020 – updated PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/16823/1/aA2020-36.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 36 of 2020, text 'as on 21 Nov 2025' with commencement footnotes."
+  },
+  {
+   "n": "Code on Social Security, 2020 – India Code act page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/16823",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Social Security (Central) Rules, 2026 were notified 8 May 2026 in the Gazette (egazette.gov.in); no verifiable official direct link found."
+  }
+ ],
+ "contract-labour": [
+  {
+   "n": "Contract Labour (R&A) Act, 1970 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/1467?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 1970. Subsumed into OSH Code from 21 Nov 2025."
+  },
+  {
+   "n": "Contract Labour (R&A) Central Rules, 1971 – PDF (MoLE)",
+   "u": "https://labour.gov.in/sites/default/files/thecontractlabour1970.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 191 of 1 Feb 1971 (original text; later amendments e.g. G.S.R. 1594(E)/2017 not consolidated)."
+  },
+  {
+   "n": "Inter-State Migrant Workmen Act, 1979 – PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/15984/1/34.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act 30 of 1979 text (filed on India Code under a UT record). Subsumed into OSH Code from 21 Nov 2025."
+  }
+ ],
+ "ep-act": [
+  {
+   "n": "Environment (Protection) Act, 1986 – PDF (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2017/06/eprotect_act_1986.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Scanned image PDF (no text layer), listed on MoEFCC's Environment Protection page as the Act 'amended 1991'."
+  },
+  {
+   "n": "Environment (Protection) Rules, 1986 – PDF (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2018/03/THE_ENVIRONMENT.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "S.O. 844(E) of 19 Nov 1986; text includes amendments only up to Dec 1998 (later schedule amendments not consolidated)."
+  },
+  {
+   "n": "MoEFCC – Environment Protection acts & rules page",
+   "u": "https://moef.gov.in/index.php/environment-protection",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official listing page with links to both PDFs."
+  },
+  {
+   "n": "EP Act, 1986 – India Code page (lists rules made under it)",
+   "u": "https://www.indiacode.nic.in/handle/123456789/4316",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Lists subordinate rules (EP Rules, MSIHC, HOW Rules 2016, C&D Rules 2016 etc.)."
+  }
+ ],
+ "msihc": [
+  {
+   "n": "MSIHC Rules, 1989 – PDF (MoEFCC Parivesh)",
+   "u": "https://cpc.parivesh.nic.in/writereaddata/ENV/HSM/note27.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "S.O. 966(E) of 27 Nov 1989 – original text; amendments of 1994 and 2000 are not consolidated."
+  },
+  {
+   "n": "EP Act, 1986 – India Code page listing MSIHC Rules, 1989",
+   "u": "https://www.indiacode.nic.in/handle/123456789/4316",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "MSIHC Rules listed under subordinate legislation of the EP Act."
+  }
+ ],
+ "chem-accident-rules": [
+  {
+   "n": "Chemical Accidents (EPPR) Rules, 1996 – PDF (MoEFCC Parivesh)",
+   "u": "https://cpc.parivesh.nic.in/writereaddata/ENV/HSM/rule3.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 347(E) of 1 Aug 1996 – original text, no amendments consolidated."
+  },
+  {
+   "n": "MoEFCC – Hazardous Substances Mgmt: accident reporting & compliance",
+   "u": "https://moef.gov.in/uploads/2017/08/hsmd_met_0.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Supporting MoEFCC document (accident reporting procedure/proforma under MSIHC & CA(EPPR) Rules; 2003-04 status)."
+  }
+ ],
+ "how-rules": [
+  {
+   "n": "MoEFCC – Rules & Regulations page (HOW Rules 2016 amendments)",
+   "u": "https://moef.gov.in/index.php/rules-regulations-3",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official listing of HOW Rules amendment notifications (2020, 2021, 2023, 2024) as PDFs; the principal 2016 notification G.S.R. 395(E) of 4 Apr 2016 is not listed there."
+  },
+  {
+   "n": "HOW (M&TM) Amendment Rules, 2024 – G.S.R. 177(E) PDF (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2024/03/GSR-177(E)-%5B12032024%5D-HOWastes-(Management-and-Transboundary-Movement)-Amendment-Rules-2024.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Gazette notification of 12 Mar 2024; cites principal rules G.S.R. 395(E), 4 Apr 2016."
+  },
+  {
+   "n": "TNPCB – Hazardous waste rules & amendment list",
+   "u": "https://tnpcb.gov.in/hazardousWaste.php",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Tamil Nadu PCB page listing the 2016 Rules and amendments 1–10 (to 12 Nov 2024)."
+  },
+  {
+   "n": "EP Act, 1986 – India Code page listing HOW Rules, 2016",
+   "u": "https://www.indiacode.nic.in/handle/123456789/4316",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "HOW Rules 2016 (04-04-2016) listed as subordinate legislation."
+  }
+ ],
+ "air-water": [
+  {
+   "n": "MoEFCC – Pollution Control division page",
+   "u": "https://moef.gov.in/index.php/pollution",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "No verifiable official direct link to the Water Act 1974 or Air Act 1981 text was found in this pass; this division page is the nearest official page. Check India Code (indiacode.nic.in) for Act 6 of "
+  },
+  {
+   "n": "Central Pollution Control Board – homepage",
+   "u": "https://cpcb.nic.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Homepage last resort (site content is script-rendered; Acts are under its Rules/Acts menus)."
+  }
+ ],
+ "noise-rules": [
+  {
+   "n": "Central Pollution Control Board – homepage",
+   "u": "https://cpcb.nic.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage last resort: no verifiable official direct link to the Noise Pollution (Regulation and Control) Rules, 2000 (S.O. 123(E), 14 Feb 2000) was found in this pass."
+  }
+ ],
+ "cd-waste-2025": [
+  {
+   "n": "MoEFCC – Waste Management division page",
+   "u": "https://moef.gov.in/index.php/waste-management",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Nearest official page; no verifiable official link to the Environment (Construction and Demolition) Waste Management Rules, 2025 notification was found in this pass (look it up on egazette.gov.in)."
+  }
+ ],
+ "eia-2006": [
+  {
+   "n": "MoEFCC – Environmental Impact Assessment (EIA) page",
+   "u": "https://moef.gov.in/index.php/environmental-impact-assessment-eia",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official EIA division page (no direct PDF of S.O. 1533(E), 14 Sep 2006 found)."
+  },
+  {
+   "n": "MoEFCC Environment Clearance – Legal Repository (EIA amendments list)",
+   "u": "https://environmentclearance.nic.in/report/Legal_Repository.html",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official index of EIA Notification 2006 amendments and related notifications (2014–2023) with S.O. numbers and dates; no download links visible."
+  },
+  {
+   "n": "PARIVESH portal – homepage",
+   "u": "https://parivesh.nic.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage (script-rendered); environmental clearance applications and EIA documents."
+  }
+ ],
+ "petroleum": [
+  {
+   "n": "PESO – Statutory menu: Petroleum Act 1934 & Petroleum Rules 2002",
+   "u": "https://www.peso.gov.in/en/node/1028",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official PESO page whose Statutory menu links the Petroleum Act, 1934, Petroleum Rules, 2002 and gazette amendments (e.g. Petroleum (Amendment) Rules 2018, 2019, 2024). Direct PDF URLs could not be ex"
+  }
+ ],
+ "explosives": [
+  {
+   "n": "PESO – Statutory menu: Explosives Act/Rules 2008, AN Rules 2012",
+   "u": "https://www.peso.gov.in/en/node/1028",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official PESO page whose Statutory menu links the Explosives Act 1884, Explosives Rules 2008, Ammonium Nitrate Rules 2012 and amendments up to 2026. Direct PDF URLs could not be extracted. The Act its"
+  },
+  {
+   "n": "DGMS – legislation downloads incl. Explosives Rules, 2008",
+   "u": "https://dgms.gov.in/UserView/index?mid=1306",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "DGMS 'Mines Safety & Allied Legislation' page offers a download of the Explosives Rules, 2008 (740 KB)."
+  }
+ ],
+ "gas-cylinders": [
+  {
+   "n": "PESO – Statutory menu: Gas Cylinders Rules 2016 & SMPV(U) Rules 2016",
+   "u": "https://www.peso.gov.in/en/node/1028",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official PESO page whose Statutory menu links the Gas Cylinders Rules 2016, SMPV(U) Rules 2016 and gazette amendments (up to 2026, incl. GCR (Second Amendment) Rules 2026, SMPV(U) (Amendment) Rules 20"
+  }
+ ],
+ "boilers-2025": [
+  {
+   "n": "Boilers Act, 2025 – PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 12 of 2025 (Ministry of Commerce & Industry), enacted 4 Apr 2025, in force 1 May 2025; text current as of 28 May 2025. Replaces the Boilers Act, 1923."
+  },
+  {
+   "n": "Boilers Act, 2025 – India Code act page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/21395",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "No subordinate legislation listed yet. No verifiable official link to the Indian Boiler Regulations, 1950 (Central Boilers Board) was found in this pass."
+  }
+ ],
+ "electricity": [
+  {
+   "n": "CEA (Safety & Electric Supply) Regulations, 2023 – Gazette PDF (CEA)",
+   "u": "https://cea.nic.in/api/regulation-report/view/hi/a9139e01-ca0c-4a07-8e3d-4937602c5f8f",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Gazette of India Extraordinary No. 377, 12 Jun 2023 (No. CEA-PS-16/1/2021, 8 Jun 2023). This file is the Hindi text; an English version may be available via the site's English toggle."
+  },
+  {
+   "n": "CEA Safety & Electric Supply Amendment Regulations, 2026 – PDF (CEA)",
+   "u": "https://cea.nic.in/api/regulation-report/view/hi/5fb81b1a-9b7f-4b1a-a54d-813e741788fa",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Listed on CEA's official page as the 2026 amendment; scanned PDF (no text layer)."
+  },
+  {
+   "n": "CEA – Safety & Electric Supply regulations listing",
+   "u": "https://cea.nic.in/regulations-subcategory/7db8702f-e3c1-47da-b7f2-3f1ada6586bc?lang=hi",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official listing with download links for the 2023 Regulations and 2026 amendment."
+  },
+  {
+   "n": "Electricity Act, 2003 – India Code (homepage, search for Act 36 of 2003)",
+   "u": "https://www.indiacode.nic.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Homepage last resort: no verifiable direct official link to the Electricity Act text was found in this pass."
+  }
+ ],
+ "mines": [
+  {
+   "n": "DGMS – Mines Safety & Allied Legislation (downloads)",
+   "u": "https://dgms.gov.in/UserView/index?mid=1306",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official DGMS page with download links for the Mines Act 1952, Mines Rules 1955, Metalliferous Mines Regulations 1961, Coal Mines Regulations 2017 (also Oil Mines Regs 2017, Mine Rescue Rules, Explosi"
+  }
+ ],
+ "pli-act": [
+  {
+   "n": "Public Liability Insurance Act, 1991 (amended 1992) – PDF (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2018/03/6.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 6 of 1991 with 1992 amendment footnotes."
+  },
+  {
+   "n": "Public Liability Insurance Rules, 1991 – PDF (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2018/03/330.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "S.O. 330(E), 15 May 1991 (with G.S.R. 596(E)/1991 insertions)."
+  },
+  {
+   "n": "MoEFCC – Public Liability Insurance acts, rules & notifications",
+   "u": "https://moef.gov.in/index.php/public-liability-insurance",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official listing incl. S.O. 227(E)/1992 list of hazardous substances and later notifications."
+  }
+ ],
+ "dm-act": [
+  {
+   "n": "Disaster Management Act, 2005 – consolidated text (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/2045/1/A200553.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Updated as on 15 May 2026; includes DM (Amendment) Act 2025 (10 of 2025)."
+  },
+  {
+   "n": "Disaster Management Act, 2005 – India Code act page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/2045",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Act page with PDF download, amendment and subordinate legislation links."
+  },
+  {
+   "n": "NDMA Guidelines list – Chemical Disasters 2007, Heat Wave, Lightning",
+   "u": "https://ndma.gov.in/Governance/Guidelines",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Listing page with download buttons: Guidelines on Chemical Disasters (Apr 2007), Heat Wave Action Plan (Oct 2019), Thunderstorm & Lightning (Mar 2019), Fire Services scaling (2012). Direct PDF links n"
+  }
+ ],
+ "nbc-2016": [
+  {
+   "n": "SP 7:2026 National Building Construction Standards – BIS standard page",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/NjY4ODk=",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "NBC 2016 (SP 7:2016) was WITHDRAWN on 30 Apr 2026 and replaced by SP 7:2026 'National Building Construction Standards 2026'. Page links to BIS sales/download portal. Access: NBC has historically been "
+  },
+  {
+   "n": "SP 7:2026 – BIS standards sales/download portal (BSB Edge)",
+   "u": "https://standardsbis.bsbedge.com/search_redirect.aspx?id=66889",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "v": false,
+   "note": "Link taken from the official BIS 'Know your standards' page; site blocks automated fetch (robots). Login required."
+  },
+  {
+   "n": "Gazette notice: SP 7:2026 established, NBC 2016 withdrawn (30 Apr 2026)",
+   "u": "https://egazette.gov.in/WriteReadData/2026/272177.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "BIS notification, Gazette of India Extraordinary Part III Sec 4, No. 299, 30 Apr 2026."
+  },
+  {
+   "n": "SP 7:2016 National Building Code of India 2016 – BIS page (withdrawn)",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MTc3NDU=",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Shows status Withdrawn. Older NBC info page: https://bis.gov.in/others/national-building-code/ (print edition Rs 13,760)."
+  }
+ ],
+ "bis-construction": [
+  {
+   "n": "BIS 'Know Your Standard' – search any IS by number/keyword",
+   "u": "https://www.bis.gov.in/know-your-standard/?lang=en",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official BIS search; each standard page links to free download on BIS portal (standardsbis.bsbedge.com) after free registration. Standards published after 01 Oct 2025 are on https://standards.bis.gov."
+  },
+  {
+   "n": "BIS list: 'Safety in Construction' codes (IS 3696, 3764, 4014, 4081…)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/dgdashboard/published/sub_sub_grp_stn_list/92",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official BIS catalogue of 22 construction-safety codes incl. SP 70 handbook; IS 4130, 7205, 13367, 14489, 3786 are in other groups – use Know Your Standard search."
+  },
+  {
+   "n": "IS 3696 (Part 1):1987 Scaffolds – BIS standard page",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MTAyODk=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Download via https://standardsbis.bsbedge.com/search_redirect.aspx?id=10289 (login)."
+  },
+  {
+   "n": "IS 3764:1992 Code of safety for excavation work – BIS page",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MTAzNTk=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Download via https://standardsbis.bsbedge.com/search_redirect.aspx?id=10359 (login). IS 4081:2013 blasting page: https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standar"
+  }
+ ],
+ "bis-ppe": [
+  {
+   "n": "BIS 'Know Your Standard' – search any IS by number/keyword",
+   "u": "https://www.bis.gov.in/know-your-standard/?lang=en",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official BIS search; each standard page links to free download on BIS portal (standardsbis.bsbedge.com) after free registration. Standards published after 01 Oct 2025 are on https://standards.bis.gov."
+  },
+  {
+   "n": "BIS standards download portal (free for Indian Standards, login)",
+   "u": "https://standardsbis.bsbedge.com/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official BIS sales/download portal (BIS & BSB Edge); 'Indigenous Indian Standards can be downloaded free of cost' after registration."
+  },
+  {
+   "n": "IS 2925:1984 Industrial safety helmets (QCO) – BIS page",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/OTQzOQ==",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Under QCO – mandatory certification (implemented 23-04-2024). Download via https://standardsbis.bsbedge.com/search_redirect.aspx?id=9439"
+  },
+  {
+   "n": "IS 3521 (Part 1):2021 Full body harness – BIS page",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MjU4OTk=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Fourth revision. IS 15298 (Part 2):2011 safety footwear is shown WITHDRAWN on BIS – check current edition via Know Your Standard."
+  }
+ ],
+ "oisd": [
+  {
+   "n": "OISD – official website (homepage)",
+   "u": "https://www.oisd.gov.in",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Homepage only – no public standards list or download link could be found or fetched. OISD standards are obtained from OISD (copyrighted; not freely downloadable as far as could be verified). Avoid Scr"
+  },
+  {
+   "n": "MoPNG – OISD page (121 standards; 21 mandatory under Petroleum Rules etc.)",
+   "u": "https://mopng.gov.in/refining/oil-industry-safety-directorate",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Explains which OISD standards are statutory via Petroleum Rules 2002, Gas Cylinder Rules 2016, SMPV(U) Rules 2016, Oil Mines Regulations 2017."
+  }
+ ],
+ "radiation": [
+  {
+   "n": "Atomic Energy (Radiation Protection) Rules, 2004 – GSR 303 (AERB)",
+   "u": "https://mgw3.aerb.gov.in/images/PDF/RPR2004.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Gazette text G.S.R. 303 dated 25 Aug 2004, hosted on AERB's site."
+  },
+  {
+   "n": "AERB Safety Code AERB/RF-IR/SC-1 (Rev.1) Industrial Radiography (2016)",
+   "u": "https://mgw3.aerb.gov.in/images/PDF/image/SafetyCodeonIndustrialRadiography.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Read with AERB amendment of 2 Aug 2019 on radiographer qualifications: https://mgw3.aerb.gov.in/storage/uploads/documents/regdoc0doqn.pdf"
+  },
+  {
+   "n": "AERB Safety Guide AERB/RF/SG/IR – Industrial Radiography (Dec 2025)",
+   "u": "https://www.aerb.gov.in/storage/uploads/documents/regdoc2zV1I.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Newer AERB safety guide (Dec 2025)."
+  },
+  {
+   "n": "AERB codes & guides – Industrial Radiography (listing)",
+   "u": "https://aerb.gov.in/english/publication/codes-guides/radiation-facility/industrial-radiography",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official AERB listing of industrial radiography regulatory documents."
+  }
+ ],
+ "child-labour": [
+  {
+   "n": "Child & Adolescent Labour Act (amended 2016) + Rules 1988 – TN Labour",
+   "u": "https://labour.tn.gov.in/pdf/Child-Labour-Act-Book.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Official TN Labour Department compilation: Act as amended by Act 35 of 2016 (w.e.f. 1 Sep 2016), Child Labour Rules 1988 (GSR 847(E)) and Children (Pledging of Labour) Act 1933. Does not include the 2"
+  },
+  {
+   "n": "Child & Adolescent Labour Act, 1986 – India Code act page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/1848",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act 61 of 1986. India Code's PDF for this act (bitstream 11220) still shows the pre-2016 text, so prefer the TN compilation above for the amended text."
+  }
+ ],
+ "mv-act": [
+  {
+   "n": "Motor Vehicles Act, 1988 – consolidated text (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/1798/1/A1988-59.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "As on 21 May 2025; includes MV (Amendment) Act 2019 and Jan Vishwas Act 2023."
+  },
+  {
+   "n": "Motor Vehicles Act – India Code page (incl. CMVR 1989 notifications)",
+   "u": "https://www.indiacode.nic.in/handle/123456789/1798",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Act page on India Code with PDF download and subordinate legislation index (CMV Rules 1989 amendments, CEV-related notifications)."
+  },
+  {
+   "n": "MoRTH – official website (CMV Rules 1989 & notifications)",
+   "u": "https://morth.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage only for CMV Rules 1989 – no direct link to a consolidated CMVR text could be found (site is script-rendered; web search budget exhausted). Individual CMVR amendment notifications are under m"
+  }
+ ],
+ "ghs-india": [
+  {
+   "n": "MoEFCC – Hazardous Substances Management (MSIHC Rules 1989 section)",
+   "u": "https://moef.gov.in/hazardous-substances-management-hsm",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official HSM division page; mentions MSIHC Rules 1989 and Chemical Accidents (EPPR) Rules 1996 but no direct PDF link was exposed. Rules list: https://moef.gov.in/rules-regulations-3 (MSIHC not visibl"
+  }
+ ],
+ "dgfasli-policy": [
+  {
+   "n": "National Policy on Safety, Health & Environment at Workplace – DGFASLI",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65004ef9af85a4.07220781.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "English text of the MoLE national OSH policy (2009) hosted by DGFASLI/DGOSH."
+  },
+  {
+   "n": "Model Rules under Factories Act, 1948 – DGFASLI (to 15-12-2020)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//6500599d9c0300.86614403.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Model rules (reference for state Factories Rules); marked 'for official use only'."
+  },
+  {
+   "n": "Dock Workers (Safety, Health & Welfare) Regulations, 1990 – DGFASLI",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//650059cc2d72e4.67466890.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 80(E), 16 Feb 1990."
+  },
+  {
+   "n": "DGFASLI – OSH laws & other Acts page (Factories Act, MAH Rules, BOCW…)",
+   "u": "https://dgfasli.gov.in/other-acts",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Lists PDFs of Factories Act, Model Rules, Dock Workers Act/Rules/Regulations, OSH Code 2020, MAH Control Rules 1997, BOCW Act & Central Rules 1998. National Policy page: https://dgfasli.gov.in/nationa"
+  }
+ ],
+ "shram-suvidha": [
+  {
+   "n": "Shram Suvidha Portal – MoLE (homepage)",
+   "u": "https://shramsuvidha.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage only – site blocks automated fetching; registration (Form I), LIN and unified annual return are filed here after login. No user manual/notification URL could be verified."
+  }
+ ],
+ "ka-factories-rules": [
+  {
+   "n": "Karnataka Labour Department / DFBISH – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Look under Factories, Boilers"
+  }
+ ],
+ "ka-safety-audit": [
+  {
+   "n": "Karnataka Labour Department / DFBISH – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Factories (Safety A"
+  }
+ ],
+ "ka-factories-amend-2023": [
+  {
+   "n": "Karnataka Labour Department – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Factories (Karnataka Amendmen"
+  }
+ ],
+ "ka-osh-rules": [
+  {
+   "n": "Karnataka Labour Department – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Draft OSH&WC (Karnataka) Rule"
+  }
+ ],
+ "ka-bocw-rules": [
+  {
+   "n": "Karnataka Labour Department – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka BOCW Rules 2006 are"
+  }
+ ],
+ "ka-shops": [
+  {
+   "n": "Karnataka Labour Department – official website (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Shops & Commercial "
+  }
+ ],
+ "ka-fire": [
+  {
+   "n": "Karnataka State Fire & Emergency Services – official website (homepage)",
+   "u": "https://ksfes.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Fire Force Act 1964"
+  }
+ ],
+ "ka-lifts": [
+  {
+   "n": "Chief Electrical Inspector to Govt, Karnataka – official website (homepage)",
+   "u": "https://ceig.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Lifts, Escalators &"
+  }
+ ],
+ "kspcb": [
+  {
+   "n": "Karnataka State Pollution Control Board – official website (homepage)",
+   "u": "https://kspcb.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Consent (CTE/CTO) guidelines,"
+  }
+ ],
+ "ka-building": [
+  {
+   "n": "BBMP (Bruhat Bengaluru Mahanagara Palike) – official website (homepage)",
+   "u": "https://bbmp.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage only – loads but no bye-law/Town Planning document links were exposed; web-search budget ran out. KTCP Act 1961 and Model Building Bye-laws are published by Karnataka Urban Development Dept /"
+  }
+ ],
+ "ka-groundwater": [
+  {
+   "n": "Karnataka Ground Water Act, 2011 (Act 25 of 2011) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/7913/1/25of2011%28e%29.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Original enacted text (no amendments shown)."
+  },
+  {
+   "n": "Karnataka Ground Water Act, 2011 – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/7913",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "India Code blocks automated fetch; URL from official search listing. Check here for amendments/notifications."
+  },
+  {
+   "n": "Karnataka Ground Water (Amendment) Bill, 2025 – Karnataka Legislature PDF",
+   "u": "https://kla.kar.nic.in/council/house/bills/156/43E.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "LA Bill No. 43 of 2025 amending Act 25 of 2011; a bill, check whether enacted/notified."
+  }
+ ],
+ "ka-labour-welfare": [
+  {
+   "n": "Karnataka Labour Welfare Fund Act, 1965 – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/7601",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Page loads (via locale variant) and shows the Act record; PDF sits in the page's Files section, which loads by script and could not be read automatically."
+  },
+  {
+   "n": "KA Labour Welfare Fund (Amendment) Bill, 2024 – rates – KA Legislature PDF",
+   "u": "https://kla.kar.nic.in/council/house/bills/154/44.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "LA Bill 44 of 2024: contribution ₹50/₹100/₹50 (employee/employer/State). Bill text as passed by Assembly."
+  },
+  {
+   "n": "KA Labour Welfare Fund (Amendment) Bill, 2025 – KA Legislature PDF",
+   "u": "https://kla.kar.nic.in/council/house/bills/157/03eng.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "LA Bill 68 of 2025: coverage threshold 10+ persons; online payment. Bill text; check notification as Act."
+  },
+  {
+   "n": "KA Ind. Establishments (Nat. & Festival Holidays) Act, 1963 – India Code",
+   "u": "https://www.indiacode.nic.in/handle/123456789/7599",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Page loads and shows the Act record; PDF in the Files section (loaded by script)."
+  }
+ ],
+ "ka-boilers": [
+  {
+   "n": "Boilers Act, 2025 (Act 12 of 2025) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act in force 1 May 2025; replaces Boilers Act 1923. States implement it through their boiler inspectorates."
+  },
+  {
+   "n": "Boilers Act, 2025 – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/21395",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Check here for rules/regulations under the Act. New Indian Boiler Regulations, 2026 (DPIIT, issued 1 Oct 2026, in force 6 Oct 2026) – no official PDF located yet; check DPIIT / eGazette."
+  },
+  {
+   "n": "Karnataka Labour Department – homepage (DFBISH is under it)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage only (URL from the entry); Karnataka govt sites block automated fetch. DFBISH has its own site (factories.karnataka.gov.in, not verifiable). No official online copy of the Karnataka Boiler Ru"
+  }
+ ],
+ "tn-factories-rules": [
+  {
+   "n": "Factories Act 1948 (Tamil Nadu) with TN rules – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/13200",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Page loads (TN Labour & Employment Dept record for the Factories Act); search index lists TN Factories Rules here but the file tables load by script. No official consolidated PDF of the TN Factories R"
+  },
+  {
+   "n": "TN Factories Rules – Schedule XX asbestos amendment (2025) – DISH PDF",
+   "u": "https://www.dish.tn.gov.in/assets/pdf/Schedule%20XX%20-%20Handling%20and%20Processing%20of%20asbestos%20-%20Amendment.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "From search result on the official DISH domain; site blocked automated fetch."
+  },
+  {
+   "n": "TN Factories Rules – first-aid training amdt (SRO A-27/2022) – DISH PDF",
+   "u": "https://dish.tn.gov.in/assets/pdf/Amendment%20of%20Rules%20for%20first%20aid%20training.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.O. Ms. 162 LWSD, 6 Dec 2022; amends Rule 63-B and Rule 95 Schedules XVII, XXIV."
+  },
+  {
+   "n": "TN Factories Rules – licence renewal period amendment – DISH PDF",
+   "u": "https://www.dish.tn.gov.in/assets/pdf/Amendment%20of%20Rule%20for%20number%20of%20years%20of%20License%20Renewal.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "From search result on the official DISH domain; site blocked automated fetch."
+  }
+ ],
+ "tn-factories-amend-2023": [
+  {
+   "n": "OSH Code, 2020 – consolidated text (s.25 working hours) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Governs daily hours now that the OSH Code is in force (21 Nov 2025). The Factories (TN Amendment) Bill 2023 (12-h shifts) was put on hold/withdrawn by the State in May 2023; no official copy of the Bi"
+  },
+  {
+   "n": "Factories Act 1948 as applied in Tamil Nadu – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/13200",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Record for TN state amendments/rules under the Factories Act; check here for any TN amendment notified."
+  }
+ ],
+ "tn-osh-rules": [
+  {
+   "n": "OSH Code, 2020 – consolidated text – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Parent Code (in force 21 Nov 2025); sections apply directly while TN rules are pending."
+  },
+  {
+   "n": "TN Labour Dept – OSH Code page (Commissioner of Labour)",
+   "u": "https://labour.tn.gov.in/conditions-code.php",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official TN page for the OSH Code; no TN OSH Rules (draft or final) are posted there yet. Draft OSH (TN) Rules 2022 (TN Gazette Extraordinary No. 216) – no official online copy found."
+  },
+  {
+   "n": "DISH Tamil Nadu – homepage (notifications, online services)",
+   "u": "https://dish.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage; track DISH notices for TN OSH Rules notification."
+  }
+ ],
+ "tn-bocw-rules": [
+  {
+   "n": "OSH Code, 2020 (subsumes BOCW Act 1996) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "BOCW Act 1996 is repealed by the OSH Code; TN BOCW Rules 2006 continue under the savings clause until TN OSH Rules are final. No official online copy of the TN BOCW Rules 2006 or SRO A-16/2025 was fou"
+  },
+  {
+   "n": "TN Construction Workers Welfare Board G.O.s – TN Labour Dept",
+   "u": "https://labour.tn.gov.in/welfare-go.php",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official list of welfare-board G.O.s (benefits, registration, board constitution); not the safety rules."
+  },
+  {
+   "n": "TN Unorganised/Construction Workers Welfare Boards portal",
+   "u": "https://tnuwwb.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Worker registration and benefit claims (homepage)."
+  }
+ ],
+ "tn-shops": [
+  {
+   "n": "TN Shops and Establishments Act, 1947 – TN Labour Dept page",
+   "u": "https://labour.tn.gov.in/tn-shops-and-establishments-act-1947.php",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official summary page only; no official full-text PDF of the Act/Rules (or the 2019 women night-work G.O.) was found online."
+  },
+  {
+   "n": "TN Catering Establishments Act, 1958 – TN Labour Dept page",
+   "u": "https://labour.tn.gov.in/tn-catering-establishments-act-1958.php",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official summary page only; no full-text PDF found."
+  },
+  {
+   "n": "TN Labour Dept – State Acts listing",
+   "u": "https://labour.tn.gov.in/stateact.php",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official list of State labour Acts administered by the Commissioner of Labour."
+  }
+ ],
+ "tn-fire": [
+  {
+   "n": "Tamil Nadu Fire and Rescue Services – homepage (NOC / fire licence)",
+   "u": "https://tnfrs.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage only: lists NOC for planning permission, completion/fire licence and renewal services. No official online copy of the TN Fire Service Act 1985 was found."
+  }
+ ],
+ "tn-cdbr": [
+  {
+   "n": "TN Housing & Urban Development single-window planning portal",
+   "u": "https://onlineppa.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage of the HUD Dept online planning-permission portal; no TNCDBR 2019 PDF link was readable."
+  },
+  {
+   "n": "CMDA Chennai – homepage (planning permission, guidelines)",
+   "u": "https://www.cmdachennai.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage only; has checklists/manuals section. No official TNCDBR 2019 PDF located."
+  }
+ ],
+ "tn-lifts": [
+  {
+   "n": "Chief Electrical Inspector to Government, Tamil Nadu – homepage",
+   "u": "https://ceig.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage only (URL from the entry); site blocks automated fetch. No official online copy of the TN Lifts and Escalators Act 1997 / Rules was found."
+  }
+ ],
+ "tnpcb": [
+  {
+   "n": "Tamil Nadu Pollution Control Board – homepage",
+   "u": "https://tnpcb.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage only; consent guidelines, categorisation list and OCMMS links are behind script-driven menus and could not be read."
+  }
+ ],
+ "tn-groundwater": [
+  {
+   "n": "Chennai Metro Water (CMWSSB) – homepage",
+   "u": "https://cmwssb.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage only; administers the Chennai Metropolitan Area Groundwater (Regulation) Act 1987 permits. Note: the TN Groundwater (Development and Management) Act 2003 is understood to have been repealed i"
+  }
+ ],
+ "tn-labour-welfare": [
+  {
+   "n": "TN Labour Welfare Fund Act, 1972 – TN Labour Dept page",
+   "u": "https://labour.tn.gov.in/The_Tamil_Nadu_Labour_Welfare_Fund_Act_1972.php",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official summary page only; no official full-text PDF of the Act was found online."
+  },
+  {
+   "n": "TN Labour Welfare Fund – contribution rates – TN Labour Dept page",
+   "u": "https://labour.tn.gov.in/tnlabour_welfarefund.php",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Shows contribution rates table (page cites G.O. 16 of 20.01.2015: ₹10 employee / ₹20 employer / ₹10 Govt) – confirm current rates with the Board."
+  },
+  {
+   "n": "TN Labour Welfare Board – homepage",
+   "u": "https://lwb.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Board site (homepage); contribution payment and schemes."
+  },
+  {
+   "n": "TN Ind. Estab. (Nat. & Festival Holidays) Act, 1958 – TN Labour Dept",
+   "u": "https://labour.tn.gov.in/TN-Industrial-Establishments-National-and-Festival-Holidays-ACT-1958.php",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official summary page only; no official full-text PDF found."
+  }
+ ],
+ "tn-boilers": [
+  {
+   "n": "Boilers Act, 2025 (Act 12 of 2025) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act in force 1 May 2025, implemented by the TN boiler inspectorate."
+  },
+  {
+   "n": "Boilers Act, 2025 – India Code record page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/21395",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Check for rules/regulations. New Indian Boiler Regulations 2026 (DPIIT, in force 6 Oct 2026) – official PDF not located."
+  },
+  {
+   "n": "DISH Tamil Nadu (incl. boilers wing) – homepage",
+   "u": "https://dish.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage; no official online copy of the TN Boiler Rules was found."
+  }
+ ],
+ "tn-dish": [
+  {
+   "n": "DISH Tamil Nadu – homepage (online licensing, plan approval)",
+   "u": "https://dish.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Online factory plan approval, registration and licensing."
+  },
+  {
+   "n": "DISH Tamil Nadu – About the Department (functions, wings)",
+   "u": "https://dish.tn.gov.in/aboutdept.html",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Department functions, enforcement role and online services."
+  },
+  {
+   "n": "TN Factories Rules Form 22 – Combined Annual Return – DISH PDF",
+   "u": "https://dish.tn.gov.in/assets/pdf/Combined%20Annual%20return%20form.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Rule 100(2) TN Factories Rules (G.O. Ms. 257, 2004); due 31 Jan."
+  }
+ ],
+ "osh-act-1970": [
+  {
+   "n": "OSH Act as 29 U.S.C. ch. 15 (§654 = general duty clause) – govinfo PDF",
+   "u": "https://www.govinfo.gov/content/pkg/USCODE-2023-title29/pdf/USCODE-2023-title29-chap15.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Official US Code 2023 edition; §654(a)(1) = OSH Act §5(a)(1) General Duty Clause."
+  },
+  {
+   "n": "OSH Act of 1970 – complete text (OSHA)",
+   "u": "https://www.osha.gov/laws-regs/oshact/completeoshact",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "v": false,
+   "note": "Official OSHA page (URL from the entry); osha.gov refused automated fetch."
+  }
+ ],
+ "osha-1926": [
+  {
+   "n": "29 CFR Part 1926 Construction – eCFR (current, updated daily)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Up to date as of Oct 2026; page offers a 'Generate PDF' option."
+  },
+  {
+   "n": "29 CFR Part 1926 – official annual CFR (1 Jul 2025 ed.) – govinfo PDF",
+   "u": "https://www.govinfo.gov/content/pkg/CFR-2025-title29-vol8/pdf/CFR-2025-title29-vol8-part1926.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Official annual edition; may miss amendments after 1 Jul 2025."
+  },
+  {
+   "n": "OSHA Part 1926 standards index (osha.gov)",
+   "u": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "v": false,
+   "note": "Official OSHA page (URL from the entry); osha.gov refused automated fetch."
+  }
+ ],
+ "osha-1910": [
+  {
+   "n": "29 CFR Part 1910 General Industry – eCFR (current, updated daily)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Up to date as of Oct 2026; 'Generate PDF' option on page."
+  },
+  {
+   "n": "29 CFR 1910.1–1910.999 – official annual CFR (1 Jul 2025) – govinfo PDF",
+   "u": "https://www.govinfo.gov/content/pkg/CFR-2025-title29-vol5/pdf/CFR-2025-title29-vol5-part1910.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Covers 1910.1–1910.999 only; 1910.1000 onward (Subpart Z, e.g. HazCom 1910.1200) is in CFR vol. 6 – use eCFR for that part."
+  },
+  {
+   "n": "OSHA Part 1910 standards index (osha.gov)",
+   "u": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "v": false,
+   "note": "Official OSHA page (URL from the entry); osha.gov refused automated fetch."
+  }
+ ],
+ "osha-1904": [
+  {
+   "n": "29 CFR Part 1904 Recordkeeping – eCFR (current)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1904",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Last amended 1 Apr 2024 (electronic submission rule)."
+  },
+  {
+   "n": "29 CFR Part 1904 – official annual CFR (1 Jul 2025) – govinfo PDF",
+   "u": "https://www.govinfo.gov/content/pkg/CFR-2025-title29-vol5/pdf/CFR-2025-title29-vol5-part1904.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain"
+  },
+  {
+   "n": "OSHA Injury & Illness Recordkeeping (forms 300/300A/301, ITA)",
+   "u": "https://www.osha.gov/recordkeeping",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "v": false,
+   "note": "Official OSHA page (URL from the entry); osha.gov refused automated fetch. Forms are linked from here."
+  }
+ ],
+ "osha-heat-nep": [
+  {
+   "n": "OSHA Heat NEP – CPL 03-00-024 (2022 directive) – OSHA PDF",
+   "u": "https://www.osha.gov/sites/default/files/enforcement/directives/CPL_03-00-024.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Original NEP effective 8 Apr 2022. OSHA now marks this directive page as an archive document; the revised NEP effective 10 Apr 2026 was not located online – check osha.gov/enforcement/directives."
+  },
+  {
+   "n": "OSHA directive page – CPL 03-00-024 Heat NEP",
+   "u": "https://www.osha.gov/enforcement/directives/cpl-03-00-024",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Page carries an 'OSHA Archive Document' notice."
+  },
+  {
+   "n": "Proposed Heat Injury & Illness rule (89 FR 70698) – Federal Register",
+   "u": "https://www.federalregister.gov/documents/2024/08/30/2024-14824/heat-injury-and-illness-prevention-in-outdoor-and-indoor-work-settings",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "NPRM 30 Aug 2024, docket OSHA-2021-0009; not a final rule."
+  },
+  {
+   "n": "Proposed Heat rule NPRM (30 Aug 2024) – govinfo PDF",
+   "u": "https://www.govinfo.gov/content/pkg/FR-2024-08-30/pdf/2024-14824.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Official Federal Register PDF of the proposed rule."
+  }
+ ],
+ "osha-maritime-ag": [
+  {
+   "n": "29 CFR 1915 Shipyard Employment – official PDF (govinfo, 2025 ed.)",
+   "u": "https://www.govinfo.gov/link/cfr/29/1915?link-type=pdf&year=mostrecent",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Annual CFR edition (revised 1 July 2025); for latest amendments see eCFR https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1915"
+  },
+  {
+   "n": "29 CFR 1917 Marine Terminals – official PDF (govinfo, 2025 ed.)",
+   "u": "https://www.govinfo.gov/link/cfr/29/1917?link-type=pdf&year=mostrecent",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Annual CFR edition (revised 1 July 2025)"
+  },
+  {
+   "n": "29 CFR 1918 Longshoring – official PDF (govinfo, 2025 ed.)",
+   "u": "https://www.govinfo.gov/link/cfr/29/1918?link-type=pdf&year=mostrecent",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Annual CFR edition (revised 1 July 2025)"
+  },
+  {
+   "n": "29 CFR 1928 Agriculture – official PDF (govinfo, 2025 ed.)",
+   "u": "https://www.govinfo.gov/link/cfr/29/1928?link-type=pdf&year=mostrecent",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Annual CFR edition (revised 1 July 2025)"
+  }
+ ],
+ "niosh-acgih": [
+  {
+   "n": "NIOSH Pocket Guide to Chemical Hazards – online (incl. RELs), CDC",
+   "u": "https://www.cdc.gov/niosh/npg/default.html",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Current online edition with NIOSH RELs; page links to the PDF edition and mobile app"
+  },
+  {
+   "n": "NIOSH Pocket Guide (Pub. 2005-149, 3rd printing 2007) – PDF, CDC Stacks",
+   "u": "https://stacks.cdc.gov/view/cdc/21265/cdc_21265_DS1.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Last full PDF printing (Sept 2007); the online NPG is more current"
+  },
+  {
+   "n": "Applications Manual – Revised NIOSH Lifting Equation (rev. 2021) – PDF",
+   "u": "https://stacks.cdc.gov/view/cdc/110725/cdc_110725_DS1.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "public-domain",
+   "note": "DHHS (NIOSH) Pub. No. 94-110, revised Sept 2021; CDC Stacks is CDC's official repository"
+  },
+  {
+   "n": "ACGIH TLVs & BEIs – official guidelines page and store (ACGIH)",
+   "u": "https://www.acgih.org/science/tlv-bei-guidelines/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "TLV/BEI book and Documentation must be bought from the ACGIH store"
+  }
+ ],
+ "ansi-assp": [
+  {
+   "n": "ASSP Standards catalogue – ANSI/ASSP Z10, Z359, A10, Z117.1…",
+   "u": "https://www.assp.org/standards",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Links to topic pages for Z10, Z359, A10, Z117.1, Z244.1, Z490 and to the ASSP store; standards are sold"
+  },
+  {
+   "n": "ANSI/ASSP Z10.0 OSH Management Systems – ASSP standard page",
+   "u": "https://www.assp.org/standards/standards-topics/osh-management-z10",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Purchase link for Z10.0; free GM-Z10.101 quick-start guide downloadable from this page"
+  },
+  {
+   "n": "ANSI/ASSP Z359 Fall Protection Code family – ASSP standard page",
+   "u": "https://www.assp.org/standards/standards-topics/fall-protection-and-fall-restraint-z359",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Lists Z359.0–Z359.18 with purchase links"
+  },
+  {
+   "n": "ANSI/ISEA Z87.1-2025 Eye & Face Protection – ANSI Webstore",
+   "u": "https://webstore.ansi.org/standards/isea/ansiiseaz872025",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Z87.1 and Z89.1 are ISEA (not ASSP) standards, sold via ANSI Webstore; Z87.1-2025 is the most recent edition"
+  }
+ ],
+ "nfpa": [
+  {
+   "n": "NFPA List of Codes & Standards – official catalogue (NFPA)",
+   "u": "https://www.nfpa.org/for-professionals/codes-and-standards/list-of-codes-and-standards",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Find any NFPA code (70, 70E, 70B, 10, 13, 25, 30, 51B, 72, 101, 241, 350, 652/654, 1600, 2112); read-only free access needs an NFPA account, downloads/print must be bought"
+  },
+  {
+   "n": "NFPA free access – read-only online codes & standards (NFPA)",
+   "u": "https://www.nfpa.org/for-professionals/codes-and-standards/list-of-codes-and-standards/free-access",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only viewing after free NFPA registration"
+  },
+  {
+   "n": "NFPA 70E Electrical Safety in the Workplace – document page (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-70e-standard-development/70e",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official document page with current edition, free-access and purchase options"
+  },
+  {
+   "n": "NFPA 70 National Electrical Code – document page (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-70-standard-development/70",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official document page with current edition, free-access and purchase options"
+  }
+ ],
+ "asme": [
+  {
+   "n": "ASME Find Codes & Standards – official catalogue/store (ASME)",
+   "u": "https://www.asme.org/codes-standards/find-codes-standards",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Search B30, B56, A17.1, BPVC, B31 by designator; e.g. A17.1/CSA B44-2025: https://www.asme.org/codes-standards/find-codes-standards/safety-code-for-elevators-and-escalators/2025"
+  },
+  {
+   "n": "ASME Boiler & Pressure Vessel Code (BPVC, 2025 ed.) – ASME page",
+   "u": "https://www.asme.org/codes-standards/bpvc-standards",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "2025 edition current; new edition every two years"
+  },
+  {
+   "n": "ASME B30.5 Mobile & Locomotive Cranes (2025) – ASME store page",
+   "u": "https://www.asme.org/codes-standards/find-codes-standards/b30-5-mobile-locomotive-cranes",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Representative B30 volume; other B30 volumes via the catalogue"
+  },
+  {
+   "n": "ASME B31.3 Process Piping (2024) – ASME store page",
+   "u": "https://www.asme.org/codes-standards/b31-3-process-piping",
+   "k": "page",
+   "a": "paid",
+   "share": "no"
+  }
+ ],
+ "api-ccps": [
+  {
+   "n": "API RP 754 Process Safety Performance Indicators, 3rd ed. – API page",
+   "u": "https://www.api.org/products-and-services/standards/important-standards-announcements/754",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Official announcement of the 3rd edition with purchase link (apiwebstore.org/standards/754)"
+  },
+  {
+   "n": "API Webstore – catalogue for API Std 2015, RP 2016, RP 2009, RP 754",
+   "u": "https://www.apiwebstore.org",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Official API publications store; search by document number"
+  },
+  {
+   "n": "API IBR Reading Room – read-only access to safety standards (API)",
+   "u": "https://www.api.org/products-and-services/standards/ibr-reading-room",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "~200 standards viewable read-only on publications.api.org (registration expected); check there whether 2015/2016/2009/754 are included"
+  },
+  {
+   "n": "CCPS Process Safety Publications & Guidelines – AIChE CCPS",
+   "u": "https://ccps.aiche.org/publications",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "CCPS Guidelines books are sold (published by Wiley); Process Safety Beacon and some tools are free"
+  }
+ ],
+ "iso-45001": [
+  {
+   "n": "ISO 45001:2018 OH&S Management Systems – ISO store page",
+   "u": "https://www.iso.org/standard/63787.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "v": false,
+   "note": "www.iso.org blocked the fetch; same page content confirmed at committee.iso.org/standard/63787.html: current (confirmed 2024), Amd 1:2024 (climate action), revision ISO/DIS 45001 in progress; CHF 196"
+  },
+  {
+   "n": "ISO 45001:2018/Amd 1:2024 Climate action changes – ISO page",
+   "u": "https://www.iso.org/standard/88428.html",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "v": false,
+   "note": "Official ISO page from search; fetch blocked. ISO lists the amendment at CHF 0 (free)"
+  },
+  {
+   "n": "ISO 45003:2021 Psychological health & safety at work – ISO page",
+   "u": "https://www.iso.org/standard/64283.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "CHF 155; under systematic review (2026)"
+  },
+  {
+   "n": "IS/ISO 45001:2018 – BIS 'Know your standards' page with download",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MjMxODI=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Indian adoption (identical); download via BIS Standards portal (standardsbis.bsbedge.com) after free registration"
+  }
+ ],
+ "iso-14001": [
+  {
+   "n": "ISO 14001:2026 Environmental Management Systems – ISO page",
+   "u": "https://www.iso.org/standard/14001",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "4th edition published April 2026; replaces ISO 14001:2015 (withdrawn 15 Apr 2026). CHF 196"
+  },
+  {
+   "n": "ISO 9001:2026 Quality Management Systems – ISO page",
+   "u": "https://www.iso.org/standard/88464.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "v": false,
+   "note": "www.iso.org blocked the fetch; content confirmed at committee.iso.org/standard/88464.html: 6th edition published 16 Sept 2026, replaces ISO 9001:2015. CHF 196"
+  },
+  {
+   "n": "ISO 31000:2018 Risk Management – Guidelines – ISO page",
+   "u": "https://www.iso.org/standard/31000",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current; revision (ISO/CD 31000) under development. CHF 135"
+  },
+  {
+   "n": "ISO 22301:2019 Business Continuity Management Systems – ISO page",
+   "u": "https://iso.org/standard/75106.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current; flagged 'to be revised'. CHF 155"
+  }
+ ],
+ "iso-machinery": [
+  {
+   "n": "ISO Standards Catalogue – browse by ICS (ISO)",
+   "u": "https://www.iso.org/standards-catalogue/browse-by-ics.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Find ISO 13849, 7243, 11228, 20471 etc. (ICS 13.110 machinery safety, 13.100 OH&S); IEC 62061/61508/60079 are sold at webstore.iec.ch"
+  },
+  {
+   "n": "ISO 12100:2010 Safety of machinery – risk assessment – ISO page",
+   "u": "https://www.iso.org/standard/51528.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current (confirmed 2022); revision ISO/DIS 12100.3 in progress. CHF 225"
+  },
+  {
+   "n": "IEC 61511-1:2016+AMD1:2017 Functional safety – SIS – IEC Webstore",
+   "u": "https://webstore.iec.ch/en/publication/24241",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Consolidated version; parts 2 and 3 and IEC 61508/62061/60079 also via IEC Webstore. CHF 380"
+  },
+  {
+   "n": "ISO 7010:2019 Registered safety signs – ISO page",
+   "u": "https://www.iso.org/standard/72424.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Edition 3 with Amd 1–11 (to 2026); revision ISO/DIS 7010 expected. CHF 227"
+  }
+ ],
+ "ilo": [
+  {
+   "n": "ILO Safety & health at work – list of OSH Conventions & codes (ILO)",
+   "u": "https://www.ilo.org/topics-and-sectors/safety-and-health-work",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official ILO topic page linking NORMLEX texts of C161, C162, C167, C170, C174, C176 etc. and a codes-of-practice search"
+  },
+  {
+   "n": "Fundamental OSH Conventions C155 & C187 – ILO overview booklet (PDF)",
+   "u": "https://www.ilo.org/sites/default/files/wcmsp5/groups/public/%40ed_protect/%40protrav/%40safework/documents/publication/wcms_874738.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "ILO 2023 overview of C155 and C187 (and R164/R197) with checklists; full Convention texts are on NORMLEX (normlex.ilo.org)"
+  },
+  {
+   "n": "C167 Safety & Health in Construction Convention, 1988 – NORMLEX",
+   "u": "https://normlex.ilo.org/dyn/normlex/en/f?p=NORMLEXPUB%3A12100%3A0%3A%3ANO%3A12100%3AP12100_INSTRUMENT_ID%3A312312%3ANO",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Link taken from the official ILO OSH topic page; NORMLEX returned a server error to the fetch tool"
+  },
+  {
+   "n": "C174 Prevention of Major Industrial Accidents Conv., 1993 – NORMLEX",
+   "u": "https://normlex.ilo.org/dyn/normlex/en/f?p=NORMLEXPUB%3A12100%3A0%3A%3ANO%3A12100%3AP12100_INSTRUMENT_ID%3A312319%3ANO",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Link taken from the official ILO OSH topic page; NORMLEX returned a server error to the fetch tool"
+  }
+ ],
+ "un-ghs": [
+  {
+   "n": "UNECE Dangerous Goods – GHS & UN Model Regulations hub (UNECE)",
+   "u": "https://unece.org/transport/dangerous-goods",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Official UNECE section for GHS and TDG; use it to reach the latest revisions (GHS Rev.11 2025 and TDG Model Regulations Rev.24 2025 are believed current; their pages blocked automated fetching)"
+  },
+  {
+   "n": "GHS Rev.10 (2023) – free official e-version, UNECE",
+   "u": "https://unece.org/transport/dangerous-goods/ghs-rev10-2023",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Free PDF downloads in 6 UN languages; check the UNECE hub for a newer revision (Rev.11, 2025). UN copyright – e-copies for consultation only"
+  },
+  {
+   "n": "UN Model Regulations (TDG) Rev.22 (2021) – UNECE page",
+   "u": "https://unece.org/transport/dangerous-goods/un-model-regulations-rev-22",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Older edition: newer revisions (Rev.23 2023, Rev.24 2025) exist on UNECE but their pages could not be fetched; free PDFs for consultation only"
+  }
+ ],
+ "ieee-bs": [
+  {
+   "n": "BSI Knowledge – official shop/search for BS, BS EN & ISO standards",
+   "u": "https://knowledge.bsigroup.com/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Search BS 5975, BS EN 12811/12810, EN 13374, EN 361/355/360, EN 166/397, EN ISO 20345. Note: BS 5975:2019 shows as withdrawn (18 Dec 2024) – buy the current edition"
+  },
+  {
+   "n": "BS 7671 IET Wiring Regulations (18th Ed. +A4:2026) – IET page",
+   "u": "https://electrical.theiet.org/bs-7671/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current: BS 7671:2018+A4:2026; A2:2022 transition ended 15 Oct 2026. Free model forms on the page"
+  },
+  {
+   "n": "IEEE SA Standards search – find IEEE 1584 (Arc-Flash Calculations)",
+   "u": "https://standards.ieee.org/search/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Official IEEE SA search; search '1584' for the current IEEE 1584 arc-flash guide (purchase via IEEE)"
+  }
+ ],
+ "hswa": [
+  {
+   "n": "HSWA 1974 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/ukpga/1974/37/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Revised (consolidated) PDF; the copy fetched was generated Sept 2022 – the web version below is updated to Oct 2026. Open Government Licence"
+  },
+  {
+   "n": "HSWA 1974 – latest revised text online (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/ukpga/1974/37/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Up to date with changes in force on or before 22 Oct 2026; original 1974 PDF: https://www.legislation.gov.uk/ukpga/1974/37/pdfs/ukpga_19740037_en.pdf"
+  },
+  {
+   "n": "Management of H&S at Work Regs 1999 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/1999/3242/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "SI 1999/3242, revised text (generated Nov 2023, no outstanding effects listed)"
+  },
+  {
+   "n": "Management of H&S at Work Regs 1999 – revised text online",
+   "u": "https://www.legislation.gov.uk/uksi/1999/3242/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Original as-made PDF: https://www.legislation.gov.uk/uksi/1999/3242/pdfs/uksi_19993242_en.pdf"
+  }
+ ],
+ "cdm-2015": [
+  {
+   "n": "CDM Regulations 2015 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2015/51/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "v": false,
+   "note": "Link listed on the official contents page; fetch blocked by robots rule. No outstanding effects listed for SI 2015/51"
+  },
+  {
+   "n": "CDM Regulations 2015 (SI 2015/51) – as made PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2015/51/pdfs/uksi_20150051_en.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Original King's Printer version"
+  },
+  {
+   "n": "CDM Regulations 2015 – revised text online (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2015/51/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence"
+  },
+  {
+   "n": "HSE L153 – Managing H&S in construction: CDM 2015 guidance (PDF)",
+   "u": "https://www.hse.gov.uk/pubns/priced/l153.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Official HSE Guidance on Regulations (2015); Crown copyright under Open Government Licence (some images excluded)"
+  }
+ ],
+ "uk-regs": [
+  {
+   "n": "HSE list of H&S statutory instruments – links to all 12 regulations",
+   "u": "https://www.hse.gov.uk/legislation/statinstruments.htm",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Official HSE listing linking each SI on legislation.gov.uk (WAH, LOLER, PUWER, Confined Spaces, COSHH, DSEAR, EAWR, RIDDOR, Noise, Vibration, MHOR; PPE only via its 2022 amendment); OGL"
+  },
+  {
+   "n": "Work at Height Regulations 2005 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2005/735/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "v": false,
+   "note": "Link listed on the official contents page https://www.legislation.gov.uk/uksi/2005/735/contents (verified); PDF fetch blocked by robots rule"
+  },
+  {
+   "n": "COSHH Regulations 2002 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2002/2677/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "SI 2002/2677 revised text (generated Apr 2024; no outstanding effects listed)"
+  },
+  {
+   "n": "LOLER 1998 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/1998/2307/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "SI 1998/2307 revised text (generated Apr 2023; no outstanding effects listed)"
+  }
+ ],
+ "comah-seveso": [
+  {
+   "n": "COMAH Regulations 2015 – revised PDF (legislation.gov.uk)",
+   "u": "https://www.legislation.gov.uk/uksi/2015/483/data.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "v": false,
+   "note": "Link listed on the official contents page; PDF fetch blocked by robots rule. No outstanding effects listed for SI 2015/483"
+  },
+  {
+   "n": "COMAH Regulations 2015 (SI 2015/483) – revised text online",
+   "u": "https://www.legislation.gov.uk/uksi/2015/483/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "As-made PDF: https://www.legislation.gov.uk/uksi/2015/483/pdfs/uksi_20150483_en.pdf"
+  },
+  {
+   "n": "Seveso III Directive 2012/18/EU – official PDF (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/eli/dir/2012/18/oj/eng/pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "OJ L 197, 24.7.2012; EUR-Lex reuse policy (Commission Decision 2011/833/EU)"
+  },
+  {
+   "n": "HSE L111 – Guide to COMAH 2015, Guidance on Regulations (PDF)",
+   "u": "https://www.hse.gov.uk/pubns/priced/l111.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "3rd edition (reissued Oct 2015); Crown copyright under Open Government Licence"
+  }
+ ],
+ "eu-framework": [
+  {
+   "n": "OSH Framework Directive 89/391/EEC – EUR-Lex (ELI page)",
+   "u": "https://eur-lex.europa.eu/eli/dir/1989/391/oj/eng",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Official EUR-Lex page with PDF/HTML and consolidated-version links. ATEX workplace Directive 1999/92/EC: https://eur-lex.europa.eu/eli/dir/1999/92/oj/eng (verified); ATEX equipment Directive 2014/34/E"
+  },
+  {
+   "n": "REACH (EC) 1907/2006 – legislation & consolidated text (ECHA)",
+   "u": "https://echa.europa.eu/regulations/reach/legislation",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "ECHA page linking the consolidated REACH text on EUR-Lex and amendments; EU law text reusable under EUR-Lex reuse policy"
+  },
+  {
+   "n": "CLP (EC) 1272/2008 – legislation & consolidated text (ECHA)",
+   "u": "https://echa.europa.eu/regulations/clp/legislation",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "ECHA page with consolidated CLP text and ATP amendments; check EUR-Lex for the latest consolidation"
+  },
+  {
+   "n": "Machinery Regulation (EU) 2023/1230 – official PDF (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng/pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "OJ L 165, 29.6.2023; repeals Machinery Directive 2006/42/EC (applies from 20 Jan 2027)"
+  }
+ ],
+ "au-whs": [
+  {
+   "n": "Model Work Health and Safety Act (5 Dec 2025) – Safe Work Australia",
+   "u": "https://www.safeworkaustralia.gov.au/doc/model-work-health-and-safety-act",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Official document page with PDF (1.05 MB) and DOCX downloads; SWA material is usually CC BY 4.0 – confirm licence on the document"
+  },
+  {
+   "n": "Model WHS laws – Act, Regs & Codes overview (Safe Work Australia)",
+   "u": "https://www.safeworkaustralia.gov.au/law-and-regulation/model-whs-laws",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Overview page for the model WHS framework; the model Codes of Practice list (/resources-and-publications/model-codes-of-practice) blocks automated fetching"
+  },
+  {
+   "n": "CSA Group Store – CSA Z1000 / Z1002 OHS standards (paid)",
+   "u": "https://www.csagroup.org/store/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Official CSA Group store; search 'Z1000' (OHS management) and 'Z1002' (hazard identification & risk assessment). CSA offers free view-only access to some standards after registration"
+  }
+ ],
+ "ec-act": [
+  {
+   "n": "Energy Conservation Act, 2001 (as amended 2010) – chapter-wise text, BEE",
+   "u": "https://www.beeindia.gov.in/show_content.php?lang=1&level=1&ls_id=164&lid=39",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official BEE page with 10 chapter files of Act 52 of 2001 (with BEE comments). Does NOT include the EC (Amendment) Act, 2022 – get that from India Code / egazette.gov.in (India Code blocked automated "
+  },
+  {
+   "n": "BEE Rules & Regulations under the EC Act – listing (BEE)",
+   "u": "https://www.beeindia.gov.in/show_content.php?lang=1&level=1&ls_id=355&lid=113",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Service Rules, Functional Rules and Regulations made under the EC Act (updated 2026)"
+  }
+ ],
+ "ccts": [
+  {
+   "n": "Carbon Credit Trading Scheme, 2023 – S.O. 2825(E), Gazette PDF (BEE)",
+   "u": "https://www.beeindia.gov.in/WriteReadData/L45218/1734693005.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Ministry of Power notification, Gazette of India Extraordinary, 28 June 2023"
+  },
+  {
+   "n": "CCTS 2023 amendment – S.O. 5369(E), 19 Dec 2023, Gazette PDF (BEE)",
+   "u": "https://www.beeindia.gov.in/WriteReadData/L45218/1734693020.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Amends S.O. 2825(E) (adds offset mechanism etc.). BEE Carbon Market page: https://www.beeindia.gov.in/show_content.php?lang=1&level=1&ls_id=189&lid=294"
+  },
+  {
+   "n": "Detailed Procedure for Compliance Mechanism under CCTS – PDF (BEE)",
+   "u": "https://www.beeindia.gov.in/WriteReadData/L45218/7772386525993811.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "45-page BEE procedure for obligated entities; not itself a Gazette notification. ICM portal: https://indiancarbonmarket.gov.in/"
+  },
+  {
+   "n": "GHG Emission Intensity Target Rules, 2025 – G.S.R. 739(E) PDF (BEE)",
+   "u": "https://www.beeindia.gov.in/WriteReadData/L45218/1663540214634949.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "MoEFCC notification, Gazette of India Extraordinary, 8 Oct 2025 – sets GEI targets for obligated entities"
+  }
+ ],
+ "brsr": [
+  {
+   "n": "SEBI circular on BRSR (10 May 2021) – official page (SEBI)",
+   "u": "https://www.sebi.gov.in/legal/circulars/may-2021/business-responsibility-and-sustainability-reporting-by-listed-entities_50096.html",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Circular SEBI/HO/CFD/CMD-2/P/CIR/2021/562 introducing the BRSR format under LODR Reg 34(2)(f); PDF attachment on the page"
+  },
+  {
+   "n": "SEBI BRSR circular 2021 incl. BRSR format & guidance – PDF (SEBI)",
+   "u": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2021/1620655793598.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Attachment path taken from the official circular page; not opened because the fetch limit was reached"
+  },
+  {
+   "n": "SEBI website – Legal > Circulars (BRSR Core 2023 & updates)",
+   "u": "https://www.sebi.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage fallback: the BRSR Core circular (SEBI/HO/CFD/CFD-SEC-2/P/CIR/2023/122, 12 Jul 2023), later BRSR Core updates and the LODR Master Circular could not be verified (fetch limit reached) – find t"
+  }
+ ],
+ "cbam": [
+  {
+   "n": "Regulation (EU) 2023/956 CBAM – consolidated text 20.10.2025 (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02023R0956-20251020",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Consolidated version incorporating amending Regulation (EU) 2025/2083 (M1); EUR-Lex reuse policy allows reuse with acknowledgement."
+  },
+  {
+   "n": "Regulation (EU) 2025/2083 amending CBAM – Official Journal (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/eli/reg/2025/2083/oj/eng",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "ELI page of the 8 Oct 2025 simplification regulation; PDF download available from the page."
+  },
+  {
+   "n": "CBAM legislation & guidance – European Commission (DG TAXUD)",
+   "u": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism/cbam-legislation-and-guidance_en",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Official listing of the CBAM Regulation, implementing acts (default values, verification, certificate prices, registry) and guidance."
+  }
+ ],
+ "ghg-standards": [
+  {
+   "n": "GHG Protocol Corporate Standard (Revised Edition) – ghgprotocol.org",
+   "u": "https://ghgprotocol.org/sites/default/files/standards/ghg-protocol-revised.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Free from WRI/WBCSD; copyright retained by WRI/WBCSD. Scope 2 Guidance and Scope 3 Standard are on ghgprotocol.org."
+  },
+  {
+   "n": "ISO 14064-1:2018 GHG – organization level (ISO store)",
+   "u": "https://www.iso.org/standard/66453.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Purchase page; under revision. ISO 14064-2/-3, 14067, 14068-1 and 50001 are found via the same ISO catalogue."
+  },
+  {
+   "n": "GRI Standards (incl. GRI 403 OSH) – download centre (GRI)",
+   "u": "https://www.globalreporting.org/standards/download-the-standards/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free download after accepting GRI terms/registration form; GRI retains copyright."
+  },
+  {
+   "n": "ESRS – Delegated Regulation (EU) 2023/2772, consolidated (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/eli/reg_del/2023/2772/2025-01-01/eng/pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Consolidated version 01.01.2025; check EUR-Lex for later amendments (e.g. 2025/1416 and simplified ESRS). IFRS S1/S2 are free with registration at ifrs.org."
+  }
+ ],
+ "epr-regimes": [
+  {
+   "n": "Plastic Waste Mgmt (Amendment) Rules 2022 – EPR guidelines (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/pdf-uploads/pdf_68401a627be674.03844470.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 133(E), 16 Feb 2022 – inserts Schedule II EPR guidelines for plastic packaging. Later amendments listed at moef.gov.in/rules-regulations-3."
+  },
+  {
+   "n": "E-Waste (Management) Rules, 2022 – Gazette G.S.R. 801(E) (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2022/11/E-Waste-Management-Rules-2022.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Original notification of 2 Nov 2022; 2023–2024 amendments are listed on moef.gov.in/rules-regulations-3."
+  },
+  {
+   "n": "Battery Waste Management Rules, 2022 – Gazette S.O. 3984(E) (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/pdf-uploads/pdf_676567459cdfe9.16099796.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Original 22 Aug 2022 notification; amendments of 2024 and 2025 are listed on moef.gov.in/rules-regulations-3."
+  },
+  {
+   "n": "HOWM Second Amendment Rules 2023 – used oil EPR (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/2023/11/HSM-Amenment-Notification-daterd-18092023.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 677(E), 18 Sep 2023, in force 1 Apr 2024. Waste-tyre EPR (HOWM 2022 amendment) and Green Credit Rules 2023 not separately located; see MoEFCC rules page."
+  }
+ ],
+ "ecsbc": [
+  {
+   "n": "ECSBC 2024 – Commercial & Office Buildings (BEE)",
+   "u": "https://beeindia.gov.in/WriteReadData/L45218/7534511430467336.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "BEE-published code (© BEE 2024); notified under the Energy Conservation Act. Old /sites/default/files/ links now redirect to the BEE homepage."
+  },
+  {
+   "n": "Eco-Niwas Samhita (ENS) 2024 – Residential ECSBC (BEE)",
+   "u": "https://beeindia.gov.in/WriteReadData/L45218/0405504518282114.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Consolidates ENS 2018 (envelope) and ENS 2021 (electro-mechanical) with sustainability provisions."
+  },
+  {
+   "n": "MoP draft notification – mandatory star rating of buildings (2026)",
+   "u": "https://powermin.gov.in/static/uploads/2026/07/f981ac1fc7a15c1136606ec2cd1979ca.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Ministry of Power draft (dated June 2026, released Jul 2026): BEE star rating (3–5) for buildings ≥20,000 m² linked to ECSBC levels; 21-day comment period. Draft only – not yet final."
+  }
+ ],
+ "ods-rules": [
+  {
+   "n": "ODS (Regulation & Control) Rules 2000 – Gazette S.O. 670(E) (Ozone Cell)",
+   "u": "https://ozonecell.nic.in/wp-content/uploads/2022/08/The-Gazette-of-India-Rule-2000-2019.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Scanned bilingual Gazette of 19 Jul 2000 (original rules; text OCR is poor). Amendments are separate files – see listing page."
+  },
+  {
+   "n": "ODS Rules 2000 & amendments 2001–2019 – listing (MoEFCC Ozone Cell)",
+   "u": "https://ozonecell.nic.in/home-page/montreal-protocol-implementation-in-india/regulatory-framework/the-gazette-of-india-notification-ods-rules-2000-its-amendments",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Lists PDFs of the 2000 rules and amendments of 2001, 2003, 2004, 2005, 2007, 2014 and 2019."
+  },
+  {
+   "n": "ODS (Regulation & Control) Amendment Rules, 2019 – S.O. 4724(E)",
+   "u": "https://ozonecell.nic.in/wp-content/uploads/2020/01/GAZETTE-NOTIFICATION-MINISTRY-OF-ENVIRONMENT-FOREST-AND-CLIMATE-CHANGE-New-Delhi-S.O.-4724E-dated-the-31st-December-2019-1.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Bans HCFC-141b imports from 1 Jan 2020 and pre-blended polyols with Group VI substances."
+  },
+  {
+   "n": "Montreal Protocol consolidated text incl. Kigali Amendment (UNEP)",
+   "u": "https://ozone.unep.org/sites/default/files/Consolidated-Montreal-Protocol-November-2016.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "UNEP Ozone Secretariat consolidated treaty text; Article 2J and Annex F set the HFC phase-down. India's HFC phase-down is implemented via MoEFCC/Ozone Cell."
+  }
+ ],
+ "ir-code": [
+  {
+   "n": "Industrial Relations Code, 2020 – Act 35 of 2020 (India Code PDF)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22040/1/aa202035.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "URL from India Code search results; automated fetch returned an India Code error page (site blocks bots) – open from the India Code page if the direct link fails."
+  },
+  {
+   "n": "Industrial Relations Code, 2020 – India Code page",
+   "u": "https://www.indiacode.nic.in/handle/123456789/22040",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official India Code record for Act 35 of 2020 (MoLE). IR (Central) Rules, 2026 (G.S.R. 342(E), 8 May 2026) – no official PDF located; search egazette.gov.in. State IR rules (KA draft 2026) pending."
+  }
+ ],
+ "tank-standards": [
+  {
+   "n": "BIS Know Your Standards – search IS 803 / IS 10987 (BIS)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Official BIS search by IS number; free PDF download after BIS registration/login. Standards published after 1 Oct 2025 are on standards.bis.gov.in."
+  },
+  {
+   "n": "API Webstore – API 650 / 653 / 2000 / 2350 / 2015 / 2016 / 1615 / 1604",
+   "u": "https://www.apiwebstore.org",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "API's official publications store (JavaScript app); search by standard number. Catalogue: api.org/products-and-services/standards."
+  },
+  {
+   "n": "OISD – Oil Industry Safety Directorate (OISD-STD-118 / 129 / 244)",
+   "u": "https://www.oisd.gov.in/",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Homepage only – OISD standards pages block automated access; standards are obtained from OISD (MoPNG)."
+  },
+  {
+   "n": "40 CFR Part 280 – US UST technical standards (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-I/part-280",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Current eCFR text (updated Oct 2026); PDF/print options on the page."
+  }
+ ],
+ "static-electricity": [
+  {
+   "n": "IS 7689:1989 Control of undesirable static electricity (BIS page)",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MTQ2Nzg=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "BIS Know Your Standards record with download link (BIS login). A revision of IS 7689 is under way in ETD 20."
+  },
+  {
+   "n": "BIS Know Your Standards – search IS/IEC 60079 series (BIS)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number for IS/IEC 60079-10-1 (gas) / -10-2 (dust) area classification; free download after login. IEC originals are sold at webstore.iec.ch."
+  },
+  {
+   "n": "NFPA 77 Recommended Practice on Static Electricity (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-77-standard-development/77",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only access with an NFPA account; purchase for download/print."
+  }
+ ],
+ "pngrb": [
+  {
+   "n": "PNGRB T4S Natural Gas Pipelines Regs 2009 – consolidated to 23.07.2025",
+   "u": "https://www.pngrb.gov.in/OurRegulation/PNGRB%20Regulations/B.%20Natural%20Gas%20Pipeline/B.6.%20NGPL%20T4S%20Regulations/20250723-NGPL-T4S-Post-Amendment.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 808(E), 11 Nov 2009, post-amendment text incl. 2025 amendment."
+  },
+  {
+   "n": "PNGRB T4S for CGD Networks Regs 2008 – consolidated to 17.12.2025",
+   "u": "https://www.pngrb.gov.in/OurRegulation/PNGRB%20Regulations/A.%20CGD%20Network/A.4.%20CGD%20T4S%20Regulations/20251217-CGD-T4S-Post-Amendment.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 612(E), 27 Aug 2008, incl. Second Amendment Regulations 2025 (17 Dec 2025). Covers CNG stations, safety distances, ESD."
+  },
+  {
+   "n": "PNGRB ERDMP Regulations 2010 – consolidated to 23.07.2025",
+   "u": "https://www.pngrb.gov.in/OurRegulation/PNGRB%20Regulations/D.%20Technical%20Standards%20and%20Specifications%20including%20Safety%20Standards%20(T4S)/D.2.%20ERDMP%20Regulations/20250723-ERDMP-Post-Amendment.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 39(E), Jan 2010, with 2014, 2020 and 2025 amendments."
+  },
+  {
+   "n": "PNGRB Technical Standards & Safety (T4S) regulations listing",
+   "u": "https://www.pngrb.gov.in/eng-web/regulation-t4s.html",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official list with consolidated PDFs incl. LNG terminal T4S (to 23.07.2025) and Integrity Management System regs for NG pipelines and CGD networks."
+  }
+ ],
+ "toxic-gas-codes": [
+  {
+   "n": "BIS Know Your Standards – IS 4263 (chlorine) / IS 4544 (ammonia)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number; free PDF download after BIS registration/login."
+  },
+  {
+   "n": "Chlorine Institute pamphlets – Bookstore (CI)",
+   "u": "https://www.chlorineinstitute.org/bookstore-overview",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Pamphlets are sold to non-members (view-only downloads); free to members and, on e-mail request, to government agencies, first responders and water utilities."
+  },
+  {
+   "n": "IIAR Technology & Standards (ammonia refrigeration) – IIAR",
+   "u": "https://www.iiar.org/IIAR/IIAR/Technology_and_Standards/Technology_and_Standards.aspx?hkey=f9655d15-9505-4d51-b267-be07bf58f017",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "ANSI/IIAR 2, 6, 7, 8, 9 are sold via IIAR publications (iiar.gilmoreglobal.com); page lists draft standards for public review."
+  },
+  {
+   "n": "OSHA 29 CFR 1910.119 PSM incl. Appendix A thresholds (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-H/section-1910.119",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Appendix A: chlorine 1,500 lb, anhydrous ammonia 10,000 lb threshold quantities."
+  }
+ ],
+ "dust-codes": [
+  {
+   "n": "NFPA 652 Fundamentals of Combustible Dust (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-652-standard-development/652",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Dust Hazard Analysis requirements; free read-only access with NFPA account. NFPA 61/484/664/68/69 have equivalent pages. NFPA 660 consolidation may supersede these."
+  },
+  {
+   "n": "NFPA 654 Combustible particulate solids (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-654-standard-development/654",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only access with NFPA account; purchase for download."
+  },
+  {
+   "n": "OSHA CPL 03-00-008 Combustible Dust National Emphasis Program",
+   "u": "https://www.osha.gov/enforcement/directives/cpl-03-00-008",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Directive page; the directive itself is provided as a PDF from this page."
+  },
+  {
+   "n": "ATEX 'workplace' Directive 1999/92/EC (EUR-Lex)",
+   "u": "https://eur-lex.europa.eu/eli/dir/1999/92/oj/eng",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Original OJ text page with PDF option; check EUR-Lex for consolidated version. IEC 60079-10-2 (dust zones) via IEC webstore or IS/IEC 60079-10-2 via BIS."
+  }
+ ],
+ "lifting-gear-codes": [
+  {
+   "n": "BIS Know Your Standards – IS 2266 / IS 6216 / IS 3832 (BIS)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number; free PDF download after BIS registration/login."
+  },
+  {
+   "n": "ASME B30.9 Slings (ASME store)",
+   "u": "https://www.asme.org/codes-standards/find-codes-standards/b30-9-slings",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "B30.10 hooks, B30.20 below-the-hook devices, B30.26 rigging hardware are sold via the same ASME catalogue. ISO 4309 (ISO) and EN 13155 / 13889 / 1677 (CEN/BSI) are paid; product pages not verified."
+  },
+  {
+   "n": "Factories Act, 1948 – full text incl. s.29 lifting tackles (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/6323/1/factories_act_1948.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Section 29 – test & examination of lifting machines and tackles; largely subsumed by the OSH Code 2020 from 21 Nov 2025."
+  },
+  {
+   "n": "BOCW (RE&CS) Central Rules, 1998 – lifting appliances testing (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65a132316845c3.92655698.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Central BOCW rules on test, examination and certification of lifting appliances/gear; listed on dgfasli.gov.in/other-acts."
+  }
+ ],
+ "crane-codes": [
+  {
+   "n": "BIS Know Your Standards – IS 3177 / 807 / 4573 / 13367-1 (BIS)",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number; free PDF download after BIS registration/login."
+  },
+  {
+   "n": "29 CFR 1926 Subpart CC – Cranes & Derricks in Construction (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-CC",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "§§1926.1400–1443 incl. §1926.1435 tower cranes."
+  },
+  {
+   "n": "OSHA 1910.179 Overhead and gantry cranes (osha.gov)",
+   "u": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.179",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain"
+  },
+  {
+   "n": "ASME B30.5 Mobile and Locomotive Cranes (ASME store)",
+   "u": "https://www.asme.org/codes-standards/find-codes-standards/b30-5-mobile-locomotive-cranes",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Latest B30.5-2025. B30.2 / B30.3 and BS 7121, BS EN 14439, BS EN 13000 are sold by ASME and BSI respectively."
+  }
+ ],
+ "tools-codes": [
+  {
+   "n": "29 CFR 1926 Subpart I – Tools, Hand and Power (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-I",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "§§1926.300–307."
+  },
+  {
+   "n": "29 CFR 1910 Subpart P – Hand & Portable Powered Tools (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-P",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "§§1910.241–244."
+  },
+  {
+   "n": "PUWER 1998 (SI 1998/2306) – legislation.gov.uk",
+   "u": "https://www.legislation.gov.uk/uksi/1998/2306/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Latest revised version with PDF download on the page; Open Government Licence v3.0."
+  },
+  {
+   "n": "HSG17 Safety in the use of abrasive wheels (HSE, 3rd ed.)",
+   "u": "https://www.hse.gov.uk/pubns/priced/hsg17.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Free HSE PDF (Crown copyright, reusable under OGL). ANSI B7.1 / A10.3 and IS/IEC 62841 are paid standards (ANSI webstore / BIS)."
+  }
+ ],
+ "pit-racking": [
+  {
+   "n": "29 CFR 1910.178 Powered industrial trucks (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-N/section-1910.178",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain"
+  },
+  {
+   "n": "29 CFR 1910.176 Handling materials – general (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-N/section-1910.176",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain"
+  },
+  {
+   "n": "ASME codes & standards catalogue – search ASME B56.1 (ASME)",
+   "u": "https://www.asme.org/codes-standards/find-codes-standards",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Official ASME catalogue (JavaScript search); B56.1 product page not verified."
+  },
+  {
+   "n": "NFPA 13 Installation of Sprinkler Systems (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-13-standard-development/13",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Covers high-piled/rack storage protection; free read-only access with NFPA account. EN 15635 (BSI/CEN, paid) and SEMA guidance not linked."
+  }
+ ],
+ "machinery-codes": [
+  {
+   "n": "ISO 12100:2010 Safety of machinery – risk assessment (ISO store)",
+   "u": "https://www.iso.org/standard/51528.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current (confirmed 2022; revision ISO/DIS 12100 under way). Indian adoption IS 16819 / IS/ISO 12100 via BIS."
+  },
+  {
+   "n": "ISO 13849-1:2023 Safety-related parts of control systems (ISO)",
+   "u": "https://www.iso.org/standard/73481.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Edition 4 replaces 2015. IEC 62061 is sold at webstore.iec.ch."
+  },
+  {
+   "n": "ISO 14120:2015 Guards – fixed and movable (ISO store)",
+   "u": "https://www.iso.org/standard/59545.html",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Marked for revision (ISO/AWI 14120). ISO 13857, ISO 10218-1/-2 and ISO/TS 15066 are in the same ISO catalogue."
+  },
+  {
+   "n": "EU Machinery Regulation (EU) 2023/1230 – OJ text (EUR-Lex PDF)",
+   "u": "https://eur-lex.europa.eu/eli/reg/2023/1230/oj/eng/pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Applies from 20 Jan 2027 (replaces Machinery Directive 2006/42/EC). ELI page: eur-lex.europa.eu/eli/reg/2023/1230/oj/eng."
+  }
+ ],
+ "foundry-codes": [
+  {
+   "n": "Model Rules under the Factories Act – dangerous operations (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//6500599d9c0300.86614403.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Model rules (Rule 120 dangerous operations schedules, incl. foundry, sand-blasting); states' Factories Rules follow these. Listed on dgfasli.gov.in/other-acts."
+  },
+  {
+   "n": "OSHA 29 CFR 1910.1053 Respirable crystalline silica (eCFR)",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-Z/section-1910.1053",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "1910.94 (ventilation) and 1910.132 (PPE) are in the same eCFR part."
+  },
+  {
+   "n": "DGFASLI – OSH laws & Acts listing (Factories Act, Model Rules, OSH Code)",
+   "u": "https://dgfasli.gov.in/other-acts",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "No foundry-specific DGFASLI guidance found online. HSE UK 'Foundries' pages (hse.gov.uk/foundries) could not be fetched; EN ISO 11612 / ASTM F955 are paid standards."
+  }
+ ],
+ "state-dangerous-ops": [
+  {
+   "n": "Model Rules under the Factories Act – Rule 120 schedules (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//6500599d9c0300.86614403.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "Reference model for state dangerous-operations schedules (s.87). Full Karnataka Factories Rules 1969 / TN Factories Rules 1950 PDFs not located online."
+  },
+  {
+   "n": "TN Factories Rules – Rule 95 Sch. XVII & XXIV amendment 2022 (DISH)",
+   "u": "https://dish.tn.gov.in/assets/pdf/Amendment%20of%20Rules%20for%20first%20aid%20training.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "SRO A-27/2022, G.O. Ms. 162 LWSD, 6 Dec 2022 (TN Gazette 28 Dec 2022). Amends Rule 63-B and Rule 95 Schedules XVII, XXIV."
+  },
+  {
+   "n": "DISH Tamil Nadu – Directorate of Industrial Safety & Health (homepage)",
+   "u": "https://dish.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Homepage only – no Acts/Rules download list exposed to automated fetch. Also: Schedule XX (asbestos) amendment PDF at dish.tn.gov.in/assets/pdf/."
+  },
+  {
+   "n": "DFBISH Karnataka – Factories, Boilers, Industrial Safety & Health",
+   "u": "https://factories.karnataka.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage only – site blocks automated fetch; Karnataka Factories Rules 1969 (Rule 129 schedules) not located online."
+  }
+ ],
+ "ht-codes": [
+  {
+   "n": "CEA (Measures relating to Safety & Electric Supply) Regs 2023 – Gazette",
+   "u": "https://cea.nic.in/api/regulation-report/view/en/a9139e01-ca0c-4a07-8e3d-4937602c5f8f",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Notification CEA-PS-16/1/2021, 8 Jun 2023 (Gazette Pt III Sec 4 No. 377, 12 Jun 2023). Bilingual Gazette PDF – Hindi text first. Listed on CEA 'Measures relating to safety' page."
+  },
+  {
+   "n": "CEA Safety & Electric Supply Amendment Regulations, 2026 (CEA)",
+   "u": "https://cea.nic.in/api/regulation-report/view/hi/5fb81b1a-9b7f-4b1a-a54d-813e741788fa",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "From CEA official listing (regulations-subcategory 'Measures relating to safety and electricity supply'); scanned PDF, text not machine-readable so content could not be confirmed."
+  },
+  {
+   "n": "NFPA 70E Electrical Safety in the Workplace (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-70e-standard-development/70e",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Arc-flash boundaries & PPE; free read-only access with NFPA account. IEEE 1584 (IEEE Standards store) and IEC 61936-1 (IEC webstore) are paid."
+  },
+  {
+   "n": "BIS Know Your Standards – IS 5216 / 3043 / 10028 / 1646 / 732",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number; free PDF download after BIS registration/login."
+  }
+ ],
+ "battery-solar-codes": [
+  {
+   "n": "NFPA 855 Installation of Stationary Energy Storage Systems (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-855-standard-development/855",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only access with NFPA account. UL 9540/9540A (UL Standards & Engagement) and IEC 62619/62933-5-2 (IEC webstore) are paid."
+  },
+  {
+   "n": "CEA Tech. Standards – Connectivity of Distributed Generation Regs 2013",
+   "u": "https://cea.nic.in/api/regulation-report/view/en/f8100f6e-8eda-42c7-9694-09653218cdd3",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Gazette 7 Oct 2013 (notified 30 Sep 2013). 2019 amendment: cea.nic.in/api/regulation-report/view/en/ebf4942a-ae2d-473a-8429-f5a3af4a4f5e. EV charging safety is in CEA Safety Regs 2023 (see ht-codes)."
+  },
+  {
+   "n": "Battery Waste Management Rules, 2022 – Gazette S.O. 3984(E) (MoEFCC)",
+   "u": "https://moef.gov.in/uploads/pdf-uploads/pdf_676567459cdfe9.16099796.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Original 22 Aug 2022 notification; 2024–2025 amendments listed at moef.gov.in/rules-regulations-3."
+  },
+  {
+   "n": "BIS Know Your Standards – IS 16046 / IS 14286 / IS 61730 / IS 1651",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number (incl. IS/IEC 60364-7-712, IS/IEC 62619); free download after BIS login. Standards published after 1 Oct 2025 are on standards.bis.gov.in."
+  }
+ ],
+ "fire-systems": [
+  {
+   "n": "BIS Know Your Standards – IS 13039 / 15105 / 2189 / 2190 / 15683 etc.",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Search by IS number (also IS 3844, 1641/1642/1644, 12349, 15325); free PDF download after BIS registration/login."
+  },
+  {
+   "n": "NFPA 25 Inspection, Testing & Maintenance of Water-Based Systems",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-25-standard-development/25",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only access with NFPA account; purchase for download."
+  },
+  {
+   "n": "NFPA 13 Installation of Sprinkler Systems (NFPA)",
+   "u": "https://www.nfpa.org/codes-and-standards/nfpa-13-standard-development/13",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "NFPA 14 / 20 / 72 have equivalent pages (nfpa-14-standard-development/14 etc.)."
+  },
+  {
+   "n": "NFPA free access – read-only codes & standards (NFPA)",
+   "u": "https://www.nfpa.org/for-professionals/codes-and-standards/list-of-codes-and-standards/free-access",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Free read-only viewing of NFPA 13/14/20/25/72 after free registration. TAC fire-protection rules (insurance) have no current official online source – TAC was dissolved; insurers/IRDAI guidance applies"
+  }
+ ],
+ "tunnel-codes": [
+  {
+   "n": "BOCW (RE&CS) Central Rules, 1998 – full text (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65a132316845c3.92655698.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Hosted on DGFASLI 'Other Acts' page. Tunnelling/compressed-air and excavation chapters are in Part III. Now subsumed under the OSH Code, 2020."
+  },
+  {
+   "n": "29 CFR 1926 Subpart S (1926.800–804, compressed air) – eCFR",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-S",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Includes 1926.803 compressed air and Appendix A decompression tables. OSHA page: https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.800"
+  },
+  {
+   "n": "UK Work in Compressed Air Regulations 1996 – legislation.gov.uk",
+   "u": "https://www.legislation.gov.uk/uksi/1996/1656/contents",
+   "k": "page",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Only the as-made version is published. Whole-instrument PDF: https://www.legislation.gov.uk/uksi/1996/1656/made/data.pdf (link on the page; direct fetch blocked by robots)."
+  },
+  {
+   "n": "BS 6164:2019 Health & safety in tunnelling – BSI Knowledge",
+   "u": "https://knowledge.bsigroup.com/products/health-and-safety-in-tunnelling-in-the-construction-industry-code-of-practice",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Current; replaces BS 6164:2011. ITA guidelines not included (ita-aites.org). Indian codes IS 4756:1978 (tunnelling) and IS 4138:1977 (compressed air) are listed on BIS 'Safety in Construction' list: h"
+  }
+ ],
+ "piling-codes": [
+  {
+   "n": "IS 2911 (Part 1/Sec 2):2010 Bored cast in-situ piles – BIS",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/OTQyNg==",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "BIS standard details page; 'Click to download' goes to BIS e-sales portal (standardsbis.bsbedge.com), free download for Indian Standards after registration. Other parts (driven, precast, load test Par"
+  },
+  {
+   "n": "BOCW (RE&CS) Central Rules, 1998 – full text (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65a132316845c3.92655698.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Excavation, foundation and piling provisions in Part III safety chapters. Now subsumed under the OSH Code, 2020."
+  },
+  {
+   "n": "FPS working platform certificate & guidance (fps.org.uk)",
+   "u": "https://www.fps.org.uk/guidance/working-platform-guidance/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Page lists PDFs: Working Platform Certificate (WPC4e, Jul 2025), granular materials, excavation & reinstatement, rig track pressure tool. Other FPS safety guidance: https://www.fps.org.uk/guidance/saf"
+  },
+  {
+   "n": "BS EN 16228-1:2014+A1 Drilling & foundation equipment safety – BSI",
+   "u": "https://knowledge.bsigroup.com/products/drilling-and-foundation-equipment-safety-common-requirements",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Part 1 common requirements; Parts 2–7 cover specific rig types. OSHA 1926 Subpart CC (cranes) on eCFR not included."
+  }
+ ],
+ "blasting-codes": [
+  {
+   "n": "Explosives Rules, 2008 – PESO statutory rules listing",
+   "u": "https://www.peso.gov.in/en/node/1028",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "PESO index page listing Explosives Act 1884, Explosive Rules 2008 and amendment notifications; direct PDF link could not be extracted (PESO blocks automated fetch). PESO SOP for ER-2008 licences: http"
+  },
+  {
+   "n": "IS 4081:2013 Blasting & related drilling operations – BIS",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/NTEx",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Second revision. Download via BIS e-sales portal (standardsbis.bsbedge.com, free for Indian Standards after registration)."
+  },
+  {
+   "n": "DGMS Mines Safety Statute – CMR 2017, MMR 1961, Explosives Rules",
+   "u": "https://dgms.gov.in/UserView/index?mid=1306",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "DGMS page listing PDFs of Coal Mines Regulations 2017, Metalliferous Mines Regulations 1961 and Explosives Rules 2008. DGMS Technical Circular 7/1997 (ground vibration) not found on an official site; "
+  },
+  {
+   "n": "29 CFR 1926 Subpart U Blasting & use of explosives – eCFR",
+   "u": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-U",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Sections 1926.900–914 incl. misfires (1926.911)."
+  }
+ ],
+ "water-codes": [
+  {
+   "n": "Dock Workers (Safety, Health & Welfare) Regulations, 1990 – DGFASLI",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//650059cc2d72e4.67466890.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 80(E), 16 Feb 1990; major ports. Now subsumed under the OSH Code, 2020."
+  },
+  {
+   "n": "OSHA 29 CFR 1926.106 Working over or near water",
+   "u": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.106",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Parts 1917 (marine terminals) and 1918 (longshoring) are on eCFR, title 29."
+  },
+  {
+   "n": "IS 13416 (Part 5):1994 Hazards at workplaces – BIS",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/NTA0OA==",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Check app data: BIS lists Part 5 as 'Fire protection', not prevention of drowning. Download via BIS e-sales portal (free for Indian Standards after registration)."
+  },
+  {
+   "n": "Merchant Shipping Act, 2025 – full text (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22147/1/202524eng.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 24 of 2025, text as on 1 Jul 2026; replaces the Merchant Shipping Act, 1958 (see s.324). ILO C152 text on NORMLEX could not be fetched."
+  }
+ ],
+ "lab-codes": [
+  {
+   "n": "OSHA 29 CFR 1910.1450 Laboratory Standard (Chemical Hygiene Plan)",
+   "u": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1450",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Includes Appendix A (NRC prudent practices) and Appendix B references. OSHA labs topic page: https://www.osha.gov/laboratories"
+  },
+  {
+   "n": "DBT rDNA Research & Biocontainment Regulations/Guidelines 2017 – IBKP",
+   "u": "https://ibkp.dbtindia.gov.in/Content/Rules",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "DBT Indian Biosafety Knowledge Portal listing; also has BSL-2/BSL-3 containment facility guidelines (2020, 2024) and risk-group list (2021)."
+  },
+  {
+   "n": "Bio-Medical Waste Management Rules, 2016 – CPCB",
+   "u": "https://cpcb.nic.in/rules-3/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "CPCB BMW rules page (G.S.R. 343(E), 28 Mar 2016); no direct consolidated PDF found. 2018 amendment (G.S.R. 234(E)) PDF on TNPCB: https://tnpcb.gov.in/PDF/Waste_Mngt/Biomedical/BMWRules16318.pdf"
+  },
+  {
+   "n": "BIS Indian Standards catalogue (IS 15656 etc.) – Know Your Standards",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Search IS 15656 (hazard identification & risk analysis) via 'IS Number Search'; download through BIS e-sales portal (free for Indian Standards after registration). ISO/IEC 17025 (iso.org, paid) and OE"
+  }
+ ],
+ "bio-codes": [
+  {
+   "n": "OSHA Bloodborne Pathogens (29 CFR 1910.1030) – OSHA topic page",
+   "u": "https://www.osha.gov/bloodborne-pathogens",
+   "k": "page",
+   "a": "free",
+   "share": "public-domain",
+   "note": "Topic page for the standard; the standard page https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.1030 could not be fetched in this check."
+  },
+  {
+   "n": "HSE L8 Legionnaires' disease ACoP (4th ed., 2013) – free PDF",
+   "u": "https://www.hse.gov.uk/pubns/priced/l8.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "open-licence",
+   "note": "Crown copyright; HSE free publications are normally reusable under the Open Government Licence – confirm the statement in the PDF. Book page: https://www.hse.gov.uk/pubns/books/l8.htm. ASHRAE 188 (pai"
+  },
+  {
+   "n": "Bio-Medical Waste Management Rules, 2016 – CPCB",
+   "u": "https://cpcb.nic.in/rules-3/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "CPCB BMW rules page (G.S.R. 343(E), 28 Mar 2016); no direct consolidated PDF found. 2018 amendment (G.S.R. 234(E)) PDF on TNPCB: https://tnpcb.gov.in/PDF/Waste_Mngt/Biomedical/BMWRules16318.pdf"
+  },
+  {
+   "n": "MoHFW – Ministry of Health & Family Welfare (homepage)",
+   "u": "https://mohfw.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Homepage only (from app data; not fetched). Epidemic Diseases Act 1897 (amended 2020) text not located – search India Code (indiacode.nic.in). IS 10500:2012 is available via the BIS standards portal."
+  }
+ ],
+ "security-codes": [
+  {
+   "n": "PSARA 2005 & PSA Central Model Rules 2020 – MHA PSARA portal",
+   "u": "https://psara.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "MHA PSARA licensing portal; lists downloads of the Act (No. 29 of 2005) and Central Model Rules 2020 (G.S.R. 776(E), gazette). Licensing is by State Home Departments."
+  },
+  {
+   "n": "POSH Act, 2013 – SHe-Box portal (Ministry of WCD)",
+   "u": "https://shebox.wcd.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Portal describes the Sexual Harassment of Women at Workplace (PPR) Act 2013 with 'Read More' link to the text; complaint filing portal."
+  },
+  {
+   "n": "Bharatiya Nyaya Sanhita, 2023 – NCRB Sankalan (new criminal laws)",
+   "u": "https://www.ncrb.gov.in/uploads/SankalanPortal/Index.html",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Linked from MHA homepage 'Important Links'; automated fetch blocked. MHA Acts listing: https://www.mha.gov.in/acts-rules"
+  },
+  {
+   "n": "IRC:SP:55 Traffic management in work zones – Indian Roads Congress",
+   "u": "https://www.irc.nic.in",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Homepage only; IRC codes are sold by IRC (no specific catalogue page found). NDMA guidelines and municipal bye-laws not included."
+  }
+ ],
+ "drone-rules": [
+  {
+   "n": "Drone Rules, 2021 – DGCA Digital Sky portal",
+   "u": "https://digitalsky.dgca.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage only (official URL from app data; automated fetch blocked). Base rules: G.S.R. 589(E), 25 Aug 2021, under the Aircraft Act 1934; direct PDF not located on MoCA/DGCA listings."
+  },
+  {
+   "n": "Drone (Amendment) Rules, 2022 – MoCA (Gazette PDF)",
+   "u": "https://www.civilaviation.gov.in/sites/default/files/2025-11/drone-amendment-rules-2022-dated-11-feb-2022.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 108(E), 11 Feb 2022 – remote pilot certificate changes. Listed at https://www.civilaviation.gov.in/ministry-documents/rules"
+  },
+  {
+   "n": "Drone (Amendment) Rules, 2023 – MoCA (Gazette PDF)",
+   "u": "https://www.civilaviation.gov.in/sites/default/files/2023-10/Drone%20%28Amendment%29%20Rules%2C%202023.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.S.R. 715(E), 27 Sep 2023 – Form D-4 identity proof. Listed in MoCA rules archive."
+  },
+  {
+   "n": "DGCA – Drones & Advanced Air Mobility page",
+   "u": "https://www.dgca.gov.in/digigov-portal/jsp/dgca/InventoryList/headerblock/drones/RPAS.jsp",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "DGCA drone section (JavaScript-heavy). Note: Bharatiya Vayuyan Adhiniyam 2024 has replaced the Aircraft Act 1934 – check for any re-issued drone rules."
+  }
+ ],
+ "road-works-codes": [
+  {
+   "n": "IRC:SP:55 / MoRTH Specifications (bituminous works) – IRC",
+   "u": "https://www.irc.nic.in",
+   "k": "page",
+   "a": "paid",
+   "share": "no",
+   "note": "Homepage only; IRC:SP:55, IRC:SP:98 and MoRTH Specifications for Road & Bridge Works (published by IRC) must be bought from IRC."
+  },
+  {
+   "n": "Eurobitume HSE – safe handling of hot bitumen, burns & fumes",
+   "u": "https://eurobitume.eu/bitumen/hse/",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "note": "Industry association guidance (Safe Handling Card, Bitumen Burns Card, Guide to Safe Delivery of Bitumen) – see https://eurobitume.eu/publications/ (HSE filter)."
+  },
+  {
+   "n": "Petroleum Rules, 2002 – PESO statutory rules listing",
+   "u": "https://www.peso.gov.in/en/node/1028",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "PESO index listing Petroleum Act 1934 and Petroleum Rules 2002 (cutback bitumen/kerosene storage). Direct PDF link could not be extracted."
+  }
+ ],
+ "is-17893": [
+  {
+   "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Use 'IS Number Search' for IS 17893:2023 (Work permit system – code of practice); its page links to the BIS e-sales download. Specific detail page could not be located without site search."
+  },
+  {
+   "n": "BIS e-sales portal – Indian Standards download",
+   "u": "https://standardsbis.bsbedge.com/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Indigenous Indian Standards download free after registration (FileOpen plug-in needed). Standards published after 1 Oct 2025 are on the new portal standards.bis.gov.in."
+  }
+ ],
+ "tn-cimah": [
+  {
+   "n": "DISH Tamil Nadu – Directorate of Industrial Safety & Health (homepage)",
+   "u": "https://dish.tn.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage only – TN CIMAH Rules 1994 text not found online on an official site (DISH site is JavaScript-driven; labour.tn.gov.in blocks automated access)."
+  },
+  {
+   "n": "Model Major Accident Hazard Control Rules, 1997 – DGFASLI (reference)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65005a4eacf128.13405955.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "DGFASLI model MAH rules (text as on 18.9.2001) under Factories Act Ch. IV-A – reference only, not the state rules."
+  }
+ ],
+ "ka-mah-rules": [
+  {
+   "n": "Karnataka Labour Department (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). Major Accident Hazards Control (Karnataka) Rules 1994 text not located; check the Factories, Boilers, Industria"
+  },
+  {
+   "n": "Model Major Accident Hazard Control Rules, 1997 – DGFASLI (reference)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65005a4eacf128.13405955.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "DGFASLI model MAH rules (text as on 18.9.2001) under Factories Act Ch. IV-A – reference only, not the state rules."
+  }
+ ],
+ "ka-bocw-amend-2024": [
+  {
+   "n": "Karnataka Labour Department (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). BOCW (Karnataka Amendment) Rules 2024 notification not located; check Karnataka e-Gazette or the Karnataka BOCW"
+  },
+  {
+   "n": "BOCW (RE&CS) Central Rules, 1998 – full text (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65a132316845c3.92655698.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Central counterpart for comparison with the Karnataka BOCW Rules 2006 technical chapters."
+  },
+  {
+   "n": "OSH Code, 2020 – Gazette text (DGFASLI)",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//650059fbb8f1a9.98699174.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 2020 as published 29 Sep 2020 (not consolidated); in force from 21 Nov 2025 and subsumes the BOCW Act 1996."
+  }
+ ],
+ "ka-boiler-rules-1982": [
+  {
+   "n": "Karnataka Labour Department (homepage)",
+   "u": "https://labour.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). Karnataka Boiler Rules 1982 text not located; administered by the Chief Inspector of Boilers, Dept of Factories"
+  },
+  {
+   "n": "Boilers Act, 1923 (as amended to 2007) – DGFASLI",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65005a94466750.54352011.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Parent Act for state boiler rules. Reportedly replaced by the Boilers Act, 2025 – check commencement; state rules continue until replaced."
+  }
+ ],
+ "tn-boiler-rules": [
+  {
+   "n": "Tamil Nadu Boiler Directorate (homepage)",
+   "u": "https://boilers.tn.gov.in/",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Homepage only – enforcing authority for the Boilers Act; site has a 'Documents & Reports' section but TN Boiler Rules text could not be located (automated access blocked on sub-pages)."
+  },
+  {
+   "n": "Boilers Act, 1923 (as amended to 2007) – DGFASLI",
+   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65005a94466750.54352011.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Parent Act for state boiler rules. Reportedly replaced by the Boilers Act, 2025 – check commencement; state rules continue until replaced."
+  }
+ ],
+ "bis-ptw-hygiene": [
+  {
+   "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Search each IS number (3103, 6665, 7194, 15652, 10592, 4209, 11457 Pt 1, 17859) via 'IS Number Search'; each detail page links to the e-sales download. Specific detail pages could not be located."
+  },
+  {
+   "n": "BIS e-sales portal – Indian Standards download",
+   "u": "https://standardsbis.bsbedge.com/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Indigenous Indian Standards download free after registration (FileOpen plug-in needed)."
+  }
+ ],
+ "bis-construction-2": [
+  {
+   "n": "BIS 'Safety in Construction' list (IS 8989, 5121, 5916, 13415, SP 70)",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/dgdashboard/published/sub_sub_grp_stn_list/92",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Official BIS list of 22 construction-safety standards with links to each detail page (IS 8989 id 16201, IS 5916 id 512, IS 13415 id 5043, IS 3764, IS 4014 Pt 2, IS 3696 etc.). Safety nets, SCBA, flash"
+  },
+  {
+   "n": "SP 70:2001 Handbook on construction safety practices – BIS",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails_mnd/17746",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Download via BIS e-sales portal (search_redirect id=17746)."
+  },
+  {
+   "n": "IS 5121:2013 Piling & deep foundations – code of safety – BIS",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails_mnd/11880",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "First revision; CED 45. Download via BIS e-sales portal."
+  },
+  {
+   "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Search IS 5175, 11057, 11972, 10245 Pts 1–4, 11006, 16819, 1991, 2762 via 'IS Number Search'."
+  }
+ ],
+ "bis-ppe-2": [
+  {
+   "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Search IS 2925, 15298, 5983, 8520, 6994, 4770, 13774, 9167, 6229, 9473, 15322, 15809, 15748, 10592 via 'IS Number Search'; detail pages link to the e-sales download. Specific pages could not be locate"
+  },
+  {
+   "n": "BIS 'Safety footwear' standards list (IS 15298, IS 1989, IS 11226)",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/dgdashboard/published/sub_sub_grp_stn_list/148",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Lists IS 15298 Parts 5–8:2004 and other safety-footwear standards with detail-page links; IS 15298 Parts 2–4 (ISO 20345/6/7 based) not shown in this list – search the catalogue."
+  },
+  {
+   "n": "BIS e-sales portal – Indian Standards download",
+   "u": "https://standardsbis.bsbedge.com/",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Indigenous Indian Standards download free after registration. Check BIS product certification (ISI mark / QCO) status separately on bis.gov.in."
+  }
+ ]
+};
 const DOCS_CHECKED = "2026-10-25";
 
 </script>
