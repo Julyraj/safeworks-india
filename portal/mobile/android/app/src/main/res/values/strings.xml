@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SafeWorks</string>
+    <string name="title_activity_main">SafeWorks</string>
+    <string name="package_name">in.safeworks.portal</string>
+    <string name="custom_url_scheme">in.safeworks.portal</string>
+</resources>

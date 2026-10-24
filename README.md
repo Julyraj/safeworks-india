@@ -22,6 +22,16 @@ Once installed it works **without internet**. Your observations, photos, checkli
 - **Share** permits, incident notices, observation cards and emergency sheets through the phone's share menu.
 - Bottom tab bar (Home · Observe · SOS · Permit · Menu), offline cache, install prompt, Android back-button support, backup/restore of your data.
 
+## SafeWorks Portal (multi-site observation system)
+
+The [`portal/`](portal/) folder holds the company-wide version, a server-backed system for many sites:
+- Safety officers raise observation points with photos (at least 1, at most 2).
+- Supervisors close the points with their own logins.
+- Safety officers approve the closures.
+- Admins run sites, users and passwords from a separate admin console.
+
+It has a website, an Android app (`SafeWorks-Portal.apk`, releases tagged `portal-v…`) and an admin console. Its PostgreSQL backend is load-tested for 100 people per site working at the same time. See [portal/README.md](portal/README.md) to run it.
+
 ## What is inside
 
 | Section | Count | What it gives you |

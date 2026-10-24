@@ -1,0 +1,49 @@
+# Run SafeWorks Portal with its own PostgreSQL on any server (cloud VM in India or a company server).
+#   cd portal && cp .env.example .env   # then edit the values
+#   docker compose up -d --build
+#   docker compose exec app npm run seed  # first time: master lists, company, 5 pilot sites, first admin login
+# Put HTTPS in front of port 8080 (e.g. Caddy, Nginx or the cloud load balancer) before anyone signs in.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: safeworks
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      POSTGRES_DB: safeworks
+    command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=512MB"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U safeworks"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build:
+      context: ..
+      dockerfile: portal/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://safeworks:${DB_PASSWORD}@db:5432/safeworks
+      FILE_SIGNING_SECRET: ${FILE_SIGNING_SECRET:?Set FILE_SIGNING_SECRET in .env}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8080}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://localhost,capacitor://localhost}
+      TRUST_PROXY: ${TRUST_PROXY:-true}
+      SMTP_URL: ${SMTP_URL:-}
+      MAIL_FROM: ${MAIL_FROM:-SafeWorks <no-reply@safeworks.local>}
+      SEED_COMPANY: ${SEED_COMPANY:-Your Company}
+      SEED_ADMIN_ID: ${SEED_ADMIN_ID:-ADMIN01}
+    ports:
+      - "8080:8080"
+    volumes:
+      - storage:/data/storage
+
+volumes:
+  pgdata:
+  storage:

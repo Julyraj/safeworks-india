@@ -1,0 +1,13 @@
+{
+  "appId": "in.safeworks.portal",
+  "appName": "SafeWorks",
+  "webDir": "../web/dist",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

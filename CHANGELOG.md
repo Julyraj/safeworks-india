@@ -1,5 +1,21 @@
 # Changelog
 
+## Portal 1.0 (Phase 1 MVP) — 2026-10-24
+- New `portal/`: multi-site safety observation system with a user portal and installable web app, an Android app (Capacitor), and a separate admin console.
+- Employee ID + password login, forced change of temporary passwords, lockout after 5 wrong attempts, admin set/reset/unlock/force-change, bulk user import, audit log.
+- Observation points:
+  - 1–2 photos, compressed and stamped on the phone
+  - 165-item unsafe act/condition master list, hazards, 60 work activities, 12 Life-Saving Rules
+  - tap-to-set 5×5 risk matrix, due dates by risk (editable in Settings)
+  - safety walks, corrected-on-the-spot, repeat detection, offline queue
+- Workflow: assign → supervisor closure (comment + optional photo) → safety officer approval or rejection. No self-approval. Every change is versioned.
+- Dashboards: personal counters (created, open, overdue, awaiting approval, closed), site dashboard, company overview, CSV export with photo links.
+- Tests:
+  - 12 end-to-end workflow and permission tests
+  - load test script, passed with 100 users on one site
+  - Docker Compose deployment and a GitHub Actions workflow for tests and the APK
+
+
 ## 3.2 — 2026-10-24 — the app release
 - Installable app: PWA manifest, offline service worker, app icons, install button; standalone `index.html` with proper document head.
 - Android app (Capacitor 8.5.2) with launcher icons, splash, camera permission, native share and back button; GitHub Actions builds the APK and publishes it to Releases on every push.

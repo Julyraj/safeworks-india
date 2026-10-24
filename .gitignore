@@ -16,3 +16,17 @@ app/android/capacitor-cordova-android-plugins/build/
 *.keystore
 app/www/
 !app/android/app/safeworks-debug.keystore
+
+# SafeWorks Portal
+portal/web/dist/
+portal/server/dist/
+portal/server/storage/
+portal/.env
+portal/server/loadtest-report-*.json
+portal/mobile/android/.gradle/
+portal/mobile/android/build/
+portal/mobile/android/app/build/
+portal/mobile/android/local.properties
+portal/mobile/android/app/src/main/assets/public/
+portal/mobile/android/capacitor-cordova-android-plugins/build/
+!portal/mobile/android/app/safeworks-debug.keystore

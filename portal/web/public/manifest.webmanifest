@@ -1,0 +1,23 @@
+{
+  "name": "SafeWorks – site safety observations",
+  "short_name": "SafeWorks",
+  "description": "Raise, assign, close and approve site safety observations with photos.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EEF1F3",
+  "theme_color": "#0F1C2B",
+  "lang": "en-IN",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Raise observation", "short_name": "Raise", "url": "/raise" },
+    { "name": "SOS – emergency numbers", "short_name": "SOS", "url": "/sos" }
+  ]
+}

@@ -1,0 +1,122 @@
+name: SafeWorks Portal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "portal/**"
+      - "data/**"
+      - "index.html"
+      - ".github/workflows/portal.yml"
+  pull_request:
+    paths:
+      - "portal/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portal-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Typecheck, build and test
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: safeworks
+          POSTGRES_PASSWORD: safeworks
+          POSTGRES_DB: safeworks_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U safeworks" --health-interval 5s --health-timeout 5s --health-retries 20
+    defaults:
+      run:
+        working-directory: portal
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portal/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Workflow and permission tests
+        run: npm test
+        env:
+          TEST_DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
+      - name: 100-user load test (short run)
+        working-directory: portal/server
+        env:
+          DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
+          FILE_SIGNING_SECRET: ci-only-secret-0123456789abcdef0123456789abcdef
+          STORAGE_DIR: ${{ runner.temp }}/storage
+          RUN_JOBS: "false"
+          SEED_ADMIN_PASSWORD: CiAdmin2026
+          UV_THREADPOOL_SIZE: "8"
+        run: |
+          psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "drop schema public cascade; create schema public;"
+          npm run seed
+          psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "update users set must_change_password = false where employee_id = 'ADMIN01';"
+          node dist/index.js > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:8080/api/health && break; sleep 1; done
+          BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json npx tsx scripts/loadtest.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: loadtest-report
+          path: portal/server/loadtest-report.json
+          if-no-files-found: ignore
+
+  android:
+    name: Android app (APK)
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Build web app
+        working-directory: portal
+        run: |
+          npm ci
+          npm run build -w web
+      - name: Sync Capacitor
+        working-directory: portal/mobile
+        run: |
+          npm ci || npm install
+          npx cap sync android
+      - name: Build APK
+        working-directory: portal/mobile/android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: 1.0.${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon -q || { echo "::error title=Gradle build failed::See the log above"; exit 1; }
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/SafeWorks-Portal.apk"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SafeWorks-Portal-apk
+          path: SafeWorks-Portal.apk
+      - name: Publish release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "portal-v1.0.${{ github.run_number }}" SafeWorks-Portal.apk \
+            --title "SafeWorks Portal app 1.0.${{ github.run_number }}" \
+            --notes "Android app for the SafeWorks portal (safety observations). On first launch, enter your company's SafeWorks server address (HTTPS) and sign in with your employee ID." \
+            --latest=false
