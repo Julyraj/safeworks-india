@@ -1,0 +1,83 @@
+name: Build Android app
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "app/**"
+      - "icons/**"
+      - "manifest.webmanifest"
+      - "build.py"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-build
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Build web assets
+        run: python3 build.py --no-json
+
+      - name: Install Capacitor
+        working-directory: app
+        run: npm ci
+
+      - name: Sync web assets into the Android project
+        working-directory: app
+        run: npx cap sync android
+
+      - name: Build APK
+        working-directory: app/android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: 3.2.${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Collect APK
+        run: cp app/android/app/build/outputs/apk/debug/app-debug.apk SafeWorks-India.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SafeWorks-India-apk
+          path: SafeWorks-India.apk
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v3.2.${{ github.run_number }}"
+          gh release create "$TAG" SafeWorks-India.apk \
+            --title "SafeWorks India $TAG (Android)" \
+            --target "${{ github.sha }}" \
+            --latest \
+            --notes "Android app for SafeWorks India – construction & industrial safety desk.
+
+          **Install:** download \`SafeWorks-India.apk\` on your Android phone, open it, and allow *Install unknown apps* for your browser/Files app when asked. Later versions install as updates over this one.
+
+          Works offline: SOS one-tap calling, observation cards with photos, permit builder, incident navigator, first aid, protocols, procedures, checklists and Indian (central, Karnataka, Tamil Nadu) regulations.
+
+          Built from commit ${{ github.sha }}."

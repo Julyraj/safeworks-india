@@ -4,3 +4,15 @@ Thumbs.db
 node_modules/
 __pycache__/
 data/_export.js
+# Android build outputs (project sources are committed)
+app/android/.gradle/
+app/android/build/
+app/android/app/build/
+app/android/local.properties
+app/android/app/src/main/assets/public/
+app/android/capacitor-cordova-android-plugins/build/
+*.apk
+*.aab
+*.keystore
+app/www/
+!app/android/app/safeworks-debug.keystore

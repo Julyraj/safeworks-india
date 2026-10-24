@@ -158,7 +158,37 @@ input.num{border:1px solid var(--line);background:var(--surface);color:var(--fg)
   .timeline .ev{grid-template-columns:1fr}
   .refs{grid-template-columns:1fr}
 }
-@media print{.rail,.top{display:none}}
+/* ----- app shell: SOS, tab bar, install ----- */
+.sosfab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:15;background:var(--crit);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:700;letter-spacing:.06em;box-shadow:0 6px 18px rgba(179,38,30,.35);text-decoration:none;font-size:14px;display:inline-flex;align-items:center;gap:8px}
+.sosfab:hover{filter:brightness(1.08)}
+.sosgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.sosbtn{display:flex;flex-direction:column;gap:2px;padding:16px;border-radius:10px;text-decoration:none;color:#fff;background:var(--crit);min-height:96px;justify-content:center}
+.sosbtn.alt{background:var(--nav);}
+.sosbtn b{font-family:var(--mono);font-size:30px;line-height:1.1;letter-spacing:.02em}
+.sosbtn span{font-size:13px;opacity:.92}
+.sosbtn:active{transform:scale(.98)}
+.sosbtn b.long{font-size:21px;white-space:nowrap}
+.installbtn{white-space:nowrap}
+.tabbar{display:none}
+.obsthumb{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.photoprev{max-width:220px;max-height:220px;border-radius:8px;border:1px solid var(--line);margin-top:8px}
+@media (max-width:860px){
+  .rail .nav,.rail .railfoot{display:none}
+  body.menu-open .rail{position:fixed;inset:0;z-index:30;overflow:auto;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+  body.menu-open .rail .nav{display:flex;flex-direction:column;overflow:visible}
+  body.menu-open .rail .nav .grp{display:block}
+  body.menu-open .rail .nav a{white-space:normal;font-size:15px;padding:10px 12px}
+  body.menu-open .rail .nav a .n{display:inline}
+  .sosfab{display:none}
+  .content{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--nav);border-top:1px solid rgba(255,255,255,.08);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  .tabbar a,.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--nav-fg);text-decoration:none;font-size:11px;background:none;border:0;padding:6px 2px;border-radius:8px;font-family:var(--font)}
+  .tabbar svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar .on{color:#fff;background:var(--nav-active)}
+  .tabbar .sos{color:#fff;background:var(--crit);font-weight:700}
+  .brand{justify-content:space-between}
+}
+@media print{.rail,.top,.tabbar,.sosfab{display:none}}
 </style>
 
 <div class="app">
@@ -171,10 +201,19 @@ input.num{border:1px solid var(--line);background:var(--surface);color:var(--fg)
   <div class="top">
     <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search acts, procedures, checklists, forms, deadlines, glossary…" autocomplete="off"><kbd>/</kbd></div>
     <div class="asof" id="asof">20 Oct 2026</div>
+    <button class="btn sm primary installbtn" id="installBtn" hidden>Install app</button>
   </div>
   <main class="content" id="view"></main>
 </div>
 </div>
+<a class="sosfab" href="#sos" aria-label="Open SOS emergency screen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>SOS</a>
+<nav class="tabbar" id="tabbar" aria-label="Main">
+  <a href="#home" data-tab="home"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>Home</a>
+  <a href="#observe" data-tab="observe"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Observe</a>
+  <a href="#sos" data-tab="sos" class="sos"><svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>SOS</a>
+  <a href="#permits" data-tab="permits"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="m9 14 2 2 4-4"/></svg>Permit</a>
+  <button type="button" id="menuBtn" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>
+</nav>
 
 <script>
 //__DATA__
@@ -198,16 +237,21 @@ ICONS.rules='<svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8
 ICONS.aid='<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M9 6V4h6v2M12 10v6M9 13h6"/></svg>';
 ICONS.key='<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/><path d="m20.5 18.5 2 2"/></svg>';
 ICONS.matrix='<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 10h16M4 16h16M10 4v16M16 4v16"/></svg>';
-const VIEWS=[["Overview",[["home","Dashboard","home"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["matrix","TN vs Karnataka matrix","matrix",MATRIX.domains.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
+ICONS.sos='<svg viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>';
+ICONS.app='<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>';
+const VIEWS=[["Overview",[["home","Dashboard","home"],["sos","SOS – emergency","sos"],["app","App & my data","app"]]],["Library",[["regulations","Regulations & standards","reg",REGS.length],["matrix","TN vs Karnataka matrix","matrix",MATRIX.domains.length],["procedures","Safe work procedures","proc",PROCS.length],["protocols","Safety protocols","rules",PROTO_COUNT],["unsafe","Unsafe acts & conditions","eye",UNSAFE_COUNT],["firstaid","First aid","aid",FIRSTAID.topics.length],["checklists","Checklists","ck",CHECKLISTS.length],["sectors","Sector guides","sector",SECTORS.length],["forms","Forms & registers","forms",FORMS.length],["numbers","Limits & thresholds","num",NUMBERS.length],["keywords","Keywords & glossary","key",KEYWORDS.length]]],["Tools",[["permits","Permit builder","permit"],["incidents","Incident navigator","inc"],["observe","Observation card","eye"],["carbon","Carbon & ESG desk","carbon"],["reporting","Reporting deadlines","rep",REPORTING.length],["talks","Toolbox talks","talk",TALKS.length],["emergency","Emergency contacts","em"]]]];
 const STATE={regJ:"All",regD:"All",regS:"All",proc:null,procCat:"All",ck:null,ckCat:"All",q:"",sector:null,kwCat:"All",faCat:"All",protoTab:"lsr",unsafeTab:"acts"};
 const JUR=["All","India – Central","Karnataka","Tamil Nadu","USA (OSHA)","International","UK / EU"];
 const DOMS=["All","Factories","Construction","Chemical","Process Safety","Storage Tanks","Environment","Energy/Carbon/ESG","Electrical","Fire","Lifting & Cranes","Tools & Tackles","Foundry & Metals","Pressure/Boilers","Welfare/Labour","Management System","PPE/Equipment","Health","Mines","Oil & Gas","Transport","Radiation"];
 const STATUSES=["All","In force","In force (transition)","Draft","Repealed (subsumed)","Enforcement guidance"];
 const stCls=s=>s==="In force"?"inforce":s==="In force (transition)"?"transition":s==="Draft"?"draft":s.startsWith("Repealed")?"repealed":"guidance";
 
-function nav(cur){$("#nav").innerHTML=VIEWS.map(([g,items])=>`<div class="grp">${g}</div>`+items.map(([id,l,ic,n])=>`<a href="#${id}" class="${cur===id?"on":""}">${ICONS[ic]}<span>${l}</span>${n?`<span class="n">${n}</span>`:""}</a>`).join("")).join("")}
+function nav(cur){document.body.classList.remove("menu-open");const mb=document.getElementById("menuBtn");if(mb)mb.setAttribute("aria-expanded","false");document.querySelectorAll("#tabbar [data-tab]").forEach(a=>a.classList.toggle("on",a.dataset.tab===cur&&cur!=="sos"));$("#nav").innerHTML=VIEWS.map(([g,items])=>`<div class="grp">${g}</div>`+items.map(([id,l,ic,n])=>`<a href="#${id}" class="${cur===id?"on":""}">${ICONS[ic]}<span>${l}</span>${n?`<span class="n">${n}</span>`:""}</a>`).join("")).join("")}
 function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
 async function copy(txt){try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){const ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied")}catch(_){toast("Select and copy manually")}ta.remove()}}
+const APP_VERSION="3.2";
+const IN_APP=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
+async function share(text,title){try{const P=IN_APP&&window.Capacitor.Plugins;if(P&&P.Share){await P.Share.share({title:title||"SafeWorks India",text,dialogTitle:"Share via"});return}if(navigator.share){await navigator.share({title:title||"SafeWorks India",text});return}}catch(e){if(e&&e.name==="AbortError")return}copy(text)}
 function chipbar(opts,cur,on){return `<div class="chips">${opts.map(o=>`<button type="button" class="chip ${o===cur?"on":""}" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`}
 function bindChips(el,fn){el.querySelectorAll(".chip[data-v]").forEach(c=>c.addEventListener("click",()=>fn(c.dataset.v)))}
 
@@ -254,6 +298,7 @@ function home(){
     <li>For audits and registers: use <a href="#forms">Forms & registers</a> and the statutory checklists (factory / construction site).</li>
     <li>Daily briefings: pick a <a href="#talks">Toolbox talk</a>; copy it to WhatsApp or print it from your browser.</li>
     <li>Anything with a figure: cross-check in <a href="#numbers">Limits & thresholds</a>. Items marked “verify” need the gazetted text.</li>
+    <li>On your phone: <a href="#app">install SafeWorks as an app</a> — it works offline, keeps your observations and photos on the device, and the red <a href="#sos">SOS</a> button is always one tap away.</li>
     <li>Working across both states: the <a href="#matrix">TN vs Karnataka matrix</a> puts the central law, the Tamil Nadu rule, the Karnataka rule and the BIS standards side by side for nine domains, with form numbers and portals.</li>
     <li>Briefings and observations: the <a href="#protocols">Safety protocols</a> (Life-Saving Rules, site rules, emergency protocols), the <a href="#unsafe">Unsafe acts & conditions</a> master list and the <a href="#observe">Observation card</a>; medical response in <a href="#firstaid">First aid</a>.</li>
     <li>New site or plant type: start from the <a href="#sectors">Sector guide</a> (foundry, chemical plant, terminal, power, warehouse, mining, water, heavy industry…); for carbon/ESG obligations use the <a href="#carbon">Carbon & ESG desk</a>.</li>
@@ -367,7 +412,7 @@ function permits(){
   <div class="g" id="gCo"><b>CO ppm</b><input id="co" inputmode="decimal" placeholder="0"><small>&lt;25 ppm</small></div>
   <div class="g"><b>Tester / time</b><input id="gasBy" placeholder="name, 08:10"><small>retest interval per permit</small></div>
  </div><div id="gasMsg" style="margin-top:8px"></div></div>
- <div class="row" style="margin-top:14px"><button class="btn primary" id="pGen">Generate permit</button><button class="btn" id="pCopy">Copy permit text</button><span class="meta" id="pRef"></span></div>
+ <div class="row" style="margin-top:14px"><button class="btn primary" id="pGen">Generate permit</button><button class="btn" id="pCopy">Copy permit text</button><button class="btn" id="pShare">Share permit</button><span class="meta" id="pRef"></span></div>
  </div>
  <div class="card"><h4>Permit</h4><div class="out" id="pOut">Generate to preview.</div></div>`;
 }
@@ -388,7 +433,7 @@ function bindPermits(){
   if(t.gas)L.push("","GAS TEST: O2 "+(g("o2")||"—")+"%  LEL "+(g("lel")||"—")+"%  H2S "+(g("h2s")||"—")+" ppm  CO "+(g("co")||"—")+" ppm   by: "+(g("gasBy")||"—"),bad.length?"RESULT: FAIL — "+bad.join("; "):"RESULT: within limits");
   L.push("","Issuer: "+(g("pIssuer")||"—")+"   Sign/time: ________","Receiver: "+(g("pReceiver")||"—")+"   Sign/time: ________","","CLOSE-OUT: area clean, tools removed, guards refitted, fire watch complete  [ ]","Closed by issuer: ________  time: ____   De-isolation authorised: [ ]","","Reference: "+t.ref,"Generated "+new Date().toLocaleString());
   $("#pOut").textContent=L.join("\n");const warn=[];if(missing)warn.push(missing+" precaution(s) unchecked");if(bad.length)warn.push("gas test failed");if(!g("pTo"))warn.push("no expiry time");if(warn.length)toast("Permit NOT ready: "+warn.join(", "));else toast("Permit ready");return L.join("\n")};
- $("#pGen").addEventListener("click",gen);$("#pCopy").addEventListener("click",()=>copy(gen()));
+ $("#pGen").addEventListener("click",gen);$("#pCopy").addEventListener("click",()=>copy(gen()));$("#pShare").addEventListener("click",()=>share(gen(),"Permit to work"));
 }
 
 /* ---------- INCIDENT NAVIGATOR ---------- */
@@ -429,7 +474,7 @@ function incidents(){
   <div class="f"><label for="iBy">Reported by (name, designation, phone)</label><input id="iBy"></div>
  </div></div>
  <div class="card"><h3>Who to notify</h3><div id="iRows" style="margin-top:10px"></div></div>
- <div class="card"><div class="row" style="justify-content:space-between"><h3>Draft notice</h3><button class="btn" id="iCopy">Copy notice</button></div><div class="out" id="iOut" style="margin-top:10px"></div></div>
+ <div class="card"><div class="row" style="justify-content:space-between"><h3>Draft notice</h3><div class="row"><button class="btn" id="iCopy">Copy notice</button><button class="btn" id="iShare">Share notice</button></div></div><div class="out" id="iOut" style="margin-top:10px"></div></div>
  <div class="card"><h4>At the scene — do this first</h4><ol class="steps" style="margin-top:8px"><li>Rescue and first aid; call 108/112; isolate the hazard; stop adjacent work.</li><li>Preserve the scene for fatal/serious incidents until the inspector permits; photograph and measure.</li><li>Inform safety officer and site head within 1 hour; assign an incident number.</li><li>Send the statutory notices below and keep acknowledgements (screenshots/email receipts).</li><li>Open the <a href="#checklists" data-ck="cl-incident">incident response checklist</a> and the <a href="#procedures" data-proc="incident">investigation procedure</a>.</li></ol></div>`;
 }
 function bindIncidents(){
@@ -438,7 +483,7 @@ function bindIncidents(){
   const g=id=>$("#"+id).value.trim();const L=["NOTICE OF "+ev.toUpperCase(),"(under the Occupational Safety, Health and Working Conditions Code 2020 s.10/s.11 and applicable rules)","","To: "+uniq.map(r=>r.to).filter((v,i,a)=>a.indexOf(v)===i).join("; "),"From: "+(g("iEst")||"[establishment]")+"  Registration/licence: "+(g("iReg")||"[no.]"),"","1. Date & time of occurrence: "+(g("iWhen")||"[date time]"),"2. Place: "+(g("iPlace")||"[place]"),"3. Person(s) involved: "+(g("iPerson")||"[name, age, sex, designation, employer]"),"4. Nature of injury/damage: "+(g("iInjury")||"[nature]"),"5. Description: "+(g("iDesc")||"[how it happened]"),"6. Immediate action taken: "+(g("iAction")||"[rescue/medical/isolation]"),"7. Reported by: "+(g("iBy")||"[name, designation, phone]"),"","This notice is submitted within the statutory time. A detailed investigation report will follow.","Signature of employer/occupier/manager: ________   Date/time: ________","","Internal note — deadlines for this event:",...uniq.map(r=>"- "+r.to+": "+r.dl+" ("+r.form+")")];
   $("#iOut").textContent=L.join("\n")};
  ["iJ","iEv","iWhen","iEst","iReg","iPlace","iPerson","iInjury","iDesc","iAction","iBy"].forEach(id=>$("#"+id).addEventListener("input",upd));
- $("#iCopy").addEventListener("click",()=>copy($("#iOut").textContent));upd();
+ $("#iCopy").addEventListener("click",()=>copy($("#iOut").textContent));$("#iShare").addEventListener("click",()=>share($("#iOut").textContent,"Incident notice"));upd();
 }
 
 /* ---------- SIMPLE VIEWS ---------- */
@@ -519,6 +564,80 @@ function matrix(){
   </div></div>`).join("")}</div>`;
 }
 
+
+/* ---------- SOS ---------- */
+const SOS_NUMS=[["112","Unified emergency (police · fire · ambulance)",""],["108","Ambulance",""],["101","Fire & rescue",""],["100","Police",""],["1077","District disaster control room","alt"],["1800116117","Poison centre (AIIMS)","alt","1800-116-117"],["1554","Coast guard (sea / man overboard)","alt"],["181","Women helpline","alt"],["1070","State disaster helpline","alt"],["104","Health helpline","alt"],["1912","Electricity utility (BESCOM / TANGEDCO)","alt"],["1098","Child helpline","alt"]];
+function sos(){
+ const site=store.get("site",{name:"",assembly:"",hospital:"",hospitalPhone:"",ambulance:"",contacts:[]});
+ const tel=n=>"tel:"+String(n).replace(/[^\d+]/g,"");
+ const quick=[["e-medical","Medical emergency / CPR"],["e-fire","Fire"],["e-gas","Gas leak / toxic release"],["e-electric","Electrocution"],["e-fall","Fall / suspended worker"],["e-confined","Confined space rescue"],["e-collapse","Collapse"],["e-snake","Snake bite"],["e-heat","Heat stroke"],["e-burn","Burns"],["e-spill","Chemical spill"],["e-evac","Evacuation"]];
+ return `<div><h2 style="color:var(--crit)">SOS — emergency</h2><p class="lead">Tap a number to call (works in the installed app and on phones). Make the scene safe, call for help, then follow the emergency card. Numbers are also shown as text so you can dial them by hand.</p></div>
+ <div class="sosgrid">${SOS_NUMS.map(([n,l,c,disp])=>`<a class="sosbtn ${c}" href="${tel(n)}"><b${disp?' class="long"':""}>${esc(disp||n)}</b><span>${esc(l)}</span></a>`).join("")}</div>
+ <div class="card"><div class="row" style="justify-content:space-between"><h3>Site emergency contacts</h3><span class="meta">Saved on this device</span></div>
+  <div class="form" style="margin-top:10px">
+   <div class="f"><label for="sName">Site / plant name</label><input id="sName" value="${esc(site.name)}"></div>
+   <div class="f"><label for="sAssembly">Assembly point</label><input id="sAssembly" value="${esc(site.assembly)}"></div>
+   <div class="f"><label for="sHospital">Nearest trauma hospital</label><input id="sHospital" value="${esc(site.hospital)}"></div>
+   <div class="f"><label for="sHospitalPhone">Hospital phone</label><input id="sHospitalPhone" inputmode="tel" value="${esc(site.hospitalPhone)}"></div>
+   <div class="f"><label for="sAmbulance">Ambulance tie-up phone</label><input id="sAmbulance" inputmode="tel" value="${esc(site.ambulance)}"></div>
+  </div>
+  <div class="list" style="margin-top:12px" id="sContacts">${site.contacts.map((c,i)=>`<div class="row" style="justify-content:space-between;border:1px solid var(--line);border-radius:8px;padding:8px 12px"><div><b>${esc(c.role)}</b> · ${esc(c.name)}<div class="meta mono">${esc(c.phone)}</div></div><div class="row"><a class="btn sm primary" href="${tel(c.phone)}">Call</a><button class="btn sm" data-del="${i}">Remove</button></div></div>`).join("")||'<div class="meta">Add the site main controller, safety officer, first-aider, ERT leader, electrical in-charge, security…</div>'}</div>
+  <div class="form" style="margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+   <div class="f"><label for="cRole">Role</label><select id="cRole"><option>Site Main Controller</option><option>Incident Controller</option><option>Safety Officer</option><option>First-aider</option><option>ERT leader</option><option>Electrical in-charge</option><option>Security</option><option>Factory Medical Officer / OHC</option><option>Client / corporate HSE</option><option>Other</option></select></div>
+   <div class="f"><label for="cName">Name</label><input id="cName"></div>
+   <div class="f"><label for="cPhone">Phone</label><input id="cPhone" inputmode="tel"></div>
+  </div>
+  <div class="row" style="margin-top:10px">${site.hospitalPhone?`<a class="btn primary" href="${tel(site.hospitalPhone)}">Call hospital</a>`:""}${site.ambulance?`<a class="btn primary" href="${tel(site.ambulance)}">Call ambulance tie-up</a>`:""}<button class="btn" id="cAdd">Add contact</button><button class="btn" id="sShare">Share emergency sheet</button></div>
+ </div>
+ <div class="card"><h3>Emergency cards</h3><div class="chips" style="margin-top:10px">${quick.map(([id,l])=>`<a class="chip" href="#protocols" data-em="${id}">${esc(l)}</a>`).join("")}</div>
+  <div class="row" style="margin-top:12px"><a class="btn" href="#firstaid">First aid</a><a class="btn" href="#incidents">Incident notification</a><a class="btn" href="#emergency">All contacts & portals</a></div></div>
+ <div class="card" style="border-left:4px solid var(--crit)"><h4>Remember</h4><ol class="steps" style="margin-top:8px"><li><span>Danger — protect yourself; isolate power, gas, plant.</span></li><li><span>Call 112 / 108; send someone to the gate to guide the ambulance.</span></li><li><span>Not breathing: 30 compressions : 2 breaths; get the AED.</span></li><li><span>Severe bleeding: firm direct pressure; tourniquet for limbs if needed.</span></li><li><span>Never enter a confined space or touch an electrocution victim until it is safe.</span></li></ol></div>`;
+}
+function bindSos(){
+ const site=store.get("site",{name:"",assembly:"",hospital:"",hospitalPhone:"",ambulance:"",contacts:[]});
+ const save=()=>store.set("site",site);
+ [["sName","name"],["sAssembly","assembly"],["sHospital","hospital"],["sHospitalPhone","hospitalPhone"],["sAmbulance","ambulance"]].forEach(([id,k])=>$("#"+id).addEventListener("change",e=>{site[k]=e.target.value.trim();save();route()}));
+ $("#cAdd").addEventListener("click",()=>{const name=$("#cName").value.trim(),phone=$("#cPhone").value.trim();if(!phone){toast("Enter a phone number");return}site.contacts.push({role:$("#cRole").value,name,phone});save();route()});
+ document.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{site.contacts.splice(+b.dataset.del,1);save();route()}));
+ document.querySelectorAll("[data-em]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();STATE.protoTab="emergency";STATE.emJump=a.dataset.em;go("#protocols")}));
+ $("#sShare").addEventListener("click",()=>share(["EMERGENCY SHEET"+(site.name?" — "+site.name:""),"","112 Emergency · 108 Ambulance · 101 Fire · 100 Police · 1077 District control · Poison 1800-116-117",site.assembly?"Assembly point: "+site.assembly:"",site.hospital?"Hospital: "+site.hospital+(site.hospitalPhone?" ("+site.hospitalPhone+")":""):"",site.ambulance?"Ambulance tie-up: "+site.ambulance:"","",...site.contacts.map(c=>c.role+": "+c.name+" "+c.phone)].filter(x=>x!=="").join("\n"),"Emergency sheet"));
+}
+
+/* ---------- APP & DATA ---------- */
+function appView(){
+ const keys=(()=>{try{return Object.keys(localStorage).filter(k=>k.startsWith("sw:"))}catch(e){return[]}})();
+ const bytes=keys.reduce((n,k)=>{try{return n+(localStorage.getItem(k)||"").length}catch(e){return n}},0);
+ const standalone=IN_APP||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
+ return `<div><h2>App & my data</h2><p class="lead">SafeWorks runs fully offline once installed. Your checklists, observations, photos, site contacts and carbon figures stay on this device only — back them up before changing phones.</p></div>
+ <div class="two">
+  <div class="card"><h3>Install</h3>
+   <div class="meta" style="margin:6px 0 10px">Version ${APP_VERSION} · ${IN_APP?"Android app":standalone?"Installed (standalone)":"Running in the browser"}</div>
+   <ul class="keys"><li><b>Android (Chrome):</b> open the link → menu ⋮ → <i>Install app</i> / <i>Add to Home screen</i>. Or download the APK from the GitHub Releases page.</li><li><b>iPhone (Safari):</b> Share → <i>Add to Home Screen</i>.</li><li><b>Windows / Mac (Chrome or Edge):</b> install icon in the address bar.</li><li>After installing, it opens like an app and works without internet.</li></ul>
+   <div class="row" style="margin-top:10px"><button class="btn primary" id="appInstall" ${deferredInstall?"":"hidden"}>Install now</button><a class="btn" href="https://github.com/Julyraj/safeworks-india/releases" target="_blank" rel="noopener">Android APK (Releases)</a></div></div>
+  <div class="card"><h3>My data on this device</h3><div class="meta" style="margin:6px 0 10px">${keys.length} items · ${(bytes/1024).toFixed(0)} KB used (browser limit ≈ 5 MB)</div>
+   <div class="row"><button class="btn" id="bkCopy">Copy backup</button><button class="btn" id="bkShare">Share backup</button></div>
+   <div class="f" style="margin-top:12px"><label for="bkIn">Restore — paste a backup here</label><textarea id="bkIn" placeholder='{"sw:obs":"[...]"}'></textarea></div>
+   <div class="row" style="margin-top:8px"><button class="btn" id="bkRestore">Restore backup</button><button class="btn" id="bkClear">Erase all my data</button></div></div>
+ </div>
+ <div class="card"><h3>About</h3><p class="sum">SafeWorks India — construction & industrial safety desk. Regulatory snapshot 20 Oct 2026; items marked “verify” need the gazetted text. Source and updates: <a href="https://github.com/Julyraj/safeworks-india" target="_blank" rel="noopener">github.com/Julyraj/safeworks-india</a>. This app supports, and does not replace, statutory texts, certified training and competent-authority advice.</p></div>`;
+}
+function bindApp(){
+ const dump=()=>{const o={};try{Object.keys(localStorage).filter(k=>k.startsWith("sw:")).forEach(k=>o[k]=localStorage.getItem(k))}catch(e){}return JSON.stringify(o)};
+ $("#bkCopy").addEventListener("click",()=>copy(dump()));
+ $("#bkShare").addEventListener("click",()=>share(dump(),"SafeWorks backup"));
+ $("#bkRestore").addEventListener("click",()=>{try{const o=JSON.parse($("#bkIn").value);let n=0;Object.entries(o).forEach(([k,v])=>{if(k.startsWith("sw:")&&typeof v==="string"){localStorage.setItem(k,v);n++}});toast("Restored "+n+" items");route()}catch(e){toast("That is not a valid backup")}});
+ $("#bkClear").addEventListener("click",()=>{const b=$("#bkClear");if(b.dataset.arm){try{Object.keys(localStorage).filter(k=>k.startsWith("sw:")).forEach(k=>localStorage.removeItem(k))}catch(e){}toast("Erased");route()}else{b.dataset.arm="1";b.textContent="Press again to erase everything";setTimeout(()=>{b.dataset.arm="";b.textContent="Erase all my data"},3000)}});
+ $("#appInstall")?.addEventListener("click",doInstall);
+}
+
+/* ---------- INSTALL / OFFLINE ---------- */
+let deferredInstall=null;
+function doInstall(){if(!deferredInstall)return;deferredInstall.prompt();deferredInstall.userChoice.finally(()=>{deferredInstall=null;$("#installBtn").hidden=true;if(location.hash==="#app")route()})}
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;$("#installBtn").hidden=false});
+window.addEventListener("appinstalled",()=>{deferredInstall=null;$("#installBtn").hidden=true;toast("Installed")});
+$("#installBtn").addEventListener("click",doInstall);
+if(!IN_APP&&"serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")&&!/claude|anthropic/.test(location.hostname)){try{navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}}
+
 /* ---------- SAFETY PROTOCOLS ---------- */
 function protocols(){
  const tab=STATE.protoTab;
@@ -532,7 +651,7 @@ function protocols(){
  <div class="card"><div class="chips">${tabs.map(([id,l,n])=>`<button type="button" class="chip ${tab===id?"on":""}" data-tab="${id}">${l} <span style="opacity:.7;font-family:var(--mono);font-size:11px">${n}</span></button>`).join("")}</div></div>
  ${body}`;
 }
-function bindProtocols(){const v=$("#view");v.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{STATE.protoTab=b.dataset.tab;route()}));
+function bindProtocols(){const v=$("#view");if(STATE.emJump){const el=document.getElementById(STATE.emJump);if(el){el.scrollIntoView({block:"start"});el.style.boxShadow="0 0 0 3px var(--crit)"}STATE.emJump=null}v.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{STATE.protoTab=b.dataset.tab;route()}));
  v.querySelectorAll("[data-copyproto]").forEach(b=>b.addEventListener("click",()=>{const p=PROTOCOLS.standing.find(x=>x.id===b.dataset.copyproto);copy([p.t.toUpperCase(),p.purpose,"",...p.steps.map((s,i)=>(i+1)+". "+s)].join("\n"))}));
  v.querySelectorAll("[data-copyem]").forEach(b=>b.addEventListener("click",()=>{const e=PROTOCOLS.emergency.find(x=>x.id===b.dataset.copyem);copy(["EMERGENCY PROTOCOL: "+e.t.toUpperCase(),"Trigger: "+e.trigger,"",...e.steps.map((s,i)=>(i+1)+". "+s),"","Call: "+e.call].join("\n"))}))}
 
@@ -571,10 +690,11 @@ function observe(){
   <div class="f"><label for="oOwner">Action owner</label><input id="oOwner"></div>
   <div class="f"><label for="oDue">Due date</label><input id="oDue" type="date"></div>
   <div class="f"><label for="oStatus">Status</label><select id="oStatus"><option>Open</option><option>Closed</option></select></div>
- </div><div class="row" style="margin-top:12px"><button class="btn primary" id="oSave">Save to log</button><button class="btn" id="oCopy">Copy card text</button><button class="btn" id="oExport">Copy full log (CSV)</button><button class="btn" id="oClear">Clear log</button></div>
+  <div class="f wide"><label for="oPhoto">Photo (optional — opens the camera on phones)</label><input id="oPhoto" type="file" accept="image/*" capture="environment"><img id="oPhotoPrev" class="photoprev" hidden alt="Observation photo preview"></div>
+ </div><div class="row" style="margin-top:12px"><button class="btn primary" id="oSave">Save to log</button><button class="btn" id="oShare">Share card</button><button class="btn" id="oCopy">Copy card text</button><button class="btn" id="oExport">Copy full log (CSV)</button><button class="btn" id="oClear">Clear log</button></div>
  <div class="out" id="oOut" style="margin-top:12px">Fill the card and press Copy or Save.</div></div>
  <div class="card"><h3>Observation log (this device)</h3><div style="margin-top:10px" id="oStats">${stats()}</div>
- ${log.length?`<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Type</th><th>Observation</th><th>Rating</th><th>Action</th><th>Status</th></tr></thead><tbody>${log.slice().reverse().slice(0,50).map((o,i)=>`<tr><td class="mono">${esc(o.date)}</td><td>${esc(o.type)}</td><td>${esc(o.item)}<div class="meta">${esc(o.loc)} ${esc(o.contractor)}</div></td><td>${esc(o.sev)}</td><td>${esc(o.action)}<div class="meta">${esc(o.capa)}</div></td><td><button class="btn sm" data-toggle="${log.length-1-i}">${o.status==="Closed"?"Closed ✓":"Open → close"}</button></td></tr>`).join("")}</tbody></table></div>`:""}
+ ${log.length?`<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Photo</th><th>Date</th><th>Type</th><th>Observation</th><th>Rating</th><th>Action</th><th>Status</th></tr></thead><tbody>${log.slice().reverse().slice(0,50).map((o,i)=>`<tr><td>${(()=>{const im=o.id?store.get("obsimg:"+o.id,null):null;return im?`<img class="obsthumb" src="${im}" alt="Photo of observation">`:'<span class="meta">—</span>'})()}</td><td class="mono">${esc(o.date)}</td><td>${esc(o.type)}</td><td>${esc(o.item)}<div class="meta">${esc(o.loc)} ${esc(o.contractor)}</div></td><td>${esc(o.sev)}</td><td>${esc(o.action)}<div class="meta">${esc(o.capa)}</div></td><td><button class="btn sm" data-toggle="${log.length-1-i}">${o.status==="Closed"?"Closed ✓":"Open → close"}</button></td></tr>`).join("")}</tbody></table></div>`:""}
  </div>`;
 }
 function bindObserve(){
@@ -582,10 +702,13 @@ function bindObserve(){
  type.addEventListener("change",()=>{item.innerHTML=type.value==="Unsafe condition"?opts(UNSAFE.conditions):type.value==="Safe behaviour"?opts([{cat:"Safe behaviours",items:["Correct PPE worn and inspected","Tied off 100% at height","Permit obtained and displayed","Proper isolation verified","Good housekeeping / clean-as-you-go","Banksman used for reversing","Load controlled with tag lines","Hazard reported / work stopped appropriately","Correct manual-handling technique","Toolbox talk delivered well","Guard/safety device in use","Hydration and rest breaks taken"]}]):opts(UNSAFE.acts)});
  const g=id=>$("#"+id).value.trim();const catOf=()=>{const o=item.selectedOptions[0];return o&&o.parentElement.tagName==="OPTGROUP"?o.parentElement.label:""};
  const text=()=>["SAFETY OBSERVATION CARD","Type: "+g("oType")+"   Category: "+catOf(),"Observation: "+g("oItem"),"Details: "+(g("oDesc")||"—"),"Date/time: "+g("oDate")+"   Location: "+(g("oLoc")||"—")+"   Contractor/dept: "+(g("oContractor")||"—"),"Observer: "+(g("oObs")||"—")+"   Rating: "+g("oSev"),"Immediate action: "+g("oAction"),"Likely cause: "+g("oCause"),"Corrective action: "+(g("oCapa")||"—")+"   Owner: "+(g("oOwner")||"—")+"   Due: "+(g("oDue")||"—")+"   Status: "+g("oStatus")].join("\n");
+ let photo=null;
+ $("#oPhoto").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const img=new Image();img.onload=()=>{const max=1024,sc=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);photo=c.toDataURL("image/jpeg",0.6);const pv=$("#oPhotoPrev");pv.src=photo;pv.hidden=false};img.src=rd.result};rd.readAsDataURL(f)});
  $("#oCopy").addEventListener("click",()=>{$("#oOut").textContent=text();copy(text())});
- $("#oSave").addEventListener("click",()=>{const log=store.get("obs",[]);log.push({type:g("oType"),cat:catOf(),item:g("oItem"),desc:g("oDesc"),date:g("oDate"),loc:g("oLoc"),contractor:g("oContractor"),obs:g("oObs"),sev:g("oSev"),action:g("oAction"),cause:g("oCause"),capa:g("oCapa"),owner:g("oOwner"),due:g("oDue"),status:g("oStatus")});store.set("obs",log);toast("Saved");route()});
+ $("#oShare").addEventListener("click",async()=>{const t=text();$("#oOut").textContent=t;try{if(photo&&navigator.canShare){const blob=await (await fetch(photo)).blob();const file=new File([blob],"observation.jpg",{type:"image/jpeg"});if(navigator.canShare({files:[file]})){await navigator.share({title:"Safety observation",text:t,files:[file]});return}}}catch(e){if(e&&e.name==="AbortError")return}share(t,"Safety observation")});
+ $("#oSave").addEventListener("click",()=>{const log=store.get("obs",[]);log.push({type:g("oType"),cat:catOf(),item:g("oItem"),desc:g("oDesc"),date:g("oDate"),loc:g("oLoc"),contractor:g("oContractor"),obs:g("oObs"),sev:g("oSev"),action:g("oAction"),cause:g("oCause"),capa:g("oCapa"),owner:g("oOwner"),due:g("oDue"),status:g("oStatus"),id:Date.now()});const rec=log[log.length-1];if(photo){try{localStorage.setItem("sw:obsimg:"+rec.id,JSON.stringify(photo))}catch(e){toast("Storage full — saved without photo");}}store.set("obs",log);toast("Saved");route()});
  $("#oExport").addEventListener("click",()=>{const log=store.get("obs",[]);const h=["date","type","category","observation","details","location","contractor","observer","rating","immediate_action","cause","corrective_action","owner","due","status"];const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';copy([h.join(",")].concat(log.map(o=>[o.date,o.type,o.cat,o.item,o.desc,o.loc,o.contractor,o.obs,o.sev,o.action,o.cause,o.capa,o.owner,o.due,o.status].map(q).join(","))).join("\n"))});
- $("#oClear").addEventListener("click",()=>{const b=$("#oClear");if(b.dataset.arm){store.set("obs",[]);route()}else{b.dataset.arm="1";b.textContent="Press again to clear";setTimeout(()=>{b.dataset.arm="";b.textContent="Clear log"},3000)}});
+ $("#oClear").addEventListener("click",()=>{const b=$("#oClear");if(b.dataset.arm){store.set("obs",[]);try{Object.keys(localStorage).filter(k=>k.startsWith("sw:obsimg:")).forEach(k=>localStorage.removeItem(k))}catch(e){}route()}else{b.dataset.arm="1";b.textContent="Press again to clear";setTimeout(()=>{b.dataset.arm="";b.textContent="Clear log"},3000)}});
  document.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{const log=store.get("obs",[]);const o=log[+b.dataset.toggle];if(o){o.status=o.status==="Closed"?"Open":"Closed";store.set("obs",log);route()}}));
 }
 
@@ -659,6 +782,8 @@ function route(){
   case "numbers":v.innerHTML=numbers();break;
   case "sectors":v.innerHTML=sectors();bindSectors();break;
   case "protocols":v.innerHTML=protocols();bindProtocols();break;
+  case "sos":v.innerHTML=sos();bindSos();break;
+  case "app":v.innerHTML=appView();bindApp();break;
   case "matrix":v.innerHTML=matrix();$("#mxCopy").addEventListener("click",()=>copy(["TAMIL NADU vs KARNATAKA — REGULATORY & ENFORCEMENT MATRIX","",...MATRIX.table.map(r=>r[0]+" | Central: "+r[1]+" | TN: "+r[2]+" | KA: "+r[3]),"",...MATRIX.domains.map(d=>[d.n+". "+d.t,"Central: "+d.central.join("; "),"Tamil Nadu: "+d.tn.join("; "),"Karnataka: "+d.ka.join("; "),"BIS: "+d.bis.join("; ")].join("\n")).flatMap(x=>[x,""])].join("\n")));break;
   case "unsafe":v.innerHTML=unsafe();bindUnsafe();break;
   case "firstaid":v.innerHTML=firstaid();bindFirstaid();break;
@@ -687,6 +812,8 @@ function bindSearch(){const q=STATE.q.toLowerCase();const items=[];const v=$("#v
  else if(k==="State matrix"){go("#matrix")}
  else{const map={Form:"forms",Deadline:"reporting",Limit:"numbers","Toolbox talk":"talks"};go("#"+map[k])}}))}
 window.addEventListener("hashchange",()=>{if(location.hash!=="#procedures")STATE.proc=null;if(location.hash!=="#checklists")STATE.ck=null;if(location.hash!=="#sectors")STATE.sector=null;STATE.q="";$("#q").value="";route()});
+if(IN_APP&&window.Capacitor.Plugins.App){window.Capacitor.Plugins.App.addListener("backButton",({canGoBack})=>{if(document.body.classList.contains("menu-open")){document.body.classList.remove("menu-open");return}if(canGoBack&&location.hash&&location.hash!=="#home")history.back();else window.Capacitor.Plugins.App.exitApp()})}
+$("#menuBtn").addEventListener("click",()=>{const open=document.body.classList.toggle("menu-open");$("#menuBtn").setAttribute("aria-expanded",String(open));if(open)window.scrollTo({top:0})});
 let qt;$("#q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{STATE.q=e.target.value.trim();route()},180)});
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();$("#q").focus()}if(e.key==="Escape"&&document.activeElement===$("#q")){$("#q").value="";STATE.q="";route()}});
 route();

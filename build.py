@@ -1,26 +1,62 @@
 #!/usr/bin/env python3
-"""Build the single-file SafeWorks India app (index.html / safeworks-india.html) from src shell + data files,
-and export the datasets as JSON for reuse."""
-import json, re, pathlib, subprocess, sys
+"""Build SafeWorks India.
+
+Outputs
+  index.html            standalone app page (PWA: manifest, service worker, icons) — served by GitHub Pages
+  safeworks-india.html  same app without the document skeleton (for embedding / Claude artifact)
+  sw.js                 service worker stamped with a cache version
+  app/www/              web assets for the Android (Capacitor) app
+  data/*.json           machine-readable export of every dataset (needs node; skip with --no-json)
+"""
+import hashlib, re, pathlib, shutil, subprocess, sys
 ROOT = pathlib.Path(__file__).resolve().parent
 SRC = ROOT / "src"
 DATA_FILES = ["data-regs.js","data-procs.js","data-misc.js","data-regs2.js","data-procs2.js","data-misc2.js","data-safety3.js","data-matrix.js"]
+
+HEAD = """<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1c2b">
+<meta name="description" content="SafeWorks India – offline construction & industrial safety app: SOS, permits, observations, first aid, procedures, checklists, Indian (central, Karnataka, Tamil Nadu) regulations.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SafeWorks">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+"""
 
 def build():
     shell = (SRC / "shell.html").read_text(encoding="utf-8")
     data = "\n".join((SRC / "data" / f).read_text(encoding="utf-8") for f in DATA_FILES)
     for k in ["REGS","PROCS","CHECKLISTS","FORMS","REPORTING","TALKS","EMERGENCY","NUMBERS","GLOSSARY"]:
         data = data.replace("window."+k+" =","const "+k+" =").replace("window."+k+"=","const "+k+"=")
-    out = shell.replace("//__DATA__", data)
-    (ROOT / "index.html").write_text(out, encoding="utf-8")
-    (ROOT / "safeworks-india.html").write_text(out, encoding="utf-8")
-    print(f"built index.html ({len(out)//1024} KB)")
-    return out
+    fragment = shell.replace("//__DATA__", data)
+    (ROOT / "safeworks-india.html").write_text(fragment, encoding="utf-8")
+    # standalone document: head metas + fragment (title/style/meta land in head, the rest in body)
+    title_end = fragment.index("</style>") + len("</style>")
+    doc = HEAD + fragment[:title_end] + "\n</head>\n<body>\n" + fragment[title_end:] + "\n</body>\n</html>\n"
+    (ROOT / "index.html").write_text(doc, encoding="utf-8")
+    ver = hashlib.sha1(doc.encode()).hexdigest()[:10]
+    (ROOT / "sw.js").write_text((SRC / "sw.template.js").read_text(encoding="utf-8").replace("__CACHE_VERSION__", ver), encoding="utf-8")
+    # Android web assets
+    www = ROOT / "app" / "www"
+    if www.exists(): shutil.rmtree(www)
+    (www / "icons").mkdir(parents=True)
+    shutil.copy(ROOT / "index.html", www / "index.html")
+    shutil.copy(ROOT / "manifest.webmanifest", www / "manifest.webmanifest")
+    for f in (ROOT / "icons").glob("*.png"):
+        shutil.copy(f, www / "icons" / f.name)
+    print(f"built index.html ({len(doc)//1024} KB), sw.js (cache {ver}), app/www")
+    return fragment
 
 def export_json(out):
-    """Evaluate the data block with node and dump each dataset to data/*.json."""
     scripts = re.findall(r"<script>(.*?)</script>", out, re.S)
-    data_block = "\n".join(scripts).split("(function(){")[0].replace("\nconst ", "\nvar ").replace("const REGS", "var REGS",1)
+    data_block = "\n".join(scripts).split("(function(){")[0].replace("\nconst ", "\nvar ").replace("const REGS", "var REGS", 1)
     js = data_block + """
 const fs=require('fs');const dir=process.argv[2];
 const dump=(n,v)=>fs.writeFileSync(dir+'/'+n+'.json',JSON.stringify(v,null,1));
@@ -34,8 +70,10 @@ console.log('exported JSON');
     (ROOT / "data").mkdir(exist_ok=True)
     tmp = ROOT / "data" / "_export.js"
     tmp.write_text(js, encoding="utf-8")
-    subprocess.run(["node", str(tmp), str(ROOT / "data")], check=True)
-    tmp.unlink()
+    try:
+        subprocess.run(["node", str(tmp), str(ROOT / "data")], check=True)
+    finally:
+        tmp.unlink(missing_ok=True)
 
 if __name__ == "__main__":
     out = build()

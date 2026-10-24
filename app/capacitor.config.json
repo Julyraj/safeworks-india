@@ -1,0 +1,9 @@
+{
+  "appId": "in.safeworks.app",
+  "appName": "SafeWorks India",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#0f1c2b",
+    "allowMixedContent": false
+  }
+}

@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2 — 2026-10-24 — the app release
+- Installable app: PWA manifest, offline service worker, app icons, install button; standalone `index.html` with proper document head.
+- Android app (Capacitor 8.5.2) with launcher icons, splash, camera permission, native share and back button; GitHub Actions builds the APK and publishes it to Releases on every push.
+- New SOS screen (one-tap emergency numbers, site emergency contacts, emergency cards) with a persistent SOS button and mobile bottom tab bar (Home · Observe · SOS · Permit · Menu).
+- Observation card: camera photo capture (compressed, stored on device), photo thumbnails in the log, share card with photo.
+- Share buttons for permits, incident notices and emergency sheets; App & my data screen with backup, restore and erase.
+
 ## 3.1 — 2026-10-20
 - TN vs Karnataka regulatory & enforcement matrix view (table + 9 domains: PTW/LOTO, confined space, work at height, machinery/lifting/pressure, chemical/hazardous/explosives, construction, environment/waste/hygiene, electrical/fire/radiation, PPE BIS set).
 - New regulation entries: IS 17893:2023, TN CIMAH Rules 1994, MAH Control (Karnataka) Rules 1994, BOCW (Karnataka Amendment) Rules 2024, Karnataka Boiler Rules 1982, TN Boiler Rules, BIS hygiene/electrical/construction/PPE sets.

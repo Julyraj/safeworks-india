@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SafeWorks India</string>
+    <string name="title_activity_main">SafeWorks India</string>
+    <string name="package_name">in.safeworks.app</string>
+    <string name="custom_url_scheme">in.safeworks.app</string>
+</resources>
