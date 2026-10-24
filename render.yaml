@@ -1,0 +1,55 @@
+# One-click TEST server for the SafeWorks Portal on Render (render.com), free plan.
+# Render → New → Blueprint → choose this repository → enter the two passwords → Apply.
+#
+# Free-plan limits (fine for trying the app, not for the pilot):
+#  - the server sleeps after 15 minutes without use; the next request wakes it in about a minute
+#  - the free database is 1 GB and expires 30 days after creation unless upgraded
+#  - hosted in Singapore (Render has no India region); use only test data, not real worker data
+# Photos are stored inside the database (STORAGE_DRIVER=db) because free servers have no permanent disk.
+
+services:
+  - type: web
+    name: safeworks-portal
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./portal/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: safeworks-db
+          property: connectionString
+      - key: FILE_SIGNING_SECRET
+        generateValue: true
+      - key: STORAGE_DRIVER
+        value: db
+      - key: TRUST_PROXY
+        value: "true"
+      - key: RUN_JOBS
+        value: "true"
+      - key: SEED_ON_START
+        value: "true"
+      - key: SEED_DEMO
+        value: "true"
+      - key: SEED_COMPANY
+        value: SafeWorks Test Company
+      - key: SEED_ADMIN_ID
+        value: ADMIN01
+      # Password for the ADMIN01 login (8+ characters with letters and numbers). You'll be asked for it.
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      # Password for the sample users (SO-PS01-1, SUP-PS01-1 …). Leave empty to use the admin password.
+      - key: DEMO_PASSWORD
+        sync: false
+      - key: DB_POOL_MAX
+        value: "10"
+
+databases:
+  - name: safeworks-db
+    plan: free
+    region: singapore
+    databaseName: safeworks
+    user: safeworks

@@ -46,6 +46,26 @@ npm start                      # http://localhost:8080  (admin console: /admin/)
 
 `npm run seed:demo` adds sample users and about 180 observations. It is for testing only, and the demo password is `Safe@1234`.
 
+## Free test server (Render, about 10 minutes)
+
+For trying the app before hosting is chosen, `render.yaml` at the repository root sets up a test server on Render's free plan:
+1. Sign in at render.com with GitHub, then choose **New → Blueprint** and pick this repository.
+2. Enter a password for `ADMIN01` (8+ characters with letters and numbers). Leave the demo password empty to use the same one, then apply.
+3. When it shows *Live*, copy the address, e.g. `https://safeworks-portal.onrender.com`.
+   - Type it into the Android app's *Server address*.
+   - Or open it in a browser. The admin console is at `/admin/`.
+4. Sign in with one of these:
+   - `ADMIN01` (admin)
+   - `SO-PS01-1` (safety officer)
+   - `SUP-PS01-1` (supervisor)
+
+Free-plan limits:
+- The server sleeps after 15 minutes without use and takes about a minute to wake.
+- The free database expires after 30 days.
+- It's hosted in Singapore, so use test data only.
+
+Photos are kept in the database (`STORAGE_DRIVER=db`), because free servers have no permanent disk.
+
 ## Run it on a server (Docker)
 
 ```bash
@@ -99,6 +119,8 @@ See `.env.example` and `server/src/config.ts`. The main settings:
 | `DATABASE_URL` | PostgreSQL connection |
 | `FILE_SIGNING_SECRET` | Signs photo links. Required in production, 32+ characters. |
 | `STORAGE_DIR` | Where photos are stored |
+| `STORAGE_DRIVER` | `disk` (default) or `db`, which keeps photos in PostgreSQL for hosts without a persistent disk |
+| `SEED_ON_START`, `SEED_DEMO` | Run the idempotent seed (and sample data) when the container starts |
 | `PUBLIC_URL` | Links in emails |
 | `SMTP_URL` | Email delivery. Without it, emails stay queued. |
 | `CORS_ORIGINS` | Origins allowed for the Android app |

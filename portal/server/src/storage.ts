@@ -2,16 +2,19 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
+import { Readable } from "node:stream";
 import { config } from "./config.js";
 import { badRequest } from "./errors.js";
+import { pool } from "./db.js";
 
 /**
- * Photo storage. Phase 1 keeps files on the server disk (STORAGE_DIR).
+ * Photo storage. Phase 1 keeps files on the server disk (STORAGE_DIR), or inside PostgreSQL
+ * when STORAGE_DRIVER=db (for hosts without a persistent disk, e.g. a free test server).
  * The interface is small so an S3-compatible store can replace it when hosting is decided.
  */
 export interface Storage {
   put(key: string, data: Buffer, mime: string): Promise<void>;
-  open(key: string): Promise<fs.ReadStream | null>;
+  open(key: string): Promise<Readable | null>;
   remove(key: string): Promise<void>;
 }
 
@@ -24,7 +27,22 @@ function resolveKey(key: string): string {
   return full;
 }
 
-export const storage: Storage = {
+const dbStorage: Storage = {
+  async put(key, data, mime) {
+    if (!SAFE_KEY.test(key) || key.includes("..")) throw badRequest("Invalid file key.");
+    await pool.query(`insert into file_blobs (key, mime, data) values ($1, $2, $3) on conflict (key) do update set data = excluded.data, mime = excluded.mime`, [key, mime, data]);
+  },
+  async open(key) {
+    if (!SAFE_KEY.test(key)) return null;
+    const r = await pool.query<{ data: Buffer }>(`select data from file_blobs where key = $1`, [key]);
+    return r.rows[0] ? Readable.from([r.rows[0].data]) : null;
+  },
+  async remove(key) {
+    await pool.query(`delete from file_blobs where key = $1`, [key]);
+  },
+};
+
+const diskStorage: Storage = {
   async put(key, data) {
     const full = resolveKey(key);
     await fsp.mkdir(path.dirname(full), { recursive: true });
@@ -54,6 +72,8 @@ export const storage: Storage = {
     }
   },
 };
+
+export const storage: Storage = config.storageDriver === "db" ? dbStorage : diskStorage;
 
 export interface ImageInfo {
   mime: "image/jpeg" | "image/png" | "image/webp";

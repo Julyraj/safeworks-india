@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { ApiError, isNative, serverBase, setServerBase } from "../../shared/api";
 import { Field } from "../../shared/forms";
 import type { Me } from "../../shared/types";
@@ -12,17 +12,31 @@ export function Login({ onDone }: { onDone: () => void }) {
   const [editServer, setEditServer] = useState(isNative && !serverBase());
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [slow, setSlow] = useState(false);
+
+  // A test server on a free plan sleeps when unused; the first sign-in can take up to a minute.
+  useEffect(() => {
+    if (!busy) {
+      setSlow(false);
+      return;
+    }
+    const t = setTimeout(() => setSlow(true), 7000);
+    return () => clearTimeout(t);
+  }, [busy]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
     setErr("");
     if (isNative) {
-      if (!/^https?:\/\/.+/.test(server.trim())) {
+      let addr = server.trim().replace(/\s+/g, "");
+      if (addr && !/^https?:\/\//i.test(addr)) addr = `https://${addr}`;
+      if (!/^https?:\/\/[^/]+\.[^/]+/i.test(addr)) {
         setErr("Enter the SafeWorks server address, e.g. https://safeworks.yourcompany.in");
         setEditServer(true);
         return;
       }
-      setServerBase(server);
+      setServer(addr);
+      setServerBase(addr);
     }
     setBusy(true);
     try {
@@ -69,6 +83,11 @@ export function Login({ onDone }: { onDone: () => void }) {
         <button className="btn btn-primary btn-block" disabled={busy || !emp.trim() || !pw}>
           {busy ? "Signing in…" : "Sign in"}
         </button>
+        {slow && (
+          <p className="small muted" role="status">
+            Still connecting. If the server was asleep it can take up to a minute to wake up.
+          </p>
+        )}
         <p className="small muted">
           Forgot your password? Ask your admin to reset it from the admin console. After 5 wrong attempts the account locks for 15 minutes.
         </p>

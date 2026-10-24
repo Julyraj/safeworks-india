@@ -9,12 +9,13 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { pool, q, one } from "../src/db.js";
 import { migrate } from "../src/migrate.js";
-import { hashPassword, tempPassword } from "../src/security.js";
+import { hashPassword, passwordProblem, tempPassword } from "../src/security.js";
 import { buildMasterRows } from "./master-data.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const demo = process.argv.includes("--demo");
-export const DEMO_PASSWORD = "Safe@1234";
+// Demo logins (testing only). On a server reachable from the internet, set DEMO_PASSWORD (or SEED_ADMIN_PASSWORD) so it isn't the public default.
+export const DEMO_PASSWORD = process.env.DEMO_PASSWORD || process.env.SEED_ADMIN_PASSWORD || "Safe@1234";
 
 async function seedMaster() {
   const rows = buildMasterRows();
@@ -55,15 +56,20 @@ async function seedCompany(): Promise<{ orgId: string }> {
   const hasAdmin = await one(`select 1 from memberships where org_id = $1 and role = 'org_admin' limit 1`, [orgId]);
   if (!hasAdmin) {
     const emp = process.env.SEED_ADMIN_ID || "ADMIN01";
-    const pw = process.env.SEED_ADMIN_PASSWORD || tempPassword();
+    let chosen = process.env.SEED_ADMIN_PASSWORD || "";
+    if (chosen && passwordProblem(chosen)) {
+      console.warn(`[seed] SEED_ADMIN_PASSWORD ignored: ${passwordProblem(chosen)} A temporary password is used instead.`);
+      chosen = "";
+    }
+    const pw = chosen || tempPassword();
     const u = await one<{ id: string }>(
-      `insert into users (org_id, employee_id, name, designation, password_hash, must_change_password) values ($1,$2,$3,$4,$5,true) returning id`,
-      [orgId, emp, "Administrator", "Admin", await hashPassword(pw)],
+      `insert into users (org_id, employee_id, name, designation, password_hash, must_change_password) values ($1,$2,$3,$4,$5,$6) returning id`,
+      [orgId, emp, "Administrator", "Admin", await hashPassword(pw), !chosen],
     );
     await q(`insert into memberships (user_id, org_id, site_id, role) values ($1,$2,null,'platform_admin'), ($1,$2,null,'org_admin')`, [u!.id, orgId]);
     console.log("\n================ FIRST ADMIN LOGIN ================");
     console.log(`  Employee ID : ${emp}`);
-    console.log(`  Password    : ${pw}   (temporary; you must change it at first login)`);
+    console.log(chosen ? "  Password    : the SEED_ADMIN_PASSWORD you set" : `  Password    : ${pw}   (temporary; you must change it at first login)`);
     console.log("====================================================\n");
   }
   return { orgId };
@@ -198,7 +204,7 @@ async function seedDemo(orgId: string) {
     }
   }
   console.log(`[seed] demo data: ${sites.length} sites × (2 safety officers, 6 supervisors, 6 areas), ${total} observations`);
-  console.log(`[seed] demo logins (testing only): SO-PS01-1, SUP-PS01-1, VIEW01, AUD01 … password ${DEMO_PASSWORD}`);
+  console.log(`[seed] demo logins (testing only): SO-PS01-1, SUP-PS01-1, VIEW01, AUD01 … password ${process.env.DEMO_PASSWORD || process.env.SEED_ADMIN_PASSWORD ? "(the password you set)" : DEMO_PASSWORD}`);
 }
 
 async function main() {

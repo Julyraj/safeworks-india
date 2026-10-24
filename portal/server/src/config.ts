@@ -22,6 +22,8 @@ export const config = {
   databaseUrl: env("DATABASE_URL", "postgres://safeworks:safeworks@127.0.0.1:5432/safeworks"),
   dbPoolMax: Number(env("DB_POOL_MAX", "20")),
   storageDir: path.resolve(env("STORAGE_DIR", path.join(serverRoot, "storage"))),
+  // "disk" (default) keeps photos in STORAGE_DIR; "db" keeps them in PostgreSQL (hosts without a persistent disk)
+  storageDriver: env("STORAGE_DRIVER", "disk") === "db" ? ("db" as const) : ("disk" as const),
   // Secret used to sign short-lived photo links. Must be set to a long random value in production.
   fileSigningSecret: env("FILE_SIGNING_SECRET", isProd ? undefined : "dev-only-change-me-0123456789abcdef"),
   fileLinkTtlSeconds: Number(env("FILE_LINK_TTL_SECONDS", "3600")),
@@ -35,7 +37,7 @@ export const config = {
   libraryDir: path.resolve(env("LIBRARY_DIR", path.join(serverRoot, "..", "..", ""))),
   smtpUrl: process.env.SMTP_URL || "",
   mailFrom: env("MAIL_FROM", "SafeWorks <no-reply@safeworks.local>"),
-  publicUrl: env("PUBLIC_URL", "http://localhost:8080"),
+  publicUrl: env("PUBLIC_URL", process.env.RENDER_EXTERNAL_URL || "http://localhost:8080"),
   trustProxy: env("TRUST_PROXY", "false") === "true",
   runJobs: env("RUN_JOBS", "true") === "true",
   logLevel: env("LOG_LEVEL", isProd ? "info" : "warn"),
