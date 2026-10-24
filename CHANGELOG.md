@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3 — 2026-10-25 — official documents
+- New **Document downloads** view: 404 official documents for all 123 regulations (150 direct PDFs), from India Code, central ministries, Karnataka and Tamil Nadu departments, BIS, eCFR/govinfo, legislation.gov.uk, EUR-Lex and the standards publishers. Filter by jurisdiction, access and type, or search.
+- Every regulation card now lists its **Official documents**: Download PDF / Open page, labelled Free, Free · login (e.g. BIS free download after registering) or Paid (e.g. ISO, NFPA, ASME), with an Internet Archive copy as a fallback.
+- Links rather than copies: Indian Acts and BIS/ISO standards are copyrighted, and a link always gives the current amended text. Documents that may be shared (Gazette rules, US public-domain, UK open licence) can also be hosted in `files/` — see `files/README.md`.
+- Weekly link check (GitHub Actions) opens an issue when an official link breaks.
+- `CONTENT-REVIEW.md` lists about 30 places where the library text may be out of date (e.g. NBC 2016 → SP 7:2026, Tamil Nadu Fire and Rescue Services Act 2025, IS 15298 Part 2:2024), to verify and update.
+
 ## Portal 1.1 — 2026-10-24 — server rewritten in Python
 - The portal server (`portal/server/`) is now Python 3.12: FastAPI, asyncpg and uvicorn. The old TypeScript server is removed.
 - Same web addresses, request and response formats, database tables and password format. The website, the admin console and the installed Android app work unchanged, and an existing database and existing logins carry over.

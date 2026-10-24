@@ -1361,22 +1361,22 @@ const DOCS = {
  ],
  "osh-central-rules": [
   {
-   "n": "Gazette of India (eGazette) – search for G.S.R. 345(E), 8 May 2026",
+   "n": "Gazette of India (eGazette) – search G.S.R. 345(E), 8 May 2026",
    "u": "https://egazette.gov.in/",
    "k": "page",
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Homepage only (site blocks automated fetch). Search eGazette for Gazette ID CG-DL-E-09052026-272379 / G.S.R. 345(E) dated 8 May 2026 (Extraordinary No. 311). No direct official PDF link could be verif"
+   "note": "Search eGazette for Gazette ID CG-DL-E-09052026-272379 (G.S.R. 345(E), 8 May 2026, Extraordinary). eGazette blocks automated fetching and no direct official PDF link appeared in search results, so the"
   },
   {
-   "n": "Ministry of Labour & Employment – homepage",
+   "n": "Ministry of Labour & Employment – homepage (Labour Codes > Rules)",
    "u": "https://labour.gov.in/",
    "k": "page",
    "a": "free",
-   "share": "gazette",
+   "share": "unknown",
    "v": false,
-   "note": "Homepage last resort; site is script-rendered and could not be read automatically. Look under Labour Codes / Rules."
+   "note": "Script-rendered site that cannot be read automatically. No specific official page for the Central OSH Rules 2026 was found."
   }
  ],
  "factories-act": [
@@ -1571,30 +1571,63 @@ const DOCS = {
  ],
  "air-water": [
   {
-   "n": "MoEFCC – Pollution Control division page",
-   "u": "https://moef.gov.in/index.php/pollution",
+   "n": "Water (P&CP) Act, 1974 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/1612?locale=en",
    "k": "page",
    "a": "free",
    "share": "act",
-   "note": "No verifiable official direct link to the Water Act 1974 or Air Act 1981 text was found in this pass; this division page is the nearest official page. Check India Code (indiacode.nic.in) for Act 6 of "
+   "note": "Central Act No. 6 of 1974 (MoEFCC)."
+  },
+  {
+   "n": "Water (P&CP) Amendment Act, 2024 – Gazette PDF (eGazette)",
+   "u": "https://egazette.gov.in/WriteReadData/2024/252144.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 5 of 2024, Gazette 15 Feb 2024: replaces most Water Act offences with penalties fixed by an adjudicating officer (appeal to NGT)."
+  },
+  {
+   "n": "Water (P&CP) Act, 1974 – PDF (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/15429/1/the_water_(prevention_and_control_of_pollution)_act,_1974.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Older text: amendments only to Act 53 of 1988. Does not include the 2024 Amendment Act; read the two together."
+  },
+  {
+   "n": "Air (P&CP) Act, 1981 – PDF (India Code)",
+   "u": "https://indiacode.nic.in/bitstream/123456789/1389/4/a1981-14%20.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "Act No. 14 of 1981. URL from search results on the official domain; India Code blocks automated fetching of this file (robots). Air Act penalties were amended by the Jan Vishwas (Amendment of Provisio"
+  }
+ ],
+ "noise-rules": [
+  {
+   "n": "Noise Pollution (Reg. & Control) Rules, 2000 – PDF (Uttarakhand PCB)",
+   "u": "https://ukpcb.uk.gov.in//public/fileupload/88.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Full text of S.O. 123(E), 14 Feb 2000, with Schedule of ambient noise limits; header lists amendments S.O. 1046(E) 2000, 1088(E) 2002, 1569(E) 2006, 50(E) 2010. Hosted by a State Pollution Control Boa"
+  },
+  {
+   "n": "Noise Rules (Amendment) 2000, S.O. 1046(E) – PDF (MoEFCC Parivesh)",
+   "u": "https://cpc.parivesh.nic.in/writereaddata/ENV/noisepollution/noise6.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Amending notification only (22 Nov 2000; silence-zone note). Read with the principal rules above."
   },
   {
    "n": "Central Pollution Control Board – homepage",
    "u": "https://cpcb.nic.in",
    "k": "page",
    "a": "free",
-   "share": "act",
-   "note": "Homepage last resort (site content is script-rendered; Acts are under its Rules/Acts menus)."
-  }
- ],
- "noise-rules": [
-  {
-   "n": "Central Pollution Control Board – homepage",
-   "u": "https://cpcb.nic.in",
-   "k": "page",
-   "a": "free",
    "share": "gazette",
-   "note": "Homepage last resort: no verifiable official direct link to the Noise Pollution (Regulation and Control) Rules, 2000 (S.O. 123(E), 14 Feb 2000) was found in this pass."
+   "note": "Homepage last resort."
   }
  ],
  "cd-waste-2025": [
@@ -1604,17 +1637,25 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Nearest official page; no verifiable official link to the Environment (Construction and Demolition) Waste Management Rules, 2025 notification was found in this pass (look it up on egazette.gov.in)."
+   "note": "Last resort. This page does not list the C&D rules. No official copy of the Environment (C&D) Waste Management Rules, 2025 (MoEFCC, notified Apr 2025, in force 1 Apr 2026) was found on moef.gov.in, cp"
   }
  ],
  "eia-2006": [
+  {
+   "n": "EIA Notification 2006 + amendments to Mar 2025 – PDF (TNPCB)",
+   "u": "https://tnpcb.gov.in/PDF/ES&L/ENV-LSG/EIA_Notification_2006_including_all_amendments_till_March_2025.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Consolidated S.O. 1533(E), 14 Sep 2006, with amendments up to March 2025 (Office Memoranda not included; the Gazette text prevails). Schedule item 8(a): 20,000 to <1,50,000 sq m built-up (industrial s"
+  },
   {
    "n": "MoEFCC – Environmental Impact Assessment (EIA) page",
    "u": "https://moef.gov.in/index.php/environmental-impact-assessment-eia",
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official EIA division page (no direct PDF of S.O. 1533(E), 14 Sep 2006 found)."
+   "note": "Official EIA division page."
   },
   {
    "n": "MoEFCC Environment Clearance – Legal Repository (EIA amendments list)",
@@ -1622,7 +1663,7 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official index of EIA Notification 2006 amendments and related notifications (2014–2023) with S.O. numbers and dates; no download links visible."
+   "note": "Official index of EIA Notification 2006 amendments and related notifications with S.O. numbers and dates."
   },
   {
    "n": "PARIVESH portal – homepage",
@@ -1630,27 +1671,59 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Homepage (script-rendered); environmental clearance applications and EIA documents."
+   "note": "Environmental clearance applications and compliance reporting."
   }
  ],
  "petroleum": [
+  {
+   "n": "Petroleum Act, 1934 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/2401?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act No. 30 of 1934 (Ministry of Petroleum and Natural Gas); in force 30 Mar 1937."
+  },
+  {
+   "n": "Petroleum Rules, 2002 – PESO licensing guidelines (SOP) PDF",
+   "u": "https://peso.gov.in/sites/default/files/2025-01/Petroleum%20Rules%202002%20-%20SOP.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "PESO reference guide to licences under the Rules (Forms XIV, XV, XIX etc.) and licence-exempt quantities; not the Rules themselves – the Gazette rules prevail."
+  },
   {
    "n": "PESO – Statutory menu: Petroleum Act 1934 & Petroleum Rules 2002",
    "u": "https://www.peso.gov.in/en/node/1028",
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official PESO page whose Statutory menu links the Petroleum Act, 1934, Petroleum Rules, 2002 and gazette amendments (e.g. Petroleum (Amendment) Rules 2018, 2019, 2024). Direct PDF URLs could not be ex"
+   "note": "Statutory menu links the Petroleum Act, Petroleum Rules 2002 and amendments (2018, 2019, 2021, 2024). Links are script-driven, so direct PDF URLs could not be extracted."
   }
  ],
  "explosives": [
+  {
+   "n": "Explosives Act, 1884 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/2301?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act No. 4 of 1884 (Ministry of Commerce & Industry, DPIIT)."
+  },
+  {
+   "n": "Explosives Rules, 2008 – PESO licensing guidelines (SOP) PDF",
+   "u": "https://peso.gov.in/sites/default/files/2025-01/Explosives%20Rules%202008%20-%20SOP.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "PESO guide to licences under G.S.R. 907(E), 29 Dec 2008: LE-1, LE-3, LE-5, LE-7, LE-8, LE-10 (shot-firer), LE-11; refers to AN Rules 2012. Gazette rules prevail."
+  },
   {
    "n": "PESO – Statutory menu: Explosives Act/Rules 2008, AN Rules 2012",
    "u": "https://www.peso.gov.in/en/node/1028",
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official PESO page whose Statutory menu links the Explosives Act 1884, Explosives Rules 2008, Ammonium Nitrate Rules 2012 and amendments up to 2026. Direct PDF URLs could not be extracted. The Act its"
+   "note": "Statutory menu links the Explosives Rules 2008, Ammonium Nitrate Rules 2012 and amendments up to Explosives (Amendment) Rules 2026 and AN (Amendment) Rules 2026. Links are script-driven."
   },
   {
    "n": "DGMS – legislation downloads incl. Explosives Rules, 2008",
@@ -1668,7 +1741,31 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official PESO page whose Statutory menu links the Gas Cylinders Rules 2016, SMPV(U) Rules 2016 and gazette amendments (up to 2026, incl. GCR (Second Amendment) Rules 2026, SMPV(U) (Amendment) Rules 20"
+   "note": "Links the principal GCR 2016 and SMPV(U) 2016 and amendments up to GCR (Third Amendment) Rules 2026 and SMPV(U) (Amendment) Rules 2026. Links are script-driven; no official direct PDF of the principal"
+  },
+  {
+   "n": "Gas Cylinders (Amdt) Rules, 2026 – G.S.R. 315(E) (eGazette)",
+   "u": "https://egazette.gov.in/WriteReadData/2026/272129.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Notified 27 Apr 2026 (DPIIT): import exemptions; extends a storage rule to other flammable gases besides LPG."
+  },
+  {
+   "n": "Gas Cylinders (Second Amdt) Rules, 2026 – G.S.R. 447(E) (eGazette)",
+   "u": "https://egazette.gov.in/WriteReadData/2026/273191.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "5 Jun 2026: omits rule 48; Form F condition allowing higher stacking and narrower gangways for cylinders in certified racks or cages."
+  },
+  {
+   "n": "SMPV(U) Rules, 2016 – PESO licensing SOP PDF (Dec 2024)",
+   "u": "https://peso.gov.in/web/sites/default/files/2024-12/SOP%20for%20SMPV%28U%29%20Rules%2C%202016-Final%20-%2002.12.2024.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "PESO SOP (2 Dec 2024) for licences and approvals: storage licence forms LS-1A/1B/1C, transport LS-2/2A/2B. Not the Rules themselves – the Gazette rules prevail."
   }
  ],
  "boilers-2025": [
@@ -1678,7 +1775,7 @@ const DOCS = {
    "k": "pdf",
    "a": "free",
    "share": "act",
-   "note": "Act No. 12 of 2025 (Ministry of Commerce & Industry), enacted 4 Apr 2025, in force 1 May 2025; text current as of 28 May 2025. Replaces the Boilers Act, 1923."
+   "note": "Act No. 12 of 2025 (Ministry of Commerce & Industry), enacted 4 Apr 2025, in force 1 May 2025. Replaces the Boilers Act, 1923."
   },
   {
    "n": "Boilers Act, 2025 – India Code act page",
@@ -1686,17 +1783,25 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "act",
-   "note": "No subordinate legislation listed yet. No verifiable official link to the Indian Boiler Regulations, 1950 (Central Boilers Board) was found in this pass."
+   "note": "No subordinate legislation listed yet. The Indian Boiler Regulations, 2026 (Central Boilers Board, published in the Gazette 1 Oct 2026, superseding IBR 1950) were not found on an official site in this"
   }
  ],
  "electricity": [
   {
-   "n": "CEA (Safety & Electric Supply) Regulations, 2023 – Gazette PDF (CEA)",
-   "u": "https://cea.nic.in/api/regulation-report/view/hi/a9139e01-ca0c-4a07-8e3d-4937602c5f8f",
+   "n": "CEA Safety & Electric Supply Regulations, 2023 – CEA notification page",
+   "u": "https://cea.nic.in/notification/central-electricity-authority-measures-relating-to-safety-and-electric-supply-regulations-2023/?lang=en",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Official notification page (16 Jun 2023) with an English PDF download (1,673 KB)."
+  },
+  {
+   "n": "CEA Safety & Electric Supply Regulations, 2023 – Gazette PDF (CEA)",
+   "u": "https://cea.nic.in/api/regulation-report/view/en/a9139e01-ca0c-4a07-8e3d-4937602c5f8f",
    "k": "pdf",
    "a": "free",
    "share": "gazette",
-   "note": "Gazette of India Extraordinary No. 377, 12 Jun 2023 (No. CEA-PS-16/1/2021, 8 Jun 2023). This file is the Hindi text; an English version may be available via the site's English toggle."
+   "note": "Gazette Extraordinary No. 377, 12 Jun 2023 (No. CEA-PS-16/1/2021); supersedes the 2010 Regulations. The text layer of this file is Hindi; the English PDF is on the notification page."
   },
   {
    "n": "CEA Safety & Electric Supply Amendment Regulations, 2026 – PDF (CEA)",
@@ -1707,31 +1812,48 @@ const DOCS = {
    "note": "Listed on CEA's official page as the 2026 amendment; scanned PDF (no text layer)."
   },
   {
-   "n": "CEA – Safety & Electric Supply regulations listing",
-   "u": "https://cea.nic.in/regulations-subcategory/7db8702f-e3c1-47da-b7f2-3f1ada6586bc?lang=hi",
-   "k": "page",
-   "a": "free",
-   "share": "gazette",
-   "note": "Official listing with download links for the 2023 Regulations and 2026 amendment."
-  },
-  {
-   "n": "Electricity Act, 2003 – India Code (homepage, search for Act 36 of 2003)",
-   "u": "https://www.indiacode.nic.in",
-   "k": "page",
+   "n": "Electricity Act, 2003 – PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/2058/1/a200336.pdf",
+   "k": "pdf",
    "a": "free",
    "share": "act",
-   "v": false,
-   "note": "Homepage last resort: no verifiable direct official link to the Electricity Act text was found in this pass."
+   "note": "Act No. 36 of 2003, updated text 'as on 1st June, 2026'."
   }
  ],
  "mines": [
+  {
+   "n": "Mines Act, 1952 – PDF (DGMS)",
+   "u": "https://www.dgms.gov.in/writereaddata/UploadFile/Mines%20Act%201952%20%2016032022.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "v": false,
+   "note": "URL quoted in DGMS's own 'Statutory Framework' PDF (dgms.gov.in/writereaddata/Content/STATUTORYFRAMEWORK.pdf); the file could not be fetched for checking. Mines Act is subsumed in the OSH Code 2020."
+  },
+  {
+   "n": "Metalliferous Mines Regulations, 1961 – PDF (DGMS)",
+   "u": "https://www.dgms.gov.in/writereaddata/UploadFile/Metalliferous%20Mines%20Regulation,%201961.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "v": false,
+   "note": "URL quoted in DGMS's 'Statutory Framework' PDF; the file could not be fetched for checking. The same source links CMR 2017: https://www.dgms.gov.in/writereaddata/UploadFile/Coal%20Mines%20Regulation%2"
+  },
+  {
+   "n": "Mines Act, 1952 – India Code act page",
+   "u": "https://indiacode.nic.in/handle/123456789/2168?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act No. 35 of 1952 (Ministry of Labour & Employment)."
+  },
   {
    "n": "DGMS – Mines Safety & Allied Legislation (downloads)",
    "u": "https://dgms.gov.in/UserView/index?mid=1306",
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Official DGMS page with download links for the Mines Act 1952, Mines Rules 1955, Metalliferous Mines Regulations 1961, Coal Mines Regulations 2017 (also Oil Mines Regs 2017, Mine Rescue Rules, Explosi"
+   "note": "Download links (script-driven) for the Mines Act 1952, Mines Rules 1955, MMR 1961, CMR 2017, Oil Mines Regs 2017, Mine Rescue Rules 1985, Explosives Rules 2008. No OSH Code mines rules or regulations "
   }
  ],
  "pli-act": [
@@ -2031,13 +2153,30 @@ const DOCS = {
  ],
  "shram-suvidha": [
   {
-   "n": "Shram Suvidha Portal – MoLE (homepage)",
-   "u": "https://shramsuvidha.gov.in",
+   "n": "Shram Suvidha Portal – MoLE information page",
+   "u": "https://labour.gov.in/shram-suvidha-portal",
    "k": "page",
    "a": "free",
    "share": "unknown",
    "v": false,
-   "note": "Homepage only – site blocks automated fetching; registration (Form I), LIN and unified annual return are filed here after login. No user manual/notification URL could be verified."
+   "note": "Official MoLE page on the portal (LIN, online registration, unified returns, inspection reports). Found in search results; the script-rendered page could not be read automatically."
+  },
+  {
+   "n": "Shram Suvidha Portal (login: registration, LIN, annual return)",
+   "u": "https://shramsuvidha.gov.in",
+   "k": "page",
+   "a": "free-login",
+   "share": "unknown",
+   "v": false,
+   "note": "Form I registration under the OSH Code/Central Rules, LIN and the unified annual return are filed here after login. The site blocks automated fetching."
+  },
+  {
+   "n": "Process for registration on Shram Suvidha – DGMS guide",
+   "u": "https://dgms.gov.in/writereaddata/Content/ShramSuvidhaRegistration.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
+   "note": "DGMS (MoLE) step-by-step guide covering sign-up, login and LIN application. It is mine-specific, undated and written before the Labour Codes, so the portal screens may differ now."
   }
  ],
  "ka-factories-rules": [
@@ -2048,7 +2187,24 @@ const DOCS = {
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Look under Factories, Boilers"
+   "note": "No official online copy of the Karnataka Factories Rules, 1969 could be found by web search (Karnataka govt sites are not indexed and block automated fetching). Look under the Factories, Boilers, Indu"
+  },
+  {
+   "n": "e-Surakshate – DFBISH Karnataka online portal (forms, licences)",
+   "u": "https://esuraksha.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Portal of the Dept of Factories, Boilers, Industrial Safety & Health (URL linked from the Raichur district NIC page for the department; Karnataka govt sites block automated fetching)."
+  },
+  {
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 2020, text as on 28 Nov 2025; in force 21 Nov 2025 and repeals the Factories Act 1948 and BOCW Act 1996 (s.143), with savings for existing rules until replaced."
   }
  ],
  "ka-safety-audit": [
@@ -2059,7 +2215,16 @@ const DOCS = {
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Factories (Safety A"
+   "note": "Karnataka Factories (Safety Audit) Rules, 2024 – notification LD 75 KBN 2024 dated 1 Feb 2025 (per secondary sources); no official online copy found. Check the Karnataka Gazette (erajyapatra.karnataka"
+  },
+  {
+   "n": "e-Surakshate – DFBISH Karnataka online portal (forms, licences)",
+   "u": "https://esuraksha.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Portal of the Dept of Factories, Boilers, Industrial Safety & Health (URL linked from the Raichur district NIC page for the department; Karnataka govt sites block automated fetching)."
   }
  ],
  "ka-factories-amend-2023": [
@@ -2070,7 +2235,15 @@ const DOCS = {
    "a": "free",
    "share": "act",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Factories (Karnataka Amendmen"
+   "note": "No official online copy of the Factories (Karnataka Amendment) Act, 2023 found (only law-firm/compliance-site copies). It amended the Factories Act 1948, which the OSH Code repealed from 21 Nov 2025 –"
+  },
+  {
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 2020, text as on 28 Nov 2025; in force 21 Nov 2025 and repeals the Factories Act 1948 and BOCW Act 1996 (s.143), with savings for existing rules until replaced."
   }
  ],
  "ka-osh-rules": [
@@ -2081,7 +2254,15 @@ const DOCS = {
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Draft OSH&WC (Karnataka) Rule"
+   "note": "Draft OSH&WC (Karnataka) Rules, 2026 (LD 245 LET 2021, 23 Jan 2026) – no official online copy found by web search; check the Labour Department site or the Karnataka Gazette (erajyapatra.karnataka.gov."
+  },
+  {
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 2020, text as on 28 Nov 2025; in force 21 Nov 2025 and repeals the Factories Act 1948 and BOCW Act 1996 (s.143), with savings for existing rules until replaced."
   }
  ],
  "ka-bocw-rules": [
@@ -2092,10 +2273,42 @@ const DOCS = {
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka BOCW Rules 2006 are"
+   "note": "No official online copy of the Karnataka BOCW (RE&CS) Rules, 2006 found by web search (only student-upload and compliance-site copies). Karnataka govt sites block automated fetching."
+  },
+  {
+   "n": "BOCW Act, 1996 + BOCW (RE&CS) Central Rules, 1998 – India Code PDF",
+   "u": "https://indiacode.nic.in/bitstream/123456789/9608/1/building-and-other-construction-workers-act-1996.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Central Act and Rules (G.S.R. 689(E), 1998) – the parent framework the Karnataka BOCW Rules 2006 follow. The BOCW Act is repealed by the OSH Code from 21 Nov 2025, with savings for existing rules."
+  },
+  {
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act 37 of 2020, text as on 28 Nov 2025; in force 21 Nov 2025 and repeals the Factories Act 1948 and BOCW Act 1996 (s.143), with savings for existing rules until replaced."
   }
  ],
  "ka-shops": [
+  {
+   "n": "Karnataka Shops & Commercial Estts Act, 1961 – India Code record",
+   "u": "https://www.indiacode.nic.in/handle/123456789/7609",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Karnataka Act 8 of 1962 (enacted 15 Feb 1962). Record page verified; the PDF/files tables load by script and could not be read automatically."
+  },
+  {
+   "n": "KA Shops & Commercial Estts (Amendment) Bill, 2026 – KA Legislature",
+   "u": "https://kla.kar.nic.in/council/house/bills/159/10e.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "LA Bill No. 23 of 2026 as introduced: exemption from Shops registration for establishments registered under the OSH Code, e-filing, registration valid until closure, service certificates, decriminalis"
+  },
   {
    "n": "Karnataka Labour Department – official website (homepage)",
    "u": "https://labour.karnataka.gov.in",
@@ -2103,29 +2316,53 @@ const DOCS = {
    "a": "free",
    "share": "act",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Shops & Commercial "
+   "note": "Registration under the Shops Act is via the Labour Department / Seva Sindhu. Site blocks automated fetching."
   }
  ],
  "ka-fire": [
   {
-   "n": "Karnataka State Fire & Emergency Services – official website (homepage)",
+   "n": "Karnataka Fire Force Act, 1964 – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/8192/1/42_of_1964_%28e%29.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Karnataka Act 42 of 1964; text 'as amended by Karnataka Act 40 of 1994' only. Does NOT include the Karnataka Fire Force (Amendment) Act 2023 (fire NOC required for high-rise buildings = 21 m and above"
+  },
+  {
+   "n": "Karnataka State Fire & Emergency Services – homepage",
    "u": "https://ksfes.karnataka.gov.in",
    "k": "page",
    "a": "free",
-   "share": "act",
+   "share": "unknown",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Fire Force Act 1964"
+   "note": "Fire NOC applications and KSFES circulars; site blocks automated fetching, so no document-level link could be verified."
   }
  ],
  "ka-lifts": [
   {
-   "n": "Chief Electrical Inspector to Govt, Karnataka – official website (homepage)",
-   "u": "https://ceig.karnataka.gov.in",
+   "n": "Karnataka Lifts, Escalators & Passenger Conveyors Act 2012 – PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/7182/1/9_of_2013_%28e%29.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Karnataka Act 9 of 2013 (assent 15 Jan 2013; in force 20 Jan 2015). Original text – does not include the 2025 amendment."
+  },
+  {
+   "n": "Karnataka Lifts Act 2012 – India Code record",
+   "u": "https://www.indiacode.nic.in/handle/123456789/7182",
    "k": "page",
    "a": "free",
    "share": "act",
+   "note": "Act record (notification N 36 EBS 2013); check here for later amendments/rules."
+  },
+  {
+   "n": "Chief Electrical Inspector to Govt, Karnataka – homepage",
+   "u": "https://ceig.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Karnataka Lifts, Escalators &"
+   "note": "Licensing authority; the Karnataka Lifts Rules and lift licence procedure should be here. Site blocks automated fetching; no rules PDF found."
   }
  ],
  "kspcb": [
@@ -2136,17 +2373,43 @@ const DOCS = {
    "a": "free",
    "share": "unknown",
    "v": false,
-   "note": "Karnataka government sites (*.karnataka.gov.in) block automated fetching (robots) and the web-search budget ran out, so no document-level link could be found or verified. Consent (CTE/CTO) guidelines,"
+   "note": "Consent (CTE/CTO), categorisation and construction-dust directions are published here but are not indexed by web search; site blocks automated fetching. No document-level official link found."
+  },
+  {
+   "n": "Environment (Protection) Act, 1986 – India Code page (lists rules)",
+   "u": "https://www.indiacode.nic.in/handle/123456789/4316",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Lists the rules made under the Act, including the C&D Waste Management Rules 2016 and Hazardous & Other Wastes Rules 2016 (basis of KSPCB HW authorisations)."
   }
  ],
  "ka-building": [
   {
-   "n": "BBMP (Bruhat Bengaluru Mahanagara Palike) – official website (homepage)",
-   "u": "https://bbmp.gov.in",
-   "k": "page",
+   "n": "Bangalore Building Bye-laws, 2003 – BBMP PDF",
+   "u": "https://site.bbmp.gov.in/PDF/Bangalore-Building-Byelaws-%202003.pdf",
+   "k": "pdf",
    "a": "free",
    "share": "gazette",
-   "note": "Homepage only – loads but no bye-law/Town Planning document links were exposed; web-search budget ran out. KTCP Act 1961 and Model Building Bye-laws are published by Karnataka Urban Development Dept /"
+   "v": false,
+   "note": "URL from a web-search result on BBMP's official site; site blocks automated fetching. BBMP was replaced by the Greater Bengaluru Authority and five city corporations (notified Sept 2025) – check GBA f"
+  },
+  {
+   "n": "Karnataka Town & Country Planning Act, 1961 – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/7905/1/11_of_1963_%28e%29.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Karnataka Act 11 of 1963, as amended up to Karnataka Act 38 of 2015."
+  },
+  {
+   "n": "BBMP – Acts & Laws page",
+   "u": "https://site.bbmp.gov.in/act%20laws.html",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Official BBMP page listing acts, bye-laws and zoning regulations (URL from a web-search result; site blocks automated fetching)."
   }
  ],
  "ka-groundwater": [
@@ -2371,61 +2634,108 @@ const DOCS = {
  ],
  "tn-fire": [
   {
+   "n": "Tamil Nadu Fire Service Act, 1985 (Act 40 of 1985) – full text, TNFRS",
+   "u": "https://tnfrs.tn.gov.in/?p=6035",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "Official TNFRS page with the 1985 Act text. It is to be repealed by the Tamil Nadu Fire and Rescue Services Act, 2025 from the date the Government notifies; check whether that has happened."
+  },
+  {
+   "n": "TN Fire & Rescue Services Bill 2025 (Bill 13) – TN Gazette Ex. 194",
+   "u": "https://stationeryprinting.tn.gov.in/extraordinary/2025/194_Ex_IV_1_E_2025.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Bill as introduced, 28 Apr 2025: repeals and re-enacts the 1985 Act. Buildings are classed as Category A (fire licence), B (fire safety certificate, 3 years) and C (self-certified protocol every 3 yea"
+  },
+  {
    "n": "Tamil Nadu Fire and Rescue Services – homepage (NOC / fire licence)",
    "u": "https://tnfrs.tn.gov.in/",
    "k": "page",
    "a": "free",
    "share": "unknown",
-   "note": "Homepage only: lists NOC for planning permission, completion/fire licence and renewal services. No official online copy of the TN Fire Service Act 1985 was found."
+   "note": "NOC/Fire Licence applications are routed to the TN single-window (DIGIGOV) portal from the menu."
   }
  ],
  "tn-cdbr": [
   {
-   "n": "TN Housing & Urban Development single-window planning portal",
-   "u": "https://onlineppa.tn.gov.in/",
-   "k": "page",
+   "n": "TN Combined Dev. & Building Rules 2019 – TN Gazette Ex. 43 (CCMC copy)",
+   "u": "https://ccmc.gov.in/img/upload/TNCDBR_Rules,_2019.pdf",
+   "k": "pdf",
    "a": "free",
-   "share": "unknown",
-   "note": "Homepage of the HUD Dept online planning-permission portal; no TNCDBR 2019 PDF link was readable."
+   "share": "gazette",
+   "note": "Original notification: G.O. Ms. No. 18, MAWS (MA1) Dept, 4 Feb 2019, SRO A-2(c)/2019, TN Gazette Extraordinary No. 43. Copy hosted by Coimbatore City Municipal Corporation. Does not include later amen"
   },
   {
-   "n": "CMDA Chennai – homepage (planning permission, guidelines)",
-   "u": "https://www.cmdachennai.gov.in/",
+   "n": "DTCP Tamil Nadu – State Rules: TNCDBR 2019 & amendment G.O.s",
+   "u": "https://www.tcp.tn.gov.in/staterules",
    "k": "page",
    "a": "free",
-   "share": "unknown",
-   "note": "Homepage only; has checklists/manuals section. No official TNCDBR 2019 PDF located."
+   "share": "gazette",
+   "note": "Lists TNCDBR 2019 and its amending G.O.s (e.g. G.O. Ms. 16, 51, 152, 01, 58, 66, 69, 15, 70, 123, 133 for self-certification) with downloads, plus the TN Lift Rules 1997."
   }
  ],
  "tn-lifts": [
   {
-   "n": "Chief Electrical Inspector to Government, Tamil Nadu – homepage",
-   "u": "https://ceig.tn.gov.in/",
+   "n": "TN Lifts & Escalators Rules amendment 2026 (G.O.Ms.13) – TN Gazette",
+   "u": "https://www.stationeryprinting.tn.gov.in/extraordinary/2026/46_Ex_III_1a_2026.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "G.O.Ms.No.13, Energy (D2), 3 Feb 2026: replaces rules 3–5 with online permission and licensing (permission valid 6 months, operating licence 5 years), adds penalties and compounding under the TN Lifts"
+  },
+  {
+   "n": "TN Electrical Inspectorate – Downloads (Lifts & Escalators Rules 1997)",
+   "u": "https://tnei.tn.gov.in/pages/downloads",
    "k": "page",
    "a": "free",
-   "share": "unknown",
-   "v": false,
-   "note": "Homepage only (URL from the entry); site blocks automated fetch. No official online copy of the TN Lifts and Escalators Act 1997 / Rules was found."
+   "share": "gazette",
+   "note": "Official downloads page: TN Lifts and Escalators Rules 1997, lists of approved lift/escalator erection and maintenance firms, and forms. The 1997 Act text and the 2025 Amendment Act text were not foun"
   }
  ],
  "tnpcb": [
   {
-   "n": "Tamil Nadu Pollution Control Board – homepage",
-   "u": "https://tnpcb.gov.in/",
-   "k": "page",
+   "n": "TNPCB & You 2025 – ready reckoner on consents & authorisations (TNPCB)",
+   "u": "https://tnpcb.gov.in/pdf/tnpcb&you2025.pdf",
+   "k": "pdf",
    "a": "free",
    "share": "unknown",
-   "note": "Homepage only; consent guidelines, categorisation list and OCMMS links are behind script-driven menus and could not be read."
+   "note": "7th edition, 2025. Covers CTE/CTO procedure, Red/Orange/Green/White categorisation, HW authorisation, C&D waste and construction dust mitigation, and siting G.O.s 213, 127 and 223."
+  },
+  {
+   "n": "TNPCB – Public Interest G.O.s (incl. G.O. 213/1989, 127 & 223/1998)",
+   "u": "https://tnpcb.gov.in/go.php",
+   "k": "page",
+   "a": "free",
+   "share": "gazette",
+   "note": "Downloads of G.O. Ms. No. 213 (30 Mar 1989: industries within 1 km of rivers and water bodies) and G.O. Ms. No. 127 (8 May 1998) and 223 (2 Sep 1998): ban on highly polluting industries within 5 km of"
   }
  ],
  "tn-groundwater": [
   {
-   "n": "Chennai Metro Water (CMWSSB) – homepage",
-   "u": "https://cmwssb.tn.gov.in/",
+   "n": "Chennai Metro Area Groundwater (Regulation) Act 1987 – CMWSSB PDF",
+   "u": "https://cmwssb.tn.gov.in/sites/default/files/upload/06Apr2022154544_GroundwaterAct1987-2020.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "TN Act 27 of 1987 with amendments up to Act 37 of 2002. s.3: permit to sink a well. s.5: licence for non-domestic extraction and transport by goods vehicle. Covers Chennai city and the scheduled villa"
+  },
+  {
+   "n": "CMWSSB – groundwater regulation: permits, licences, fees",
+   "u": "https://cmwssb.tn.gov.in/node/119",
    "k": "page",
    "a": "free",
    "share": "unknown",
-   "note": "Homepage only; administers the Chennai Metropolitan Area Groundwater (Regulation) Act 1987 permits. Note: the TN Groundwater (Development and Management) Act 2003 is understood to have been repealed i"
+   "note": "CMWSSB summary of well registration, new-well permits, extraction (Form II) and transport (Form III) licences, fees and penalties."
+  },
+  {
+   "n": "TN Groundwater (Dev. & Mgmt) Repeal Act 2013 – India Code",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/19505/1/the_tamil_nadu_groundwater_%28development_and_management%29_repeal_act%2C_2013_act_no._23_of_2013.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "TN Act 23 of 2013, in force from 14 Sep 2013. It repeals the TN Groundwater (Development and Management) Act 2003 (TN Act 3 of 2003), so the 2003 Act is not in force."
   }
  ],
  "tn-labour-welfare": [
@@ -3243,12 +3553,28 @@ const DOCS = {
  ],
  "ec-act": [
   {
-   "n": "Energy Conservation Act, 2001 (as amended 2010) – chapter-wise text, BEE",
+   "n": "Energy Conservation Act, 2001 (Act 52 of 2001) – India Code",
+   "u": "https://indiacode.nic.in/handle/123456789/2003?locale=en",
+   "k": "page",
+   "a": "free",
+   "share": "act",
+   "note": "India Code page for the Act, with the subordinate notifications, rules and regulations made under it."
+  },
+  {
+   "n": "EC (Amendment) Act 2022 – commencement S.O. 6064(E), Gazette of India",
+   "u": "https://egazette.gov.in/WriteReadData/2022/241432.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "gazette",
+   "note": "Ministry of Power notification of 26 Dec 2022: all provisions of the EC (Amendment) Act 2022 (Act 19 of 2022) in force from 1 Jan 2023. The amending Act's own text was not found on an official site."
+  },
+  {
+   "n": "Energy Conservation Act, 2001 (as amended 2010) – chapter-wise, BEE",
    "u": "https://www.beeindia.gov.in/show_content.php?lang=1&level=1&ls_id=164&lid=39",
    "k": "page",
    "a": "free",
    "share": "act",
-   "note": "Official BEE page with 10 chapter files of Act 52 of 2001 (with BEE comments). Does NOT include the EC (Amendment) Act, 2022 – get that from India Code / egazette.gov.in (India Code blocked automated "
+   "note": "Official BEE page with chapter files of Act 52 of 2001. It does not include the 2022 amendment."
   },
   {
    "n": "BEE Rules & Regulations under the EC Act – listing (BEE)",
@@ -3256,7 +3582,7 @@ const DOCS = {
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Service Rules, Functional Rules and Regulations made under the EC Act (updated 2026)"
+   "note": "Service Rules, Functional Rules and Regulations made under the EC Act."
   }
  ],
  "ccts": [
@@ -3295,30 +3621,37 @@ const DOCS = {
  ],
  "brsr": [
   {
-   "n": "SEBI circular on BRSR (10 May 2021) – official page (SEBI)",
+   "n": "SEBI circular on BRSR (10 May 2021) – official page",
    "u": "https://www.sebi.gov.in/legal/circulars/may-2021/business-responsibility-and-sustainability-reporting-by-listed-entities_50096.html",
    "k": "page",
    "a": "free",
    "share": "unknown",
-   "note": "Circular SEBI/HO/CFD/CMD-2/P/CIR/2021/562 introducing the BRSR format under LODR Reg 34(2)(f); PDF attachment on the page"
+   "note": "Circular SEBI/HO/CFD/CMD-2/P/CIR/2021/562 introducing BRSR under LODR Reg 34(2)(f)."
   },
   {
-   "n": "SEBI BRSR circular 2021 incl. BRSR format & guidance – PDF (SEBI)",
+   "n": "SEBI BRSR circular 10 May 2021 – PDF",
    "u": "https://www.sebi.gov.in/sebi_data/attachdocs/may-2021/1620655793598.pdf",
    "k": "pdf",
    "a": "free",
    "share": "unknown",
-   "v": false,
-   "note": "Attachment path taken from the official circular page; not opened because the fetch limit was reached"
+   "note": "Circular PDF. The BRSR format (Annexure I) and guidance note (Annexure II) are referred to in it. Check the official page for the annexure files if they are not in this PDF."
   },
   {
-   "n": "SEBI website – Legal > Circulars (BRSR Core 2023 & updates)",
-   "u": "https://www.sebi.gov.in",
+   "n": "SEBI circular: BRSR Core – assurance & value chain (12 Jul 2023)",
+   "u": "https://www.sebi.gov.in/legal/circulars/jul-2023/brsr-core-framework-for-assurance-and-esg-disclosures-for-value-chain_73854.html",
    "k": "page",
    "a": "free",
    "share": "unknown",
+   "note": "Circular SEBI/HO/CFD/CFD-SEC-2/P/CIR/2023/122, with the BRSR Core format and glide path. Later changes (e.g. the March 2025 'assessment or assurance' and value-chain relaxation circular, and the LODR "
+  },
+  {
+   "n": "SEBI BRSR Core circular 12 Jul 2023 – PDF",
+   "u": "https://www.sebi.gov.in/sebi_data/attachdocs/jul-2023/1689166456465.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "unknown",
    "v": false,
-   "note": "Homepage fallback: the BRSR Core circular (SEBI/HO/CFD/CFD-SEC-2/P/CIR/2023/122, 12 Jul 2023), later BRSR Core updates and the LODR Master Circular could not be verified (fetch limit reached) – find t"
+   "note": "PDF path taken from the official circular page's viewer link. Automated opening was not permitted."
   }
  ],
  "cbam": [
@@ -4194,37 +4527,36 @@ const DOCS = {
  ],
  "security-codes": [
   {
-   "n": "PSARA 2005 & PSA Central Model Rules 2020 – MHA PSARA portal",
+   "n": "Private Security Agencies (Regulation) Act 2005 – India Code",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/2024/1/A2005-29.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Act No. 29 of 2005."
+  },
+  {
+   "n": "PSARA licensing portal & Central Model Rules 2020 – MHA",
    "u": "https://psara.gov.in/",
    "k": "page",
    "a": "free",
-   "share": "act",
-   "note": "MHA PSARA licensing portal; lists downloads of the Act (No. 29 of 2005) and Central Model Rules 2020 (G.S.R. 776(E), gazette). Licensing is by State Home Departments."
+   "share": "gazette",
+   "note": "MHA PSARA portal, with downloads of the Act and the Private Security Agencies Central Model Rules 2020. Licensing is by State Home Departments."
   },
   {
-   "n": "POSH Act, 2013 – SHe-Box portal (Ministry of WCD)",
-   "u": "https://shebox.wcd.gov.in/",
+   "n": "POSH Act 2013 (Act 14 of 2013) – India Code",
+   "u": "https://indiacode.nic.in/handle/123456789/2104",
    "k": "page",
    "a": "free",
    "share": "act",
-   "note": "Portal describes the Sexual Harassment of Women at Workplace (PPR) Act 2013 with 'Read More' link to the text; complaint filing portal."
+   "note": "India Code page for the Sexual Harassment of Women at Workplace (PPR) Act 2013. It does not list the 2013 Rules."
   },
   {
-   "n": "Bharatiya Nyaya Sanhita, 2023 – NCRB Sankalan (new criminal laws)",
-   "u": "https://www.ncrb.gov.in/uploads/SankalanPortal/Index.html",
-   "k": "page",
+   "n": "Bharatiya Nyaya Sanhita 2023 (Act 45 of 2023) – India Code",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+   "k": "pdf",
    "a": "free",
    "share": "act",
-   "v": false,
-   "note": "Linked from MHA homepage 'Important Links'; automated fetch blocked. MHA Acts listing: https://www.mha.gov.in/acts-rules"
-  },
-  {
-   "n": "IRC:SP:55 Traffic management in work zones – Indian Roads Congress",
-   "u": "https://www.irc.nic.in",
-   "k": "page",
-   "a": "paid",
-   "share": "no",
-   "note": "Homepage only; IRC codes are sold by IRC (no specific catalogue page found). NDMA guidelines and municipal bye-laws not included."
+   "note": "Updated text as on 6 Oct 2025. IRC:SP:55 is a paid IRC standard and is not linked. NDMA guidelines and municipal bye-laws are not included."
   }
  ],
  "drone-rules": [
@@ -4290,49 +4622,59 @@ const DOCS = {
  ],
  "is-17893": [
   {
-   "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
-   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
-   "k": "page",
-   "a": "free",
-   "share": "no",
-   "note": "Use 'IS Number Search' for IS 17893:2023 (Work permit system – code of practice); its page links to the BIS e-sales download. Specific detail page could not be located without site search."
-  },
-  {
-   "n": "BIS e-sales portal – Indian Standards download",
-   "u": "https://standardsbis.bsbedge.com/",
+   "n": "IS 17893:2023 Work permit system – BIS standard page",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MjkwMDM=",
    "k": "page",
    "a": "free-login",
    "share": "no",
-   "note": "Indigenous Indian Standards download free after registration (FileOpen plug-in needed). Standards published after 1 Oct 2025 are on the new portal standards.bis.gov.in."
+   "note": "BIS 'Know your standards' page: new standard, no amendments; committee CHD 07; 'Click to download' leads to the BIS e-sales portal (free after registration)."
+  },
+  {
+   "n": "IS 17893:2023 – BIS e-sales download link",
+   "u": "https://standardsbis.bsbedge.com/search_redirect.aspx?id=29003",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "v": false,
+   "note": "Download link given on the BIS standard page above; free download after registering (FileOpen plug-in). Not fetched."
   }
  ],
  "tn-cimah": [
   {
-   "n": "DISH Tamil Nadu – Directorate of Industrial Safety & Health (homepage)",
-   "u": "https://dish.tn.gov.in",
-   "k": "page",
+   "n": "TN CIMAH Rules 1994 – compliance checklist (DISH Tamil Nadu)",
+   "u": "https://dish.tn.gov.in/assets/pdf/TNCIMAH-Rules-Check-list.pdf",
+   "k": "pdf",
    "a": "free",
-   "share": "gazette",
-   "note": "Homepage only – TN CIMAH Rules 1994 text not found online on an official site (DISH site is JavaScript-driven; labour.tn.gov.in blocks automated access)."
+   "share": "unknown",
+   "note": "DISH checklist: on-site emergency plan and mock drills, risk assessment/HAZOP, safety audit report to the Director, chemical inventory. The full text of the TN CIMAH Rules 1994 was not found on an off"
   },
   {
-   "n": "Model Major Accident Hazard Control Rules, 1997 – DGFASLI (reference)",
+   "n": "Model Major Accident Hazard Control Rules 1997 – DGFASLI (reference)",
    "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//65005a4eacf128.13405955.pdf",
    "k": "pdf",
    "a": "free",
    "share": "unknown",
-   "note": "DGFASLI model MAH rules (text as on 18.9.2001) under Factories Act Ch. IV-A – reference only, not the state rules."
+   "note": "DGFASLI model MAH rules (text as on 18.9.2001) under Factories Act Ch. IV-A. For reference only; these are not the TN rules."
   }
  ],
  "ka-mah-rules": [
   {
-   "n": "Karnataka Labour Department (homepage)",
+   "n": "Karnataka Labour Department / DFBISH (homepage)",
    "u": "https://labour.karnataka.gov.in",
    "k": "page",
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). Major Accident Hazards Control (Karnataka) Rules 1994 text not located; check the Factories, Boilers, Industria"
+   "note": "No official online copy found. Secondary legal databases list these rules as the 'Control of Industrial Major Accident Hazards (Karnataka) Rules, 1994' – search under that title. Karnataka govt sites "
+  },
+  {
+   "n": "e-Surakshate – DFBISH Karnataka online portal (forms, licences)",
+   "u": "https://esuraksha.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Portal of the Dept of Factories, Boilers, Industrial Safety & Health (URL linked from the Raichur district NIC page for the department; Karnataka govt sites block automated fetching)."
   },
   {
    "n": "Model Major Accident Hazard Control Rules, 1997 – DGFASLI (reference)",
@@ -4351,7 +4693,7 @@ const DOCS = {
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). BOCW (Karnataka Amendment) Rules 2024 notification not located; check Karnataka e-Gazette or the Karnataka BOCW"
+   "note": "BOCW (RE&CS) (Karnataka) (Amendment) Rules, 2024 – no official online copy found (only compliance-site copies, c. Feb 2024). Check the Karnataka Gazette (erajyapatra.karnataka.gov.in)."
   },
   {
    "n": "BOCW (RE&CS) Central Rules, 1998 – full text (DGFASLI)",
@@ -4362,23 +4704,31 @@ const DOCS = {
    "note": "Central counterpart for comparison with the Karnataka BOCW Rules 2006 technical chapters."
   },
   {
-   "n": "OSH Code, 2020 – Gazette text (DGFASLI)",
-   "u": "https://dgfasli.gov.in/public/Admin/Cms/AllPdf//650059fbb8f1a9.98699174.pdf",
+   "n": "OSH Code, 2020 – updated full text PDF (India Code)",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/22041/1/2020-37.pdf",
    "k": "pdf",
    "a": "free",
    "share": "act",
-   "note": "Act 37 of 2020 as published 29 Sep 2020 (not consolidated); in force from 21 Nov 2025 and subsumes the BOCW Act 1996."
+   "note": "Act 37 of 2020, text as on 28 Nov 2025; in force 21 Nov 2025 and repeals the Factories Act 1948 and BOCW Act 1996 (s.143), with savings for existing rules until replaced."
   }
  ],
  "ka-boiler-rules-1982": [
   {
-   "n": "Karnataka Labour Department (homepage)",
+   "n": "Karnataka Labour Department / DFBISH (homepage)",
    "u": "https://labour.karnataka.gov.in",
    "k": "page",
    "a": "free",
    "share": "gazette",
    "v": false,
-   "note": "Homepage only (from app data; Karnataka govt sites block automated fetch, not verified). Karnataka Boiler Rules 1982 text not located; administered by the Chief Inspector of Boilers, Dept of Factories"
+   "note": "No official online copy of the Karnataka Boiler Rules, 1982 found; administered by the Chief Inspector of Boilers, DFBISH. Karnataka govt sites block automated fetching."
+  },
+  {
+   "n": "Boilers Act, 2025 (Act 12 of 2025) – India Code PDF",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "Central Act in force 1 May 2025; replaces the Boilers Act, 1923. New Indian Boiler Regulations, 2026 (DPIIT) reportedly in force 6 Oct 2026 – no official PDF located."
   },
   {
    "n": "Boilers Act, 1923 (as amended to 2007) – DGFASLI",
@@ -4386,17 +4736,34 @@ const DOCS = {
    "k": "pdf",
    "a": "free",
    "share": "act",
-   "note": "Parent Act for state boiler rules. Reportedly replaced by the Boilers Act, 2025 – check commencement; state rules continue until replaced."
+   "note": "Repealed parent Act under which the 1982 state rules were made – historical reference."
+  },
+  {
+   "n": "e-Surakshate – DFBISH Karnataka online portal (forms, licences)",
+   "u": "https://esuraksha.karnataka.gov.in",
+   "k": "page",
+   "a": "free",
+   "share": "unknown",
+   "v": false,
+   "note": "Portal of the Dept of Factories, Boilers, Industrial Safety & Health (URL linked from the Raichur district NIC page for the department; Karnataka govt sites block automated fetching)."
   }
  ],
  "tn-boiler-rules": [
   {
-   "n": "Tamil Nadu Boiler Directorate (homepage)",
-   "u": "https://boilers.tn.gov.in/",
+   "n": "TN Boilers Directorate – Documents (procedures, G.O.s, self-cert.)",
+   "u": "https://boilers.tn.gov.in/documentsreports.html",
    "k": "page",
    "a": "free",
    "share": "gazette",
-   "note": "Homepage only – enforcing authority for the Boilers Act; site has a 'Documents & Reports' section but TN Boiler Rules text could not be located (automated access blocked on sub-pages)."
+   "note": "Registration and renewal procedures, the self-certification of boilers gazette notification, G.O. Ms. No. 244 (2017), G.O. (3D) No. 11 (2001) and G.O. Ms. No. 1139 (1992). No consolidated 'TN Boiler R"
+  },
+  {
+   "n": "Boilers Act, 2025 (Act 12 of 2025) – India Code",
+   "u": "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf",
+   "k": "pdf",
+   "a": "free",
+   "share": "act",
+   "note": "In force from 1 May 2025 (S.O. 1943(E), 30 Apr 2025). It repeals the Boilers Act 1923, but s.45(2) saves existing rules, registrations and certificates. Under s.42, States make rules on fees, inspecti"
   },
   {
    "n": "Boilers Act, 1923 (as amended to 2007) – DGFASLI",
@@ -4404,7 +4771,7 @@ const DOCS = {
    "k": "pdf",
    "a": "free",
    "share": "act",
-   "note": "Parent Act for state boiler rules. Reportedly replaced by the Boilers Act, 2025 – check commencement; state rules continue until replaced."
+   "note": "Repealed from 1 May 2025 by the Boilers Act 2025. Kept for reference, because existing state rules were made under it."
   }
  ],
  "bis-ptw-hygiene": [
@@ -4461,28 +4828,36 @@ const DOCS = {
  ],
  "bis-ppe-2": [
   {
+   "n": "IS 2925:1984 Industrial safety helmets – BIS standard page",
+   "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/OTQzOQ==",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "QCO notified and implemented (23 Apr 2024); 4 amendments. Download via standardsbis.bsbedge.com (free after registration)."
+  },
+  {
+   "n": "IS 15298 (Part 2):2024 Safety footwear – BIS standard page",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/MzE1NzM=",
+   "k": "page",
+   "a": "free-login",
+   "share": "no",
+   "note": "Third revision (ISO 20345:2021, MOD); supersedes IS 15298 (Part 2):2016. Check Parts 3–4 on the catalogue."
+  },
+  {
+   "n": "BIS list: Occupational Health & Safety Protection (56 standards)",
+   "u": "https://services.bis.gov.in/php/BIS_2.0/dgdashboard/published/sub_sub_grp_stn_list/546",
+   "k": "page",
+   "a": "free",
+   "share": "no",
+   "note": "Links to pages for IS 9167 (ear protectors), IS 9473 (filtering half masks), IS 15322 (particle filters), IS 15323 (gas & combined filters), IS 15809 (hi-vis), IS 10592 (emergency showers), IS 3521 pa"
+  },
+  {
    "n": "BIS 'Know Your Standards' catalogue – Indian Standards search",
    "u": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards",
    "k": "page",
    "a": "free",
    "share": "no",
-   "note": "Search IS 2925, 15298, 5983, 8520, 6994, 4770, 13774, 9167, 6229, 9473, 15322, 15809, 15748, 10592 via 'IS Number Search'; detail pages link to the e-sales download. Specific pages could not be locate"
-  },
-  {
-   "n": "BIS 'Safety footwear' standards list (IS 15298, IS 1989, IS 11226)",
-   "u": "https://services.bis.gov.in/php/BIS_2.0/dgdashboard/published/sub_sub_grp_stn_list/148",
-   "k": "page",
-   "a": "free",
-   "share": "no",
-   "note": "Lists IS 15298 Parts 5–8:2004 and other safety-footwear standards with detail-page links; IS 15298 Parts 2–4 (ISO 20345/6/7 based) not shown in this list – search the catalogue."
-  },
-  {
-   "n": "BIS e-sales portal – Indian Standards download",
-   "u": "https://standardsbis.bsbedge.com/",
-   "k": "page",
-   "a": "free-login",
-   "share": "no",
-   "note": "Indigenous Indian Standards download free after registration. Check BIS product certification (ISI mark / QCO) status separately on bis.gov.in."
+   "note": "Search the rest by number: IS 5983, 8520, 6994, 4770, 13774, 6229, 15748; detail pages link to the e-sales download."
   }
  ]
 };
