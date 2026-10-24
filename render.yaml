@@ -16,7 +16,8 @@ services:
     dockerfilePath: ./portal/Dockerfile
     dockerContext: .
     healthCheckPath: /api/health
-    autoDeploy: true
+    # Deploy a new commit only after the GitHub Actions tests pass
+    autoDeployTrigger: checksPass
     envVars:
       - key: DATABASE_URL
         fromDatabase:
