@@ -1,100 +1,85 @@
+/* Line icons (24-grid, 2 px stroke, currentColor). Original drawings — no brand or sign-standard art is copied. */
 import type { SVGProps } from "react";
 
 type P = SVGProps<SVGSVGElement> & { size?: number };
+const S = ({ size = 24, children, ...p }: P) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
+    {children}
+  </svg>
+);
 
-function base(size = 22, rest: SVGProps<SVGSVGElement>) {
-  return {
-    width: size,
-    height: size,
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true,
-    ...rest,
-  };
-}
-
-export const IconHome = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M3 11.5 12 4l9 7.5" /><path d="M5.5 10v9.5h13V10" /><path d="M10 19.5v-5h4v5" /></svg>
-);
-export const IconList = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M9 6h11M9 12h11M9 18h11" /><path d="M4 6h.01M4 12h.01M4 18h.01" strokeWidth={3} /></svg>
-);
-export const IconPlus = ({ size, ...p }: P) => (
-  <svg {...base(size, p)} strokeWidth={2.6}><path d="M12 5v14M5 12h14" /></svg>
-);
-export const IconCamera = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
-);
-export const IconCheck = ({ size, ...p }: P) => (
-  <svg {...base(size, p)} strokeWidth={2.4}><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
-);
-export const IconBell = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10" /><path d="M10 20a2 2 0 0 0 4 0" /></svg>
-);
-export const IconMore = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M4 7h16M4 12h16M4 17h16" /></svg>
-);
-export const IconPhone = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M5 4h4l1.5 4.5L8 10a11 11 0 0 0 6 6l1.5-2.5L20 15v4a1.5 1.5 0 0 1-1.5 1.5A16.5 16.5 0 0 1 3.5 5.5 1.5 1.5 0 0 1 5 4" /></svg>
-);
-export const IconBook = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" /><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5" /></svg>
-);
-export const IconUser = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
-);
-export const IconLogout = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M15 4h4v16h-4" /><path d="M10 8l-4 4 4 4M6 12h10" /></svg>
-);
-export const IconChart = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M4 20V4M4 20h16" /><path d="M8 16v-5M12 16V8M16 16v-3" /></svg>
-);
-export const IconX = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M6 6l12 12M18 6 6 18" /></svg>
-);
-export const IconBack = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M15 5l-7 7 7 7" /></svg>
-);
-export const IconSearch = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
-);
-export const IconAlert = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M12 3 2.5 20h19z" /><path d="M12 10v4.5M12 17.5h.01" /></svg>
-);
-export const IconWalk = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="13" cy="4.5" r="2" /><path d="m9 21 3-6 3 3v3M7 12l3-4 4 1 2 4 3 1" /></svg>
-);
-export const IconApprove = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M9 11.5 11.5 14 16 9" /><path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z" /></svg>
-);
-export const IconDownload = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" /></svg>
-);
-export const IconUsers = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6" /></svg>
-);
-export const IconSettings = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1" /></svg>
-);
-export const IconSite = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M3 21h18M5 21V9l7-5 7 5v12" /><path d="M9 21v-6h6v6" /></svg>
-);
-export const IconClock = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>
-);
-export const IconLog = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="M6 3h9l4 4v14H6z" /><path d="M14 3v5h5M9 12h7M9 16h7" /></svg>
-);
-export const IconLock = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><rect x="5" y="10.5" width="14" height="10" rx="1.5" /><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" /></svg>
-);
-export const IconLayers = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><path d="m12 3 9 5-9 5-9-5z" /><path d="m3 13 9 5 9-5" /></svg>
-);
-export const IconBriefcase = ({ size, ...p }: P) => (
-  <svg {...base(size, p)}><rect x="3" y="7" width="18" height="13" rx="1.5" /><path d="M9 7V4.5h6V7M3 12.5h18" /></svg>
-);
+export const IconHome = (p: P) => <S {...p}><path d="M3 11.5 12 4l9 7.5" /><path d="M5 10v10h5v-6h4v6h5V10" /></S>;
+export const IconList = (p: P) => <S {...p}><path d="M8 6h13M8 12h13M8 18h13" /><circle cx="4" cy="6" r="1" /><circle cx="4" cy="12" r="1" /><circle cx="4" cy="18" r="1" /></S>;
+export const IconPlus = (p: P) => <S {...p}><path d="M12 5v14M5 12h14" /></S>;
+export const IconCamera = (p: P) => <S {...p}><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></S>;
+export const IconCheck = (p: P) => <S {...p}><path d="M5 12.5 10 17l9-10" /></S>;
+export const IconCheckCircle = (p: P) => <S {...p}><circle cx="12" cy="12" r="9" /><path d="M8 12.5l2.5 2.5L16 9.5" /></S>;
+export const IconBell = (p: P) => <S {...p}><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z" /><path d="M10 20a2 2 0 0 0 4 0" /></S>;
+export const IconMore = (p: P) => <S {...p}><circle cx="5" cy="12" r="1.5" /><circle cx="12" cy="12" r="1.5" /><circle cx="19" cy="12" r="1.5" /></S>;
+export const IconPhone = (p: P) => <S {...p}><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z" /></S>;
+export const IconBook = (p: P) => <S {...p}><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z" /><path d="M4 19V5M8 7h8" /></S>;
+export const IconUser = (p: P) => <S {...p}><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></S>;
+export const IconUsers = (p: P) => <S {...p}><circle cx="9" cy="8" r="3.5" /><path d="M2 20a7 7 0 0 1 14 0" /><path d="M16 4a3.5 3.5 0 0 1 0 7M18 13a6 6 0 0 1 4 6" /></S>;
+export const IconLogout = (p: P) => <S {...p}><path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10" /></S>;
+export const IconChart = (p: P) => <S {...p}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></S>;
+export const IconX = (p: P) => <S {...p}><path d="M6 6l12 12M18 6 6 18" /></S>;
+export const IconBack = (p: P) => <S {...p}><path d="M14 6l-6 6 6 6" /></S>;
+export const IconForward = (p: P) => <S {...p}><path d="M10 6l6 6-6 6" /></S>;
+export const IconSearch = (p: P) => <S {...p}><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" /></S>;
+export const IconAlert = (p: P) => <S {...p}><path d="M12 3 2.5 20h19z" /><path d="M12 9v5M12 17.5v.5" /></S>;
+export const IconStop = (p: P) => <S {...p}><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z" /><path d="M9 12h6" /></S>;
+export const IconWalk = (p: P) => <S {...p}><circle cx="13" cy="4" r="1.5" /><path d="M10 21l2-7 3 3v4M9 12l2-4 3 1 2 3M7 21l3-9" /></S>;
+export const IconClipboard = (p: P) => <S {...p}><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V2h6v2M8 11h8M8 15h5" /></S>;
+export const IconDownload = (p: P) => <S {...p}><path d="M12 4v11M7 10l5 5 5-5M4 20h16" /></S>;
+export const IconUpload = (p: P) => <S {...p}><path d="M12 15V4M7 9l5-5 5 5M4 20h16" /></S>;
+export const IconSettings = (p: P) => <S {...p}><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" /></S>;
+export const IconSite = (p: P) => <S {...p}><path d="M3 21h18M5 21V9l5-3v15M10 21V12l9-4v13" /><path d="M13 13h3M13 17h3" /></S>;
+export const IconClock = (p: P) => <S {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></S>;
+export const IconLog = (p: P) => <S {...p}><path d="M5 3h11l3 3v15H5z" /><path d="M8 9h8M8 13h8M8 17h5" /></S>;
+export const IconLock = (p: P) => <S {...p}><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></S>;
+export const IconLayers = (p: P) => <S {...p}><path d="m12 3 9 5-9 5-9-5z" /><path d="m3 13 9 5 9-5" /></S>;
+export const IconQr = (p: P) => <S {...p}><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2v2" /></S>;
+export const IconMic = (p: P) => <S {...p}><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></S>;
+export const IconMapPin = (p: P) => <S {...p}><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z" /><circle cx="12" cy="10" r="2" /></S>;
+export const IconWifiOff = (p: P) => <S {...p}><path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 12.5a10 10 0 0 1 3.5-2.3M12 8a10 10 0 0 1 7 2.5" /><circle cx="12" cy="20" r="1" /></S>;
+export const IconWifi = (p: P) => <S {...p}><path d="M2 9a14 14 0 0 1 20 0M5.5 12.5a9 9 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0" /><circle cx="12" cy="20" r="1" /></S>;
+export const IconRefresh = (p: P) => <S {...p}><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" /></S>;
+export const IconUndo = (p: P) => <S {...p}><path d="M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10h-3" /></S>;
+export const IconEye = (p: P) => <S {...p}><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></S>;
+export const IconEyeOff = (p: P) => <S {...p}><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M7 7.5C4 9.5 2 12 2 12s4 7 10 7c1.5 0 2.9-.4 4-1M12 5c6 0 10 7 10 7a18 18 0 0 1-2.5 3.3" /></S>;
+export const IconFilter = (p: P) => <S {...p}><path d="M3 5h18l-7 8v6l-4 2v-8z" /></S>;
+export const IconFlag = (p: P) => <S {...p}><path d="M5 21V4h12l-2 4 2 4H5" /></S>;
+export const IconShield = (p: P) => <S {...p}><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z" /><path d="m9 12 2 2 4-4" /></S>;
+export const IconHelmet = (p: P) => <S {...p}><path d="M4 15a8 8 0 0 1 16 0" /><path d="M2 15h20v3H2zM12 7v-3" /></S>;
+export const IconTool = (p: P) => <S {...p}><path d="M14.5 6.5a4 4 0 0 0 5 5L9 22l-3-3z" /><path d="M14.5 6.5 18 3l3 3-3.5 3.5" /></S>;
+export const IconFire = (p: P) => <S {...p}><path d="M12 22a6 6 0 0 1-6-6c0-3 2-5 3-7 0 2 1 3 2 3 0-4 2-7 4-9 0 3 1 5 3 7a6 6 0 0 1-6 12z" /></S>;
+export const IconSwap = (p: P) => <S {...p}><path d="M4 7h13l-3-3M20 17H7l3 3" /></S>;
+export const IconCalendar = (p: P) => <S {...p}><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4" /></S>;
+export const IconKey = (p: P) => <S {...p}><circle cx="8" cy="14" r="4" /><path d="M11 11 20 2M16 6l3 3M14 8l2 2" /></S>;
+export const IconGlobe = (p: P) => <S {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></S>;
+export const IconPrint = (p: P) => <S {...p}><path d="M7 9V3h10v6M7 17H4v-8h16v8h-3" /><rect x="7" y="14" width="10" height="7" /></S>;
+export const IconCopy = (p: P) => <S {...p}><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" /></S>;
+export const IconTrash = (p: P) => <S {...p}><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14" /></S>;
+export const IconEdit = (p: P) => <S {...p}><path d="M4 20h4l11-11-4-4L4 16z" /><path d="m13 7 4 4" /></S>;
+export const IconInfo = (p: P) => <S {...p}><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8v.5" /></S>;
+export const IconStar = (p: P) => <S {...p}><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.4 6.4 20.3l1.1-6.2L3 9.7l6.2-.9z" /></S>;
+export const IconThumbUp = (p: P) => <S {...p}><path d="M7 11v10H3V11zM7 11l4-8a2.5 2.5 0 0 1 2.5 2.5V9h5a2 2 0 0 1 2 2.3l-1.3 7.4a2 2 0 0 1-2 1.7H7" /></S>;
+export const IconHand = (p: P) => <S {...p}><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11V4.5a1.5 1.5 0 0 1 3 0V12M14 11V6a1.5 1.5 0 0 1 3 0v7" /><path d="M17 13v-1a1.5 1.5 0 0 1 3 0v4a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7L4 15a1.6 1.6 0 0 1 2.6-1.8L8 15" /></S>;
+export const IconNearMiss = (p: P) => <S {...p}><circle cx="12" cy="12" r="9" /><path d="M7 17 17 7M9 7h8v8" /></S>;
+export const IconHazard = (p: P) => <S {...p}><path d="M12 3 2.5 20h19z" /><path d="M12 9v5M12 17.5v.5" /></S>;
+export const IconMenu = (p: P) => <S {...p}><path d="M4 7h16M4 12h16M4 17h16" /></S>;
+export const IconKeyboard = (p: P) => <S {...p}><rect x="2" y="6" width="20" height="12" rx="2" /><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8" /></S>;
+export const IconExternal = (p: P) => <S {...p}><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" /></S>;
+export const IconSend = (p: P) => <S {...p}><path d="M21 3 3 10l8 3 3 8z" /><path d="M11 13 21 3" /></S>;
+export const IconMerge = (p: P) => <S {...p}><circle cx="6" cy="5" r="2" /><circle cx="6" cy="19" r="2" /><circle cx="18" cy="12" r="2" /><path d="M6 7v10M6 7c0 5 10 5 10 5M6 17c0-5 10-5 10-5" /></S>;
+export const IconInbox = (p: P) => <S {...p}><path d="M4 4h16v16H4z" /><path d="M4 14h5l1 2h4l1-2h5" /></S>;
+export const IconHistory = (p: P) => <S {...p}><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v5h5" /><path d="M12 8v4l3 2" /></S>;
+export const IconPlay = (p: P) => <S {...p}><path d="M7 4v16l13-8z" /></S>;
+export const IconPause = (p: P) => <S {...p}><path d="M7 4h4v16H7zM13 4h4v16h-4z" /></S>;
+export const IconTruck = (p: P) => <S {...p}><path d="M2 7h12v9H2zM14 10h4l3 3v3h-7" /><circle cx="6" cy="18" r="2" /><circle cx="17" cy="18" r="2" /></S>;
+export const IconFactory = (p: P) => <S {...p}><path d="M3 21V9l5 3V9l5 3V9l5 3V5h3v16z" /><path d="M7 17h2M11 17h2M15 17h2" /></S>;
+export const IconLanguage = (p: P) => <S {...p}><path d="M3 5h10M8 3v2M11 5c-1 4-4 7-7 9M5 5c1 4 4 7 7 9" /><path d="m13 21 4-10 4 10M14.5 17h5" /></S>;
+export const IconSun = (p: P) => <S {...p}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></S>;
+export const IconMoon = (p: P) => <S {...p}><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></S>;
+export const IconCircle = (p: P) => <S {...p}><circle cx="12" cy="12" r="8" /></S>;
+export const IconDot = (p: P) => <S {...p}><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" /></S>;

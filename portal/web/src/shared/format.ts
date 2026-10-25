@@ -1,94 +1,88 @@
-import type { ObsType, Status } from "./types";
+/* Dates, durations and labels. Times are shown in India Standard Time whatever the device clock says. */
+import type { Band, Lang } from "./types";
+import type { TFn } from "./i18n";
 
-const TZ = "Asia/Kolkata";
+export const TZ = "Asia/Kolkata";
+const LOCALE: Record<Lang, string> = { en: "en-IN", hi: "hi-IN", ta: "ta-IN", kn: "kn-IN" };
 
-export function fmtDate(iso: string | null | undefined): string {
+export function fmtDate(iso: string | null | undefined, lang: Lang = "en"): string {
   if (!iso) return "—";
-  const d = new Date(iso.length === 10 ? iso + "T00:00:00" : iso);
-  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: TZ });
+  const d = new Date(iso.length === 10 ? iso + "T00:00:00+05:30" : iso);
+  return d.toLocaleDateString(LOCALE[lang], { day: "numeric", month: "short", year: "numeric", timeZone: TZ });
 }
-
-export function fmtDateTime(iso: string | null | undefined): string {
+export function fmtDateTime(iso: string | null | undefined, lang: Lang = "en"): string {
   if (!iso) return "—";
-  return new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: TZ });
+  return new Date(iso).toLocaleString(LOCALE[lang], { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: TZ });
 }
-
-export function fmtTime(iso: string | null | undefined): string {
+export function fmtTime(iso: string | null | undefined, lang: Lang = "en"): string {
   if (!iso) return "";
-  return new Date(iso).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", timeZone: TZ });
+  return new Date(iso).toLocaleTimeString(LOCALE[lang], { hour: "2-digit", minute: "2-digit", timeZone: TZ });
+}
+export function fmtNumber(n: number | null | undefined, lang: Lang = "en", digits = 0): string {
+  if (n === null || n === undefined || Number.isNaN(n)) return "—";
+  return n.toLocaleString(LOCALE[lang], { maximumFractionDigits: digits, minimumFractionDigits: 0 });
+}
+export function pct(v: number | null | undefined, lang: Lang = "en"): string {
+  return v === null || v === undefined ? "—" : `${fmtNumber(v, lang, v < 10 ? 1 : 0)}%`;
 }
 
-export function dueText(dueAt: string | null, status: Status): { text: string; late: boolean } {
-  if (!dueAt) return { text: "No due date", late: false };
-  if (!["open", "in_progress"].includes(status)) return { text: `Due ${fmtDate(dueAt)}`, late: false };
+/** "Just now", "5 minutes ago", "Yesterday", or a date. */
+export function relative(iso: string | null | undefined, t: TFn, lang: Lang = "en"): string {
+  if (!iso) return "—";
+  const ms = Date.now() - new Date(iso).getTime();
+  const min = Math.round(ms / 60_000);
+  if (min < 1) return t("common.now");
+  if (min < 60) return t("common.minutesAgo", { count: min });
+  const h = Math.round(min / 60);
+  if (h < 24) return t("common.hoursAgo", { count: h });
+  const d = Math.round(h / 24);
+  if (d === 1) return t("common.yesterday");
+  if (d < 7) return t("common.daysAgo", { count: d });
+  return fmtDate(iso, lang);
+}
+
+/** Due countdown text and whether it is late. */
+export function dueText(dueAt: string | null | undefined, open: boolean, t: TFn): { text: string; late: boolean; soon: boolean } {
+  if (!dueAt) return { text: "", late: false, soon: false };
   const ms = new Date(dueAt).getTime() - Date.now();
+  const hours = Math.max(1, Math.round(Math.abs(ms) / 3_600_000));
   const days = Math.round(Math.abs(ms) / 86_400_000);
-  const hours = Math.round(Math.abs(ms) / 3_600_000);
-  if (ms < 0) return { text: days >= 1 ? `${days} day${days === 1 ? "" : "s"} overdue` : `${hours} h overdue`, late: true };
-  if (hours < 24) return { text: `Due in ${Math.max(hours, 1)} h`, late: false };
-  return { text: `Due in ${days} day${days === 1 ? "" : "s"}`, late: false };
+  const span = hours < 48 ? t("common.hours", { count: hours }) : t("common.days", { count: days });
+  if (!open) return { text: fmtDate(dueAt), late: false, soon: false };
+  if (ms < 0) return { text: t("common.overdueBy", { time: span }), late: true, soon: false };
+  return { text: t("common.dueIn", { time: span }), late: false, soon: hours <= 24 };
 }
 
-export const STATUS_LABEL: Record<Status, string> = {
-  open: "Open",
-  in_progress: "In progress",
-  closure_submitted: "Awaiting approval",
-  closed: "Closed",
-  cancelled: "Cancelled",
-  noted: "Noted (safe)",
-};
-
-export const TYPE_LABEL: Record<ObsType, string> = {
-  unsafe_act: "Unsafe act",
-  unsafe_condition: "Unsafe condition",
-  near_miss: "Near miss",
-  safe_behaviour: "Safe behaviour",
-};
-
-export const ACTION_LABEL: Record<string, string> = {
-  created: "Raised",
-  created_closed_on_spot: "Raised and corrected on the spot",
-  edited: "Edited",
-  assigned: "Assigned",
-  started: "Work started",
-  closure_submitted: "Closure submitted",
-  approved: "Closure approved – closed",
-  rejected: "Closure rejected",
-  cancelled: "Cancelled",
-  reopened: "Reopened",
-  due_extended: "Due date extended",
-  photo_withdrawn: "Photo withdrawn",
-  photo_added: "Photo added",
-};
-
-export const FIELD_LABEL: Record<string, string> = {
-  area_id: "Area", location: "Location", hazard: "Hazard", activity: "Work activity", lsr: "Life-Saving Rule", permit_type: "Permit type",
-  permit_no: "Permit no.", equipment: "Equipment", person_observed: "Person observed", contractor_id: "Contractor", crew_size: "Crew size",
-  severity: "Severity", likelihood: "Likelihood", work_stopped: "Work stopped", description: "Description", immediate_action: "Immediate action",
-  root_cause: "Root cause", corrective_action: "Corrective action", control_level: "Control level", legal_ref: "Legal reference",
-  owner_id: "Action owner", assigned_at: "Assigned at", risk_score: "Risk score", risk_level: "Risk level", category: "Category", category_code: "Category code",
-  item: "Observation", item_code: "Item code", due_at: "Due date", status: "Status", closure_attempt: "Closure attempt",
-};
-
-export function riskLevelOf(sev: number | null, lik: number | null, stopped: boolean): "Low" | "Medium" | "High" | "Critical" | null {
-  if (!sev || !lik) return stopped ? "Critical" : null;
-  const s = sev * lik;
-  if (stopped) return "Critical";
-  return s >= 15 ? "Critical" : s >= 10 ? "High" : s >= 5 ? "Medium" : "Low";
+export const BAND_ORDER: Band[] = ["extreme", "high", "moderate", "low"];
+export const BAND_COLOUR: Record<Band, "red" | "orange" | "amber" | "green"> = { extreme: "red", high: "orange", moderate: "amber", low: "green" };
+export function bandLabel(band: Band | null | undefined, t: TFn): string {
+  return band ? t(`band.${band}`) : "";
 }
 
-export const SEVERITY = ["First aid", "Medical treatment", "Lost time / reportable", "Permanent disability / major loss", "Fatality / major accident"];
-export const LIKELIHOOD = ["Rare", "Unlikely", "Possible", "Likely", "Almost certain"];
-
-export function greeting(): string {
-  const h = Number(new Date().toLocaleString("en-IN", { hour: "numeric", hour12: false, timeZone: TZ }));
-  return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+export function initials(name: string): string {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((s) => s[0]?.toUpperCase() ?? "").join("") || "?";
 }
 
 export function todayLocal(): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  return new Date().toLocaleDateString("en-CA", { timeZone: TZ });
 }
 
-export function daysAgo(n: number): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Date.now() - n * 86_400_000));
+export function plural(n: number, one: string, many: string): string {
+  return n === 1 ? one : many;
+}
+
+/** Working-day aware addition using a site's weekly-off days (0 = Sunday). */
+export function addWorkingDays(from: Date, days: number, weeklyOff: number[] = [0]): Date {
+  const d = new Date(from);
+  let left = days;
+  while (left > 0) {
+    d.setDate(d.getDate() + 1);
+    if (!weeklyOff.includes(d.getDay())) left--;
+  }
+  return d;
+}
+
+export function csvEscape(v: unknown): string {
+  const s = v === null || v === undefined ? "" : String(v);
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }

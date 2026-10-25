@@ -1,0 +1,114 @@
+/* SafeWorks design tokens — the one palette for the website (library), the field app and the admin console.
+   Brand: navy ink on concrete paper, hi-vis yellow for the one primary action on a screen.
+   ISO 7010 sign colours carry meaning only: red = prohibited/critical/overdue, orange = warning/high,
+   amber = caution/moderate, blue = mandatory/in progress/information, green = safe/closed/verified.
+   Both themes are defined here; a page opts into dark mode with the system setting or data-theme="dark". */
+:root {
+  --ink: #0f1c2b;
+  --ink-2: #2b3a4b;
+  --muted: #5a6775;
+  --paper: #eef1f3;
+  --surface: #ffffff;
+  --surface-2: #f6f8f9;
+  --surface-3: #e7ebee;
+  --line: #d3dae0;
+  --line-strong: #aeb9c3;
+  --hivis: #f5c400;
+  --hivis-ink: #0f1c2b;
+  --hivis-press: #ddb000;
+  --hivis-tint: #fff7cc;
+  --red: #c62828;
+  --red-tint: #fbe9e9;
+  --orange: #d9620b;
+  --orange-tint: #fdeee2;
+  --amber: #c99700;
+  --amber-tint: #fdf5d8;
+  --blue: #1d5fa7;
+  --blue-tint: #e6eff9;
+  --green: #1f7a4d;
+  --green-tint: #e3f2ea;
+  --focus: #1d5fa7;
+  --shadow-1: 0 1px 2px rgba(15, 28, 43, 0.08), 0 1px 1px rgba(15, 28, 43, 0.04);
+  --shadow-2: 0 6px 20px rgba(15, 28, 43, 0.12);
+  --shadow-sheet: 0 -8px 32px rgba(15, 28, 43, 0.18);
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+  --tap: 48px;
+  --gutter: 16px;
+  --font: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  --font-cond: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 120ms;
+  --t-med: 220ms;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e8edf2;
+    --ink-2: #c6d0da;
+    --muted: #93a1af;
+    --paper: #0d1722;
+    --surface: #152231;
+    --surface-2: #1b2a3b;
+    --surface-3: #223447;
+    --line: #2a3a4c;
+    --line-strong: #3b4e63;
+    --hivis-ink: #0f1c2b;
+    --hivis-tint: #3a3410;
+    --red: #ff6b6b;
+    --red-tint: #3a1a1e;
+    --orange: #ff9a4d;
+    --orange-tint: #3a2616;
+    --amber: #ffd34d;
+    --amber-tint: #3a3216;
+    --blue: #6fa8ec;
+    --blue-tint: #172c45;
+    --green: #4fc28a;
+    --green-tint: #15301f;
+    --focus: #8fc0ff;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-2: 0 6px 20px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ink: #e8edf2;
+  --ink-2: #c6d0da;
+  --muted: #93a1af;
+  --paper: #0d1722;
+  --surface: #152231;
+  --surface-2: #1b2a3b;
+  --surface-3: #223447;
+  --line: #2a3a4c;
+  --line-strong: #3b4e63;
+  --hivis-ink: #0f1c2b;
+  --hivis-tint: #3a3410;
+  --red: #ff6b6b;
+  --red-tint: #3a1a1e;
+  --orange: #ff9a4d;
+  --orange-tint: #3a2616;
+  --amber: #ffd34d;
+  --amber-tint: #3a3216;
+  --blue: #6fa8ec;
+  --blue-tint: #172c45;
+  --green: #4fc28a;
+  --green-tint: #15301f;
+  --focus: #8fc0ff;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 6px 20px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-med: 0ms;
+  }
+}

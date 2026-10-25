@@ -15,7 +15,7 @@ services:
     region: singapore
     dockerfilePath: ./portal/Dockerfile
     dockerContext: .
-    healthCheckPath: /api/health
+    healthCheckPath: /api/v1/health
     # Deploy a new commit only after the GitHub Actions tests pass
     autoDeployTrigger: checksPass
     envVars:
@@ -24,6 +24,9 @@ services:
           name: safeworks-db
           property: connectionString
       - key: FILE_SIGNING_SECRET
+        generateValue: true
+      # Encrypts phone numbers, reporter contacts, anonymous-report seals and MFA secrets at rest
+      - key: FIELD_ENCRYPTION_KEY
         generateValue: true
       - key: STORAGE_DRIVER
         value: db
@@ -42,7 +45,7 @@ services:
       # Password for the ADMIN01 login (8+ characters with letters and numbers). You'll be asked for it.
       - key: SEED_ADMIN_PASSWORD
         sync: false
-      # Password for the sample users (SO-PS01-1, SUP-PS01-1 …). Leave empty to use the admin password.
+      # Password for the sample users (SO-TN1, OWN-TN1-1, VER-TN1, HSE01 …). Leave empty to use the admin password.
       - key: DEMO_PASSWORD
         sync: false
       - key: DB_POOL_MAX

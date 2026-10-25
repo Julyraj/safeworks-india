@@ -74,14 +74,16 @@ def sha256(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
 
-def password_problem(pw: str) -> str | None:
-    """Password rule: at least 8 characters with at least one letter and one number."""
-    if not isinstance(pw, str) or len(pw) < 8:
-        return "Password must be at least 8 characters."
+def password_problem(pw: str, staff: bool = False) -> str | None:
+    """Password rule (API.md): 12+ characters for staff, 8+ for workers, letters and numbers.
+    Returns a translation key, or None when the password is acceptable."""
+    minimum = 12 if staff else 8
+    if not isinstance(pw, str) or len(pw) < minimum:
+        return "err.password_rule_staff" if staff else "err.password_rule_worker"
     if len(pw) > 128:
-        return "Password is too long."
+        return "err.password_too_long"
     if not re.search(r"[A-Za-z]", pw) or not re.search(r"[0-9]", pw):
-        return "Password must contain letters and numbers."
+        return "err.password_rule_staff" if staff else "err.password_rule_worker"
     return None
 
 
@@ -108,7 +110,37 @@ def verify_file_sig(key: str, exp: int | None, sig: str) -> bool:
     return hmac.compare_digest(sign_file(key, exp).encode(), (sig or "").encode())
 
 
-def signed_file_url(key: str) -> str:
+def signed_file_url(key: str, ttl_seconds: int | None = None) -> str:
     # Expiry rounded to 10 minutes so the same photo keeps the same URL for a while (cache friendly).
-    exp = int(math.ceil((int(time.time()) + config.file_link_ttl_seconds) / 600) * 600)
+    ttl = config.file_link_ttl_seconds if ttl_seconds is None else ttl_seconds
+    exp = int(math.ceil((int(time.time()) + ttl) / 600) * 600)
     return f"/files/{key}?e={exp}&s={sign_file(key, exp)}"
+
+
+def sign_ticket(purpose: str, subject: str, exp: int) -> str:
+    """Opaque signed ticket `<subject>.<exp>.<sig>` (public upload tickets, status links)."""
+    sig = _b64url(hmac.new(config.file_signing_secret.encode(), f"{purpose}|{subject}|{exp}".encode(), hashlib.sha256).digest())
+    return f"{subject}.{exp}.{sig}"
+
+
+def verify_ticket(purpose: str, ticket: str) -> str | None:
+    """Returns the subject when the ticket is genuine and not expired."""
+    parts = (ticket or "").rsplit(".", 2)
+    if len(parts) != 3 or not parts[1].isdigit():
+        return None
+    subject, exp, sig = parts[0], int(parts[1]), parts[2]
+    if exp < int(time.time()):
+        return None
+    good = _b64url(hmac.new(config.file_signing_secret.encode(), f"{purpose}|{subject}|{exp}".encode(), hashlib.sha256).digest())
+    return subject if hmac.compare_digest(good.encode(), sig.encode()) else None
+
+
+def random_code(n: int = 8) -> str:
+    """Human-friendly code without look-alike characters (enrolment codes)."""
+    alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+    return "".join(secrets.choice(alphabet) for _ in range(n))
+
+
+def qr_token() -> str:
+    """Random 128-bit url-safe token for QR codes."""
+    return secrets.token_urlsafe(16)

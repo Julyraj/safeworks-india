@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   test:
-    name: Build screens, test the Python server
+    name: Build the web pages, test the Python server
     runs-on: ubuntu-24.04
     services:
       postgres:
@@ -79,7 +79,7 @@ jobs:
           psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "drop schema public cascade; create schema public;"
           python scripts/seed.py
           python -m safeworks > server.log 2>&1 &
-          for i in $(seq 1 30); do curl -sf http://localhost:8080/api/health && break; sleep 1; done
+          for i in $(seq 1 30); do curl -sf http://localhost:8080/api/v1/health && break; sleep 1; done
           BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json python scripts/loadtest.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -114,12 +114,13 @@ jobs:
             -e FILE_SIGNING_SECRET=ci-only-secret-0123456789abcdef0123456789abcdef \
             -e STORAGE_DRIVER=db -e SEED_ON_START=true -e SEED_DEMO=true \
             -e SEED_ADMIN_PASSWORD=CiAdmin2026 -e WEB_CONCURRENCY=1 safeworks-portal
-          for i in $(seq 1 90); do curl -sf http://localhost:8080/api/health && break; sleep 2; done
+          for i in $(seq 1 90); do curl -sf http://localhost:8080/api/v1/health && break; sleep 2; done
           curl -sf http://localhost:8080/ | grep -q "<div id=\"root\">"
           curl -sf http://localhost:8080/admin/ > /dev/null
           curl -sf http://localhost:8080/library/ > /dev/null
-          curl -sf -X POST http://localhost:8080/api/auth/login -H 'content-type: application/json' \
-            -d '{"employeeId":"SO-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
+          curl -sf -X POST http://localhost:8080/api/v1/auth/login -H 'content-type: application/json' \
+            -d '{"login":"SO-TN1","password":"CiAdmin2026","kind":"field"}' | grep -q '"token"'
+          curl -sf http://localhost:8080/q/demo-token | grep -q "<div id=\"root\">"
           docker inspect --format '{{.State.Health.Status}}' sw
       - if: always()
         run: docker logs sw 2>&1 | tail -50
@@ -133,12 +134,12 @@ jobs:
         run: sudo bash portal/deploy/install.sh --domain localhost --demo --admin-password CiAdmin2026
       - name: Sign in over HTTPS; port 8080 stays private
         run: |
-          curl -fsSk https://localhost/api/health
+          curl -fsSk https://localhost/api/v1/health
           curl -fsSk https://localhost/ | grep -q '<div id="root">'
-          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
-            -d '{"employeeId":"SO-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
-          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
-            -d '{"employeeId":"ADMIN01","password":"CiAdmin2026","app":"admin"}' | grep -q '"token"'
+          curl -fsSk -X POST https://localhost/api/v1/auth/login -H 'content-type: application/json' \
+            -d '{"login":"SO-TN1","password":"CiAdmin2026","kind":"field"}' | grep -q '"token"'
+          curl -fsSk -X POST https://localhost/api/v1/auth/login -H 'content-type: application/json' \
+            -d '{"login":"ADMIN01","password":"CiAdmin2026","kind":"admin"}' | grep -q '"token"'
           ss -ltn | grep -q '127.0.0.1:8080'
           ! ss -ltn | grep -q '0.0.0.0:8080'
       - name: Backup and restore
@@ -147,14 +148,14 @@ jobs:
           D=$(sudo sh -c 'ls /var/backups/safeworks/db-*.dump | tail -1')
           P=$(sudo sh -c 'ls /var/backups/safeworks/photos-*.tar.gz | tail -1')
           sudo env RESTORE_YES=1 bash portal/deploy/restore.sh "$D" "$P"
-          for i in $(seq 1 30); do curl -fsSk https://localhost/api/health && break; sleep 2; done
-          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
-            -d '{"employeeId":"SUP-PS01-1","password":"CiAdmin2026","app":"portal"}' | grep -q '"token"'
+          for i in $(seq 1 30); do curl -fsSk https://localhost/api/v1/health && break; sleep 2; done
+          curl -fsSk -X POST https://localhost/api/v1/auth/login -H 'content-type: application/json' \
+            -d '{"login":"OWN-TN1-1","password":"CiAdmin2026","kind":"field"}' | grep -q '"token"'
       - name: Run the installer again (update) – settings and data are kept
         run: |
           sudo bash portal/deploy/install.sh
-          curl -fsSk -X POST https://localhost/api/auth/login -H 'content-type: application/json' \
-            -d '{"employeeId":"ADMIN01","password":"CiAdmin2026","app":"admin"}' | grep -q '"token"'
+          curl -fsSk -X POST https://localhost/api/v1/auth/login -H 'content-type: application/json' \
+            -d '{"login":"ADMIN01","password":"CiAdmin2026","kind":"admin"}' | grep -q '"token"'
           test -f /etc/cron.d/safeworks-backup
       - if: failure()
         working-directory: portal
@@ -188,7 +189,7 @@ jobs:
         working-directory: portal/mobile/android
         env:
           VERSION_CODE: ${{ github.run_number }}
-          VERSION_NAME: 1.0.${{ github.run_number }}
+          VERSION_NAME: 2.0.${{ github.run_number }}
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon -q || { echo "::error title=Gradle build failed::See the log above"; exit 1; }
@@ -202,7 +203,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "portal-v1.0.${{ github.run_number }}" SafeWorks-Portal.apk \
-            --title "SafeWorks Portal app 1.0.${{ github.run_number }}" \
-            --notes "Android app for the SafeWorks portal (safety observations). On first launch, enter your company's SafeWorks server address (HTTPS) and sign in with your employee ID." \
+          gh release create "portal-v2.0.${{ github.run_number }}" SafeWorks-Portal.apk \
+            --title "SafeWorks Portal app 2.0.${{ github.run_number }}" \
+            --notes "Android app for SafeWorks Portal 2.0: report a hazard in 30 seconds (offline too), triage, actions with verified closure, inspections, in English, Hindi, Tamil and Kannada. On first launch, enter your company's SafeWorks server address (HTTPS) and sign in with your employee code or an enrolment code." \
             --latest=false

@@ -1,4 +1,4 @@
-# SafeWorks Portal – one container for the API (Python), the user portal, the admin console and the safety library.
+# SafeWorks Portal 2.0 – one container for the API (Python), the field app, the QR form, the admin console and the safety library.
 # Build from the repository root (the build needs /data and the library files):
 #   docker build -f portal/Dockerfile -t safeworks-portal .
 
@@ -9,6 +9,7 @@ COPY portal/package.json portal/package-lock.json portal/
 COPY portal/web/package.json portal/web/
 RUN cd portal && npm ci
 COPY data data
+COPY design design
 COPY index.html manifest.webmanifest sw.js ./
 COPY icons icons
 COPY files files
@@ -37,6 +38,6 @@ RUN useradd --system --uid 10001 --home /app safeworks \
 USER safeworks
 VOLUME ["/data/storage"]
 EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import os,urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:%s/api/health' % os.environ.get('PORT','8080'), timeout=4).status == 200 else 1)"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import os,urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:%s/api/v1/health' % os.environ.get('PORT','8080'), timeout=4).status == 200 else 1)"
 WORKDIR /app/portal/server
 CMD ["sh", "scripts/start.sh"]

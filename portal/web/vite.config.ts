@@ -2,6 +2,15 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 
+// Three pages from one build: the field app (/), the QR public form (/q/) and the admin console (/admin/).
+// SW_ONLY=field|admin|q builds just one of them while working on it.
+const pages: Record<string, string> = {
+  field: resolve(__dirname, "index.html"),
+  q: resolve(__dirname, "q/index.html"),
+  admin: resolve(__dirname, "admin/index.html"),
+};
+const only = process.env.SW_ONLY;
+
 export default defineConfig({
   plugins: [react()],
   base: "/",
@@ -10,20 +19,10 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      // SW_ONLY=portal builds just the portal (handy while the admin console is being worked on)
-      input:
-        process.env.SW_ONLY === "portal"
-          ? { portal: resolve(__dirname, "index.html") }
-          : { portal: resolve(__dirname, "index.html"), admin: resolve(__dirname, "admin/index.html") },
-    },
+    rollupOptions: { input: only && pages[only] ? { [only]: pages[only] } : pages },
   },
   server: {
     port: 5173,
-    proxy: {
-      "/api": "http://localhost:8080",
-      "/files": "http://localhost:8080",
-      "/library": "http://localhost:8080",
-    },
+    proxy: { "/api": "http://localhost:8080", "/files": "http://localhost:8080", "/library": "http://localhost:8080" },
   },
 });

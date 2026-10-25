@@ -38,6 +38,7 @@ services:
     environment:
       DATABASE_URL: postgres://safeworks:${DB_PASSWORD}@db:5432/safeworks
       FILE_SIGNING_SECRET: ${FILE_SIGNING_SECRET:?Set FILE_SIGNING_SECRET in .env}
+      FIELD_ENCRYPTION_KEY: ${FIELD_ENCRYPTION_KEY:?Set FIELD_ENCRYPTION_KEY in .env}
       PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8080}
       CORS_ORIGINS: ${CORS_ORIGINS:-https://localhost,capacitor://localhost}
       TRUST_PROXY: ${TRUST_PROXY:-true}

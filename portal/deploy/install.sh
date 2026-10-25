@@ -134,6 +134,8 @@ DOMAIN=$DOMAIN
 PUBLIC_URL=https://$DOMAIN
 DB_PASSWORD=$(openssl rand -hex 24)
 FILE_SIGNING_SECRET=$(openssl rand -hex 32)
+# Encrypts phone numbers, reporter contacts, anonymous-report seals and MFA secrets at rest (base64 of 32 random bytes)
+FIELD_ENCRYPTION_KEY=$(openssl rand -base64 32)
 CORS_ORIGINS=https://localhost,capacitor://localhost
 TRUST_PROXY=true
 APP_BIND=127.0.0.1
@@ -148,6 +150,10 @@ EOF
   umask 022
 else
   say "Keeping existing settings in $ENV_FILE"
+  if ! grep -q '^FIELD_ENCRYPTION_KEY=' "$ENV_FILE"; then
+    say "Adding FIELD_ENCRYPTION_KEY (new in 2.0) to $ENV_FILE"
+    printf 'FIELD_ENCRYPTION_KEY=%s\n' "$(openssl rand -base64 32)" >> "$ENV_FILE"
+  fi
   if [ "$(getenv DOMAIN)" != "$DOMAIN" ]; then
     setenv DOMAIN "$DOMAIN"; setenv PUBLIC_URL "https://$DOMAIN"
   fi
@@ -163,7 +169,7 @@ docker compose up -d --build --remove-orphans
 say "Waiting for the server to start"
 ok=false
 for _ in $(seq 1 90); do
-  if curl -fsS --max-time 3 http://127.0.0.1:8080/api/health >/dev/null 2>&1; then ok=true; break; fi
+  if curl -fsS --max-time 3 http://127.0.0.1:8080/api/v1/health >/dev/null 2>&1; then ok=true; break; fi
   sleep 2
 done
 $ok || { docker compose logs --tail 50 app; die "SafeWorks did not start. The log is above."; }
@@ -203,9 +209,9 @@ if $CHECK_HTTPS; then
   say "Waiting for the HTTPS certificate for $DOMAIN (up to 3 minutes)"
   for _ in $(seq 1 36); do
     if [ "$DOMAIN" = "localhost" ]; then
-      curl -fsSk --max-time 5 "https://localhost/api/health" >/dev/null 2>&1 && { https_ok=true; break; }
+      curl -fsSk --max-time 5 "https://localhost/api/v1/health" >/dev/null 2>&1 && { https_ok=true; break; }
     else
-      curl -fsS --max-time 5 "https://$DOMAIN/api/health" >/dev/null 2>&1 && { https_ok=true; break; }
+      curl -fsS --max-time 5 "https://$DOMAIN/api/v1/health" >/dev/null 2>&1 && { https_ok=true; break; }
     fi
     sleep 5
   done

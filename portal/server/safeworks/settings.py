@@ -1,52 +1,99 @@
-"""Company settings (due dates by risk, escalation) and the risk calculation."""
+"""Organisation settings (`OrgSettings` in types.ts) merged over the defaults from the brief."""
 from __future__ import annotations
 
+import copy
 import time
 from typing import Any
 
 from . import db
 
 DEFAULT_SETTINGS: dict[str, Any] = {
-    "dueDays": {"Critical": 1, "High": 3, "Medium": 7, "Low": 15},
-    "escalation": {"siteHeadDays": 3, "adminDays": 7},
-    "dueReminderHours": 24,
+    "mfaRequiredRoles": ["admin", "hse_manager", "site_head"],
+    "triageSlaWorkingDays": 1,
+    "triageEscalateWorkingDays": 2,
+    "criticalAckMinutes": 30,
+    "quietHours": {"start": "21:00", "end": "07:00"},
+    "dailyPushCap": 5,
+    "duplicateWindowHours": 24,
+    "duplicateRadiusM": 30,
+    "photoMaxEdgePx": 1600,
+    "photoQuality": 0.8,
+    "defaultLanguage": "en",
+    "languages": ["en", "hi", "ta", "kn"],
+    "dateChangeRequestsBeforeSiteHead": 3,
+    "disputePauseDays": 3,
+    "statusLabels": {
+        "risk_matrix": "design default (NPSA 2008 style; Unverified)",
+        "due_date_rules": "design default",
+        "reminder_ladder": "design default (TeamLease RegTrack pattern)",
+        "duplicate_window": "design default",
+        "quiet_hours": "design default",
+        "daily_push_cap": "design default",
+        "critical_ack_minutes": "design target",
+        "triage_sla": "design default",
+        "retention": "design default; open decision",
+        "mfa_roles": "from the research (admin, HSE manager, site head); officers: design default, off",
+        "percent_safe_minimum": "derived (Campbell Institute), 30 behaviours",
+    },
+    "percentSafeMinimum": 30,
+    "maxPhotosPerRecord": 10,
+    "maxPhotosQuickForm": 3,
+    "voiceNoteMaxSeconds": 60,
 }
+
+INT_KEYS = ("triageSlaWorkingDays", "triageEscalateWorkingDays", "criticalAckMinutes", "dailyPushCap", "duplicateWindowHours",
+            "duplicateRadiusM", "photoMaxEdgePx", "dateChangeRequestsBeforeSiteHead", "disputePauseDays", "percentSafeMinimum",
+            "maxPhotosPerRecord", "maxPhotosQuickForm", "voiceNoteMaxSeconds")
 
 
 def merge_settings(raw: Any) -> dict[str, Any]:
     s = raw if isinstance(raw, dict) else {}
-    return {
-        "dueDays": {**DEFAULT_SETTINGS["dueDays"], **(s.get("dueDays") or {})},
-        "escalation": {**DEFAULT_SETTINGS["escalation"], **(s.get("escalation") or {})},
-        "dueReminderHours": int(s.get("dueReminderHours", DEFAULT_SETTINGS["dueReminderHours"])),
-    }
+    out = copy.deepcopy(DEFAULT_SETTINGS)
+    for k, v in s.items():
+        if k in ("quietHours", "statusLabels") and isinstance(v, dict):
+            out[k].update(v)
+        elif k in INT_KEYS:
+            try:
+                out[k] = int(v)
+            except (TypeError, ValueError):
+                pass
+        elif k == "photoQuality":
+            try:
+                out[k] = float(v)
+            except (TypeError, ValueError):
+                pass
+        elif k in ("mfaRequiredRoles", "languages") and isinstance(v, list):
+            out[k] = [str(x) for x in v]
+        elif k == "defaultLanguage" and isinstance(v, str):
+            out[k] = v
+        else:
+            out[k] = v
+    return out
 
 
-_cache: dict[str, Any] | None = None
+_cache: dict[str, tuple[float, dict]] = {}
 
 
 async def get_org(org_id: str, conn=None) -> dict[str, Any]:
-    global _cache
-    if _cache and _cache["org_id"] == org_id and time.time() - _cache["at"] < 15:
-        return {"name": _cache["name"], "settings": _cache["settings"]}
-    row = await db.one("select name, settings from organisations where id = $1", [org_id], conn)
-    settings = merge_settings(row["settings"] if row else None)
-    name = row["name"] if row else ""
-    _cache = {"org_id": org_id, "at": time.time(), "settings": settings, "name": name}
-    return {"name": name, "settings": settings}
+    """{id, name, legalName, address, phone, settings} with a 15 s cache."""
+    hit = _cache.get(org_id)
+    if hit and time.time() - hit[0] < 15:
+        return hit[1]
+    row = await db.one("select id, name, legal_name, address, phone, settings from organisations where id = $1", [org_id], conn)
+    if not row:
+        return {"id": org_id, "name": "", "legalName": "", "address": "", "phone": "", "settings": merge_settings(None)}
+    org = {"id": row["id"], "name": row["name"], "legalName": row["legal_name"], "address": row["address"], "phone": row["phone"],
+           "settings": merge_settings(row["settings"])}
+    _cache[org_id] = (time.time(), org)
+    return org
 
 
-def clear_org_cache() -> None:
-    global _cache
-    _cache = None
+async def org_settings(org_id: str, conn=None) -> dict[str, Any]:
+    return (await get_org(org_id, conn))["settings"]
 
 
-def risk_of(severity: int | None, likelihood: int | None, work_stopped: bool) -> tuple[int | None, str | None]:
-    """Severity × likelihood: 1–4 Low, 5–9 Medium, 10–14 High, 15–25 Critical; work stopped forces Critical."""
-    if not severity or not likelihood:
-        return None, ("Critical" if work_stopped else None)
-    score = severity * likelihood
-    level = "Critical" if score >= 15 else "High" if score >= 10 else "Medium" if score >= 5 else "Low"
-    if work_stopped:
-        level = "Critical"
-    return score, level
+def clear_org_cache(org_id: str | None = None) -> None:
+    if org_id:
+        _cache.pop(org_id, None)
+    else:
+        _cache.clear()
