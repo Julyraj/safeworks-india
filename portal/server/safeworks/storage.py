@@ -1,4 +1,4 @@
-"""Photo storage: server disk (STORAGE_DIR, default) or PostgreSQL (STORAGE_DRIVER=db).
+"""File storage (photos, voice notes, reports): server disk (STORAGE_DIR, default) or PostgreSQL (STORAGE_DRIVER=db).
 
 The interface is small so an S3-compatible store can replace it when hosting is decided.
 """
@@ -112,6 +112,33 @@ def _jpeg_size(buf: bytes) -> tuple[int | None, int | None]:
     return None, None
 
 
+def sniff_media(buf: bytes) -> dict | None:
+    """Identify a photo (JPEG/PNG/WebP) or a voice note (WebM, MP4/M4A, OGG) by its magic bytes."""
+    img = sniff_image(buf)
+    if img:
+        return {**img, "kind": "photo"}
+    if len(buf) > 4 and buf[:4] == b"\x1a\x45\xdf\xa3":  # EBML → WebM
+        return {"mime": "audio/webm", "ext": "webm", "kind": "audio", "width": None, "height": None}
+    if len(buf) > 12 and buf[4:8] == b"ftyp":  # ISO BMFF → MP4 / M4A
+        return {"mime": "audio/mp4", "ext": "m4a", "kind": "audio", "width": None, "height": None}
+    if len(buf) > 4 and buf[:4] == b"OggS":
+        return {"mime": "audio/ogg", "ext": "ogg", "kind": "audio", "width": None, "height": None}
+    return None
+
+
+EXT_FOR_MIME = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "audio/webm": "webm", "audio/mp4": "m4a", "audio/ogg": "ogg",
+                "application/pdf": "pdf", "text/html": "html"}
+MIME_FOR_EXT = {v: k for k, v in EXT_FOR_MIME.items()}
+MIME_FOR_EXT["m4a"] = "audio/mp4"
+
+
 def photo_key(ext: str) -> str:
     d = datetime.now(timezone.utc)
     return f"obs/{d.year}/{d.month:02d}/{uuid.uuid4()}.{ext}"
+
+
+def media_key(kind: str, mime: str) -> str:
+    """Storage key for a media row: `media/<yyyy>/<mm>/<uuid>.<ext>`; the extension follows the declared mime."""
+    d = datetime.now(timezone.utc)
+    ext = EXT_FOR_MIME.get((mime or "").lower().split(";")[0], "jpg" if kind == "photo" else "bin")
+    return f"media/{d.year}/{d.month:02d}/{uuid.uuid4()}.{ext}"

@@ -1,86 +1,44 @@
-"""Multipart uploads: a JSON `data` field plus photo files."""
+"""Raw-body uploads for PUT /media/{clientUuid} and PUT /public/upload/{ticket}.
+
+The body is the file itself (no multipart). The server sniffs the type from the bytes, refuses anything that is not a
+photo (JPEG/PNG/WebP) or a voice note (WebM/MP4/OGG), enforces the 10 MB cap and never re-encodes (brief §8.8).
+"""
 from __future__ import annotations
 
-import json
+import hashlib
 from dataclasses import dataclass
-from typing import Any
 
 from fastapi import Request
-from starlette.datastructures import UploadFile
 
 from .config import config
 from .errors import HttpError, bad_request
-from .storage import photo_key, sniff_image, storage
+from .storage import sniff_media
 
 
 @dataclass
-class UploadedImage:
+class UploadedFile:
     data: bytes
-    info: dict
-
-
-@dataclass
-class StoredPhoto:
-    key: str
     mime: str
-    bytes: int
+    ext: str
+    kind: str
     width: int | None
     height: int | None
+    sha256: str
 
 
-async def read_multipart(request: Request, file_fields: list[str], max_files: int) -> tuple[Any, dict[str, list[UploadedImage]]]:
-    ctype = request.headers.get("content-type", "")
-    if not ctype.startswith("multipart/form-data"):
-        raise bad_request("Expected a form upload (multipart/form-data).")
-    try:
-        form = await request.form(max_files=max_files, max_fields=10, max_part_size=256 * 1024)
-    except HttpError:
-        raise
-    except Exception as e:  # malformed body or too many parts
-        msg = str(e)
-        if "Too many files" in msg:
-            raise HttpError(413, "Too many photos in one upload.", "too_many_files")
-        raise bad_request(f"Could not read the upload: {msg}")
-    files: dict[str, list[UploadedImage]] = {}
-    data: Any = {}
-    try:
-        for name, value in form.multi_items():
-            if isinstance(value, UploadFile):
-                content = await value.read(config.max_photo_bytes + 1)
-                if len(content) > config.max_photo_bytes:
-                    raise HttpError(413, f"A photo is too large (limit {round(config.max_photo_bytes / 1024 / 1024)} MB).", "too_large")
-                if name not in file_fields:
-                    continue
-                info = sniff_image(content)
-                if not info:
-                    raise bad_request("Only JPEG, PNG or WebP photos are accepted.")
-                files.setdefault(name, []).append(UploadedImage(content, info))
-            elif name == "data":
-                try:
-                    data = json.loads(value)
-                except ValueError:
-                    raise bad_request("Form data is not valid JSON.")
-    finally:
-        await form.close()
-    return data, files
-
-
-async def store_photos(images: list[UploadedImage]) -> list[StoredPhoto]:
-    out: list[StoredPhoto] = []
-    try:
-        for img in images:
-            key = photo_key(img.info["ext"])
-            await storage.put(key, img.data, img.info["mime"])
-            out.append(StoredPhoto(key, img.info["mime"], len(img.data), img.info["width"], img.info["height"]))
-    except Exception:
-        await discard_photos(out)
-        raise
-    return out
-
-
-async def discard_photos(photos: list[StoredPhoto]) -> None:
-    for p in photos:
-        try:
-            await storage.remove(p.key)
-        except Exception:
-            pass
+async def read_raw_upload(request: Request, max_bytes: int | None = None) -> UploadedFile:
+    limit = max_bytes or config.max_media_bytes
+    chunks: list[bytes] = []
+    size = 0
+    async for chunk in request.stream():
+        size += len(chunk)
+        if size > limit:
+            raise HttpError(413, f"The upload is too large (limit {limit // (1024 * 1024)} MB).", "too_large", key="err.too_large", params={"mb": limit // (1024 * 1024)})
+        chunks.append(chunk)
+    data = b"".join(chunks)
+    if not data:
+        raise bad_request("Empty upload.", key="err.media_type")
+    info = sniff_media(data)
+    if not info:
+        raise bad_request("Only JPEG, PNG or WebP photos and WebM, MP4 or OGG voice notes are accepted.", key="err.media_type")
+    return UploadedFile(data, info["mime"], info["ext"], info["kind"], info.get("width"), info.get("height"), hashlib.sha256(data).hexdigest())
