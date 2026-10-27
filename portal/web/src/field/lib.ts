@@ -1,5 +1,5 @@
 /* Field-app helpers: smart defaults (location, categories, owners), SLA arithmetic, titles. */
-import type { Area, Category, DirectoryUser, Me, ObservationType, Site, TemplateVersion, Question } from "../shared/types";
+import type { Area, Category, DirectoryUser, I18n, Me, ObservationType, Site, TemplateVersion, Question } from "../shared/types";
 import type { LocalAction, LocalObservation, RefData } from "./offline/db";
 import { getJSON, safeGet, setJSON } from "../shared/storage";
 import { addWorkingDays } from "../shared/format";
@@ -102,7 +102,7 @@ export function isToday(iso: string | null): boolean {
 }
 
 /* ---------------------------------------------------------------- titles */
-export function obsTitle(o: { type: ObservationType; categoryCodes: string[]; description: string }, ref: RefData, t: TFn, pick: (x: unknown) => string): string {
+export function obsTitle(o: { type: ObservationType; categoryCodes: string[]; description: string }, ref: RefData, t: TFn, pick: (x: I18n | string | null | undefined) => string): string {
   const cat = ref.categories.find((c) => c.code === o.categoryCodes[0]);
   const head = cat ? pick(cat.name) : t(`type.${o.type}`);
   const desc = o.description?.trim();

@@ -1,202 +1,246 @@
-"""Personal and site dashboards."""
+"""Dashboard KPIs (brief §5.9, §10) and CSV exports with a BOM."""
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta
-from typing import Any
+from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, Depends, Request
 
 from .. import db
+from ..audit import audit
 from ..auth import require_user
-from ..errors import forbidden
-from ..http import JSON, query, uuid_param
-from ..observations import full_site_ids, list_observations
-from ..rbac import AuthUser, can_manage, can_view_whole_site
-from ..validation import In, parse
+from ..config import config
+from ..errors import forbidden, not_found, rate_limited
+from ..http import JSON, csv_response, parse_dt, uuid_param
+from ..i18n import pick, t
+from ..ratelimit import Limiter
+from ..rbac import AuthUser
+from ..settings import org_settings
+from .actions import action_filters
+from .observations import observation_filters
 
-router = APIRouter()
-
-COUNTS = """
-  count(*) filter (where status <> 'cancelled')::int as created,
-  count(*) filter (where status in ('open','in_progress'))::int as open,
-  count(*) filter (where status in ('open','in_progress') and due_at < now())::int as overdue,
-  count(*) filter (where status = 'closure_submitted')::int as awaiting,
-  count(*) filter (where status = 'closed')::int as closed,
-  count(*) filter (where status = 'noted')::int as noted"""
+router = APIRouter(prefix="/api/v1")
+export_limiter = Limiter(3600)
 
 
-class PeriodIn(In):
-    from_: date | None = None
-    to: date | None = None
-
-    model_config = {**In.model_config, "alias_generator": None}
-
-    @classmethod
-    def of(cls, raw: dict) -> "PeriodIn":
-        return parse(cls, {"from_": raw.get("from"), "to": raw.get("to")})
-
-
-def period(raw: dict) -> tuple[date, date]:
-    p = PeriodIn.of(raw or {})
-    today = datetime.now(db.TZ).date()
-    to = p.to or today
-    frm = p.from_ or (today - timedelta(days=89))
-    return frm, to
+def _sites(request: Request, user: AuthUser) -> list[str]:
+    raw = request.query_params.get("siteIds") or request.query_params.get("siteId") or ""
+    ids = [uuid_param(s) for s in raw.split(",") if s]
+    scope = user.sites_in_scope()
+    allowed = [s for s in scope if user.can_view_site(s)]
+    if not allowed:
+        raise forbidden()
+    if ids:
+        if any(s not in scope for s in ids):
+            raise not_found()
+        return ids
+    return allowed
 
 
-def _pct(a: int, b: int) -> float | None:
-    return round(a / b * 1000) / 10 if b > 0 else None
+def _kpi(key: str, value, lang: str, org: str, *, unit: str = "", n: int | None = None, hint: str | None = None, formula: str = "") -> dict:
+    out = {"key": key, "label": {"en": t(f"kpi.{key}", "en", org), lang: t(f"kpi.{key}", lang, org)}, "value": value, "unit": unit, "n": n, "trend": None, "formula": formula}
+    if hint:
+        out["hint"] = {"en": t(hint, "en", org), lang: t(hint, lang, org)}
+    return out
 
 
-async def kpis(where: str, params: list, frm: date, to: date) -> dict:
-    n = len(params)
-    row = await db.one(
-        f"""select
-              count(*) filter (where status not in ('cancelled'))::int as raised,
-              count(*) filter (where status not in ('cancelled','noted'))::int as actionable,
-              count(*) filter (where status = 'closed')::int as closed,
-              count(*) filter (where status = 'closed' and closed_at <= coalesce(due_at, closed_at))::int as closed_on_time,
-              round((avg(extract(epoch from (closed_at - raised_at)) / 86400) filter (where status = 'closed'))::numeric, 1)::float as avg_days_to_close,
-              count(*) filter (where obs_type = 'unsafe_act' and status <> 'cancelled')::int as acts,
-              count(*) filter (where obs_type = 'unsafe_condition' and status <> 'cancelled')::int as conditions,
-              count(*) filter (where obs_type = 'near_miss' and status <> 'cancelled')::int as near_misses,
-              count(*) filter (where obs_type = 'safe_behaviour' and status <> 'cancelled')::int as safe,
-              count(*) filter (where repeat_of is not null and status <> 'cancelled')::int as repeats,
-              count(*) filter (where risk_level in ('High','Critical') and status <> 'cancelled')::int as high_critical
-            from observations o
-           where {where} and o.raised_at >= ${n + 1}::date and o.raised_at < (${n + 2}::date + 1)""",
-        [*params, frm, to],
-    )
-    return {
-        "raised": row["raised"],
-        "closed": row["closed"],
-        "closureRate": _pct(row["closed"], row["actionable"]),
-        "onTimeClosure": _pct(row["closed_on_time"], row["closed"]),
-        "avgDaysToClose": row["avg_days_to_close"],
-        "actConditionRatio": round(row["acts"] / row["conditions"] * 100) / 100 if row["conditions"] > 0 else None,
-        "acts": row["acts"],
-        "conditions": row["conditions"],
-        "nearMisses": row["near_misses"],
-        "safeBehaviourShare": _pct(row["safe"], row["raised"]),
-        "repeatRate": _pct(row["repeats"], row["raised"]),
-        "highCritical": row["high_critical"],
-    }
-
-
-async def my_dashboard(u: AuthUser) -> dict:
-    full = await full_site_ids(u)
-    manageable = [s for s in full if can_manage(u, s)]
-    site_level = len(full) > 0
-    if site_level:
-        scope = await db.one(f"select {COUNTS} from observations where org_id = $1 and site_id = any($2::uuid[])", [u.org_id, full])
-    else:
-        scope = await db.one(f"select {COUNTS} from observations where org_id = $1 and owner_id = $2", [u.org_id, u.id])
-    mine = await db.one(
-        """select count(*) filter (where status <> 'cancelled')::int as raised,
-                  count(*) filter (where status <> 'cancelled' and raised_at >= date_trunc('day', now()))::int as raised_today
-             from observations where raised_by = $1""",
-        [u.id],
-    )
-    assigned = await db.one(f"select {COUNTS} from observations where owner_id = $1", [u.id])
-    approvals = await db.one(
-        """select count(*)::int as n from observations o
-            where o.site_id = any($1::uuid[]) and o.status = 'closure_submitted'
-              and not exists (select 1 from closures c where c.observation_id = o.id and c.decision = 'pending' and c.submitted_by = $2)""",
-        [manageable, u.id],
-    )
-    due = await list_observations(u, {"scope": "all" if site_level else "assigned", "status": "open", "pageSize": 10})
-    open_round = await db.one(
-        """select r.id, r.code, s.name as site_name, (select count(*)::int from observations o where o.round_id = r.id) as points
-             from rounds r join sites s on s.id = r.site_id where r.observer_id = $1 and r.status = 'open' order by r.started_at desc limit 1""",
-        [u.id],
-    )
-    return {
-        "scope": "site" if site_level else "assigned",
-        "counters": scope,
-        "raisedByMe": mine["raised"] if mine else 0,
-        "raisedToday": mine["raised_today"] if mine else 0,
-        "assignedToMe": assigned,
-        "awaitingMyApproval": approvals["n"] if approvals else 0,
-        "dueSoon": due["items"],
-        "openRound": {"id": open_round["id"], "code": open_round["code"], "siteName": open_round["site_name"], "points": open_round["points"]} if open_round else None,
-    }
-
-
-async def site_dashboard(site_ids: list[str], org_id: str, frm: date, to: date) -> dict:
-    where = "o.org_id = $1 and o.site_id = any($2::uuid[])"
-    params: list[Any] = [org_id, site_ids]
-    in_period = f"{where} and o.raised_at >= $3::date and o.raised_at < ($4::date + 1) and o.status <> 'cancelled'"
-    pp = [*params, frm, to]
-
-    async def group(expr: str, limit: int = 12) -> list[dict]:
-        return await db.q(
-            f"""select coalesce(nullif({expr}, ''), 'Not set') as label, count(*)::int as n from observations o
-                  left join areas a on a.id = o.area_id left join contractors ct on ct.id = o.contractor_id
-                 where {in_period} group by 1 order by 2 desc limit {limit}""",
-            pp,
-        )
-
-    counts = await db.one(f"select {COUNTS} from observations o where {where}", params)
-    k = await kpis(where, params, frm, to)
+@router.get("/dashboard")
+async def dashboard(request: Request, user: AuthUser = Depends(require_user())):
+    sites = _sites(request, user)
+    q = request.query_params
+    to = parse_dt(q.get("to"), end_of_day=True) or datetime.now(timezone.utc)
+    frm = parse_dt(q.get("from")) or (to - timedelta(days=90))
+    org = user.org_id
+    lang = user.language
+    settings = await org_settings(org)
+    p = [sites, frm, to]
+    obs_where = "o.site_id = any($1::uuid[]) and o.received_at between $2 and $3"
+    # KPIs
+    open_actions = await db.one("select count(*)::int as n from actions a where a.site_id = any($1::uuid[]) and a.status in ('open','in_progress','reopened','disputed')", [sites])
+    overdue = await db.one("select count(*)::int as n from actions a where a.site_id = any($1::uuid[]) and a.status in ('open','in_progress','reopened','disputed') and a.due_at < now()", [sites])
+    backlog = await db.one("select count(*)::int as n from observations o where o.site_id = any($1::uuid[]) and o.status in ('submitted','returned')", [sites])
+    due = await db.one(
+        """select count(*)::int as n, count(*) filter (where status = 'verified' and completed_at <= original_due_at)::int as on_time
+             from actions a where a.site_id = any($1::uuid[]) and a.original_due_at between $2 and $3 and a.status <> 'cancelled'""", p)
+    closed = await db.one(
+        """select percentile_cont(0.5) within group (order by extract(epoch from (closed_at - received_at)) / 86400) as med, count(*)::int as n
+             from observations o where {w} and o.status = 'closed' and o.closed_at is not null""".format(w=obs_where), p)
+    part = await db.one(
+        """select count(distinct coalesce(o.reporter_user_id::text, s.reporter_user_hash))::int as reporters,
+                  (select coalesce(sum(worker_count), 0)::int from sites where id = any($1::uuid[])) as workers
+             from observations o left join observation_reporter_seals s on s.observation_id = o.id where {w}""".format(w=obs_where), p)
+    crit = await db.one(
+        """select percentile_cont(0.5) within group (order by extract(epoch from (critical_acked_at - received_at)) / 60) as med, count(*)::int as n
+             from observations o where {w} and (o.imminent_danger or o.risk_band = 'extreme') and o.critical_acked_at is not null""".format(w=obs_where), p)
+    insp = await db.one(
+        """select count(*) filter (where status in ('completed','closed'))::int as done, count(*) filter (where status in ('completed','closed','missed'))::int as n
+             from inspection_runs r where r.site_id = any($1::uuid[]) and coalesce(r.completed_at, r.due_at, r.created_at) between $2 and $3 and r.schedule_id is not null""", p)
+    repeat = await db.one(
+        """select count(*) filter (where ia.repeat_finding)::int as rep, count(*)::int as n from inspection_answers ia join inspection_runs r on r.id = ia.run_id
+            where r.site_id = any($1::uuid[]) and r.completed_at between $2 and $3 and ia.flag""", p)
+    discard = await db.one(
+        """select count(*) filter (where status = 'discarded')::int as d, count(*) filter (where triaged_at is not null)::int as n from observations o where {w}""".format(w=obs_where), p)
+    safe = await db.one(
+        """select count(*) filter (where type = 'good_practice')::int as safe, count(*) filter (where type in ('unsafe_act','unsafe_condition'))::int as at_risk
+             from observations o where {w} and o.status not in ('discarded','merged')""".format(w=obs_where), p)
+    min_safe = int(settings.get("percentSafeMinimum", 30))
+    behaviours = safe["safe"] + safe["at_risk"]
+    kpis = [
+        _kpi("open_actions", open_actions["n"], lang, org, n=open_actions["n"]),
+        _kpi("overdue_actions", overdue["n"], lang, org, n=open_actions["n"], formula="open actions past due"),
+        _kpi("triage_backlog", backlog["n"], lang, org, n=backlog["n"]),
+        _kpi("on_time_closure", round(100.0 * due["on_time"] / due["n"], 1) if due["n"] else None, lang, org, unit="%", n=due["n"], hint="kpi.hint.on_time_closure",
+             formula="verified effective by original due date ÷ actions due in period × 100"),
+        _kpi("median_days_to_close", round(float(closed["med"]), 1) if closed["med"] is not None else None, lang, org, unit="days", n=closed["n"]),
+        _kpi("participation", round(100.0 * part["reporters"] / part["workers"], 1) if part["workers"] else None, lang, org, unit="%", n=part["reporters"], hint="kpi.hint.participation",
+             formula="distinct reporters ÷ site worker count × 100"),
+        _kpi("critical_ack_median", round(float(crit["med"]), 1) if crit["med"] is not None else None, lang, org, unit="min", n=crit["n"]),
+        _kpi("inspection_completion", round(100.0 * insp["done"] / insp["n"], 1) if insp["n"] else None, lang, org, unit="%", n=insp["n"], hint="kpi.hint.inspection_completion",
+             formula="completed ÷ scheduled × 100 (missed counts as not completed)"),
+        _kpi("repeat_findings", round(100.0 * repeat["rep"] / repeat["n"], 1) if repeat["n"] else None, lang, org, unit="%", n=repeat["n"], hint="kpi.hint.repeat_findings"),
+        _kpi("discard_rate", round(100.0 * discard["d"] / discard["n"], 1) if discard["n"] else None, lang, org, unit="%", n=discard["n"], hint="kpi.hint.discard_rate"),
+        _kpi("percent_safe", round(100.0 * safe["safe"] / behaviours, 1) if behaviours >= min_safe else None, lang, org, unit="%", n=behaviours, hint="kpi.hint.percent_safe",
+             formula=f"good practice ÷ (good practice + at-risk) × 100, hidden below {min_safe}"),
+    ]
+    by_type = await db.q(f"select type, count(*)::int as count from observations o where {obs_where} and o.status not in ('discarded','merged') group by type order by type", p)
+    by_cat = await db.q(
+        f"""select c as code, count(*)::int as count, count(*) filter (where type in ('unsafe_act','unsafe_condition','near_miss'))::int as at_risk,
+                   count(*) filter (where type = 'good_practice')::int as safe
+              from observations o, unnest(o.category_codes) c where {obs_where} and o.status not in ('discarded','merged') group by c order by count desc limit 30""", p)
+    by_area = await db.q(
+        f"""select o.area_id, a.name_i18n as name, count(*)::int as count from observations o left join areas a on a.id = o.area_id
+             where {obs_where} and o.status not in ('discarded','merged') group by o.area_id, a.name_i18n order by count desc limit 30""", p)
+    by_emp = await db.q(
+        f"""select o.employer_involved_id as employer_id, coalesce(k.name, '—') as name, count(*)::int as count from observations o left join contractors k on k.id = o.employer_involved_id
+             where {obs_where} and o.status not in ('discarded','merged') group by o.employer_involved_id, k.name order by count desc limit 30""", p)
     weekly = await db.q(
-        f"""with weeks as (select generate_series(date_trunc('week', now()) - interval '11 weeks', date_trunc('week', now()), interval '1 week') as wk)
-            select to_char(w.wk, 'YYYY-MM-DD') as week,
-                   (select count(*)::int from observations o where {where} and o.status <> 'cancelled' and o.raised_at >= w.wk and o.raised_at < w.wk + interval '1 week') as raised,
-                   (select count(*)::int from observations o where {where} and o.status = 'closed' and o.closed_at >= w.wk and o.closed_at < w.wk + interval '1 week') as closed
-              from weeks w order by w.wk""",
-        params,
-    )
-    overdue = await db.q(
-        f"""select o.id, o.code, o.item, o.hazard, o.risk_level, o.due_at, ow.name as owner_name, s.name as site_name,
-                   floor(extract(epoch from (now() - o.due_at)) / 86400)::int as days_overdue
-              from observations o join sites s on s.id = o.site_id left join users ow on ow.id = o.owner_id
-             where {where} and o.status in ('open','in_progress') and o.due_at < now() order by o.due_at limit 25""",
-        params,
-    )
-    repeats = await db.q(
-        f"""select o.item as label, coalesce(a.name, '') as area, count(*)::int as n from observations o left join areas a on a.id = o.area_id
-             where {in_period} and o.item <> '' group by o.item, a.name having count(*) > 1 order by 3 desc limit 10""",
-        pp,
-    )
-    lsr = await db.q(f"select o.lsr as label, count(*)::int as n from observations o where {in_period} and o.lsr <> '' group by 1 order by 2 desc", pp)
-    per_officer = await db.q(
-        f"""select u.name as officer, to_char(date_trunc('day', o.raised_at), 'YYYY-MM-DD') as day, count(*)::int as n
-              from observations o join users u on u.id = o.raised_by
-             where {where} and o.status <> 'cancelled' and o.raised_at >= date_trunc('day', now()) - interval '13 days'
-             group by 1, 2 order by 1, 2""",
-        params,
-    )
-    return {
-        "period": {"from": frm.isoformat(), "to": to.isoformat()},
-        "counters": counts,
-        "kpis": k,
-        "byCategory": await group("o.category"),
-        "byHazard": await group("o.hazard"),
-        "byArea": await group("a.name"),
-        "byContractor": await group("ct.name"),
-        "byRisk": await group("o.risk_level", 5),
-        "byType": await group("o.obs_type", 5),
-        "weekly": weekly,
-        "overdue": [
-            {"id": r["id"], "code": r["code"], "item": r["item"] or r["hazard"], "riskLevel": r["risk_level"], "dueAt": r["due_at"],
-             "ownerName": r["owner_name"], "siteName": r["site_name"], "daysOverdue": r["days_overdue"]}
-            for r in overdue
-        ],
-        "repeats": repeats,
-        "lsrBreaches": lsr,
-        "perOfficer": per_officer,
-    }
+        f"""select to_char(date_trunc('week', o.received_at at time zone 'Asia/Kolkata'), 'IYYY-"W"IW') as week, count(*)::int as reports,
+                   count(*) filter (where type in ('unsafe_act','unsafe_condition','near_miss'))::int as at_risk, count(*) filter (where type = 'good_practice')::int as good
+              from observations o where {obs_where} and o.status not in ('discarded','merged') group by 1 order by 1""", p)
+    ageing = await db.q(
+        """select bucket, count(*)::int as count from (
+             select case when age <= 7 then '0-7' when age <= 30 then '8-30' when age <= 90 then '31-90' else '90+' end as bucket
+               from (select extract(epoch from (now() - created_at)) / 86400 as age from actions a where a.site_id = any($1::uuid[]) and a.status in ('open','in_progress','reopened','disputed')) x) y
+            group by bucket""", [sites])
+    order = {"0-7": 0, "8-30": 1, "31-90": 2, "90+": 3}
+    ageing_rows = {r["bucket"]: r["count"] for r in ageing}
+    dtc = await db.q(
+        """select band, percentile_cont(0.5) within group (order by extract(epoch from (verified_at - created_at)) / 86400) as median, count(*)::int as n
+             from actions a where a.site_id = any($1::uuid[]) and a.status = 'verified' and a.verified_at between $2 and $3 group by band""", p)
+    dtc_map = {r["band"]: r for r in dtc}
+    top_rep = await db.q(
+        """select q.text_i18n as question_text, tm.name_i18n as template_name, count(*)::int as count
+             from inspection_answers ia join inspection_runs r on r.id = ia.run_id join inspection_questions q on q.id = ia.question_id
+             join inspection_template_versions v on v.id = r.template_version_id join inspection_templates tm on tm.id = v.template_id
+            where r.site_id = any($1::uuid[]) and r.completed_at between $2 and $3 and ia.repeat_finding group by q.text_i18n, tm.name_i18n order by count desc limit 10""", p)
+    return JSON({
+        "siteIds": sites, "from": frm, "to": to, "kpis": kpis,
+        "byType": [{"type": r["type"], "count": r["count"]} for r in by_type],
+        "byCategory": [{"code": r["code"], "count": r["count"], "atRisk": r["at_risk"], "safe": r["safe"]} for r in by_cat],
+        "byArea": [{"areaId": r["area_id"], "name": r["name"] or {"en": "—"}, "count": r["count"]} for r in by_area],
+        "byEmployer": [{"employerId": r["employer_id"], "name": r["name"], "count": r["count"]} for r in by_emp],
+        "weekly": [{"week": r["week"], "reports": r["reports"], "atRisk": r["at_risk"], "good": r["good"]} for r in weekly],
+        "ageing": [{"bucket": b, "count": ageing_rows.get(b, 0)} for b in sorted(order, key=order.get)],
+        "daysToCloseByBand": [{"band": b, "median": round(float(dtc_map[b]["median"]), 1) if b in dtc_map and dtc_map[b]["median"] is not None else None, "n": dtc_map[b]["n"] if b in dtc_map else 0}
+                               for b in ("low", "moderate", "high", "extreme")],
+        "topRepeatFindings": [{"questionText": r["question_text"], "templateName": r["template_name"], "count": r["count"]} for r in top_rep],
+        "sampleNote": {"en": t("dashboard.sample_note", "en", org), lang: t("dashboard.sample_note", lang, org)},
+    })
 
 
-@router.get("/api/dashboard/me")
-async def me(u: AuthUser = Depends(require_user())):
-    return JSON(await my_dashboard(u))
+# ---------- exports ----------
+
+def _check_export(user: AuthUser) -> None:
+    if not any(user.can_view_site(s) for s in user.sites_in_scope()):
+        raise forbidden()
+    try:
+        export_limiter.check(f"export:{user.id}", config.exports_per_hour)
+    except Exception:
+        raise rate_limited(f"Export limit reached ({config.exports_per_hour} per hour).", key="err.exports_limit", limit=config.exports_per_hour)
 
 
-@router.get("/api/dashboard/site/{site_id}")
-async def site(site_id: str, request: Request, u: AuthUser = Depends(require_user())):
-    site_id = uuid_param(site_id, "Site not found.")
-    if not can_view_whole_site(u, site_id):
-        raise forbidden("Site dashboard is for the site's safety officers and managers.")
-    frm, to = period(query(request))
-    return JSON(await site_dashboard([site_id], u.org_id, frm, to))
+async def _audit_export(user: AuthUser, what: str, n: int, filters: dict) -> None:
+    async with db.tx() as c:
+        await audit(c, org_id=user.org_id, actor=user, action="export", record_type=what, record_id="csv", changes={"rows": n, "filters": filters})
+
+
+@router.get("/exports/observations.csv")
+async def export_observations(request: Request, user: AuthUser = Depends(require_user())):
+    _check_export(user)
+    q = dict(request.query_params)
+    params: list = []
+    where, params = observation_filters(q, user, params)
+    rows = await db.q(
+        f"""select o.case_no, o.site_id, s.code as site_code, a.name_i18n as area_name, o.type, o.category_codes, o.description, o.description_lang, o.status, o.risk_band, o.likelihood, o.severity,
+                   o.imminent_danger, o.fixed_on_spot, o.anonymous, o.channel, o.reporter_type, k.name as employer, o.trade, o.captured_at, o.received_at, o.triaged_at, o.closed_at,
+                   o.closure_summary, o.is3786_code, o.lat, o.lng,
+                   case when o.anonymous then '' else coalesce(p.full_name, u.employee_code, '') end as reporter
+              from observations o join sites s on s.id = o.site_id left join areas a on a.id = o.area_id left join contractors k on k.id = o.employer_involved_id
+              left join users u on u.id = o.reporter_user_id left join people p on p.id = u.person_id
+             where {' and '.join(where)} order by o.received_at desc limit 50000""", params)
+    lang = user.language
+    head = ["Case no", "Site", "Area", "Type", "Categories", "Description", "Language", "Status", "Band", "Likelihood", "Severity", "Danger now", "Fixed on spot", "Anonymous", "Channel",
+            "Reporter type", "Employer", "Trade", "Reporter", "Captured at", "Received at", "Triaged at", "Closed at", "Closure summary", "IS 3786", "Lat", "Lng"]
+    out = [head]
+    for r in rows:
+        reporter = r["reporter"] if user.sees_reporter_identity(r["site_id"]) else ""
+        out.append([r["case_no"], r["site_code"], pick(r["area_name"], lang) if r["area_name"] else "", r["type"], ",".join(r["category_codes"] or []), r["description"], r["description_lang"],
+                    r["status"], r["risk_band"], r["likelihood"], r["severity"], r["imminent_danger"], r["fixed_on_spot"], r["anonymous"], r["channel"], r["reporter_type"], r["employer"],
+                    r["trade"], reporter, r["captured_at"], r["received_at"], r["triaged_at"], r["closed_at"], r["closure_summary"], r["is3786_code"], r["lat"], r["lng"]])
+    await _audit_export(user, "observation", len(rows), q)
+    return csv_response(out, "observations.csv")
+
+
+@router.get("/exports/actions.csv")
+async def export_actions(request: Request, user: AuthUser = Depends(require_user())):
+    _check_export(user)
+    q = dict(request.query_params)
+    params: list = []
+    where = action_filters(q, user, params)
+    rows = await db.q(
+        f"""select a.case_no, s.code as site_code, a.source_type, a.title, a.problem, a.band, a.status, coalesce(p.full_name, u.employee_code) as owner, k.name as employer,
+                   a.action_type, a.control_level, a.original_due_at, a.due_at, a.created_at, a.completed_at, a.verified_at, a.completion_note, a.cause_addressed, a.verification_result,
+                   a.verification_method, a.reopen_count, a.interim_control
+              from actions a join sites s on s.id = a.site_id join users u on u.id = a.owner_user_id left join people p on p.id = u.person_id
+              left join contractors k on k.id = a.responsible_employer_id where {' and '.join(where)} order by a.created_at desc limit 50000""", params)
+    head = ["Case no", "Site", "Source", "Title", "Problem", "Band", "Status", "Owner", "Employer", "Type", "Control level", "Original due", "Due", "Created", "Completed", "Verified",
+            "Completion note", "Cause addressed", "Verification result", "Verification method", "Reopen count", "Interim control"]
+    out = [head] + [[r["case_no"], r["site_code"], r["source_type"], r["title"], r["problem"], r["band"], r["status"], r["owner"], r["employer"], r["action_type"], r["control_level"],
+                     r["original_due_at"], r["due_at"], r["created_at"], r["completed_at"], r["verified_at"], r["completion_note"], r["cause_addressed"], r["verification_result"],
+                     r["verification_method"], r["reopen_count"], r["interim_control"]] for r in rows]
+    await _audit_export(user, "action", len(rows), q)
+    return csv_response(out, "actions.csv")
+
+
+@router.get("/exports/inspections.csv")
+async def export_inspections(request: Request, user: AuthUser = Depends(require_user())):
+    _check_export(user)
+    q = dict(request.query_params)
+    sites = _sites(request, user)
+    params: list = [sites]
+    where = ["r.site_id = any($1::uuid[])"]
+    if q.get("status"):
+        params.append(q["status"].split(","))
+        where.append(f"r.status = any(${len(params)}::text[])")
+    if q.get("from"):
+        params.append(parse_dt(q["from"]))
+        where.append(f"coalesce(r.completed_at, r.due_at, r.created_at) >= ${len(params)}")
+    if q.get("to"):
+        params.append(parse_dt(q["to"], end_of_day=True))
+        where.append(f"coalesce(r.completed_at, r.due_at, r.created_at) <= ${len(params)}")
+    rows = await db.q(
+        f"""select r.case_no, s.code as site_code, t.code as template_code, t.name_i18n as template_name, v.version, ar.name_i18n as area_name, ast.tag_no, r.trigger, r.status,
+                   coalesce(p.full_name, u.employee_code) as inspector, r.due_at, r.started_at, r.completed_at, r.score_pct, r.result, r.tag_status,
+                   (select count(*) from inspection_answers ia where ia.run_id = r.id and ia.flag)::int as failed,
+                   (select count(*) from inspection_answers ia where ia.run_id = r.id and ia.action_id is not null)::int as actions,
+                   (select count(*) from inspection_answers ia where ia.run_id = r.id and ia.repeat_finding)::int as repeats
+              from inspection_runs r join sites s on s.id = r.site_id join inspection_template_versions v on v.id = r.template_version_id join inspection_templates t on t.id = v.template_id
+              left join areas ar on ar.id = r.area_id left join assets ast on ast.id = r.asset_id left join users u on u.id = r.inspector_user_id left join people p on p.id = u.person_id
+             where {' and '.join(where)} order by coalesce(r.completed_at, r.due_at, r.created_at) desc limit 50000""", params)
+    lang = user.language
+    head = ["Case no", "Site", "Template", "Template name", "Version", "Area", "Asset", "Trigger", "Status", "Inspector", "Due", "Started", "Completed", "Score %", "Result", "Tag", "Failed",
+            "Actions", "Repeat findings"]
+    out = [head] + [[r["case_no"], r["site_code"], r["template_code"], pick(r["template_name"], lang), r["version"], pick(r["area_name"], lang) if r["area_name"] else "", r["tag_no"],
+                     r["trigger"], r["status"], r["inspector"], r["due_at"], r["started_at"], r["completed_at"], float(r["score_pct"]) if r["score_pct"] is not None else "", r["result"],
+                     r["tag_status"], r["failed"], r["actions"], r["repeats"]] for r in rows]
+    await _audit_export(user, "inspection_run", len(rows), q)
+    return csv_response(out, "inspections.csv")

@@ -21,7 +21,7 @@ from .security import sha256
 
 log = logging.getLogger("safeworks")
 
-MAX_BODY = 14 * 1024 * 1024
+MAX_BODY = 16 * 1024 * 1024  # media PUT is capped at 10 MB by upload.py; QR JSON at 15 MB by the public route
 STRICT_CSP = (
     "default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; "
     "connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"

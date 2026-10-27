@@ -1,249 +1,160 @@
-"""Safety walks, observation points and notifications."""
+"""Observations: list, detail, duplicates, create, triage, comments, reply, reopen, critical acknowledgement, closure summary."""
 from __future__ import annotations
 
-from typing import Any
-
 from fastapi import APIRouter, Depends, Request
-from pydantic import Field, field_validator
 
 from .. import db
 from ..auth import require_user
-from ..errors import bad_request, conflict, forbidden, not_found
-from ..http import JSON, client_ip, json_body, query, uuid_param
-from ..observations import (
-    add_comment, add_evidence_photo, cancel_observation, check_uuid, create_observation, decide_closure, edit_observation, extend_due,
-    get_observation, list_observations, next_round_code, reopen_observation, start_work, submit_closure, withdraw_photo,
-)
-from ..rbac import AuthUser, can_raise, can_view_whole_site, is_admin
-from ..upload import read_multipart
-from ..validation import In, Str, parse
+from ..crypto import hmac_id
+from ..errors import not_found
+from ..http import JSON, json_body, page_params, parse_dt, uuid_param
+from ..rbac import AuthUser, require_officer
+from ..schemas import ClosureSummaryBody, CommentBody, ObservationCreate, ReasonBody, ReplyBody, TriageRequest, parse
+from ..views import OBS_SELECT, paged
+from ..workflow import observations as obs_wf
+from ..workflow.common import DuplicateRecord, get_site
 
-router = APIRouter()
-auth = require_user()
+router = APIRouter(prefix="/api/v1/observations")
 
-
-class RoundIn(In):
-    id: str
-    site_id: str
-    round_type: Str(80, 1)
-    shift: Str(40, 1)
-    area_names: list[Str(120)] = Field(default_factory=list, max_length=30)
-    accompanied_by: Str(300) = ""
-    weather: Str(120) = ""
-    persons_on_site: int | None = Field(default=None, ge=0, le=100000)
-
-    @field_validator("id", "site_id")
-    @classmethod
-    def _uuid(cls, v: str) -> str:
-        r = check_uuid(v)
-        if not r:
-            raise ValueError("Invalid ID")
-        return r
+OPEN = ("submitted", "returned", "action_assigned", "escalated")
 
 
-# ----- Rounds (safety walks) ------------------------------------------------------------------
-
-
-@router.post("/api/rounds")
-async def create_round(request: Request, u: AuthUser = Depends(auth)):
-    inp = parse(RoundIn, await json_body(request))
-    existing = await db.one("select id, observer_id from rounds where id = $1", [inp.id])
-    if existing:
-        if existing["observer_id"] != u.id:
-            raise conflict("Round ID already used.")
-        return JSON({"id": inp.id, "duplicate": True})
-    if not can_raise(u, inp.site_id):
-        raise forbidden("Only safety officers start safety walks.")
-    site = await db.one("select id, code from sites where id = $1 and org_id = $2 and active", [inp.site_id, u.org_id])
-    if not site:
-        raise bad_request("Site not found.")
-    code = await next_round_code(None, site["code"])
-    await db.execute(
-        """insert into rounds (id, org_id, site_id, code, observer_id, round_type, shift, area_names, accompanied_by, weather, persons_on_site)
-           values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)""",
-        [inp.id, u.org_id, site["id"], code, u.id, inp.round_type, inp.shift, inp.area_names, inp.accompanied_by, inp.weather, inp.persons_on_site],
-    )
-    return JSON({"id": inp.id, "code": code}, status_code=201)
-
-
-@router.post("/api/rounds/{rid}/finish")
-async def finish_round(rid: str, u: AuthUser = Depends(auth)):
-    rid = uuid_param(rid, "Round not found.")
-    r = await db.one("select * from rounds where id = $1 and org_id = $2", [rid, u.org_id])
-    if not r:
-        raise not_found("Round not found.")
-    if r["observer_id"] != u.id and not is_admin(u):
-        raise forbidden()
-    await db.execute("update rounds set status = 'finished', ended_at = coalesce(ended_at, now()) where id = $1", [rid])
-    return JSON({"ok": True})
-
-
-class RoundsQ(In):
-    site_id: str | None = None
-    mine: str | None = None
-
-    @field_validator("site_id")
-    @classmethod
-    def _uuid(cls, v: str | None) -> str | None:
-        return check_uuid(v)
-
-
-@router.get("/api/rounds")
-async def list_rounds(request: Request, u: AuthUser = Depends(auth)):
-    f = parse(RoundsQ, query(request))
-    rows = await db.q(
-        """select r.id, r.code, r.round_type, r.shift, r.status, r.started_at, r.ended_at, r.area_names, s.name as site_name, s.id as site_id,
-                  u.name as observer_name, r.observer_id,
-                  (select count(*)::int from observations o where o.round_id = r.id and o.status <> 'cancelled') as points
-             from rounds r join sites s on s.id = r.site_id join users u on u.id = r.observer_id
-            where r.org_id = $1 and ($2::uuid is null or r.site_id = $2::uuid) and ($3::boolean is not true or r.observer_id = $4::uuid)
-            order by r.started_at desc limit 50""",
-        [u.org_id, f.site_id, f.mine == "1", u.id],
-    )
-    return JSON({
-        "rounds": [
-            {"id": r["id"], "code": r["code"], "roundType": r["round_type"], "shift": r["shift"], "status": r["status"], "startedAt": r["started_at"],
-             "endedAt": r["ended_at"], "areaNames": r["area_names"], "site": {"id": r["site_id"], "name": r["site_name"]},
-             "observerName": r["observer_name"], "points": r["points"], "mine": r["observer_id"] == u.id}
-            for r in rows
-            if r["observer_id"] == u.id or can_view_whole_site(u, r["site_id"])
-        ]
-    })
-
-
-@router.get("/api/rounds/{rid}")
-async def get_round(rid: str, u: AuthUser = Depends(auth)):
-    rid = uuid_param(rid, "Round not found.")
-    r = await db.one(
-        """select r.*, s.name as site_name, s.code as site_code, u.name as observer_name, u.designation as observer_designation, u.employee_id as observer_employee_id
-             from rounds r join sites s on s.id = r.site_id join users u on u.id = r.observer_id where r.id = $1 and r.org_id = $2""",
-        [rid, u.org_id],
-    )
-    if not r:
-        raise not_found("Round not found.")
-    if r["observer_id"] != u.id and not can_view_whole_site(u, r["site_id"]):
-        raise forbidden()
-    lst = await list_observations(u, {"roundId": rid, "pageSize": 200, "status": "any"})
-    return JSON({
-        "id": r["id"], "code": r["code"], "status": r["status"], "roundType": r["round_type"], "shift": r["shift"], "areaNames": r["area_names"],
-        "accompaniedBy": r["accompanied_by"], "weather": r["weather"], "personsOnSite": r["persons_on_site"], "startedAt": r["started_at"],
-        "endedAt": r["ended_at"], "site": {"id": r["site_id"], "name": r["site_name"], "code": r["site_code"]},
-        "observer": {"name": r["observer_name"], "designation": r["observer_designation"], "employeeId": r["observer_employee_id"]},
-        "mine": r["observer_id"] == u.id, "points": lst["items"],
-    })
-
-
-# ----- Observations ---------------------------------------------------------------------------
-
-
-@router.post("/api/observations")
-async def create(request: Request, u: AuthUser = Depends(auth)):
-    data, files = await read_multipart(request, ["photos", "afterPhotos"], 4)
-    obs_id, duplicate = await create_observation(u, data, files.get("photos", []), files.get("afterPhotos", []), client_ip(request))
-    return JSON(await get_observation(u, obs_id), status_code=200 if duplicate else 201)
-
-
-@router.get("/api/observations")
-async def list_(request: Request, u: AuthUser = Depends(auth)):
-    return JSON(await list_observations(u, query(request)))
-
-
-@router.get("/api/observations/{oid}")
-async def get_(oid: str, u: AuthUser = Depends(auth)):
-    return JSON(await get_observation(u, uuid_param(oid, "Observation not found.")))
-
-
-@router.patch("/api/observations/{oid}")
-async def edit(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    oid = uuid_param(oid, "Observation not found.")
-    await edit_observation(u, oid, await json_body(request))
-    return JSON(await get_observation(u, oid))
-
-
-@router.post("/api/observations/{oid}/start")
-async def start(oid: str, u: AuthUser = Depends(auth)):
-    oid = uuid_param(oid, "Observation not found.")
-    await start_work(u, oid)
-    return JSON(await get_observation(u, oid))
-
-
-@router.post("/api/observations/{oid}/closure")
-async def closure(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    oid = uuid_param(oid, "Observation not found.")
-    data, files = await read_multipart(request, ["photos"], 2)
-    await submit_closure(u, oid, data, files.get("photos", []))
-    return JSON(await get_observation(u, oid))
-
-
-async def _simple(fn: Any, oid: str, request: Request, u: AuthUser) -> JSON:
-    oid = uuid_param(oid, "Observation not found.")
-    await fn(u, oid, await json_body(request))
-    return JSON(await get_observation(u, oid))
-
-
-@router.post("/api/observations/{oid}/decision")
-async def decision(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    return await _simple(decide_closure, oid, request, u)
-
-
-@router.post("/api/observations/{oid}/cancel")
-async def cancel(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    return await _simple(cancel_observation, oid, request, u)
-
-
-@router.post("/api/observations/{oid}/reopen")
-async def reopen(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    return await _simple(reopen_observation, oid, request, u)
-
-
-@router.post("/api/observations/{oid}/extend")
-async def extend(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    return await _simple(extend_due, oid, request, u)
-
-
-@router.post("/api/observations/{oid}/comments")
-async def comment(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    return await _simple(add_comment, oid, request, u)
-
-
-@router.post("/api/observations/{oid}/photos")
-async def add_photos(oid: str, request: Request, u: AuthUser = Depends(auth)):
-    oid = uuid_param(oid, "Observation not found.")
-    _, files = await read_multipart(request, ["photos"], 2)
-    await add_evidence_photo(u, oid, files.get("photos", []))
-    return JSON(await get_observation(u, oid))
-
-
-@router.post("/api/photos/{pid}/withdraw")
-async def withdraw(pid: str, request: Request, u: AuthUser = Depends(auth)):
-    await withdraw_photo(u, uuid_param(pid, "Photo not found."), await json_body(request))
-    return JSON({"ok": True})
-
-
-# ----- Notifications --------------------------------------------------------------------------
-
-
-@router.get("/api/notifications")
-async def notifications(u: AuthUser = Depends(auth)):
-    rows = await db.q(
-        "select n.id, n.kind, n.title, n.body, n.created_at, n.read_at, n.observation_id from notifications n where n.user_id = $1 order by n.created_at desc limit 100",
-        [u.id],
-    )
-    return JSON({"items": [
-        {"id": r["id"], "kind": r["kind"], "title": r["title"], "body": r["body"], "at": r["created_at"], "read": r["read_at"] is not None, "observationId": r["observation_id"]}
-        for r in rows
-    ]})
-
-
-class ReadIn(In):
-    ids: list[int] | None = Field(default=None, max_length=500)
-
-
-@router.post("/api/notifications/read")
-async def notifications_read(request: Request, u: AuthUser = Depends(auth)):
-    inp = parse(ReadIn, await json_body(request))
-    if inp.ids:
-        await db.execute("update notifications set read_at = now() where user_id = $1 and id = any($2::bigint[]) and read_at is null", [u.id, inp.ids])
+def observation_filters(q: dict, user: AuthUser, params: list, *, table: str = "o") -> tuple[list[str], list]:
+    """WHERE clauses for the shared observation filters (list and CSV export)."""
+    where: list[str] = [f"{table}.org_id = ${len(params) + 1}"]
+    params.append(user.org_id)
+    site_ids = [s for s in (q.get("siteId") or q.get("siteIds") or "").split(",") if s]
+    scope = user.sites_in_scope()
+    officer_sites = [s for s in scope if user.can_view_site(s)]
+    mine = q.get("mine") == "1" or not officer_sites
+    if site_ids:
+        site_ids = [uuid_param(s) for s in site_ids]
+        if any(s not in scope for s in site_ids):
+            raise not_found()
+    if mine:
+        params += [user.id, hmac_id(user.id)]
+        where.append(f"({table}.reporter_user_id = ${len(params) - 1} or {table}.id in (select observation_id from observation_reporter_seals where reporter_user_hash = ${len(params)}))")
+        if site_ids:
+            params.append(site_ids)
+            where.append(f"{table}.site_id = any(${len(params)}::uuid[])")
     else:
-        await db.execute("update notifications set read_at = now() where user_id = $1 and read_at is null", [u.id])
-    return JSON({"ok": True})
+        params.append(site_ids or officer_sites)
+        where.append(f"{table}.site_id = any(${len(params)}::uuid[])")
+    for key, col in (("status", "status"), ("band", "risk_band"), ("type", "type"), ("channel", "channel")):
+        if q.get(key):
+            vals = q[key].split(",")
+            params.append(vals)
+            where.append(f"{table}.{col} = any(${len(params)}::text[])")
+    if q.get("category"):
+        params.append(q["category"].split(","))
+        where.append(f"{table}.category_codes && ${len(params)}::text[]")
+    if q.get("areaId"):
+        params.append(uuid_param(q["areaId"]))
+        where.append(f"{table}.area_id = ${len(params)}")
+    if q.get("employerId"):
+        params.append(uuid_param(q["employerId"]))
+        where.append(f"{table}.employer_involved_id = ${len(params)}")
+    if q.get("from"):
+        params.append(parse_dt(q["from"]))
+        where.append(f"{table}.received_at >= ${len(params)}")
+    if q.get("to"):
+        params.append(parse_dt(q["to"], end_of_day=True))
+        where.append(f"{table}.received_at <= ${len(params)}")
+    if q.get("q"):
+        params.append(f"%{q['q'].strip()}%")
+        where.append(f"({table}.description ilike ${len(params)} or {table}.case_no ilike ${len(params)} or {table}.task_observed ilike ${len(params)})")
+    return where, params
+
+
+@router.get("")
+async def list_observations(request: Request, user: AuthUser = Depends(require_user())):
+    q = dict(request.query_params)
+    page, size = page_params(request, 50, 200)
+    params: list = []
+    where, params = observation_filters(q, user, params)
+    order = "o.imminent_danger desc, (o.risk_band = 'extreme') desc, o.received_at asc" if q.get("status") == "submitted" else "o.received_at desc"
+    total = await db.one(f"select count(*)::int as n from observations o where {' and '.join(where)}", params)
+    rows = await db.q(OBS_SELECT + f" where {' and '.join(where)} order by {order} limit {size} offset {(page - 1) * size}", params)
+    items = await obs_wf.summary_for(None, user, rows)
+    return JSON(paged(items, total["n"], page, size))
+
+
+@router.post("")
+async def create_observation(request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(ObservationCreate, await json_body(request))
+    site = await get_site(None, inp.site_id)
+    if not user.in_scope(site["id"]):
+        raise not_found()
+    channel = inp.channel if inp.channel in ("app", "web", "on_behalf") else "web"
+    async with db.tx() as c:
+        try:
+            o, uploads = await obs_wf.create(c, user, inp, site=site, area_id=inp.area_id, asset_id=inp.asset_id, channel=channel, device_id=user.device_id)
+        except DuplicateRecord as d:
+            out = await obs_wf.detail(c, user, d.record_id)
+            out["uploads"] = [{"clientUuid": m["clientUuid"], "url": f"/api/v1/media/{m['clientUuid']}"} for m in out["media"] if m["uploadStatus"] == "pending"]
+            out["duplicate"] = True
+            return JSON(out)
+        out = await obs_wf.detail(c, user, o["id"])
+    out["uploads"] = uploads
+    return JSON(out, status_code=201)
+
+
+@router.get("/{obs_id}")
+async def get_observation(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    oid = uuid_param(obs_id)
+    out = await obs_wf.detail(None, user, oid, with_duplicates=request.query_params.get("duplicates") == "1")
+    return JSON(out)
+
+
+@router.get("/{obs_id}/duplicates")
+async def get_duplicates(obs_id: str, user: AuthUser = Depends(require_user())):
+    o = await obs_wf.load(None, uuid_param(obs_id))
+    require_officer(user, o["site_id"])
+    return JSON(await obs_wf.duplicates(None, o))
+
+
+@router.post("/{obs_id}/triage")
+async def triage(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(TriageRequest, await json_body(request))
+    async with db.tx() as c:
+        out = await obs_wf.triage(c, user, uuid_param(obs_id), inp)
+    return JSON(out)
+
+
+@router.post("/{obs_id}/comments")
+async def add_comment(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(CommentBody, await json_body(request))
+    async with db.tx() as c:
+        out = await obs_wf.add_comment(c, user, uuid_param(obs_id), inp)
+    return JSON(out, status_code=201)
+
+
+@router.post("/{obs_id}/reply")
+async def reply(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(ReplyBody, await json_body(request))
+    async with db.tx() as c:
+        out = await obs_wf.reply(c, user, uuid_param(obs_id), inp)
+    return JSON(out)
+
+
+@router.post("/{obs_id}/reopen")
+async def reopen(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(ReasonBody, await json_body(request))
+    async with db.tx() as c:
+        out = await obs_wf.reopen(c, user, uuid_param(obs_id), inp.reason)
+    return JSON(out)
+
+
+@router.post("/{obs_id}/ack-critical")
+async def ack_critical(obs_id: str, user: AuthUser = Depends(require_user())):
+    async with db.tx() as c:
+        out = await obs_wf.ack_critical(c, user, uuid_param(obs_id))
+    return JSON(out)
+
+
+@router.put("/{obs_id}/closure-summary")
+async def closure_summary(obs_id: str, request: Request, user: AuthUser = Depends(require_user())):
+    inp = parse(ClosureSummaryBody, await json_body(request))
+    async with db.tx() as c:
+        out = await obs_wf.set_closure_summary(c, user, uuid_param(obs_id), inp.closure_summary)
+    return JSON(out)

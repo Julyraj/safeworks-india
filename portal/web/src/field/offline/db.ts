@@ -235,7 +235,7 @@ export async function getRecord<T extends RecordStore>(store: T, id: string): Pr
   const database = await d();
   const direct = await database.get(store, id);
   if (direct) return direct as FieldDB[T]["value"];
-  return (await database.getFromIndex(store, "byClientUuid", id)) as FieldDB[T]["value"] | undefined;
+  return (await database.getFromIndex(store as "observations", "byClientUuid", id)) as FieldDB[T]["value"] | undefined;
 }
 export async function putRecords<T extends RecordStore>(store: T, rows: FieldDB[T]["value"][], opts: { replaceAll?: boolean; deleteIds?: string[] } = {}): Promise<void> {
   const database = await d();
@@ -251,7 +251,7 @@ export async function putRecords<T extends RecordStore>(store: T, rows: FieldDB[
   for (const id of opts.deleteIds ?? []) await tx.store.delete(id);
   for (const r of rows) {
     // a server copy replaces the local placeholder with the same clientUuid
-    const local = await tx.store.index("byClientUuid").get(r.clientUuid);
+    const local = await (tx.store as unknown as { index: (n: string) => { get: (k: string) => Promise<{ id: string } | undefined> } }).index("byClientUuid").get(r.clientUuid);
     if (local && local.id !== r.id) await tx.store.delete(local.id);
     await tx.store.put(r as never);
   }
