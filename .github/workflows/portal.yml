@@ -66,7 +66,7 @@ jobs:
         env:
           TEST_DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
           STORAGE_DRIVER: db
-      - name: 100-user load test (short run)
+      - name: Load test with demo users (short run)
         working-directory: portal/server
         env:
           DATABASE_URL: postgres://safeworks:safeworks@localhost:5432/safeworks_test
@@ -77,7 +77,7 @@ jobs:
           WEB_CONCURRENCY: "2"
         run: |
           psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "drop schema public cascade; create schema public;"
-          python scripts/seed.py
+          python scripts/seed.py --demo
           python -m safeworks > server.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:8080/api/v1/health && break; sleep 1; done
           BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json python scripts/loadtest.py
