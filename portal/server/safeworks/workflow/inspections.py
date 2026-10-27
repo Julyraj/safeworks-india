@@ -306,7 +306,7 @@ async def submit(conn, actor: AuthUser, run_id: str, payload: RunSubmitRequest) 
 
 
 async def _open_actions(conn, run_id: str) -> int:
-    return await conn.fetchval(
+    return await db._db(conn).fetchval(
         "select count(*) from inspection_answers ia join actions a on a.id = ia.action_id where ia.run_id = $1 and a.status not in ('verified','cancelled')", run_id
     ) or 0
 

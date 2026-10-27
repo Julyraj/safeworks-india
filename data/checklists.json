@@ -981,5 +981,1120 @@
    "Positive behaviours recognised on the spot; at-risk behaviours discussed with the person (why?)",
    "Observations recorded on cards; imminent dangers stopped and corrected before leaving"
   ]
+ },
+ {
+  "id": "cl4-press",
+  "t": "Power Press Shift & Set-Up Check",
+  "cat": "Industrial",
+  "items": [
+   "Operator and die-setter authorised in writing; nobody under 18 on the press",
+   "Light curtain tested with test piece at three heights; two-hand controls both required and timed; e-stop works",
+   "Brake-monitor lamp normal; stop time within recorded value; stroke selector keyed and key with supervisor",
+   "Fixed/interlocked guards fitted at rear and sides; no gaps allowing reach to the point of operation (ISO 13857)",
+   "Foot pedal only with light curtain or enclosure; pedal shrouded",
+   "Safety blocks/ram props available and used during die setting; die clamped at all designated points",
+   "Press isolated (LOTO) before hands enter die space; guard refitted and verified before first stroke",
+   "Scrap chutes/conveyors enclosed; blanks handled with cut-resistant gloves or tongs",
+   "Hydraulic hoses, relief valve setting and leaks checked; air pressure to clutch/brake within range",
+   "Coil handling: band cutter, face shield, decoiler interlocks, coil secured before clamp release",
+   "Noise zone marked; hearing protection worn; audiometry current",
+   "No bypass keys, jumpers or taped sensors; interlock audit record current",
+   "6-monthly thorough examination of press and safety devices within date (12-monthly if fixed guards only — verify)",
+   "Double-stroke/light-curtain trip near misses logged and investigated"
+  ]
+ },
+ {
+  "id": "cl4-robot",
+  "t": "Robot Cell Interlock & Entry Audit",
+  "cat": "Industrial",
+  "items": [
+   "Cell risk assessment and safety validation report on file; stop distances measured and used for guard placement",
+   "Perimeter guard ≥ 1.4 m with no reach-over/under/through to the restricted space",
+   "Every gate switch/guard lock tested: opening a gate puts all robots into protective stop",
+   "Laser scanners/light curtains cover all areas where a person could stand unseen; restart impossible from inside",
+   "Request-to-enter and trapped-key/padlock procedure in use; key carried by the person inside",
+   "Teach pendant enabling device (3-position) functional; T1 speed ≤ 250 mm/s; T2 authorisations listed",
+   "E-stops at every operator station and inside cell; muting functions documented and verified",
+   "Pneumatic/hydraulic dump valves and capacitor discharge included in LOTO procedure",
+   "Gripper/tooling edges covered; hot tooling and weld spatter controls in place",
+   "Cobot force/pressure validation done after last tool or payload change",
+   "MoC records show re-validation after program/fixture/layout changes",
+   "AGV/AMR interfaces: pedestrian lanes separated, scanner fields validated",
+   "Entrant training/authorisation records (operators, cleaners, maintenance) current",
+   "No bypassed interlocks, taped sensors or fence openings found on walk-through"
+  ]
+ },
+ {
+  "id": "cl4-paintshop",
+  "t": "Paint Shop Daily / Weekly Safety Check",
+  "cat": "Chemical",
+  "items": [
+   "Booth ventilation running before spraying; airflow/LEL interlock proved; filters within differential-pressure limits",
+   "Area-classification drawing available; all equipment in Zone 1/2 is Ex-rated; Ex inspection register current",
+   "No phones, non-Ex tools or vehicles in paint areas; signage in place",
+   "Earthing/bonding clamps on parts, conveyors, containers and hoses; conductive flooring/footwear in use",
+   "Isocyanate (2K) spraying only with supplied-air hood or PAPR; no one else in booth; clearance time observed",
+   "Mix room LEV running; containers closed and earthed; waste solvent in closed earthed drums; rags in self-closing bins",
+   "Oven purge, flame-failure and high-temperature limits tested; LEL control functional; no entry until cool",
+   "ED/pre-treatment: rectifier isolation proven for work near tanks; tank covers/guardrails in place; eyewash within 10 s",
+   "Overspray deposits in booth/ducts within cleaning schedule; no hot work in paint shop without permit and gas test",
+   "Spill kits, foam/CO2 extinguishers and sprinklers/suppression in service",
+   "Paint sludge, filters and spent solvent stored and manifested as hazardous waste; VOC abatement running",
+   "Painters' RPE fit tests, airline flow checks and annual lung-function/HDA monitoring current"
+  ]
+ },
+ {
+  "id": "cl4-weldshop",
+  "t": "Welding / Body Shop Fume & Safety Check",
+  "cat": "Health",
+  "items": [
+   "LEV running at every manual MIG/RSW station; airflow indicator OK; smoke test shows capture at the arc",
+   "Extraction hoods positioned within 150–300 mm of arc (verify by smoke); robotic cells enclosed and exhausted",
+   "Welding fume, Mn, Zn, Cr(VI) exposure monitoring within last 12 months; results below limits or RPE in use",
+   "RSW guns: insulated handles, two-hand/enable initiation, tip dressers guarded, cables and water hoses undamaged",
+   "Water-flow switches and transformer earthing checked; no leaks onto live parts",
+   "Laser cells: Class 1 enclosure interlocks tested; LSO named; eyewear and Class 4 service procedure available",
+   "Coated/galvanised and stainless welding have extra extraction and RPE; metal-fume-fever symptoms reported",
+   "Spark screens, spatter-free zones; sealers/adhesives/cardboard away from arcs; extinguishers within 15 m",
+   "Hot-work permit used for welding outside designated shop areas",
+   "Fume filters changed per DP with FFP3 and bagged as hazardous waste; floors vacuumed (no compressed air)",
+   "Pacemaker warning signs at RSW transformers; hearing protection in zone",
+   "Health surveillance (lung function, questionnaire, skin) and LEV 14-monthly examination records current"
+  ]
+ },
+ {
+  "id": "cl4-ev-battery",
+  "t": "HV / EV Battery Area Inspection",
+  "cat": "Electrical",
+  "items": [
+   "HV work bays marked; only HV-authorised persons working; never alone; rescue hook and AED at bay",
+   "Insulated tools (IEC 60900), Class 0 gloves (tested, with protectors), arc-rated face shield, insulated mats available and in date",
+   "Service disconnect/plug removed and locked; capacitor discharge time observed; 0 V verified with proven meter before contact",
+   "Pack assembly benches insulated; busbars covered; no metal watches/rings; torque tools insulated",
+   "Cells/modules inspected at receipt; swollen/damaged/hot cells quarantined immediately",
+   "Storage: SoC 30–50 %, 15–25 °C, segregated compartment, detection and suppression in service, no charging in store",
+   "DDR cells kept outdoors ≥ 15 m from buildings (verify) in metal containers with sand/vermiculite",
+   "Thermal cameras/gas (CO/VOC/H2) detection functional in formation and EOL test areas",
+   "Charging bays: cables/connectors undamaged, Type B RCD/6 mA DC detection tested monthly, e-stop works, combustibles clear",
+   "Fire plan posted: isolation points, water supply for prolonged cooling, 'lithium-ion' information for fire service",
+   "Crashed/damaged vehicles or packs isolated outdoors with 48-h thermal monitoring",
+   "Battery waste handed to registered recycler under BWMR 2022; manifests on file",
+   "HV authorisations, drills (6-monthly) and HF first-aid (calcium gluconate) kit current"
+  ]
+ },
+ {
+  "id": "cl4-test-track",
+  "t": "Test Track Daily Opening Check",
+  "cat": "Management",
+  "items": [
+   "Track inspected: debris, oil, standing water, barriers/tyre walls, run-off areas, signage, lighting, fencing intact",
+   "Radio/communication check with all marshal posts; track status board set; CCTV working",
+   "Controller on duty; maximum vehicles per circuit and test slots planned; entry/exit protocol briefed",
+   "Drivers signed in with valid certification tier and medical; zero alcohol; phones off while driving",
+   "Vehicles pre-run checked (brakes, tyres, leaks, HV status); helmets/harness/cage for limit tests; extinguisher fitted",
+   "Weather within limits (visibility, wet grip, wind, lightning); night tests only with lighting",
+   "Dynamic pad/limit-handling tests scheduled with exclusion and outriggers/safety vehicle",
+   "Maintenance/pedestrian access only with zone closure, barriers and hi-vis; re-admission only after 'all clear'",
+   "Dyno cells: restraints rated, chocks, exhaust extraction, CO monitor, e-stop at console, no one in cell during test",
+   "Ambulance/paramedic and recovery vehicle available for high-speed/limit tests; hospital route known",
+   "Fatigue plan: driving blocks and breaks per policy; hydration",
+   "Incident procedure (red flag/radio stop, HV isolation, scene preservation) known to all"
+  ]
+ },
+ {
+  "id": "cl4-ammonia-ref",
+  "t": "Ammonia Refrigeration Plant Weekly Check",
+  "cat": "Chemical",
+  "items": [
+   "NH3 detectors reading zero; alarm (25 ppm) and emergency ventilation/shutdown set-points tested; calibration in date",
+   "Machinery room: two outward-opening exits with panic bars, emergency stop outside door, lighting, no storage",
+   "Eyewash/shower at exit tested; SCBA (≥ 2) and gas suits stored outside room and in test; escape respirators issued",
+   "Oil-draining: dead-man valves in place, two trained persons available, written procedure and PPE at station",
+   "PRVs vented outdoors to safe height; register shows replacement within 5 years; no blocked vent lines",
+   "Pipework labelled (state, pressure, direction); insulation dry; no stains/corrosion under insulation",
+   "Receivers/vessels: test certificates in date (state rules/SMPV); gauges and relief calibrated",
+   "Evaporators in cold rooms protected by bollards; NH3 detectors in rooms with evaporators",
+   "No liquid trapped between closed valves; hot-gas defrost sequence followed; hydraulic shock investigated",
+   "Charging/decanting: hose test date, earthing, excess-flow protection, second person at e-stop",
+   "MSIHC status checked (quantity vs thresholds); on-site plan and drill records current where applicable",
+   "Operator certificates, shift logs, leak/incident log and annual IIAR 6-style inspection on file"
+  ]
+ },
+ {
+  "id": "cl4-cip",
+  "t": "CIP & Food-Plant Chemical Safety Audit",
+  "cat": "Chemical",
+  "items": [
+   "Chemical inventory with SDS (local language) matches store; acids segregated from caustic and hypochlorite; PAA in cool vented store",
+   "Bulk tanks/IBCs bunded (110 %), vented, labelled; delivery couplings unique per chemical",
+   "CIP route verified; manways of tanks under CIP locked/tagged; mix-proof valves or physical breaks in place",
+   "Tank-empty-of-people confirmation recorded before every CIP start",
+   "Dosing automated; concentration and temperature logs within limits; return conductivity verified",
+   "Emergency showers/eyewash within 10 s travel, tested weekly, tempered water",
+   "PPE at point of use: goggles + face shield, gauntlet gloves, apron, boots; respirators for PAA/hypochlorite fogging",
+   "Cleaning cards show chemical, concentration, temperature, PPE and never-mix list; staff and contractors trained",
+   "No decanting from 200 L drums by hand; pumps used; all containers labelled",
+   "Spill kit and neutraliser available; drains to ETP; discharge within consent",
+   "First-aid and splash incidents logged and reviewed; hospital tie-up for alkali eye injuries",
+   "Wrong-coupling/near-miss reports reviewed; corrective actions closed"
+  ]
+ },
+ {
+  "id": "cl4-silo",
+  "t": "Silo / Bin Entry Permit Check",
+  "cat": "Industrial",
+  "items": [
+   "All non-entry methods tried and recorded (poles, air cannons, vibrators, bin whips, cameras)",
+   "Feed and discharge equipment (augers, sweeps, elevators, pneumatic lines) isolated, locked and start attempted",
+   "Bridging/caking checked by camera; no entry below hanging material or above caked material level",
+   "Atmosphere tested at several depths: O2 19.5–23.5 %, CO < 25 ppm, LEL < 10 %, PH3 < 0.3 ppm (verify); continuous monitor carried",
+   "Fumigation record checked; no entry to treated bin without clearance",
+   "Ventilation running; dust respirator (FFP3 or supplied air) selected for conditions",
+   "Entrant in full-body harness on lifeline attached to rated anchor and mechanical retrieval; attendant posted",
+   "Communication method tested; rescue team and equipment (tube/vacuum/fire service contact) ready",
+   "Roof/hatch access safe: guardrails or anchors, ladder cage/rail, weather acceptable",
+   "Hot work prohibited unless silo emptied, cleaned, gas/dust tested and permitted",
+   "Explosion vents, bearing/belt sensors and Ex equipment on connected elevators/collectors in service",
+   "Permit signed by supervisor; time limits set; permit closed and records filed after exit"
+  ]
+ },
+ {
+  "id": "cl4-bakery",
+  "t": "Bakery / Hot-Process Line Daily Check",
+  "cat": "Industrial",
+  "items": [
+   "Gas smell check; gas detectors and auto shut-off tested; isolation valve accessible",
+   "Oven purge, flame-failure and high-limit devices functional; no manual lighting; CO levels OK in oven room",
+   "Fryer high-limit cut-out and suppression/lid available; oil level below max; no water near fryer",
+   "Mixer bowl guards, divider/moulder covers and slicer guards interlocked; e-stops tested",
+   "Hot-surface signage; gauntlets/sleeves at ovens and fryers; trolleys locked when loading",
+   "Flour tipping under LEV; vacuum cleaning only; silo/sifter dust controls intact",
+   "Floors dry/clean; non-slip footwear; spill response",
+   "LPG/PNG: cylinders outdoors and upright, regulators/hoses in date, changeover by trained person",
+   "Burn first-aid kit (cool water access, cling film, dressings) at each hot area",
+   "Heat: oven-room ventilation on, water available, WBGT within action level or breaks applied",
+   "Night shift: minimum two persons; women's night-work conditions met",
+   "Annual burner service by licensed fitter, exhaust duct cleaning and asthma surveillance records current"
+  ]
+ },
+ {
+  "id": "cl4-bottling",
+  "t": "Bottling / Packaging Line Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "E-stops and interlocked guards tested on every machine; guard locking where run-down > 1 s",
+   "No reaching into running machines; jam-clearing procedure followed (stop, run-down, tool, restart)",
+   "Polycarbonate guards at filler/capper; face shields and cut-resistant gloves in glass zones",
+   "Broken-glass procedure followed: zone cleared, tongs/brush, sharps bin, breakage logged",
+   "CO2 detectors in carbonation/tank areas reading normal; calibration in date; ventilation running",
+   "CO2 tank: SMPV licence/PRV tests in date; fill by trained operator with PPE",
+   "Bottle washer caustic handling PPE available; lids interlocked; isolation before cleaning",
+   "Pasteuriser/hot zones guarded; steam/hot-water isolation valves identified",
+   "Palletiser/depalletiser cell gates interlocked; key-in-pocket entry rule followed",
+   "PET blow moulder: high-pressure air and heaters isolated for mould work",
+   "Noise zone signage; hearing protection worn; audiometry current",
+   "Floors dry; drip trays and chain-lube controlled; non-slip footwear",
+   "LOTO applied for changeovers/maintenance; zero energy verified (air, electrical, gravity)"
+  ]
+ },
+ {
+  "id": "cl4-coldroom",
+  "t": "Cold Store / Freezer Weekly Safety Check",
+  "cat": "Health",
+  "items": [
+   "Every cold-room door opens from inside even when locked outside; internal release luminous and ice-free",
+   "Trapped-person alarm (battery-backed) tested; audible outside and at control room; emergency light and axe inside",
+   "Door heaters/seals working; no ice build-up at thresholds; floors de-iced",
+   "Sign-in/headcount system in use; nobody working alone in freezers",
+   "Work/warm-up schedule posted and followed; heated rest room and warm drinks available",
+   "Freezer suits, insulated gloves, thermal boots, balaclavas in good condition; medical fitness records current",
+   "CA/ripening rooms locked and placarded; O2 meter calibrated; entry only after ventilation and > 19.5 % O2 with permit",
+   "Ethylene detection and Ex equipment in ripening rooms; nitrogen generator area has O2 alarm",
+   "Blast freezers: fan isolation and door interlock tested; no entry with air blast running",
+   "Forklifts: cold-rated, lights/cameras working, speed ≤ 5 km/h inside; racking inspected for frozen-load damage",
+   "Refrigerant (NH3/CO2) detectors in rooms with evaporators tested; alarm response known",
+   "Reefer containers/trucks: chocks, door stops, internal release checked; genset exhaust away from doors",
+   "Missing-person and frostbite/hypothermia response known; SCBA available for CA-room rescue"
+  ]
+ },
+ {
+  "id": "cl4-solvent",
+  "t": "Solvent Storage & Recovery Monthly Audit",
+  "cat": "Chemical",
+  "items": [
+   "PESO licence and approved drawings on site; stock within licensed quantities; day-tank quantities limited",
+   "Dyke/bund 110 % intact; tank vents with flame arresters; nitrogen blanketing or conservation vents working",
+   "Area-classification drawing available; Ex equipment register and IEC 60079-17 inspections current",
+   "LEL detectors calibrated; alarm (20 %) and trip (40 %) functional (verify set-points)",
+   "Earthing/bonding of tanks, pumps, hoses and drum stations tested; conductive hoses; dip-pipe/bottom filling",
+   "Dispensing booth LEV running; Ex pumps; no open pouring of Class A; containers labelled and capped",
+   "Peroxide-forming solvents dated; test records before distillation; none distilled to dryness",
+   "Recovery column interlocks (cooling, vacuum, level, temperature) tested; relief routed to safe location",
+   "No non-Ex phones/tools/forklifts in Zone 1/2; signage in place",
+   "Foam stocks (AR-AFFF), deluge, extinguishers and spill kits in service; emergency isolation valves accessible",
+   "Hot-work permits show gas test, isolation and fire watch; no hot work on uncleaned drums/tanks",
+   "Spent solvent segregated, labelled, ≤ 90 days, manifested to authorised recycler/co-processor",
+   "Exposure monitoring (methanol, toluene, DCM etc.) and medicals current; MoC for any change"
+  ]
+ },
+ {
+  "id": "cl4-potent",
+  "t": "Potent Compound Suite Containment Check",
+  "cat": "Health",
+  "items": [
+   "OEB/OEL assigned for every compound handled; containment strategy matches band (OEB 5 = no open handling)",
+   "Isolator pressure (negative) and HEPA alarms clear; glove-port integrity tests logged for campaign",
+   "Split-butterfly valves/continuous liners used for transfers; no open scoops or bags cut outside containment",
+   "Pressure cascade correct (suite negative to corridor); differential readings logged",
+   "Containment verification (SMEPAC-style surrogate test) done at installation and after last modification",
+   "Routine air/surface monitoring results below OEL; exit-side surface wipes negative",
+   "PAPR/supplied-air units fit-tested, flow-checked; no beards with tight-fitting masks",
+   "Disposable PPE (Type 5/6 coveralls, double gloves) in use; de-gowning sequence followed; shower where OEB 5",
+   "HEPA vacuum and wet-cleaning only; cleaning agents validated; cloths/PPE bagged inside suite",
+   "BIBO filter change by trained team; filters double-bagged for incineration",
+   "Potent waste segregated for incineration; wash water treated before ETP",
+   "Medical surveillance current; reproductive-health counselling documented; exposure records retained long-term",
+   "Containment incidents (breaches, torn gloves) logged and reviewed; MoC for changes"
+  ]
+ },
+ {
+  "id": "cl4-cleanroom",
+  "t": "Clean Room & HVAC Work Permit Check",
+  "cat": "Industrial",
+  "items": [
+   "AHU isolated at starter and local isolator; fan proved stopped; dampers closed/locked; LOTO tags on",
+   "Platform/guardrails or anchors for AHU/rooftop work; ladders secured; roof permit where needed",
+   "FFP3/PAPR and bagging for used filters; BIBO for potent/biological areas; DOP/PAO aerosol SDS available",
+   "Duct/plenum entry treated as confined space: fans isolated, atmosphere tested, attendant posted",
+   "Door interlocks release on fire alarm/power loss; manual override at every door tested",
+   "Gas-suppression release isolated (panel + mechanical lock-off) and tagged before entry for maintenance; restored after",
+   "Pre-discharge alarm/delay/abort function known to all; CO2 systems in occupiable rooms interlocked",
+   "Fumigation (VHP/formaldehyde): room sealed, placarded, doors locked, adjacent areas monitored",
+   "Re-entry only after aeration and verified concentration (< 1 ppm H2O2 / < 0.1 ppm HCHO — verify) at head height",
+   "Autoclaves/tunnels/lyophilisers: pressure-vessel certificates, door interlocks, cool-down before unloading",
+   "Nitrogen areas have O2 monitors (< 19.5 % alarm); UV-C lamps interlocked/off before opening",
+   "70 % IPA bulk stored per Petroleum Rules; disinfectants handled per cleaning cards with PPE",
+   "Evacuation drill done with gowned staff; fire service aware of suppression gases and fumigation"
+  ]
+ },
+ {
+  "id": "cl4-reactor",
+  "t": "Reactor Charging Pre-Batch Check",
+  "cat": "Chemical",
+  "items": [
+   "Batch record and reaction hazard sheet reviewed: materials, order, quantities, safe operating limits, relief case",
+   "Reaction hazard data (DSC/ARC, onset temperature, gas evolution) available for this process; HAZOP actions closed",
+   "Nitrogen supply and O2 analyser working; O2 below inerting limit before powder charging (verify limit)",
+   "Reactor, hopper/chute, drums, FIBC and operator earthed; earthing continuity verified; conductive/dissipative liners only",
+   "Closed charging system (split valve/hopper/vacuum) used where available; manway charging risk-assessed with LEV",
+   "Solvent temperature below flash point where feasible; no free-fall of flammable liquids (dip pipe/bottom entry)",
+   "Agitator running/interlocked as required; cooling water flow and temperature alarms functional; emergency cooling/quench available",
+   "Relief and vent path clear; rupture disc/PRV in date; scrubber on",
+   "Ex equipment only in area; no plastic drums/scoops for Class A solvents",
+   "PPE: antistatic FR coveralls, conductive shoes, goggles/face shield, gloves, respirator per material",
+   "Sampling via closed sampler; manway not opened on hot/pressurised vessel",
+   "Deviation/runaway response (stop feeds, max cooling, quench/dump, evacuate) known to crew",
+   "MoC completed for any change of material, vendor, scale or equipment"
+  ]
+ },
+ {
+  "id": "cl4-cotton-dust",
+  "t": "Cotton Dust & Byssinosis Programme Audit",
+  "cat": "Health",
+  "items": [
+   "Dust monitoring at fixed stations (blow room, carding, ring, weaving, waste room) monthly; personal samples on rotation",
+   "Results compared with PEL/action level; posted on department boards; actions where exceeded",
+   "Blow-room machines enclosed with suction; card hoods and continuous waste removal working",
+   "Central filtration plant: differential pressure normal; discharge outside shed; filters cleaned on schedule",
+   "Housekeeping by vacuum/wet methods; no compressed-air blow-down with workers present",
+   "Respirators (FFP2/FFP3) issued for blow room, card stripping, filter cleaning and waste rooms; replacement schedule",
+   "Pre-placement and periodic spirometry (pre/post shift on first working day of week) by certifying surgeon; records in prescribed form",
+   "Symptomatic workers (Monday chest tightness) referred and relocated pending review",
+   "Byssinosis cases notified to DISH/DFBISH and ESI; register maintained",
+   "Smoking banned in premises; health education sessions in local language recorded",
+   "Noise zones marked in ring/weaving sheds; audiometry current",
+   "Annual review of exposure trends, medical findings and control upgrades documented"
+  ]
+ },
+ {
+  "id": "cl4-dyehouse",
+  "t": "Dye House & Boiler Weekly Check",
+  "cat": "Chemical",
+  "items": [
+   "Chemical store segregated: oxidisers (H2O2) away from reducers (hydrosulphite); acids away from hypochlorite and caustic",
+   "Hydrosulphite drums sealed, dry, cool; no warm/wet/smoking drums; handled dry",
+   "Dye powders weighed in booth with LEV; FFP2/3 worn; SDS in local language available",
+   "HT dyeing machines: door interlock (pressure/temperature) tested; PRV and gauge in date; vessel certificate current",
+   "Jiggers/winches/steam lines: nip guards, lids, lagging intact; valves opened slowly",
+   "Stenter: duct/filter cleaning done (weekly); gas train purge and flame safeguard tested; no manual lighting",
+   "Thermic-fluid heater: leak check done; no fluid on hot surfaces; fluid test within year",
+   "Boiler: certified attendant on shift; low-water cut-off tested; log book up to date; annual certificate valid",
+   "Emergency showers/eyewash within 10 s travel tested; spill kits with dry absorbent (no sawdust)",
+   "ETP: H2S monitors at anaerobic units/sumps; confined-space permits for sump work; chlorine dosing PPE",
+   "PPE at stations: goggles/face shield, gauntlets, aprons, gumboots, heat gloves",
+   "Chlorine-release and hydrosulphite-fire response known; extinguishers and fire crew contacts posted"
+  ]
+ },
+ {
+  "id": "cl4-textile-machines",
+  "t": "Textile / Garment Machinery Guard Audit",
+  "cat": "Industrial",
+  "items": [
+   "Blow-room beater/cleaner lids interlocked with run-down time delay; not bypassed",
+   "Card lickerin/cylinder covers interlocked; stripping/grinding only with machine stopped and locked",
+   "Nip guards on drafting/calender rollers; spindle tapes and gears guarded on ring/speed frames",
+   "OE rotors and autoconer splicers guarded; stop before threading inside guards",
+   "Looms: shuttle guards/fly catchers fitted; e-stops reachable both sides; beam hoist/trolley inspected",
+   "Permitted running-task list displayed per machine; cleaning inside running machines otherwise prohibited",
+   "Dress code enforced: hair covered, no loose dupatta/scarf/jewellery, fitted sleeves (visitors too)",
+   "No women/children at cotton openers; young-worker register checked against dangerous-machine list",
+   "Band knife: chain-mail glove and finger guard; straight knife blade guard; blade change under isolation",
+   "Sewing/overlock: needle guards and eye guards fitted; broken-needle procedure in use",
+   "Fusing presses/irons: interlocks/heat shields, steam hoses inspected, iron boilers within exemption or certified",
+   "Exits and aisles (≥ 1.2 m) clear of stock/trolleys; hearing protection in weaving/ring sheds",
+   "Guard defects tagged and machines stopped until repaired; monthly audit record with safety committee"
+  ]
+ },
+ {
+  "id": "cl4-humidification",
+  "t": "Humidification, Heat & Air-Washer Check",
+  "cat": "Health",
+  "items": [
+   "Hygrometer (dry/wet-bulb) readings taken at prescribed times and recorded in Humidity Register",
+   "Wet-bulb below statutory limit; humidification switched to ventilation-only when exceeded",
+   "Hygrometer wicks clean, water distilled; calibration record",
+   "Humidification water of required quality (potable/purified); treatment records",
+   "Air-washer sump clear; nozzles spraying; drift eliminators intact; biocide dosing logged",
+   "Sump cleaning/disinfection within schedule (≥ quarterly — verify); confined-space permit used; disinfectant neutralised before discharge",
+   "TVC/Legionella sampling on schedule; results within action levels",
+   "WBGT measured per department; summer protocol (breaks, water/ORS, task rotation) active above action level",
+   "Cool rest area and drinking water points within 50 m; new workers acclimatised 7–14 days",
+   "Heat-illness cases logged; first aiders trained in heat stroke response",
+   "Plant room: fans/pumps guarded, RCD sockets, dry floors, chemical PPE and eyewash",
+   "Electrical panels/lights free of condensation ingress; RCD tests current"
+  ]
+ },
+ {
+  "id": "cl4-moulding",
+  "t": "Injection Moulding Machine Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "Front gate interlocks (electrical + hydraulic/mechanical) tested — machine does not close with gate open",
+   "Rear/top guards, purge guard, nozzle guard and hopper interlock in place; e-stops tested",
+   "Hands enter mould area only via front gate in semi-auto, or in set-up mode with clamp blocked/machine isolated",
+   "Purge procedure: shield down, face shield and heat gloves, nobody in front of nozzle, purge to metal tray",
+   "Barrel/nozzle hot surfaces guarded or insulated; hot-runner leaks reported",
+   "LEV running for PVC/POM/PU/decomposition-prone materials; no smoke/odour from barrel",
+   "Mould change: eyebolts inspected and rated, crane/slings certified, clamps torqued, safety strap on halves",
+   "Hydraulic leaks checked; accumulators discharged for maintenance; nitrogen gas-assist lines rated",
+   "Take-out robot/sprue picker within guards; perimeter interlocks tested",
+   "Granulator: hopper interlock with time delay; blade change under LOTO with cut-resistant gloves",
+   "Dryers/hopper loaders isolated before clearing; pellet spills cleaned (slips)",
+   "Noise zone/hearing protection; machine safety log signed; defects → machine off until repaired"
+  ]
+ },
+ {
+  "id": "cl4-extruder",
+  "t": "Extrusion / Film Line Pre-Start Check",
+  "cat": "Industrial",
+  "items": [
+   "Zone temperatures and soak time per procedure; melt-pressure transducer working; rupture disc fitted and directed away from stations",
+   "Nip guards closed on haul-off, winders, chill rolls; pull-wire e-stops tested along line",
+   "Threading done at creep speed with threading tools; no hands near nips at speed",
+   "Die bolts tightened per sequence with heat PPE; nobody in line of die face at start-up",
+   "No torch/naked flame used on blocked die; frozen-die procedure available",
+   "Screw removal tool/hoist and cradle available; barrel pressure zero before removal",
+   "Corona treater enclosure interlocked; ozone extraction running",
+   "Pelletiser/strand cutter/saw guards interlocked; blade changes under LOTO",
+   "Film tower: guardrails, stairs/platforms, roll-change hoist inspected",
+   "Reels/rolls secured on stands; mechanical aids for 500–1,000 kg reels",
+   "LEV at die/exhaust hoods running; decomposition smell → reduce heat, ventilate",
+   "Hot-melt: tank lid guard, pressure released before hose/applicator change, hoses inspected, burn kit at station"
+  ]
+ },
+ {
+  "id": "cl4-calender",
+  "t": "Two-Roll Mill / Calender / Mixer Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "Trip bar/cable tested at start of shift: rolls stop within marked distance and separate/reverse",
+   "Brake lining and stopping-distance log current; defective mill out of service",
+   "Two trained persons present whenever a mill runs; operator rules displayed",
+   "Feeding tools and mill knife used; no gloves/loose sleeves at nip; sleeves fitted",
+   "Calender nip guards, trip wires and e-stops both ends tested; thread-up at creep with two persons",
+   "Banbury: charging door and hopper interlocks tested; ram control two-hand/guarded; LEV at charging",
+   "Chamber cleaning only under LOTO, cooling and permit",
+   "Curing presses: light curtains/two-hand controls functional; platen heat shields; mould lifting aids",
+   "Autoclaves: pressure-vessel certificate current; door opened only at zero pressure and cooled",
+   "Carbon-black station LEV and FFP2; housekeeping by vacuum",
+   "Solvent/cement room: earthed containers, Ex ventilation, respirators, no ignition sources, closed waste drums",
+   "CO2/DCP extinguishers at each mill; no water on hot oil; fume LEV running",
+   "Exposure monitoring (rubber fume/dust, nitrosamines) and medicals current"
+  ]
+ },
+ {
+  "id": "cl4-printing",
+  "t": "Solvent Printing / Lamination Daily Check",
+  "cat": "Chemical",
+  "items": [
+   "LEL monitors at presses/dryers reading normal; calibration in date; alarm/shutdown set-points verified",
+   "Ex lighting/motors/instruments intact; no non-Ex phones or tools in Zone 1/2",
+   "Earthing straps on presses, rollers, doctor blades, ink pumps and containers; ionisers at unwind/rewind working",
+   "Static measurement/earthing test records within schedule; conductive flooring and footwear in use",
+   "Dryer purge, flame safeguard and airflow interlocks functional; duct cleaning within schedule",
+   "Ink kitchen LEV running; containers closed/earthed; Ex pumps; no open plastic containers for Class A",
+   "Solvent stock within PESO licence; bunded storage; waste solvent/inks/rags in closed earthed drums",
+   "Rag bins self-closing and emptied each shift; spill kit with inert absorbent",
+   "Nip guards on presses/laminators; doctor blade and slitter blades handled with cut-resistant gloves",
+   "Gravure cylinders lifted with rated devices; racks secure; plating-shop Cr(VI) controls in place",
+   "Isocyanate (PU adhesive) controls: enclosed mixing, LEV, gloves, health surveillance",
+   "Sprinklers/CO2/foam systems and extinguishers in service; hot-work permits used; drill records current"
+  ]
+ },
+ {
+  "id": "cl4-soldering",
+  "t": "Soldering Area Fume & Lead Hygiene Check",
+  "cat": "Health",
+  "items": [
+   "Tip extraction/LEV on at every hand-soldering station; smoke test shows capture; filters within indicator",
+   "Wave/selective/reflow machines exhausted to outside or filtered; N2 reflow areas have O2 monitor",
+   "Lead solder area designated; no food/drink/cosmetics; hand-wash before breaks; wet-wipe benches",
+   "Dross skimmed with tools and face shield into labelled metal container; boards/components dry before wave",
+   "Solder pot temperature controllers and over-temperature cut-outs working; splash shields fitted",
+   "Flux/IPA/cleaners in small closed dispensers under LEV; bulk stock stored per flammable rules",
+   "Conformal coating/potting in LEV booth; UV curing shielded; nitrile gloves for uncured resins",
+   "ESD wrist straps with 1 MΩ resistor; irons/stations earthed; RCD tested",
+   "Blood-lead and spirometry programme on schedule; results below action levels or workers removed from exposure",
+   "Occupational asthma/lead symptoms reported and investigated; notifiable disease reporting known",
+   "Fume filters/dross/lead waste manifested as hazardous waste; E-waste rules followed",
+   "LEV examination (14-monthly) and training records current"
+  ]
+ },
+ {
+  "id": "cl4-fab-chem",
+  "t": "Fab Chemicals & Specialty Gas Area Daily Check",
+  "cat": "Chemical",
+  "items": [
+   "TGMS and O2 monitors online; alarm set-points per gas; calibration in date; no bypassed channels",
+   "Gas cabinets: exhaust flow verified, excess-flow/RFO valves, auto shut-off and purge panels functional",
+   "Cylinder change-outs by two certified technicians with gas-specific PPE; logs complete",
+   "Silane bunker outdoors with deluge armed; pyrophoric handling area clear of combustibles",
+   "Wet benches: exhaust on, lids closed between steps, splash guards on hot baths, no piranha stored closed",
+   "HF points: 2.5 % calcium gluconate gel in date, eyewash/shower within 10 s tested, HF first-aid trained staff on shift",
+   "TMAH handled in closed systems; concentrate access restricted; flush/hospital protocol posted",
+   "Chemical delivery systems: leak detection and double containment alarms clear",
+   "PPE matrix per chemical followed: double gloves (laminate for HF), face shield + goggles, apron, boots",
+   "Scrubbers (acid/base/VOC/POU) running within parameters; exhaust duct integrity",
+   "Plating/etching: LEV at tanks, cyanide and acid physically separated, Cr(VI) controls, waste treatment logs",
+   "Cryogen (LN2) areas: O2 alarm, cryo PPE; sub-fab ventilation normal",
+   "Waste segregated/labelled (HF neutralised, cyanide separate); HOWM manifests; empty cylinders capped and returned",
+   "ERT SCBA/suits inspected; drill (gas release/HF burn) within schedule; MSIHC documents current where applicable"
+  ]
+ },
+ {
+  "id": "cl4-licell",
+  "t": "Lithium Cell Storage & Handling Inspection",
+  "cat": "Electrical",
+  "items": [
+   "Storage compartment segregated/fire-rated; quantity and kWh within limits; aisles and sprinkler clearance kept",
+   "Cells/packs at 30–50 % SoC; temperature 10–25 °C; no charging in storage",
+   "Receipt inspection done (dents, swelling, leaks, odour, temperature); suspect lots quarantined",
+   "DDR cells outdoors ≥ 15 m (verify) in metal containers with sand/vermiculite; labelled",
+   "Off-gas/smoke detection and sprinklers in service; HVAC isolation on alarm tested",
+   "Twice-daily thermal-camera rounds logged; no hot spots",
+   "Handling: insulated tools, terminals covered, no jewellery; lifting aids for > 25 kg",
+   "Formation/ageing racks: per-channel temperature/voltage trips tested; local suppression in place",
+   "Electrolyte/NMP areas: LEV, HF kit (calcium gluconate), exposure monitoring; dry-room entry limits",
+   "Water supply for prolonged cooling available; Class D agent only for lithium-metal cells",
+   "Fire-service information sheet (chemistry, kWh, layout) current; ERT trained; drill within 6 months",
+   "UN 38.3 certificates for shipped cells; UN 3480/3481 packaging; damaged cells shipped under special provisions",
+   "Battery waste to registered recycler under BWMR 2022; manifests filed"
+  ]
+ },
+ {
+  "id": "cl4-wtg-climb",
+  "t": "Turbine Climb Pre-Ascent Check",
+  "cat": "Construction",
+  "items": [
+   "Two persons minimum; GWO BST (or equivalent) and medical fitness current for both",
+   "Wind at hub below OEM climb limit; no lightning alert within 30 km; forecast checked",
+   "Communication with control/site office tested; climb logged with expected duration",
+   "Tower base: switchgear status checked, no live work in progress, base clear of snakes/water",
+   "Harness, twin lanyards, fall arrester, positioning lanyard, helmet inspected (6-monthly tag + pre-use)",
+   "Fall-arrest rail/rope system inspection in date; rungs/hatches/platforms sound",
+   "Climb assist/service lift: pre-use check, load limit, interlocks, e-stop; not used in lightning alert",
+   "Tools tethered/in bags; hoist line used; exclusion zone at tower base when work aloft",
+   "Water carried (≥ 500 mL per 30 min climbing — verify); rest at each platform; heat plan in summer",
+   "Rescue kit at nacelle/top platform with rope ≥ hub height + margin; inspection in date",
+   "First-aid kit, AED and vehicle available at ground; hospital route known",
+   "Hatches to be closed behind; 100 % tie-off at transitions briefed"
+  ]
+ },
+ {
+  "id": "cl4-wtg-rescue",
+  "t": "Turbine Rescue Readiness (Monthly)",
+  "cat": "Fire & Emergency",
+  "items": [
+   "All technicians current in GWO Advanced Rescue (or equivalent); at least two trained per turbine team",
+   "Site rescue plan per turbine model with anchor points and methods available in vehicles",
+   "Rescue kit (descender EN 341, rope ≥ hub height + 10 %, stretcher/sling, pulleys, knife, torch) inspected and sealed",
+   "Second kit for tower-ladder rescue at base/mid-platform",
+   "Trauma straps on every harness; suspension-trauma response briefed",
+   "Personal descenders carried in nacelle for fire escape; nacelle fire alarm/suppression status known",
+   "Ground: AED, trauma kit, stretcher, blankets, oxygen (if trained) checked",
+   "GPS/plus-codes of each WTG, hospital and ambulance numbers posted; meeting points agreed",
+   "Radio/mobile coverage verified; satellite phone at control room",
+   "Drill done within last 6 months covering two scenarios; actions closed",
+   "Annual joint drill with fire service/ambulance scheduled or done",
+   "Incident reporting and family-liaison procedure known to site manager"
+  ]
+ },
+ {
+  "id": "cl4-wtg-nacelle",
+  "t": "Nacelle / Hub Entry & Rotor Lock Permit",
+  "cat": "Electrical",
+  "items": [
+   "Turbine in service mode from control; stop and brake confirmed; work logged",
+   "Electrical isolation per turbine LOTO list: LV main breaker, converter, pitch/yaw, UPS/batteries locked and tagged",
+   "HT isolation via authorised person with permit where required; earths applied",
+   "Dead test with proven instrument on each circuit; capacitor discharge time observed",
+   "Hydraulic accumulators (brake/pitch) depressurised and verified 0 bar",
+   "Rotor lock: blades feathered, pins inserted (all), indicator and visual verification, lock tag applied",
+   "Yaw lock engaged for yaw/roof work; pitch mechanical blocks for blade-bearing work",
+   "Wind below lock/roof limits; no lightning alert; weather monitored",
+   "Hub entry: two persons, hatch secured open, radio, lighting, atmosphere check if solvents used",
+   "Nacelle roof: anchor connection before exit, tools tethered, time limited, no rain",
+   "Hydraulic bolting tools inspected; hoses/couplings rated; hands clear of reaction arm",
+   "Nacelle crane/hoist test within 12 months; rigging inspected; base exclusion zone for lifts",
+   "Return-to-service sequence (persons/tools out, pins/blocks removed, earths/locks removed, control informed) planned"
+  ]
+ },
+ {
+  "id": "cl4-blade",
+  "t": "Blade Access / Rope Work Daily Check",
+  "cat": "Construction",
+  "items": [
+   "Rotor locked with blade at 6 o'clock; pitch locked; isolation recorded",
+   "Wind ≤ 10–12 m/s (verify), no rain, no lightning within alert radius; forecast monitored continuously",
+   "IRATA/SPRAT certificates and logbooks valid; Level 3 supervisor on site",
+   "Anchors rated and inspected; two independent systems rigged; rope protectors at edges",
+   "Blade platform (if used): daily check done, 12-monthly examination in date, SWL known, secondary brake tested",
+   "Ground exclusion zone (≥ blade length) with signs and spotter; radio check",
+   "Tools/pots tethered; haul line used; no loose items",
+   "Grinders with vacuum shroud; FFP3/PAPR, Type 5/6 coveralls, nitrile gloves, eye protection",
+   "Resin/hardener SDS available; pot life and cure temperature planned; heating blanket thermostat and extinguisher",
+   "Blade interior entry: permit, two persons, ventilation, gas test, lifeline, maximum distance per OEM",
+   "Lightning protection system to be inspected after any strike before work",
+   "Drone ops: DGCA registration/pilot certificate, airspace clearance, flight log",
+   "Waste bagged for HOWM disposal; end-of-day tool inventory and rotor release plan"
+  ]
+ },
+ {
+  "id": "cl4-wtg-weather",
+  "t": "Site Weather & Lightning Daily Board",
+  "cat": "Management",
+  "items": [
+   "IMD forecast and lightning outlook reviewed at morning brief; weather board updated",
+   "Wind forecast at hub height vs task limits (climb, lock, roof, blade, crane, module handling) recorded",
+   "Lightning detection feed/app active; alert (30 km) and stop (15 km — verify) radii known to all teams",
+   "Control room monitoring met mast and alerting teams; radio check done",
+   "Live wind reading at task start logged by lead technician/crane supervisor",
+   "Heat index/WBGT measured; rest schedule and water/ORS in place",
+   "Monsoon: tower bases/trenches/inverter stations checked for water; slip controls; RCD tests",
+   "Cyclone/red alert plan reviewed in season; evacuation triggers and communication tree current",
+   "Shelter locations (vehicles, control building) known; no shelter under turbines/trees/lines",
+   "Post-storm LPS/receptor inspection and electrical checks procedure available",
+   "Stop-work events logged; near misses reviewed monthly",
+   "Pre-season refresher briefing (pre-monsoon / NE monsoon) completed"
+  ]
+ },
+ {
+  "id": "cl4-remote-er",
+  "t": "Remote Site Emergency Readiness (Monthly)",
+  "cat": "Fire & Emergency",
+  "items": [
+   "Emergency plan with GPS/plus-codes of all assets, access roads and meeting points in every vehicle and control room",
+   "Primary and secondary hospitals (24×7 trauma, ASV stock verified) and ambulance numbers posted; travel times known",
+   "Radio network coverage (incl. tower interiors) tested; satellite phone at control room; coverage map current",
+   "Check-in protocol in use; lone working prohibited for HT, height and confined tasks",
+   "Certified first-aid responders on every crew; refresher dates tracked",
+   "AED(s) and trauma kits inspected (expiry, battery); stretcher/basket available",
+   "Snakebite kit (pressure-immobilisation bandage) and protocol posted; snake gaiters for vegetation work",
+   "Vehicles: seat belts, first-aid kit, extinguisher, torch, tow rope; drivers trained; journey management for night call-outs",
+   "Causeway/flood depth gauges and alternative routes identified for monsoon",
+   "Inverter-station/transformer extinguishers and grass-fire plan in place; local fire station contact",
+   "Quarterly drill done (scenario rotation) and actions closed; annual joint drill planned",
+   "Incident reporting matrix (OSH Code/BOCW/CEA/police) and family-liaison contacts current"
+  ]
+ },
+ {
+  "id": "cl4-solar-dc",
+  "t": "Solar PV DC Work Permit & O&M Check",
+  "cat": "Electrical",
+  "items": [
+   "Electrical PTW issued; single-line diagram and isolation points identified; weather dry, no lightning",
+   "Only authorised persons on DC work; never alone; PV-specific training current",
+   "AC breaker open and locked; DC isolators open at inverter and SCB; inverter discharge time observed",
+   "Absence of voltage verified at work point with CAT III 1,500 V meter proven before and after",
+   "Opaque module covers used where strings cannot be isolated; clamp meter confirms zero current before any connector is opened",
+   "Insulated tools (IEC 60900), insulating gloves (class per voltage — verify) with protectors, arc-rated face shield available and in date",
+   "Connectors matched make/model, torqued/crimped per OEM; burnt/discoloured connectors replaced and logged",
+   "SCBs/inverters: IP seals intact, no water ingress, SPD indicators normal, terminations tight; thermography within schedule",
+   "'Live in daylight' labels on all DC enclosures; firefighter isolation/rapid-shutdown signage present",
+   "Earth continuity and insulation-resistance test reports (IEC 62446) current; ground-fault/arc-fault alarms investigated",
+   "Tracker motion isolated (LOTO) for maintenance in arrays; trench/cable work controlled",
+   "Cleaning crews briefed: no contact with cables/enclosures; no pressure jets at connectors; dawn/dusk schedule",
+   "CEIG approval/periodic inspection records available; electrical accidents reported within 48 h"
+  ]
+ },
+ {
+  "id": "cl4-fragile-roof",
+  "t": "Rooftop PV Work Daily Check",
+  "cat": "Construction",
+  "items": [
+   "Roof survey available: sheet type/condition, fragile areas and rooflights marked, structural capacity confirmed",
+   "AC (asbestos) sheets identified; no dry cutting/drilling; clamps on purlins preferred; asbestos controls where unavoidable",
+   "WAH permit issued; weather within limits (wind ≤ 10 m/s for modules — verify; no rain/lightning)",
+   "Edge protection (guardrails) or lifelines/anchors (tested) in place; harness with twin lanyards worn beyond guardrails",
+   "Rooflights/fragile zones covered/caged or netted; walkways/crawl boards laid across purlins",
+   "Ladder/stair access secured and extending 1 m above landing; hatches closed after use",
+   "Exclusion zones below work and lifts; overhead power-line clearance confirmed",
+   "Module lifting: crane/hoist certificates, lift plan, tag lines, pallets secured; manual carry two-person on walkways only",
+   "Rescue plan and equipment on site; first aid and water available; heat schedule in force",
+   "Tools/materials secured against wind at breaks and end of shift; loose items removed",
+   "Damaged sheets reported to owner and barricaded below",
+   "Cleaning/O&M visits follow the same access and fall-protection rules; anchors checked before use"
+  ]
+ },
+ {
+  "id": "cl4-bess",
+  "t": "BESS Monthly Inspection & Alarm Readiness",
+  "cat": "Electrical",
+  "items": [
+   "BMS/EMS alarms reviewed daily; no unresolved cell voltage/temperature deviation",
+   "Gas (H2/CO/VOC), smoke and heat detection tested; ventilation/deflagration vents clear and functional",
+   "Suppression system (per OEM) inspected; no impairment without compensating measures and fire-service notice",
+   "HVAC/thermal management within set-points; coolant levels/leaks checked (liquid-cooled)",
+   "'Do not open doors during gas alarm' rule posted; standoff distance marked (≥ 50 m — verify)",
+   "Thermography of DC busbars, rack connections and PCS within schedule; torque checks annual",
+   "DC rack/PCS LOTO procedure available; insulated tools, gloves, arc-rated PPE in date",
+   "Separation distances and fire-rated barriers maintained; no combustible storage near units",
+   "ERP agreed with fire service; information sheet (chemistry, kWh, layout, isolation points) current; last drill within 12 months",
+   "Water supply (hydrants/monitors) for prolonged cooling available; runoff containment identified",
+   "CEIG approval, Fire NOC and UL 9540A/IEC 62619 documentation on site",
+   "MoC records for firmware/chemistry/layout changes; technician training current",
+   "Decommissioning/battery-waste route under BWMR 2022 defined"
+  ]
+ },
+ {
+  "id": "cl4-quay-crane",
+  "t": "Quay & Yard Equipment Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "Crane pre-use: brakes, limits, spreader twistlock indicators, anti-collision, wind alarm, lights, radio",
+   "Lifting appliance register: tests and 12-monthly thorough examinations in date; defects tagged out",
+   "Operator certification and medical valid; fatigue hours within limits",
+   "Wind reading below terminal limit; storm pins/anchors ready; stack heights adjusted if warning",
+   "Quay operational area clear of pedestrians; ITV drivers in cab under crane; marked walkways in use",
+   "Hatch covers placed in marked areas with barricades",
+   "Lashing platforms/cages used; no climbing on container stacks; lashing gear inspected; rods handled in pairs",
+   "Reach stackers/straddles/RTGs: daily checks, cameras/alarms working, speed limits observed, truck drivers in cabs",
+   "Container checks: CSC plates, VGM verified, damaged/leaking boxes isolated, DG placards and segregation",
+   "Night lighting adequate at work areas; wet-deck slip controls",
+   "Incident/dangerous-occurrence reporting to port authority/Dock Safety Inspector known",
+   "Near misses (struck-by, dropped objects, wind events) logged and reviewed weekly"
+  ]
+ },
+ {
+  "id": "cl4-hold-entry",
+  "t": "Ship Hold / Enclosed-Space Entry Permit",
+  "cat": "Industrial",
+  "items": [
+   "Ship–shore meeting held: cargo type (IMSBC hazards), fumigation status, ventilation, emergency contacts",
+   "Hold ventilated; atmosphere tested at three depths with calibrated detector: O2, LEL, CO, H2S, PH3 within limits",
+   "Fumigated cargo: gas-free certificate from licensed fumigator; placards removed; residues disposed",
+   "Ship's enclosed-space permit (SOLAS XI-1/7) and stevedore permit both issued; attendant at hatch",
+   "Entrants carry personal 4-gas monitors; continuous monitoring in deep holds",
+   "Hold ladder inspected; one person at a time; harness/fall arrester where fitted; tools on hoist line",
+   "Hatch coaming guarded or exclusion maintained; lighting adequate",
+   "No persons in hold while grab or dozer operates; CO monitoring with diesel plant; ventilation",
+   "Adjacent spaces (stools, ducts, stores) tested and permitted separately",
+   "Rescue: ≥ 2 SCBA sets, rescue harness/stretcher, crane standby, oxygen; rescuers never enter without SCBA",
+   "Heat/dust controls: hydration, rotation, FFP3, water sprays where allowed",
+   "Permit closed on exit; readings and entrant log filed"
+  ]
+ },
+ {
+  "id": "cl4-mooring",
+  "t": "Mooring Operation Pre-Start Check",
+  "cat": "Construction",
+  "items": [
+   "Mooring plan agreed with ship (lines, sequence, tide, weather limits, VHF channel, language)",
+   "Bollards/quick-release hooks inspected; SWL ≥ line MBL; damaged bollards out of service",
+   "Linesmen trained; team size adequate; foreman briefed gang on snap-back (whole-area) rule and signals",
+   "Lifejackets (150 N) worn by all within 2 m of quay edge and in boats",
+   "Quay edge lighting, lifebuoys with lines, self-rescue ladders in place",
+   "Heaving lines without added weights; no standing in bights or line of pull",
+   "Mooring boat: coxswain, lifejackets, load limit, radio, clear of propeller/lines in water",
+   "Quay traffic stopped in mooring area during operations",
+   "Gangway: safety net, angle within limit, secured, lit, lifebuoy at foot; access controlled (ISPS)",
+   "Tanker jetty: ESD tested, breakaway couplings, ISGOTT checklist signed, drift alarms",
+   "Cargo-watch line checks at tide changes scheduled; weather deterioration plan agreed",
+   "Man-overboard and line-parting response known; incident reporting route posted"
+  ]
+ },
+ {
+  "id": "cl4-dg-container",
+  "t": "DG Yard / CFS Dangerous Goods Audit",
+  "cat": "Chemical",
+  "items": [
+   "DGD, UN number, class, SDS and placards (four sides) verified for every DG unit; non-compliant units held",
+   "Segregation per IMDG table and quantity limits per class maintained in dedicated DG yard",
+   "Class 1 and ammonium nitrate under direct delivery/PESO conditions; no storage beyond permitted period",
+   "Class 5.1 (calcium hypochlorite) and 4.2 units shaded/ventilated; lithium battery units monitored",
+   "Daily thermal/leak/odour round logged; IR thermometer and gas detector in use",
+   "Fumigated unit register current; UN 3359 marks checked; de-stuffing only after ventilation and gas test (PH3/MeBr/VOC)",
+   "Container opening procedure (doors cracked from side, ventilation time, breathing-zone test) followed by customs/CFS staff",
+   "Hazmat response: Level A/B suits, SCBA, absorbents, overpacks, booms; ERG/EmS references available",
+   "Leaking/heating units isolated upwind; drains blocked; shipper/port/SPCB notified",
+   "Fire hydrants/monitors clear; fire service familiar with DG yard; evacuation distances known",
+   "IMDG Ch. 1.3 training records for all DG-handling and examination staff (refresher 2 yr)",
+   "No smoking/phones in DG yard; forklifts DG-rated; cyclone/weather plan for DG stock"
+  ]
+ },
+ {
+  "id": "cl4-sugar",
+  "t": "Sugar Mill Season Weekly Check",
+  "cat": "Industrial",
+  "items": [
+   "Cane yard: one-way flow, marshals with radios, speed limit, lighting, drivers clear of unloading bays, trolleys chocked",
+   "Cane carrier/bagasse conveyor nip guards and pull-wire stops tested; no hand feeding; choke clearing under LOTO",
+   "Knives/shredder/mill covers interlocked; roller setting under LOTO with two persons",
+   "Centrifugals: lid interlock and brake tested; over-speed/vibration trips tested weekly; annual basket NDT in date",
+   "Bagasse stacks: temperatures probed and logged; fire breaks clear; water monitors/hydrants ready; no hot work",
+   "Spark arrestors on boiler stacks; bagasse conveyor dust housekeeping done",
+   "Boiler: certified attendant, low-water cut-off test, log book; certificate valid; pressure-vessel tests in date",
+   "Sulphur burner: SO2 detector working, scrubber running; lime slaking PPE (face shield, gloves) in use",
+   "Hot-liquor valves operated from side; lagging intact; scald first aid available",
+   "Pan/evaporator/molasses tank entries under confined-space permits with gas tests",
+   "Sugar house: dust housekeeping, Ex equipment, venting intact; bagging aids for 50 kg bags",
+   "Seasonal workers inducted (language, buddy, colour code) before posting; OHC/first aid 24×7"
+  ]
+ },
+ {
+  "id": "cl4-grain-mill",
+  "t": "Rice / Flour / Oil Mill Monthly Check",
+  "cat": "Industrial",
+  "items": [
+   "Dust layers below housekeeping limit; vacuum/damp sweeping; no compressed-air blow-down near ignition sources",
+   "Bucket elevators: belt-slip/alignment switches and bearing temperature monitors working; explosion vents unobstructed",
+   "Magnets/destoners before mills working; tramp-metal log",
+   "Ex-rated electricals in dusty areas; no damaged fittings; thermography within year",
+   "Hullers/polishers/roller and hammer mills guarded; chokes cleared only after stop and isolation",
+   "Husk boiler/furnace: certified attendant, low-water cut-off tested, husk storage away from furnace, spark arrestors",
+   "Parboiling/driers: hot water/steam PPE, flame-failure on burners, CO check in enclosed drier rooms",
+   "Silos/bins: zero-entry policy; permits, lifeline and isolation for any entry",
+   "Bag stacks within height limit, dunnage, interlocked pattern, no lean/wet bags; ladders used",
+   "Manual handling: mechanical aids in use; two-person lifts > 50 kg; heat breaks for loaders",
+   "Fumigation only by licensed fumigator: placards, exclusion, aeration and clearance records; no worker-applied AlP",
+   "Solvent extraction (if any): LEL monitors, earthing, Ex equipment, hexane licence; hot-work ban",
+   "Respirators issued for dusty jobs; lung-function screening and noise audiometry records"
+  ]
+ },
+ {
+  "id": "cl4-seasonal",
+  "t": "Seasonal / Migrant Worker Mobilisation Audit",
+  "cat": "Management",
+  "items": [
+   "Contractor licence/registration valid; worker lists with age proof and origin state; inter-state migrant registration done",
+   "No worker under 14; 14–18 not in hazardous processes; age verification records",
+   "Induction completed in workers' languages before any work; competence sign-off for job-specific tasks",
+   "Buddy/mentor assigned for first 2 weeks; colour-coded helmet/band for workers in first 30 days",
+   "No new worker on cane yard traffic, centrifugals, boilers, HT or confined spaces until authorised",
+   "PPE issued free, sized (incl. women), replacement register",
+   "Welfare: drinking water (tested), toilets/bathing ratios, rest shelters, canteen/crèche where thresholds met",
+   "Camps inspected weekly: space, ventilation, lighting, LPG/cooking safety, electrical, waste, vector control, fire extinguishers",
+   "Wages via bank on time with slips; overtime limits; weekly off; PF/ESI or EC insurance confirmed",
+   "First-aid boxes stocked, OHC/ambulance tie-up; night transport/first aid arrangements posted",
+   "Grievance channel (multilingual) and labour helpline displayed; complaints logged and closed",
+   "Women's night-work conditions met (consent, transport, security, minimum numbers)",
+   "Monthly HR–safety audit done; corrective actions with contractor tracked"
+  ]
+ },
+ {
+  "id": "cl4-dg-room",
+  "t": "DG Set & Generator Room Weekly Check",
+  "cat": "Electrical",
+  "items": [
+   "'May start automatically' signage; AMF disabled, battery disconnected and control fuse removed before any work (LOTO)",
+   "Changeover/ATS back-feed interlock (mechanical + electrical) tested; no bypass",
+   "Room ventilation adequate; exhaust piped to stack at CPCB height; insulation intact; ≥ 0.5 m from combustibles (verify)",
+   "CO detector in basement rooms tested monthly; no occupancy during runs",
+   "Fuel: day tank within exempt quantity or PESO licence; bund 110 %, level gauge/overfill alarm, shut-off valve, spill kit, no leaks",
+   "Fuel transfer with bonding, drip trays; no filling in lightning",
+   "Battery: terminals clean, no swelling, ventilation, acid PPE and insulated tools available",
+   "Guards on radiator fan/belts; hot exhaust manifold shielded; no rags/combustibles in room",
+   "Fire detection and CO2/DCP/clean-agent extinguishers or fixed system in service; no storage in room",
+   "Noise: enclosure doors closed during runs; 75 dB(A) at 1 m; hearing protection inside enclosure",
+   "Weekly test run logged (readings, defects); AMC vendor inducted; CEIG approval/inspection records on file",
+   "Emission compliance (CPCB IV+/stack test) and used-oil manifests current; running hours/fuel logged"
+  ]
+ },
+ {
+  "id": "cl4-hvac",
+  "t": "HVAC Plant Room & Refrigerant Monthly Check",
+  "cat": "Industrial",
+  "items": [
+   "Refrigerant detectors and O2 monitor (where fitted) tested; alarm set-points per refrigerant; ventilation auto-start works",
+   "Machinery room: self-closing doors open outward, emergency shut-off outside, no open flames, signage with refrigerant/charge",
+   "Refrigerant log per system current; losses > 5 %/yr investigated; no venting (ODS Rules)",
+   "Technicians certified in refrigerant handling; recovery machine and rated cylinders available",
+   "Pressure/leak testing with OFN and regulator/PRV only; never oxygen or compressed air",
+   "Brazing: refrigerant recovered, OFN purge flowing, hot-work permit, fire watch, ventilation",
+   "Refrigerant cylinders upright, shaded, ≤ 50 °C, caps on; A2L/A3 refrigerants handled with Ex tools and ventilation",
+   "AHU/fan work: LOTO at starter and local isolator; belts guarded after service; filters changed with respirator",
+   "Rooftop units: edge protection/anchors, secured ladders, weather check",
+   "Ducts/plenums/tanks entered only under confined-space permit",
+   "Cooling-tower legionella scheme: dosing, cleaning/disinfection and sampling records current",
+   "Chemical dosing PPE/eyewash; hot-surface and steam/hot-water isolation identified",
+   "Escape respirators/SCBA for large-charge or ammonia rooms inspected; leak response known"
+  ]
+ },
+ {
+  "id": "cl4-lift-mr",
+  "t": "Lift & Escalator Statutory and Maintenance Check",
+  "cat": "Industrial",
+  "items": [
+   "Lifts Act licence and periodic inspection report current; licence and load notice displayed in car",
+   "AMC with licensed firm; monthly maintenance logged in lift book; mechanics trained",
+   "Landing door interlocks tested; no jumpers/bypass; landing-door emergency keys controlled",
+   "Car-top: INSPECTION mode, stop switch, guardrail/clearance per standard; two persons for hoistway work",
+   "Pit: stop switch, light, ladder, counterweight screen; car blocked/inspection mode before pit entry",
+   "Machine room/controller: LOTO at mainline and car-light switches; VVVF capacitor discharge; sheaves guarded; no storage",
+   "Ropes/brake/safety gear inspected per schedule; discard criteria applied",
+   "ARD, alarm/intercom and emergency light tested; emergency power for hospital/bed lifts",
+   "Trapped-passenger release: trained persons listed; response ≤ 30 min; car-position confirmation and landing-zone rule known",
+   "Escalator: emergency stops, comb plates, skirt brushes, handrail checked daily; pit work under LOTO and barricades",
+   "Fire lift/fireman's switch tested; lifts recall on fire alarm",
+   "Entrapment and injury log reviewed; incidents reported to Inspectorate as required"
+  ]
+ },
+ {
+  "id": "cl4-housekeeping",
+  "t": "Housekeeping Contractor Monthly Audit",
+  "cat": "Management",
+  "items": [
+   "Contractor licence, wages, PF/ESI and attendance verified; PPE and training supplied free",
+   "Approved chemical list with SDS in local language; dilution charts and never-mix (acid + bleach) rule displayed",
+   "All bottles/dispensers labelled and colour-coded; no decanting into drink bottles; store locked, ventilated, bunded",
+   "Gloves/goggles worn for toilet and chemical work; eyewash/first aid available",
+   "Wet-floor signs and barriers used; cleaning schedules avoid peak traffic; non-slip footwear",
+   "No ladders above 3 m; MEWP/scaffold/BMU/rope access by trained persons with permits",
+   "Gondola/BMU: 12-monthly examination, daily pre-use, harness to independent anchor, wind limits, exclusion below",
+   "Sharps in puncture-proof containers; BMW colour-coded segregation; bags ≤ 3/4 full; no hand compaction",
+   "Needlestick/spill protocol and PEP route known; hepatitis B vaccination records (hospitals)",
+   "No manual entry into septic tanks/sewers/drains; mechanised agency used; sump entries only under confined-space permit by trained persons",
+   "Floor machines/cables RCD-protected and undamaged; electrical isolation for cleaning fittings",
+   "Welfare: toilets, changing room, rest area, drinking water for contract staff; ID cards",
+   "Women's night shifts: ≥ 2 staff, escort/transport, lit routes, panic/call system; POSH route displayed",
+   "Injury/near-miss log reviewed with contractor; corrective actions closed"
+  ]
+ },
+ {
+  "id": "cl4-events",
+  "t": "Event Pre-Doors Safety Walk",
+  "cat": "Management",
+  "items": [
+   "Permissions in hand: police, fire NOC (temporary structures), municipal/venue, PESO (pyro), electrical certificate, FSSAI/LPG for stalls",
+   "Capacity calculated (NBC assembly loading) and displayed; counting system live at every gate",
+   "All exits unlocked, clear, lit and staffed; exit widths per plan; fire lanes clear",
+   "Queue barriers in snake lanes; front-of-stage barrier and pit with extraction team",
+   "Stewards in position with radios at ratio per plan (benchmark 1:250 — verify; more at pinch points); briefed on crush signs",
+   "Temporary structures (stage, trusses, LED walls, pandals, grandstands) certified; ballast/anchors checked today; wind action plan known",
+   "Pandal fabrics flame-retardant (certificates); extinguishers per area; LPG stalls separated; generators fenced with fuel bunding",
+   "Temporary wiring: RCDs, earthing, cable protection, weather-proof distribution; no cables in walkways",
+   "Pyro/SFX: licensed operator, fire service present, exclusion zones, no-fly/no-drop zones",
+   "Medical post staffed (doctor/paramedics), ambulances on site, AEDs and first-aid points marked",
+   "Water points, shade and heat plan for outdoor; weather/lightning monitoring with triggers",
+   "PA/announcement scripts (safety, evacuation, dispersal) tested; control room with CCTV and radios",
+   "Go/no-go decision recorded by event safety officer with police/fire/venue"
+  ]
+ },
+ {
+  "id": "cl4-sewer",
+  "t": "Sewer / Septic Tank Work Permit Check",
+  "cat": "Industrial",
+  "items": [
+   "Mechanised cleaning (jetting/suction/robot) scheduled; manual cleaning entry refused and recorded",
+   "Agency licensed/empanelled; contract prohibits manual entry; PEMSR Act compliance file",
+   "If entry unavoidable: written justification and permit signed by supervisor",
+   "Inflows isolated (penstock/valve) and pumps locked out; rain not forecast",
+   "Ventilation ≥ 20 min with blower (verify); atmosphere tested top/middle/bottom: O2, H2S < 10 ppm, LEL < 10 %, CO < 25 ppm",
+   "Continuous 4-gas monitor on entrant; alarm = immediate exit",
+   "Harness with retrieval line on tripod/winch; attendant posted and never enters",
+   "≥ 2 SCBA sets and trained rescuers at manhole; ambulance contact; non-entry rescue first",
+   "Traffic management at road manholes (signs, cones, barriers); lighting",
+   "PPE: gloves, gumboots, coveralls, goggles/face shield, FFP3; washing/disinfection facility available",
+   "Vaccinations/medical records for entrants; no eating at site",
+   "Permit closed; manhole secured; equipment decontaminated; readings filed; any manual-entry proposal reported"
+  ]
+ },
+ {
+  "id": "cl4-crusher",
+  "t": "Crusher Plant & Haul Road Shift Check",
+  "cat": "Industrial",
+  "items": [
+   "Crusher chamber entry/blockage clearing only under LOTO and permit; stored energy released from outside",
+   "Hopper grids/rock breaker in use for oversize; no bars used on running crusher",
+   "Conveyor nip guards (head/tail/take-up/return idlers) in place; pull-wire stops tested full length",
+   "Belt cleaning/idler changes only with belt stopped and isolated; crossing bridges used",
+   "Haul roads: width, gradient, berms ≥ half wheel height at edges, tip bunds/stop blocks, drainage, dust suppression",
+   "HEMM pre-use: brakes on grade, seat belts, reversing cameras/alarms, ROPS/FOPS, fire suppression, lights",
+   "Light-vehicle/dumper radio protocol and separation in use; speed limits posted and observed",
+   "Stockpile tunnels/hoppers: confined-space permits; reclaim feeders isolated; no walking on live piles",
+   "Dust sprays at crushers/screens/transfer points working; cab filters serviced; FFP3 where exposure",
+   "Hearing protection worn in noise zones; audiometry current",
+   "Silica monitoring and medical surveillance (X-ray/PFT) records; silicosis cases notified",
+   "Tyre work by trained persons in cage; raised bodies propped; buckets lowered",
+   "DGMS/state statutory registers, operator certificates and incident log up to date"
+  ]
+ },
+ {
+  "id": "cl4-cement-kiln",
+  "t": "Kiln / Preheater / Coal Mill Safety Check",
+  "cat": "Industrial",
+  "items": [
+   "CCR trends (cyclone pressure/temperature) reviewed for build-ups; poke-hole covers intact",
+   "Blockage clearing: permit, trained crew, aluminised PPE, barriers on all levels below, nobody in discharge line",
+   "Air cannons/CO2 blasters operated remotely; manual poking from the side only",
+   "Inspection doors not opened with meal build-up above; restart hot-meal flush zones cleared",
+   "Coal/petcoke bins: CO/O2 and temperature monitoring working; inerting available; explosion vents clear",
+   "Coal mill interlocks and fire-fighting (CO2) tested; no hot work near; dust housekeeping done",
+   "Preheater tower/cooler/silo tops: guardrails and gratings intact; WAH permits for open edges",
+   "Kiln/preheater/cooler entry: cooled, fuel/feed/fans/drive isolated with mechanical block, atmosphere tested, permit, attendant",
+   "Loose coating removed from safe position before refractory work; scaffold/platforms inspected",
+   "Burn first-aid stations at each level; burn-unit tie-up; fire crew contacts posted",
+   "Dust (silica/cement) controls and respirators in use; monitoring/medical records current",
+   "AFR reception: segregated, SDS, PPE, fire detection; no bunker entry",
+   "Heat-stress plan active for tower work; incident/near-miss log reviewed"
+  ]
+ },
+ {
+  "id": "cl4-steel-gas",
+  "t": "Gas Safety & Hot-Metal Area Check",
+  "cat": "Chemical",
+  "items": [
+   "Fixed CO monitors online at leak-prone points; calibration in date; wind socks visible",
+   "Personal CO monitors and self-rescuers issued to all entering gas areas; two-person rule enforced",
+   "Gas safety officer and rescue squad on shift; rescue station (SCBA, resuscitator) checked",
+   "Water seals at required head; goggle valves/blinds status logged; bleeders operated under permit",
+   "Gas-line permits show positive isolation, purge readings (CO/LEL/O2) and retest intervals",
+   "Hot work on gas mains/holders only after purge and gas test; fire watch; SCBA standby",
+   "Restoration: air purged with N2 before gas admitted; leak checks done",
+   "Furnace/stove light-off: purge and flame safeguard proven; no bypass; double block and bleed on gas trains",
+   "Cast house/converter: dry charge/tools, no water leaks near runners, ladle/torpedo inspection, access restricted during tapping",
+   "Radiant-heat PPE (aluminised/FR, face shields) worn; crane/ladle lifting gear in date",
+   "Coke ovens: emission controls, benzene monitoring, PPE; confined-space permits for stoves/GCP",
+   "CO exposure/medical surveillance and drill records current; incidents investigated"
+  ]
+ },
+ {
+  "id": "cl4-chp-ash",
+  "t": "Coal & Ash Handling Plant Weekly Check",
+  "cat": "Industrial",
+  "items": [
+   "Conveyor nip guards at head/tail/take-up/return idlers in place; pull-cords tested full length; zero-speed/sway switches working",
+   "No work on running belts; LOTO used for idler changes/cleaning; belt clamped and counterweight secured",
+   "Galleries/transfer towers: handrails, toe boards, lighting, housekeeping; dust layers < 0.8 mm",
+   "Dust suppression/extraction at transfer points and crushers running; no compressed-air blow-down",
+   "Ex-rated electricals in Zone 21/22 intact; hot-work permits used; thermal scans of stockpiles logged",
+   "Bunker/silo CO and temperature monitoring online; inerting (steam/CO2) available; explosion vents clear",
+   "Bunker/silo entry only with isolation, bridging check, lifeline and attendant under permit",
+   "Coal mill fire/inerting procedure known; mill interlocks tested",
+   "Wagon tippler/side-arm charger exclusion and interlocks; track hopper guarded",
+   "Fly-ash silos: level/temperature/PRV checks; loading spouts dust-free; burns PPE; ESP hopper poking under isolation",
+   "Ash pond: dyke freeboard, seepage, piezometers inspected and logged; slurry pipelines patrolled; lifebuoys at decant",
+   "Respirators/hearing protection in use; dust, silica and noise monitoring current",
+   "Fire-system tests and incident/near-miss review done"
+  ]
+ },
+ {
+  "id": "cl4-loading-dock",
+  "t": "Loading Dock & Yard Daily Check",
+  "cat": "Industrial",
+  "items": [
+   "Vehicle restraints/wheel chocks and communication lights working; 'keys-to-loader' rule in use",
+   "Dock levellers/plates: lip engages, maintenance props, no damage; stored when not in use",
+   "Dock bumpers, edge barriers/chains at unused doors, lighting ≥ 100 lux (verify) in trailers",
+   "Trailer checked before entry: floor, landing gear/stands, load shifted?; container doors opened from side with strap",
+   "Forklift drives straight at walking pace; loaders out of trailer while forklift inside; capacity vs trailer floor",
+   "Tail-lift: trained operator, platform rated, exclusion area, stowed before driving",
+   "Yard: one-way flow, truck lanes/pedestrian walkways marked, speed ≤ 10 km/h, reversing with banksman/cameras, mirrors",
+   "Drivers in waiting area until released; no walking in yard lanes",
+   "Manual handling aids (pallet jacks, extendable conveyors) available; heat breaks for container work",
+   "CO: electric forklifts or ventilation in enclosed trailers",
+   "Wet-weather slip controls at dock edges; wind — container doors secured",
+   "Near misses (drive-off, creep, pedestrian conflict) logged; monthly equipment inspection records"
+  ]
+ },
+ {
+  "id": "cl4-heat-treat",
+  "t": "Heat Treatment Shop Monthly Check",
+  "cat": "Industrial",
+  "items": [
+   "Atmosphere furnaces: purge/interlock (low temperature, gas/air pressure, power failure) tested; flame curtains/pilots working",
+   "Gas trains: double block-and-bleed, flame safeguards tested; annual gas-train test record",
+   "CO monitors in shop calibrated; personal CO monitors in atmosphere-furnace area",
+   "Quench tanks: oil level/temperature interlocks, agitation, lids/suppression (CO2/dry powder) tested; no water lines above tanks",
+   "Quench oil flash point/water content tested; margin to operating temperature adequate",
+   "Salt baths: salts stored dry/covered; nitrate and cyanide baths separated; fume extraction; dry tools/work rule",
+   "Cyanide antidote kit and trained first aiders where cyanide used; acids excluded from area",
+   "Baskets/fixtures inspected for creep/cracks; crane/manipulator and hot-rated lifting gear in date",
+   "Pit furnaces/tanks guarded; exclusion zones during transfers",
+   "Ammonia/methanol/nitrogen storage per rules; leak detection; O2 monitors in enclosed areas",
+   "Furnace entry: cooled, purged, gas isolated/locked, confined-space permit, RCF dust controls",
+   "Waste (quench oil, salts, effluent) manifested; cyanide waste detoxified",
+   "PPE (aluminised, face shield, metatarsal boots) in good condition; quench-fire drill done"
+  ]
+ },
+ {
+  "id": "cl4-fuel-station",
+  "t": "Fuel Outlet / Site Fuel Point Monthly Check",
+  "cat": "Chemical",
+  "items": [
+   "PESO licence/approved layout displayed; quantities within licence; CEIG electrical certificate",
+   "Earthing pits/clamps tested (≤ 1 Ω — verify); lorry bonding point in good condition",
+   "Dispensers: breakaway couplings, auto shut-off nozzles, no leaks; ESD switch tested",
+   "Overfill prevention/level gauging and high-level alarm working; fill points labelled by product",
+   "Extinguishers (DCP) and sand buckets in date and accessible; spill kit stocked",
+   "'No smoking / engine off / phone off' signage; forecourt traffic layout and speed limit visible",
+   "Decantation SOP followed: two persons, chocks, earth, engine off, seals/dip verified, no dispensing from tank being filled",
+   "Vapour-recovery (Stage I/II) functional where mandated; vents/flame arresters intact",
+   "Manhole chambers/USTs: no water ingress; tightness test in date; entry only under confined-space permit",
+   "CNG: compressor room ventilation and gas detection, hoses/nozzles in date, PRVs; auto-LPG equipment checks",
+   "Staff training (OMC/PESO), antistatic uniforms, night security (lighting, CCTV, two attendants)",
+   "Site fuel points (construction/mines): bunded skid tanks/bowsers earthed, approved safety cans, cold-engine refuelling only",
+   "Spill/fire drill done; incident log reviewed"
+  ]
+ },
+ {
+  "id": "cl4-lpg-bottling",
+  "t": "LPG Plant Shift & Monthly Audit",
+  "cat": "Chemical",
+  "items": [
+   "Gas detectors across sheds/gantries/storage reading normal; alarm/ESD set-points tested; calibration in date",
+   "ESD and ROVs on bullets/gantries function-tested per schedule; excess-flow/back-check valves in place",
+   "Fire-water: pumps auto-start, storage full, deluge valves/sprinklers on bullets, sheds and gantries tested; hydrants/monitors clear",
+   "Area-classification drawings; Ex equipment register and IEC 60079-17 inspections current",
+   "Tank-lorry unloading: PESO-approved vehicle, chocks, earthing, engine off, hose test date, operator present throughout",
+   "Filling: cylinder inspection (due date, valve, body), electronic scales with auto cut-off, 100 % check-weighing, leak test every cylinder",
+   "Defective/leaking cylinders in designated outdoor area; evacuation via recovery (no venting); valve change by trained person",
+   "Cylinder storage: upright, caps, full/empty segregation, stack heights, Ex forklifts/lighting",
+   "No phones/vehicles/hot work in licensed area without permit and gas-free certificate",
+   "PTW for maintenance shows isolation, N2 purge and gas test; Ex equipment reinstated",
+   "Carousel/conveyor guards and e-stops; manual handling aids; gloves/antistatic clothing worn",
+   "MSIHC: safety report current, on-site plan, 6-monthly mock drill with district authorities, off-site plan liaison",
+   "Security per PESO/OMC; lightning protection tested; monsoon bund drainage checked"
+  ]
  }
 ]

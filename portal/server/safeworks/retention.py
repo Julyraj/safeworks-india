@@ -55,5 +55,5 @@ async def dry_run(org_id: str, conn=None) -> dict:
 
 async def conn_fetchval(conn, sql: str, *args):
     if conn is not None:
-        return await conn.fetchval(sql, *args)
+        return await db._db(conn).fetchval(sql, *args)
     return await db._db(None).fetchval(sql, *args)

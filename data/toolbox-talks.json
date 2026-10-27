@@ -403,5 +403,632 @@
    "Chemical in eye: flush 20 minutes and go to hospital",
    "Know your first-aider, the box location and the ambulance plan"
   ]
+ },
+ {
+  "t": "Press Shop – Hands Out of the Die",
+  "pts": [
+   "Test the light curtain and two-hand controls every shift — no test, no run",
+   "Never reach in to clear a misfeed: stop, isolate, then clear",
+   "Die setting only with safety blocks in and the press locked out",
+   "A double stroke is a near miss — report it the same shift",
+   "No bypass keys, taped sensors or foot pedals without guards",
+   "Ear plugs in; gloves off near rotating parts"
+  ]
+ },
+ {
+  "t": "Robot Cells – Nobody Inside While Live",
+  "pts": [
+   "A still robot is not a safe robot — it may be waiting for a signal",
+   "Request entry, wait for the protective stop, take the gate key with you",
+   "Inside the cell carry the pendant with e-stop; stay out of pinch zones",
+   "Teach at reduced speed with the enabling device; second person at e-stop",
+   "Last person out sweeps the cell before reset — nobody restarts from outside blind",
+   "Any bypassed interlock is a stop-work"
+  ]
+ },
+ {
+  "t": "Paint Shop – Solvents, Static & Isocyanates",
+  "pts": [
+   "Thinner vapour needs only a spark: earth every container, no phones, no non-Ex tools",
+   "Ventilation on before you spray; airflow alarm means stop",
+   "2K clear coat = isocyanates = asthma for life; supplied air or PAPR, nobody else in the booth",
+   "Rags into self-closing metal bins; empty each shift",
+   "Never light an oven by hand; purge and flame-failure protect you",
+   "Hot work in the paint shop only with a permit and gas test"
+  ]
+ },
+ {
+  "t": "Weld Fume Is Not Just Smoke",
+  "pts": [
+   "Welding fume is a Group 1 carcinogen — every indoor weld needs extraction",
+   "Keep the extraction nozzle close to the arc; if you can see fume in your face, it is not working",
+   "Galvanised sheet gives metal fume fever: chills after shift — report it",
+   "Stainless means hexavalent chromium — extraction plus RPE",
+   "Spot-weld tips crush fingers: both hands on the initiation, tips cool before dressing",
+   "Pacemaker wearers stay away from RSW transformers"
+  ]
+ },
+ {
+  "t": "High-Voltage Batteries – Orange Means Danger",
+  "pts": [
+   "Orange cables carry 400–800 V DC — only HV-authorised persons, never alone",
+   "Pull the service plug, wait the discharge time, prove the meter, test, then touch",
+   "Insulated tools, Class 0 gloves, face shield — no rings or watches",
+   "A swollen, hot or hissing cell leaves the building now",
+   "Lithium fires need huge volumes of water and come back for hours — call the fire service early",
+   "Damaged packs sit outside, 15 m away, watched with a thermal camera"
+  ]
+ },
+ {
+  "t": "Test Track Rules",
+  "pts": [
+   "No entry without the controller's clearance; radio on at all times",
+   "Know the speed band for your certification — limit tests only on the dynamic pad",
+   "Pull to the shoulder for any fault; never stop on the racing line",
+   "Pedestrians and maintenance only when the zone is closed",
+   "Rain, fog, lightning or dust: high-speed runs stop",
+   "Helmet and harness for limit-handling and rollover tests"
+  ]
+ },
+ {
+  "t": "Ammonia – Smell It, Leave It",
+  "pts": [
+   "Ammonia smells long before it hurts — any smell is a leak, leave and report",
+   "Escape respirator on your belt in every NH3 area",
+   "Oil draining: two people, dead-man valve, never walk away from an open drain",
+   "Never trap liquid between two closed valves",
+   "Water fog knocks down vapour; never spray liquid ammonia pools",
+   "Eyes or skin splashed: flush 20 minutes, then OHC"
+  ]
+ },
+ {
+  "t": "Never Mix Cleaning Chemicals",
+  "pts": [
+   "Acid plus bleach makes chlorine gas — one chemical at a time, rinse between",
+   "Add concentrate to water, never water to concentrate",
+   "Label every bottle; never use a drink bottle",
+   "Goggles and face shield for caustic — a splash in the eye is permanent",
+   "Before CIP starts, confirm nobody is inside the tank — lock the manway",
+   "Eyewash within 10 seconds: know where it is before you need it"
+  ]
+ },
+ {
+  "t": "Grain & Sugar Silos – Never Walk the Pile",
+  "pts": [
+   "Flowing grain buries you knee-deep in 4 seconds and fully in 20",
+   "Clear bridges and walls from outside with poles — entry is the last option",
+   "Entry only with feeders locked out, atmosphere tested, lifeline and attendant",
+   "Never stand below hanging material",
+   "Dust layers explode: clean daily, no compressed-air blow-down, no hot work",
+   "If someone goes under, do not jump in — call rescue"
+  ]
+ },
+ {
+  "t": "Hot Ovens & Fryers",
+  "pts": [
+   "Gas smell: stop, ventilate, isolate — never light by hand",
+   "Gauntlets and sleeves at ovens; open steam ovens from the side",
+   "Wet product into hot oil spits and boils over — dry it first",
+   "Fryer fire: lid or suppression, isolate heat, never water",
+   "Mixers and dividers: stop and isolate before scraping or clearing",
+   "Flour dust causes baker's asthma — tip under extraction, vacuum, no brooms"
+  ]
+ },
+ {
+  "t": "Bottling Line – Guards, Glass & CO2",
+  "pts": [
+   "Hands never go into a running machine — stop, wait for run-down, use a tool",
+   "Glass bursts at the filler: face shield in the glass zone, tongs for shards",
+   "CO2 has no smell and fills low places — detector alarm means leave",
+   "Caustic from the bottle washer: goggles, gloves, isolate before cleaning",
+   "Palletiser cell: enter only through the interlocked gate with the key in your pocket",
+   "Wet floors: non-slip boots, clean spills now"
+  ]
+ },
+ {
+  "t": "Cold Room – Never Alone, Never Locked In",
+  "pts": [
+   "Check the inside release before the door closes behind you",
+   "Sign in, carry a radio or alarm pendant, keep to the work/warm-up times",
+   "Shivering, numb fingers or confusion: leave now",
+   "CA rooms have 1–3 % oxygen — never enter to fetch fruit or a friend",
+   "Forklifts crawl inside: lights on, horn at doors, stop in fog",
+   "Frostbite: warm slowly, no rubbing"
+  ]
+ },
+ {
+  "t": "Solvents & Static",
+  "pts": [
+   "Vapour travels along the floor to the nearest spark",
+   "Earth the drum, the pump and yourself before pouring",
+   "No splash filling — dip pipe, slow start",
+   "Ex equipment only; a phone in Zone 1 is a bomb in your pocket",
+   "Peroxide-formers: test before you distil, never to dryness",
+   "Spent solvent: closed earthed drum, labelled, out within 90 days"
+  ]
+ },
+ {
+  "t": "Potent Compounds – Gown Right, Degown Slower",
+  "pts": [
+   "Micrograms matter: no open handling of OEB 5 material",
+   "Glove ports and split valves are the containment — a torn glove is an incident",
+   "Degowning is where most exposure happens — slow, inside-out, respirator last",
+   "Wet clean only; no brooms, no compressed air",
+   "Pressure alarm or HEPA alarm: stop and report",
+   "Tell OHC early if you are pregnant or planning — hormones and cytotoxics are not negotiable"
+  ]
+ },
+ {
+  "t": "Clean-Room Work – Interlocks, Fumigation & Gas Suppression",
+  "pts": [
+   "AHU work: isolate at the panel and the local switch, prove the fan is stopped",
+   "Door interlocks must release on the fire alarm — test the override",
+   "Fumigation in progress: locked, placarded, no entry until readings clear",
+   "Gas suppression room: isolate the release before maintenance inside; pre-discharge alarm means leave now",
+   "Nitrogen areas: watch the O2 monitor",
+   "Evacuate gowned — nobody degowns in a fire"
+  ]
+ },
+ {
+  "t": "Charging the Reactor Safely",
+  "pts": [
+   "Powder into solvent vapour through an open manway is how pharma fires start",
+   "Inert first: O2 below the limit on the analyser, purge on during charging",
+   "Earth the drum, the chute, the reactor and yourself; no plastic scoops or liners",
+   "Add at the planned rate and in the planned order — accumulation becomes a runaway",
+   "Temperature off profile: stop the feed, maximum cooling, call the shift in-charge",
+   "Never open a hot or pressurised vessel"
+  ]
+ },
+ {
+  "t": "Cotton Dust & Monday Chest Tightness",
+  "pts": [
+   "Tight chest on Mondays is byssinosis starting — tell the OHC",
+   "Suction hoods and the filter plant are your lungs' protection — report blockages",
+   "No compressed-air cleaning while people are in the shed",
+   "Respirator for blow room, card stripping and waste rooms",
+   "Spirometry before and after the Monday shift — do not skip it",
+   "No smoking anywhere in the mill"
+  ]
+ },
+ {
+  "t": "Dye House Chemicals",
+  "pts": [
+   "Hydrosulphite plus moisture heats up and burns — keep drums sealed and dry",
+   "Peroxide away from reducers; acid away from bleach and caustic",
+   "Dye powders only in the booth with extraction and a mask",
+   "HT machine door opens only below 80 °C and zero pressure — never bypass the interlock",
+   "Steam valves open slowly; lagging stays on",
+   "Shower and eyewash: 10 seconds away, tested every week"
+  ]
+ },
+ {
+  "t": "Carding & Ring Frames – Stop Before You Clear",
+  "pts": [
+   "Beater lids open only after the rotor has stopped — the timer is there for a reason",
+   "Card stripping with the machine stopped and locked",
+   "Hair covered, dupatta tucked, no loose sleeves — frames do not let go",
+   "Piece only where you were trained; stop for lapping and tape changes",
+   "Shuttle guards stay on; stop the loom before reaching in",
+   "Keep aisles and exits clear of trolleys"
+  ]
+ },
+ {
+  "t": "Heat in the Spinning Shed",
+  "pts": [
+   "Wet-bulb above the limit: humidification off, ventilation on",
+   "Drink before you are thirsty; ORS in the summer",
+   "Dizziness, cramps, no sweating: cool area, water, tell the supervisor",
+   "New workers take 7–14 days to acclimatise — watch them",
+   "Air-washer tanks are confined spaces",
+   "Report hygrometer readings honestly — they protect you"
+  ]
+ },
+ {
+  "t": "Moulding Machines – Interlocks Save Hands",
+  "pts": [
+   "Test the front gate every shift — the machine must not close with it open",
+   "Hands in the mould area only through the front gate, never rear or top",
+   "Stuck part: set-up mode, clamp blocked, tools not fingers",
+   "Mould change: inspected eyebolt, rated crane, hands never between the halves",
+   "Granulator blockage: stop, isolate, wait, then clear",
+   "Smoke from the barrel means decomposition — lower heat, ventilate"
+  ]
+ },
+ {
+  "t": "Hot Plastic & Purging",
+  "pts": [
+   "Purge behind the shield, face shield on, nobody in front of the nozzle",
+   "Hot plastic traps gas and spits — short shots into a metal tray",
+   "Never put a torch on a blocked die",
+   "Rupture disc in place or no start",
+   "PVC and POM fumes burn your lungs — extraction on",
+   "Hot screws and dies go in the marked cooling area"
+  ]
+ },
+ {
+  "t": "Two-Roll Mills – The Trip Bar Is Your Life",
+  "pts": [
+   "Test the trip bar at the start of every shift — rolls must stop and separate",
+   "Two people on a running mill, always",
+   "No gloves, no loose sleeves at the nip",
+   "Feed with tools from above the guard line; cut with the knife away from the nip",
+   "Sticking stock: trip, stop, then clear",
+   "A near miss at the nip is reported the same hour"
+  ]
+ },
+ {
+  "t": "Printing Solvents & Dryers",
+  "pts": [
+   "Ethyl acetate ignites at −4 °C — treat every tray as a fire waiting for a spark",
+   "Earthing straps and ionisers on before the web runs",
+   "LEL alarm: slow down, more exhaust, then stop",
+   "Dryer purge and flame safeguard never bypassed",
+   "Rags in closed bins; small quantities at the press",
+   "Blade changes with cut-resistant gloves and covers"
+  ]
+ },
+ {
+  "t": "Soldering Fume & Lead – Wash Before You Eat",
+  "pts": [
+   "Rosin fume causes asthma — tip extraction on, nozzle close to the joint",
+   "Lead gets in through your hands: wash before breaks, no food at the bench",
+   "Skim dross with tools and a face shield, into a metal tin",
+   "Wet boards into the wave pot explode",
+   "Blood-lead tests are for you — attend them",
+   "Wheeze or chest tightness at work: report it"
+  ]
+ },
+ {
+  "t": "HF Acid – Calcium Gluconate Now",
+  "pts": [
+   "HF does not hurt at first — the burn goes to the bone hours later",
+   "Any skin contact: flush 5 minutes, rub in calcium gluconate gel, go to hospital",
+   "Double gloves, face shield, apron at the wet bench",
+   "Piranha: acid first, slow peroxide, never a closed container",
+   "TMAH through the skin can stop your breathing — flush and hospital even if you feel fine",
+   "Gas alarm: leave the zone, let the ERT handle it"
+  ]
+ },
+ {
+  "t": "Lithium Cells – Signs of Thermal Runaway",
+  "pts": [
+   "Hissing, sweet smell, bulging, heat or smoke: move away and raise the alarm",
+   "Store at 30–50 % charge, cool, with aisles clear",
+   "Damaged or returned cells go to the outdoor quarantine, never back on the rack",
+   "Water in large volume cools; small extinguishers do not stop runaway",
+   "Fires re-ignite for days — thermal camera watch after any event",
+   "No metal tools or jewellery near terminals"
+  ]
+ },
+ {
+  "t": "Climbing the Tower – Clip, Check, Climb",
+  "pts": [
+   "Two people, weather checked, control informed — then climb",
+   "Arrester on the rail before your foot is on the rung",
+   "Twin lanyards at every hatch: one on before one off",
+   "Close every hatch behind you; tools tethered",
+   "Rest at platforms; water every 30 minutes in summer",
+   "Dizzy or unwell: say so and come down"
+  ]
+ },
+ {
+  "t": "Rescue in 15 Minutes",
+  "pts": [
+   "A person hanging in a harness can die within minutes — the team on the turbine is the rescue",
+   "Rescue kit at the top, rope long enough for the hub height, inspected monthly",
+   "Use the trauma straps if you are suspended; keep your legs moving",
+   "Lower the casualty, do not try to lift them up the ladder",
+   "Nacelle fire: personal descender, out through the hatch",
+   "Drill every six months — practice is the plan"
+  ]
+ },
+ {
+  "t": "Rotor Lock Before Hub Entry",
+  "pts": [
+   "All lock pins in, indicator and eyes agree, tag on — then open the hub hatch",
+   "Isolate pitch, converter and UPS; prove dead on every circuit",
+   "Accumulators at zero before touching hydraulics",
+   "Two in the hub or at the hatch, radio on",
+   "Wind over the limit or lightning alert: pins stay in, you come down",
+   "Hydraulic torque tools: hands clear of the reaction arm"
+  ]
+ },
+ {
+  "t": "Blade Work Weather Call",
+  "pts": [
+   "Rope access only below the wind limit, dry, no lightning within range",
+   "Blade at 6 o'clock, rotor and pitch locked, recorded",
+   "Two ropes, two anchors, edge protectors — no exceptions",
+   "Grinding fibreglass: extraction and FFP3; resin on skin becomes an allergy",
+   "Spotter on the ground watches the sky and the road",
+   "Lightning alert: finish nothing, come off the blade"
+  ]
+ },
+ {
+  "t": "Lightning – 30 km Out, We Come Down",
+  "pts": [
+   "Lightning at 30 km: pack up; at 15 km or thunder heard: leave the turbine or roof",
+   "Shelter in vehicles or the control building — never under the tower or a tree",
+   "Wait 30 minutes after the last strike before climbing again",
+   "Do not touch towers, fences or cables during a storm",
+   "After a strike on a turbine, inspect the lightning protection before work",
+   "The control room's call to descend is not a suggestion"
+  ]
+ },
+ {
+  "t": "Remote Site – Know Your Way to Hospital",
+  "pts": [
+   "Ambulance is an hour away — the first aider on your crew is the first hour",
+   "Every vehicle has the turbine GPS list, the hospital route and an AED or knows where one is",
+   "Check in every hour; nobody works alone on HT, height or in confined spaces",
+   "Snakebite: still limb, pressure bandage, hospital with anti-venom — no cutting, no tourniquet",
+   "Heat stroke: cool first, drive second",
+   "Road accidents kill more technicians than turbines — seat belts, speed limits, no tired driving"
+  ]
+ },
+ {
+  "t": "Solar DC Is Live in Daylight",
+  "pts": [
+   "Strings cannot be switched off while the sun is up — treat every DC cable as live",
+   "Open AC, open DC isolators, wait for discharge, prove the meter, test",
+   "Never pull a connector under load — check current first or cover the modules",
+   "Burnt or mismatched connectors start fires; replace, do not tape",
+   "Rain or lightning: no open enclosures",
+   "Fire service must be told DC stays live — nobody cuts cables"
+  ]
+ },
+ {
+  "t": "Fragile Roofs Kill",
+  "pts": [
+   "Cement sheets and skylights do not hold a person — walk only on boards over purlins",
+   "Clip to the lifeline before you leave the ladder",
+   "Rooflights covered or netted before anyone steps on the roof",
+   "Modules catch wind like sails: two people, stop at the wind limit",
+   "Never cut or drill asbestos sheets dry",
+   "A ten-minute cleaning job needs the same protection as installation"
+  ]
+ },
+ {
+  "t": "BESS Alarm Response",
+  "pts": [
+   "Gas alarm: doors stay shut — opening them can trigger an explosion",
+   "Move to the standoff distance and isolate remotely",
+   "Call the fire service with the chemistry and kWh — the ERP is in the control room",
+   "Water cools neighbours; nobody enters until gas and temperature are stable for a day",
+   "DC racks: isolate, wait, prove dead, insulated tools",
+   "Firmware and layout changes go through MoC"
+  ]
+ },
+ {
+  "t": "Container Tops & Twistlocks",
+  "pts": [
+   "Nobody walks under a crane load or in the operational lane",
+   "Lashing from platforms and cages — never climb stacks",
+   "Twistlock indicators: locked before the lift",
+   "Rods in pairs, bins for twistlocks, gloves on",
+   "Wind rising: top tiers stop first, cranes stow at the limit",
+   "ITV drivers stay in the cab under the crane"
+  ]
+ },
+ {
+  "t": "Ship Holds – Test Before Entry",
+  "pts": [
+   "Coal, grain, logs and steel eat oxygen; fumigated cargo leaves phosphine behind",
+   "No entry on smell or guesswork — a calibrated meter at three depths, then a permit",
+   "Attendant at the hatch never enters; rescuers wear SCBA or stay out",
+   "One person on the ladder at a time, tools on the hoist line",
+   "Grab or dozer working: nobody in the hold",
+   "Headache or dizziness: get out and report"
+  ]
+ },
+ {
+  "t": "Mooring Lines – Snap-Back Zones",
+  "pts": [
+   "The whole mooring deck and quay area is a snap-back zone",
+   "Never stand in a bight or in line with a tensioned line",
+   "Grab a line only when it is slack and on the quay",
+   "Lifejacket within 2 m of the edge and on the boat",
+   "Creaking or strand breaks: warn the ship, step well back",
+   "Someone in the water: lifebuoy and boat — never jump in"
+  ]
+ },
+ {
+  "t": "Dangerous Goods Containers",
+  "pts": [
+   "Placards and the declaration must match — if not, the box goes to the hold area",
+   "Fumigated units: ventilate, test, then open",
+   "Crack the doors from the side and step back",
+   "Leak or heat: isolate upwind, identify the UN number, call the DG officer",
+   "Ammonium nitrate and explosives do not stay in the yard",
+   "No smoking, no phones in the DG yard"
+  ]
+ },
+ {
+  "t": "Sugar Mill Season Start",
+  "pts": [
+   "Cane yard traffic kills more than machines: marshals, one-way, drivers out of the bay",
+   "Never hand-feed the carrier or clear a choke while it runs",
+   "Centrifugal lid opens only when the basket has stopped",
+   "Bagasse heats itself — probe the stacks, keep fire breaks clear",
+   "Hot juice and lime: face shield, open valves from the side",
+   "New workers wear the new-worker colour — look out for them"
+  ]
+ },
+ {
+  "t": "Grain Dust & Elevators",
+  "pts": [
+   "Most mill explosions start in the bucket elevator — belt slip, hot bearing, dust",
+   "Keep dust off ledges and motors; vacuum, no compressed air",
+   "Magnets and destoners stop tramp metal sparks",
+   "Never walk on stored grain; bins are entered only under permit",
+   "Phosphine fumigation is for licensed people only — keep out of placarded areas",
+   "Lift bags with your legs and a partner"
+  ]
+ },
+ {
+  "t": "New Season, New Workers – Buddy Up",
+  "pts": [
+   "No one works near machines, vehicles or heights before induction in their language",
+   "Every new worker has a buddy for two weeks and wears the new-worker colour",
+   "Ask, do not assume: show how, watch, then sign off",
+   "Age proof for everyone; no under-18s on hazardous jobs",
+   "Safe camps: water, toilets, LPG kept outside, fire extinguisher",
+   "Report unsafe conditions — nobody loses wages for speaking up"
+  ]
+ },
+ {
+  "t": "DG Room – It Can Start by Itself",
+  "pts": [
+   "Mains fails, the DG starts — AMF off, battery off, fuse out before any work",
+   "Back-feed can electrocute the lineman down the street: never bypass the interlock",
+   "Exhaust at 400 °C; no rags, no diesel near the manifold",
+   "Basement DG rooms: CO detector on, nobody inside during runs",
+   "Fuel transfer: bonding, drip tray, stop at 90 %",
+   "Doors closed, ear protection inside the enclosure"
+  ]
+ },
+ {
+  "t": "Refrigerant Rooms – Air You Cannot Smell",
+  "pts": [
+   "A refrigerant leak pushes out the oxygen — the detector is your nose",
+   "Alarm: leave, ventilate, close the door, isolate from outside",
+   "Pressure test with nitrogen only — never oxygen or air",
+   "Brazing a line with refrigerant inside makes phosgene — recover first, purge with nitrogen",
+   "Cylinders upright, shaded, capped",
+   "Venting refrigerant is illegal and wasteful — recover it"
+  ]
+ },
+ {
+  "t": "Lift Shafts – Never Open a Landing Door Blind",
+  "pts": [
+   "Most lift deaths are falls into an empty shaft — confirm the car is there",
+   "No jumpers on door locks; remove them before you leave",
+   "Car-top work only in INSPECTION mode with the stop switch and a second person",
+   "Pit entry with the car blocked and the stop switch on",
+   "Trapped passengers: trained mechanic releases, car at the landing, power off",
+   "Tell passengers to stay inside — climbing out between floors kills"
+  ]
+ },
+ {
+  "t": "Housekeeping Chemicals & Sharps",
+  "pts": [
+   "Toilet acid plus bleach makes chlorine — never together",
+   "Labelled bottles only; gloves and goggles for toilet cleaning",
+   "Needles only in the puncture-proof box; never push waste down with hands",
+   "Needlestick: wash, report, PEP within 2 hours",
+   "No ladders above 3 m; façade work for trained people with harness",
+   "Nobody enters a septic tank or drain — ever"
+  ]
+ },
+ {
+  "t": "Crowd Events – Exits, Marshals, Headcount",
+  "pts": [
+   "Count people in; stop at capacity — no free-entry rumours",
+   "Every exit unlocked, lit, staffed",
+   "Crowd surge signs: people falling, screaming, pressure — pause the show, open all exits",
+   "LED walls and trusses come down at the wind limit",
+   "Pandal fabric flame-retardant; LPG stalls separated; extinguishers everywhere",
+   "Medical post, AEDs and water points before the doors open"
+  ]
+ },
+ {
+  "t": "Sewer & Septic Tanks – No Manual Entry",
+  "pts": [
+   "Manual cleaning of sewers and septic tanks is illegal and lethal — machines do it",
+   "H2S kills in one breath and takes the rescuer next",
+   "Inspection entry only: isolate inflows, ventilate, test, lifeline, attendant, SCBA at the manhole",
+   "Attendant never enters; rescue is pulled out by winch",
+   "Rain forecast: no entry",
+   "Anyone asked to go in by hand says no and reports it"
+  ]
+ },
+ {
+  "t": "Haul Roads & Dumpers",
+  "pts": [
+   "Berms at the edges, stop blocks at the tip, spotter at night",
+   "Light vehicles keep 50 m and call before overtaking",
+   "Reverse only with camera or spotter; pedestrians stay out of the pit road",
+   "Brakes tested on the grade every shift; seat belt on",
+   "Blocked crusher: isolate, release the energy from outside — no bars in a running jaw",
+   "Dust sprays on; mask when they are not"
+  ]
+ },
+ {
+  "t": "Hot Meal Burns",
+  "pts": [
+   "Hot meal is 800 °C powder that flows like water",
+   "Nobody stands below or in line with a poke hole or inspection door",
+   "Clear blockages remotely first; manual poking only in aluminised PPE from the side",
+   "Doors stay shut when meal is built up above",
+   "Restart flushes the kiln inlet — clear the area before feed on",
+   "Burn: cool with water 20 minutes, straight to hospital"
+  ]
+ },
+ {
+  "t": "CO – The Silent Killer in Steel Plants",
+  "pts": [
+   "Blast-furnace gas has no smell; your CO monitor is the only warning",
+   "Monitor on, buddy with you, stay upwind of bleeders and stoves",
+   "Alarm: leave uphill and upwind, report — never finish the job",
+   "Collapsed colleague: do not go in without SCBA — call the rescue squad",
+   "Gas-line work only after goggle valve, blind, purge and test",
+   "Water near molten metal explodes — dry tools, dry charge"
+  ]
+ },
+ {
+  "t": "Coal Bunkers & Conveyors",
+  "pts": [
+   "Nip points at every pulley — no cleaning near a running belt",
+   "Pull-cord tested, guards on, cross only at bridges",
+   "Coal dust on beams is explosion fuel — clean, no compressed air",
+   "Bunker CO rising means a fire inside: inert, do not open",
+   "Bunker and silo entry: isolate, test, lifeline, attendant",
+   "Ash is hot and flows — hopper poking under isolation only"
+  ]
+ },
+ {
+  "t": "Loading Dock – Chock Before You Load",
+  "pts": [
+   "Trailer creeps, forklift drops — restraint or chocks and keys in the office first",
+   "Check the trailer floor and landing gear before driving in",
+   "Container doors open from the side with a strap",
+   "Loaders out of the trailer while the forklift is inside",
+   "Drivers wait in the driver room, not between vehicles",
+   "Green light means go; red means the trailer is not ready"
+  ]
+ },
+ {
+  "t": "Quench Tanks & Furnace Atmospheres",
+  "pts": [
+   "Endothermic gas explodes if air gets in — never bypass the purge",
+   "CO monitor on in the furnace area",
+   "Low oil or hot oil: no quench — the load will light the tank",
+   "Water in oil or salt erupts; dry work, dry tools, dry salt",
+   "Fire in the tank: load stays under, lid down, suppression on, no water",
+   "Baskets with cracks do not go in the furnace"
+  ]
+ },
+ {
+  "t": "Fuel Station – Static & Decanting",
+  "pts": [
+   "Earth the lorry before any hatch or hose",
+   "Engine off, chocks in, two people watching the whole decant",
+   "Right product, right tank — check the label twice",
+   "Phones, smoking, running engines: not on the forecourt",
+   "Spill: stop, isolate ignition, sand, report",
+   "Lightning: stop decanting"
+  ]
+ },
+ {
+  "t": "LPG Cylinders – Leaks & BLEVE",
+  "pts": [
+   "LPG sinks and travels — a leak at the carousel reaches the gate",
+   "Smell or alarm: stop, ESD, no ignition, move crosswind",
+   "Overfilled cylinder bursts in the sun — check-weigh every one",
+   "Jet fire: do not put it out until the gas is isolated; cool the tanks",
+   "Tank-lorry fire: 500 m back, BLEVE can happen",
+   "Earth, chock, engine off, hose in date — every lorry, every time"
+  ]
  }
 ]

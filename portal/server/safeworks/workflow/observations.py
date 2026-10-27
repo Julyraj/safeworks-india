@@ -38,7 +38,7 @@ async def is_mine(conn, viewer: AuthUser | None, o: dict) -> bool:
     if o["reporter_user_id"] == viewer.id:
         return True
     if o["anonymous"]:
-        return bool(await conn.fetchval("select 1 from observation_reporter_seals where observation_id = $1 and reporter_user_hash = $2", o["id"], hmac_id(viewer.id)))
+        return bool(await db._db(conn).fetchval("select 1 from observation_reporter_seals where observation_id = $1 and reporter_user_hash = $2", o["id"], hmac_id(viewer.id)))
     return False
 
 
@@ -485,7 +485,7 @@ async def duplicates(conn, o: dict) -> list[dict]:
 # ---------- reads ----------
 
 async def _linked_action_user(conn, viewer: AuthUser, o: dict) -> bool:
-    return bool(await conn.fetchval(
+    return bool(await db._db(conn).fetchval(
         "select 1 from actions where source_type = 'observation' and source_id = $1 and (owner_user_id = $2 or verifier_user_id = $2 or completed_by = $2) limit 1", o["id"], viewer.id
     ))
 

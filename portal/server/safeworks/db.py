@@ -4,7 +4,8 @@ from __future__ import annotations
 import json
 import uuid
 from contextlib import asynccontextmanager
-from datetime import date, datetime
+from datetime import date, datetime, timezone
+from decimal import Decimal
 from typing import Any, AsyncIterator
 from zoneinfo import ZoneInfo
 
@@ -30,9 +31,25 @@ class _Connection(asyncpg.Connection):
         return ""
 
 
+def _json_default(o: Any) -> Any:
+    if isinstance(o, datetime):
+        return o.astimezone(timezone.utc).isoformat(timespec="microseconds")
+    if isinstance(o, date):
+        return o.isoformat()
+    if isinstance(o, (uuid.UUID, Decimal)):
+        return str(o)
+    if isinstance(o, set):
+        return sorted(o)
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+
+
+def _json_encode(v: Any) -> str:
+    return json.dumps(v, default=_json_default, ensure_ascii=False)
+
+
 async def _init_conn(conn: asyncpg.Connection) -> None:
     for t in ("json", "jsonb"):
-        await conn.set_type_codec(t, encoder=json.dumps, decoder=json.loads, schema="pg_catalog")
+        await conn.set_type_codec(t, encoder=_json_encode, decoder=json.loads, schema="pg_catalog")
 
 
 async def init_pool() -> asyncpg.Pool:

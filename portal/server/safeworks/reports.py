@@ -67,7 +67,7 @@ async def render_run_report(conn, run_id: str, lang: str | None = None) -> str:
     )
     if not run:
         return ""
-    lang = lang or (await conn.fetchval("select language from users where id = $1", run["inspector_user_id"]) if run["inspector_user_id"] else None) or "en"
+    lang = lang or (await db._db(conn).fetchval("select language from users where id = $1", run["inspector_user_id"]) if run["inspector_user_id"] else None) or "en"
     org = run["org_id"]
     sections = await db.q("select * from inspection_sections where version_id = $1 order by sort, id", [run["template_version_id"]], conn)
     questions = await db.q(
@@ -178,7 +178,7 @@ async def store_run_report(conn, run_id: str, lang: str | None = None) -> str | 
 
 
 async def read_run_report(conn, run_id: str) -> bytes | None:
-    key = await conn.fetchval("select m.storage_key from inspection_runs r join media m on m.id = r.report_media_id where r.id = $1", run_id)
+    key = await db._db(conn).fetchval("select m.storage_key from inspection_runs r join media m on m.id = r.report_media_id where r.id = $1", run_id)
     if not key:
         return None
     return await storage.get(key)

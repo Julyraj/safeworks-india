@@ -1,7 +1,7 @@
 {
-  "name": "SafeWorks – site safety observations",
+  "name": "SafeWorks \u2013 site safety observations",
   "short_name": "SafeWorks",
-  "description": "Raise, assign, close and approve site safety observations with photos.",
+  "description": "Report a hazard in 30 seconds, track every action to a verified fix \u2014 online or offline.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
@@ -10,14 +10,46 @@
   "background_color": "#EEF1F3",
   "theme_color": "#0F1C2B",
   "lang": "en-IN",
-  "categories": ["business", "productivity", "utilities"],
+  "categories": [
+    "business",
+    "productivity",
+    "utilities"
+  ],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "Raise observation", "short_name": "Raise", "url": "/raise" },
-    { "name": "SOS – emergency numbers", "short_name": "SOS", "url": "/sos" }
+    {
+      "name": "Report a hazard",
+      "short_name": "Report",
+      "url": "/report"
+    },
+    {
+      "name": "Scan QR",
+      "short_name": "Scan",
+      "url": "/scan"
+    },
+    {
+      "name": "My actions",
+      "short_name": "Actions",
+      "url": "/actions"
+    }
   ]
 }

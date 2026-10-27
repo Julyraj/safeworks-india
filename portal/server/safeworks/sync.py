@@ -226,7 +226,7 @@ def _parse_cursor(cursor: str | None) -> datetime | None:
     if not cursor:
         return None
     try:
-        d = datetime.fromisoformat(cursor.replace("Z", "+00:00"))
+        d = datetime.fromisoformat(cursor.strip().replace(" ", "+").replace("Z", "+00:00"))  # an unencoded "+" arrives as a space
         if d.tzinfo is None:
             d = d.replace(tzinfo=timezone.utc)
     except ValueError:

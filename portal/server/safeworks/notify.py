@@ -84,7 +84,7 @@ async def notify(conn, *, org_id: str, recipients: Iterable[str | None], event_t
             if not critical:
                 if event_type in REMINDER_EVENTS:
                     cap = int(settings.get("dailyPushCap", 5))
-                    sent_today = await conn.fetchval(
+                    sent_today = await db._db(conn).fetchval(
                         """select count(*) from notifications where recipient_user_id = $1 and channel = 'push' and event_type = any($2::text[])
                               and created_at > now() - interval '24 hours' and status <> 'failed'""",
                         u["id"], list(REMINDER_EVENTS),
@@ -122,7 +122,7 @@ async def send_email(conn, *, org_id: str, user_id: str | None, to_addr: str, su
 
 
 async def _org_name(conn, org_id: str) -> str:
-    return await conn.fetchval("select name from organisations where id = $1", org_id) or "SafeWorks"
+    return await db._db(conn).fetchval("select name from organisations where id = $1", org_id) or "SafeWorks"
 
 
 def link_for(record_type: str, record_id: str) -> str:

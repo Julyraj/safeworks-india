@@ -422,7 +422,7 @@ class QrObservationCreate(In):
 
 # ---------- admin ----------
 class I18nText(Loose):
-    en: Str500
+    en: Str500 = ""
     hi: Str500 | None = None
     ta: Str500 | None = None
     kn: Str500 | None = None

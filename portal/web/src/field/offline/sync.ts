@@ -267,10 +267,11 @@ function mergeBy<T>(prev: T[], next: T[] | undefined, key: (x: T) => string, tom
 
 /* ---------------------------------------------------------------- orchestration */
 let running: Promise<void> | null = null;
+let again = false;
 let timer = 0;
 let kickTimer = 0;
 export async function syncNow(): Promise<void> {
-  if (running) return running;
+  if (running) { again = true; return running; } // something was queued mid-sync: run once more when this one ends
   if (!offlineReady() || !api.token()) return;
   running = (async () => {
     set({ syncing: true });
@@ -286,12 +287,14 @@ export async function syncNow(): Promise<void> {
       await recount();
       set({ syncing: false });
       running = null;
+      if (again) { again = false; void syncNow(); }
     }
   })();
   return running;
 }
 /** Push soon (debounced) — called after every enqueue so a saved report leaves the phone within a second when online. */
 export function kick(delayMs = 400) {
+  void recount(); // the banner shows the new pending item at once, before the push runs
   clearTimeout(kickTimer);
   kickTimer = window.setTimeout(() => { void syncNow(); }, delayMs);
 }

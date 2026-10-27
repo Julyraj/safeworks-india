@@ -206,7 +206,7 @@ async def create_notice(request: Request, user: AuthUser = Depends(console_user)
         for lang, body in inp.body.items():
             if lang in LANGS and body:
                 await c.execute(
-                    """insert into privacy_notices (org_id, version, lang, body, effective_from, status) values ($1,$2,$3,$4,$5::date,'active')
+                    """insert into privacy_notices (org_id, version, lang, body, effective_from, status) values ($1,$2,$3,$4,$5::text::date,'active')
                        on conflict (org_id, version, lang) do update set body = excluded.body, effective_from = excluded.effective_from, status = 'active'""", user.org_id, version, lang, body, inp.effective_from)
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="privacy_notice", record_id=str(version), changes={"langs": sorted(inp.body.keys()), "effectiveFrom": inp.effective_from})
     return await list_notices(user)

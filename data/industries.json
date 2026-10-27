@@ -13,16 +13,298 @@
    "construction_site"
   ],
   "sector": "sec-building",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Falls from height and through openings",
+   "Scaffold and formwork collapse",
+   "Excavation collapse and utility strikes",
+   "Struck by cranes, hoists and site vehicles",
+   "Electrocution from temporary power and overhead lines",
+   "Falling objects on workers and public",
+   "Heat stress, monsoon flooding and lightning",
+   "Dust, noise and manual handling"
+  ],
+  "tasks": [
+   {
+    "id": "con-wah",
+    "t": "Working at height (slabs, edges, ladders)",
+    "procs": [
+     "wah",
+     "scaffold"
+    ],
+    "cks": [
+     "cl-wah",
+     "cl-scaffold"
+    ],
+    "regs": [
+     "bocw-act",
+     "bis-construction",
+     "nbc-2016"
+    ],
+    "talks": [
+     "Falls from Height",
+     "Scaffolds"
+    ],
+    "permits": [
+     "Work at height"
+    ]
+   },
+   {
+    "id": "con-excav",
+    "t": "Excavation and foundations",
+    "procs": [
+     "excavation",
+     "piling"
+    ],
+    "cks": [
+     "cl-excavation",
+     "cl-piling"
+    ],
+    "regs": [
+     "bis-construction-2",
+     "piling-codes"
+    ],
+    "talks": [
+     "Excavation Collapse"
+    ],
+    "permits": [
+     "Excavation"
+    ]
+   },
+   {
+    "id": "con-lift",
+    "t": "Tower crane, hoists and lifting",
+    "procs": [
+     "lifting",
+     "towercrane",
+     "tackles"
+    ],
+    "cks": [
+     "cl-lifting",
+     "cl-towercrane",
+     "cl-tackles"
+    ],
+    "regs": [
+     "crane-codes",
+     "lifting-gear-codes"
+    ],
+    "talks": [
+     "Lifting Operations",
+     "Tower Crane Zone",
+     "Lifting Gear – Check Before You Rig"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "con-elec",
+    "t": "Temporary power and overhead lines",
+    "procs": [
+     "electrical"
+    ],
+    "cks": [
+     "cl-electrical"
+    ],
+    "regs": [
+     "electricity",
+     "ht-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "Working Near Overhead Lines"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "con-concrete",
+    "t": "Concrete, formwork, steel erection and hot work",
+    "procs": [
+     "concrete",
+     "steel",
+     "hotwork"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl-daily"
+    ],
+    "regs": [
+     "bis-construction-2",
+     "nfpa"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": [
+     "Hot work",
+     "Work at height"
+    ]
+   },
+   {
+    "id": "con-traffic",
+    "t": "Site traffic, demolition and public interface",
+    "procs": [
+     "traffic",
+     "demolition",
+     "security"
+    ],
+    "cks": [
+     "cl-daily",
+     "cl-demolition",
+     "cl-security"
+    ],
+    "regs": [
+     "mv-act",
+     "security-codes",
+     "cd-waste-2025"
+    ],
+    "talks": [
+     "Struck by Plant & Vehicles",
+     "Spot the Unsafe Condition"
+    ],
+    "permits": []
+   },
+   {
+    "id": "con-welfare",
+    "t": "Workforce welfare, heat and monsoon",
+    "procs": [
+     "heat",
+     "health",
+     "training",
+     "contractor"
+    ],
+    "cks": [
+     "cl-welfare",
+     "cl-heat",
+     "cl-statutory-construction",
+     "cl-contractor"
+    ],
+    "regs": [
+     "bocw-act",
+     "ss-code",
+     "contract-labour"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Monsoon Safety",
+     "Women's Safety & Respect at Work"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "bocw-act",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "nbc-2016",
+   "bis-construction",
+   "bis-construction-2",
+   "cd-waste-2025",
+   "eia-2006",
+   "ka-building",
+   "tn-cdbr",
+   "ka-fire",
+   "tn-fire",
+   "electricity",
+   "crane-codes",
+   "lifting-gear-codes",
+   "tools-codes",
+   "osha-1926",
+   "cdm-2015",
+   "ilo"
+  ],
+  "procs": [
+   "ptw",
+   "hira",
+   "wah",
+   "scaffold",
+   "excavation",
+   "piling",
+   "lifting",
+   "towercrane",
+   "tackles",
+   "tools",
+   "electrical",
+   "concrete",
+   "steel",
+   "demolition",
+   "traffic",
+   "housekeeping",
+   "heat",
+   "contractor",
+   "training",
+   "incident"
+  ],
+  "cks": [
+   "cl-daily",
+   "cl-statutory-construction",
+   "cl-scaffold",
+   "cl-excavation",
+   "cl-lifting",
+   "cl-towercrane",
+   "cl-tackles",
+   "cl-tools",
+   "cl-electrical",
+   "cl-wah",
+   "cl-welfare",
+   "cl-heat"
+  ],
+  "talks": [
+   "Falls from Height",
+   "Scaffolds",
+   "Excavation Collapse",
+   "Lifting Operations",
+   "Tower Crane Zone",
+   "Electrical Safety on Site",
+   "Working Near Overhead Lines",
+   "Struck by Plant & Vehicles",
+   "Hot Work & Fire",
+   "Heat Stress",
+   "Monsoon Safety",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Helmet (IS 2925)",
+   "Safety shoes (IS 15298)",
+   "Hi-vis vest",
+   "Safety glasses",
+   "Full-body harness for height work (IS 3521)",
+   "Gloves",
+   "Hearing protection near plant",
+   "FFP2 for cutting and grinding"
+  ],
+  "statutory": [
+   "Registration under OSH Code s.3 (legacy BOCW), cess 1 %, worker registration with Welfare Board",
+   "Building permit/commencement (BBMP-GBA/BDA/CMDA/DTCP), EC if ≥ 20,000 m² (excl. sheds), provisional Fire NOC, KSPCB/TNPCB CTE where applicable, C&D waste plan (2025 Rules)",
+   "Safety officer (250+ workers), safety committee, site safety plan, daily inspections, 7-day scaffold and daily excavation registers",
+   "Lifting appliances tested, hoists licensed, electrical by licensed electrician with RCDs, PESO licence for diesel storage above exemption",
+   "Welfare: drinking water, toilets, crèche (50+ women), first aid; working hours/OT; women's safety; child labour prohibited",
+   "Accident notice Form XI (12 h) / state form; fatal forthwith to ICF, police, family; dangerous occurrences and notifiable diseases"
+  ],
+  "cats": [
+   "HEIGHT",
+   "SCAFF",
+   "EXCAV",
+   "LIFT",
+   "ELEC",
+   "VEHICLE",
+   "PPE",
+   "HOUSE",
+   "FIRE",
+   "TOOLS",
+   "HEAT",
+   "PROC",
+   "HEALTH",
+   "SECURITY"
+  ],
+  "kpis": [
+   "Scaffold tags valid and edge protection complete on daily walk (% of areas)",
+   "Permits audited vs issued (% fully compliant)",
+   "Heat-illness cases per 1,000 workers in Apr–Jun"
+  ]
  },
  {
   "id": "infrastructure",
@@ -38,16 +320,298 @@
    "construction_site"
   ],
   "sector": "sec-infra",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Traffic intrusion into work zones",
+   "Tunnel atmosphere and ground collapse",
+   "Piling rig overturn and auger entanglement",
+   "Blasting flyrock, misfires and vibration",
+   "Working over or near water",
+   "Bitumen burns and hot-mix plant fires",
+   "Utility strikes (gas, power, water)",
+   "Deep excavation collapse",
+   "Girder/segment lifting",
+   "Heat and remote-site emergencies"
+  ],
+  "tasks": [
+   {
+    "id": "inf-tunnel",
+    "t": "Tunnelling, shafts and compressed air",
+    "procs": [
+     "tunnelling",
+     "confined"
+    ],
+    "cks": [
+     "cl-tunnel",
+     "cl-confined"
+    ],
+    "regs": [
+     "tunnel-codes"
+    ],
+    "talks": [
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "inf-piling",
+    "t": "Piling and deep foundations",
+    "procs": [
+     "piling",
+     "lifting"
+    ],
+    "cks": [
+     "cl-piling",
+     "cl-lifting"
+    ],
+    "regs": [
+     "piling-codes"
+    ],
+    "talks": [
+     "Lifting Operations"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "inf-blast",
+    "t": "Blasting and rock excavation",
+    "procs": [
+     "blasting"
+    ],
+    "cks": [
+     "cl-blasting"
+    ],
+    "regs": [
+     "blasting-codes",
+     "explosives"
+    ],
+    "talks": [
+     "Blasting Day"
+    ],
+    "permits": []
+   },
+   {
+    "id": "inf-road",
+    "t": "Road works, bitumen and traffic management",
+    "procs": [
+     "roadworks",
+     "traffic"
+    ],
+    "cks": [
+     "cl-roadworks"
+    ],
+    "regs": [
+     "road-works-codes",
+     "mv-act"
+    ],
+    "talks": [
+     "Bitumen Burns",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": []
+   },
+   {
+    "id": "inf-water",
+    "t": "Marine, jetty and work over water",
+    "procs": [
+     "water"
+    ],
+    "cks": [
+     "cl-water"
+    ],
+    "regs": [
+     "water-codes"
+    ],
+    "talks": [
+     "Working Over Water"
+    ],
+    "permits": []
+   },
+   {
+    "id": "inf-excav",
+    "t": "Trenching, pipelines and utility strikes",
+    "procs": [
+     "excavation"
+    ],
+    "cks": [
+     "cl-excavation"
+    ],
+    "regs": [
+     "bis-construction",
+     "bis-construction-2"
+    ],
+    "talks": [
+     "Excavation Collapse"
+    ],
+    "permits": [
+     "Excavation"
+    ]
+   },
+   {
+    "id": "inf-girder",
+    "t": "Girder, segment and structural lifts",
+    "procs": [
+     "lifting",
+     "towercrane",
+     "steel",
+     "concrete"
+    ],
+    "cks": [
+     "cl-lifting",
+     "cl-towercrane"
+    ],
+    "regs": [
+     "crane-codes",
+     "lifting-gear-codes"
+    ],
+    "talks": [
+     "Lifting Operations",
+     "Tower Crane Zone"
+    ],
+    "permits": [
+     "Lifting (critical)",
+     "Work at height"
+    ]
+   },
+   {
+    "id": "inf-remote",
+    "t": "Remote stretches, heat and emergencies",
+    "procs": [
+     "p3-remote-er",
+     "heat",
+     "emergency"
+    ],
+    "cks": [
+     "cl4-remote-er",
+     "cl-heat",
+     "cl-emergency"
+    ],
+    "regs": [
+     "dm-act",
+     "osha-heat-nep"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Emergency Response",
+     "Remote Site – Know Your Way to Hospital"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "bocw-act",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "tunnel-codes",
+   "piling-codes",
+   "blasting-codes",
+   "explosives",
+   "water-codes",
+   "road-works-codes",
+   "mv-act",
+   "electricity",
+   "crane-codes",
+   "lifting-gear-codes",
+   "bis-construction",
+   "eia-2006",
+   "noise-rules",
+   "dm-act",
+   "osha-1926",
+   "ilo"
+  ],
+  "procs": [
+   "ptw",
+   "tunnelling",
+   "piling",
+   "blasting",
+   "roadworks",
+   "water",
+   "excavation",
+   "lifting",
+   "towercrane",
+   "tackles",
+   "electrical",
+   "traffic",
+   "concrete",
+   "steel",
+   "wah",
+   "heat",
+   "p3-remote-er",
+   "p3-crusher",
+   "emergency",
+   "incident"
+  ],
+  "cks": [
+   "cl-tunnel",
+   "cl-piling",
+   "cl-blasting",
+   "cl-roadworks",
+   "cl-water",
+   "cl-excavation",
+   "cl-lifting",
+   "cl-wah",
+   "cl-daily",
+   "cl-statutory-construction",
+   "cl4-remote-er",
+   "cl-emergency"
+  ],
+  "talks": [
+   "Struck by Plant & Vehicles",
+   "Confined Space",
+   "Excavation Collapse",
+   "Blasting Day",
+   "Bitumen Burns",
+   "Working Over Water",
+   "Lifting Operations",
+   "Working Near Overhead Lines",
+   "Heat Stress",
+   "Monsoon Safety",
+   "Remote Site – Know Your Way to Hospital",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Helmet",
+   "Hi-vis (Class 2/3 for road works)",
+   "Safety boots",
+   "Safety glasses",
+   "Lifejacket for work over water",
+   "Harness for height work",
+   "Heat-resistant gloves/gaiters for bitumen",
+   "Hearing and dust protection in tunnels/crushers"
+  ],
+  "statutory": [
+   "BOCW/OSH Code registration per state; contractor licence; client SHE manuals (NHAI, BMRCL, CMRL, water boards)",
+   "Traffic police permissions and IRC:SP:55 signage; PESO explosives licences and DM intimation for blasting; port/coast guard and CRZ for marine works",
+   "EC for highways/metro per EIA Notification; tree-cutting permissions; hot-mix plant consents; noise rules near habitations",
+   "Compressed-air work medical surveillance; tunnel atmosphere monitoring; DGMS where quarries supply aggregates",
+   "Utility clearances (permit-to-dig) and emergency contacts for gas/power/water authorities",
+   "Accident notices under BOCW/OSH Code; dangerous occurrences (collapse, flyrock, rig overturn) reported within statutory time"
+  ],
+  "cats": [
+   "VEHICLE",
+   "EXCAV",
+   "HEIGHT",
+   "LIFT",
+   "CONFINED",
+   "ELEC",
+   "FIRE",
+   "PPE",
+   "HOUSE",
+   "ENV",
+   "HEAT",
+   "NOISE",
+   "DUST",
+   "PROC"
+  ],
+  "kpis": [
+   "Work-zone traffic intrusions/near misses per month",
+   "Tunnel gas-alarm events and response time",
+   "Utility strikes per 100 excavations"
+  ]
  },
  {
   "id": "manufacturing",
@@ -63,16 +627,318 @@
    "factory"
   ],
   "sector": "sec-factory",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Machine entanglement and unguarded nips",
+   "Power press and robot-cell injuries",
+   "EOT crane and forklift incidents",
+   "Welding fire and fume",
+   "Paint/solvent flammables and isocyanates",
+   "Electrical shock and arc flash at panels",
+   "Noise and hand-arm vibration",
+   "Manual handling and ergonomics",
+   "Compressed air and pressure systems",
+   "Heat treatment and furnace hazards"
+  ],
+  "tasks": [
+   {
+    "id": "mfg-machine",
+    "t": "Machine guarding, tools and lockout",
+    "procs": [
+     "machine",
+     "tools",
+     "loto"
+    ],
+    "cks": [
+     "cl-loto",
+     "cl-tools"
+    ],
+    "regs": [
+     "machinery-codes",
+     "tools-codes"
+    ],
+    "talks": [
+     "Lockout / Tagout",
+     "Angle Grinder Rules"
+    ],
+    "permits": []
+   },
+   {
+    "id": "mfg-press",
+    "t": "Presses and robot cells",
+    "procs": [
+     "p3-press",
+     "p3-robot"
+    ],
+    "cks": [
+     "cl4-press",
+     "cl4-robot"
+    ],
+    "regs": [
+     "machinery-codes",
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Press Shop – Hands Out of the Die",
+     "Robot Cells – Nobody Inside While Live"
+    ],
+    "permits": []
+   },
+   {
+    "id": "mfg-weld",
+    "t": "Welding, cutting and fabrication",
+    "procs": [
+     "hotwork",
+     "p3-weldshop",
+     "cylinders"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl4-weldshop"
+    ],
+    "regs": [
+     "nfpa",
+     "bis-ptw-hygiene"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Weld Fume Is Not Just Smoke"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "mfg-lift",
+    "t": "EOT cranes, slings and forklifts",
+    "procs": [
+     "lifting",
+     "tackles",
+     "towercrane",
+     "forklift"
+    ],
+    "cks": [
+     "cl-tackles",
+     "cl-forklift",
+     "cl-lifting"
+    ],
+    "regs": [
+     "crane-codes",
+     "lifting-gear-codes",
+     "pit-racking"
+    ],
+    "talks": [
+     "Lifting Gear – Check Before You Rig",
+     "Forklifts & Pedestrians"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "mfg-paint",
+    "t": "Painting, blasting and coating",
+    "procs": [
+     "painting",
+     "p3-paintshop"
+    ],
+    "cks": [
+     "cl-painting",
+     "cl4-paintshop"
+    ],
+    "regs": [
+     "petroleum",
+     "static-electricity"
+    ],
+    "talks": [
+     "Paint Shop – Solvents, Static & Isocyanates"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "mfg-elec",
+    "t": "Electrical panels, substations and isolation",
+    "procs": [
+     "electrical",
+     "substation",
+     "loto"
+    ],
+    "cks": [
+     "cl-substation",
+     "cl-loto"
+    ],
+    "regs": [
+     "electricity",
+     "ht-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "mfg-heat",
+    "t": "Heat treatment, furnaces and compressors",
+    "procs": [
+     "p3-heat-treat",
+     "pressure"
+    ],
+    "cks": [
+     "cl4-heat-treat"
+    ],
+    "regs": [
+     "boilers-2025",
+     "gas-cylinders"
+    ],
+    "talks": [
+     "Quench Tanks & Furnace Atmospheres"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "mfg-health",
+    "t": "Noise, ergonomics, PPE and health",
+    "procs": [
+     "noise",
+     "respiratory",
+     "manual",
+     "health",
+     "ppe"
+    ],
+    "cks": [
+     "cl-ppe",
+     "cl-welfare"
+    ],
+    "regs": [
+     "state-dangerous-ops",
+     "bis-ppe-2",
+     "noise-rules"
+    ],
+    "talks": [
+     "Noise",
+     "Manual Handling",
+     "PPE Basics"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "ka-safety-audit",
+   "state-dangerous-ops",
+   "machinery-codes",
+   "crane-codes",
+   "lifting-gear-codes",
+   "tools-codes",
+   "pit-racking",
+   "fire-systems",
+   "electricity",
+   "ht-codes",
+   "how-rules",
+   "epr-regimes",
+   "ec-act",
+   "osha-1910",
+   "iso-45001"
+  ],
+  "procs": [
+   "committee",
+   "hira",
+   "ptw",
+   "machine",
+   "p3-press",
+   "p3-robot",
+   "loto",
+   "lifting",
+   "tackles",
+   "forklift",
+   "tools",
+   "hotwork",
+   "p3-weldshop",
+   "p3-paintshop",
+   "electrical",
+   "substation",
+   "pressure",
+   "p3-heat-treat",
+   "noise",
+   "firesys"
+  ],
+  "cks": [
+   "cl-statutory-factory",
+   "cl-loto",
+   "cl4-press",
+   "cl4-robot",
+   "cl-tackles",
+   "cl-forklift",
+   "cl-tools",
+   "cl4-weldshop",
+   "cl4-paintshop",
+   "cl-substation",
+   "cl-firesys",
+   "cl-ppe"
+  ],
+  "talks": [
+   "Lockout / Tagout",
+   "Press Shop – Hands Out of the Die",
+   "Robot Cells – Nobody Inside While Live",
+   "Weld Fume Is Not Just Smoke",
+   "Forklifts & Pedestrians",
+   "Lifting Gear – Check Before You Rig",
+   "Angle Grinder Rules",
+   "Noise",
+   "Manual Handling",
+   "Hot Work & Fire",
+   "Electrical Safety on Site",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Safety shoes",
+   "Safety glasses",
+   "Hearing protection in marked zones",
+   "Gloves matched to task (none at rotating parts)",
+   "Helmet in crane/overhead areas",
+   "Welding helmet/shield and leathers",
+   "FFP2/3 for grinding, welding, painting",
+   "Arc-rated PPE for live electrical testing"
+  ],
+  "statutory": [
+   "OSH Code registration (legacy Factories licence), occupier/manager notice, Safety Officer (500+; hazardous 250+), Safety Committee, welfare (canteen 250+, crèche 50+ women), medical examinations for dangerous operations",
+   "Lifting machines/tackles 12-monthly test; pressure vessels per state rules; electrical CEIG inspection; Fire NOC; CTE/CTO; HW authorisation; Form V; EPR for e-waste/batteries/used oil",
+   "Power presses, robots and dangerous machines: operators 18+, authorised in writing; state-rule schedules (power presses, rubber mills, woodworking)",
+   "Noise ≥ 90 dB(A): hearing conservation and audiometry; NIHL notifiable; dust/fume PELs per Sch. II",
+   "Hot work, confined space and electrical permits per IS 17893; Karnataka Safety Audit Rules 2024 where applicable",
+   "Working hours/OT/women night-work conditions; contract labour licences; accident notices within 12 h/48 h"
+  ],
+  "cats": [
+   "GUARD",
+   "LIFT",
+   "ELEC",
+   "FIRE",
+   "TOOLS",
+   "PPE",
+   "HOUSE",
+   "NOISE",
+   "CHEM",
+   "ERGO",
+   "PRESSURE",
+   "PROC",
+   "HEALTH",
+   "VEHICLE"
+  ],
+  "kpis": [
+   "Guard/interlock defects found per audit and days to close",
+   "Machine-related hand/finger injuries per million hours",
+   "LOTO compliance on maintenance jobs (% audited)"
+  ]
  },
  {
   "id": "automotive",
@@ -89,16 +955,309 @@
    "hazardous_process_factory"
   ],
   "sector": "sec-factory",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Power press and die-setting crush injuries",
+   "Robot cells and automated lines",
+   "Welding fume, spatter and laser hazards in body shop",
+   "Paint shop flammables, isocyanates and ovens",
+   "EV high-voltage batteries and thermal runaway",
+   "Conveyor/assembly-line entanglement and ergonomics",
+   "Test-track and vehicle-movement incidents",
+   "Forklifts, AGVs and in-plant logistics",
+   "Chemicals: phosphating, ED, adhesives, oils",
+   "Noise and heat"
+  ],
+  "tasks": [
+   {
+    "id": "auto-press",
+    "t": "Press shop and die setting",
+    "procs": [
+     "p3-press",
+     "machine"
+    ],
+    "cks": [
+     "cl4-press"
+    ],
+    "regs": [
+     "machinery-codes",
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Press Shop – Hands Out of the Die"
+    ],
+    "permits": []
+   },
+   {
+    "id": "auto-robot",
+    "t": "Robot cells and automated lines",
+    "procs": [
+     "p3-robot",
+     "loto"
+    ],
+    "cks": [
+     "cl4-robot",
+     "cl-loto"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Robot Cells – Nobody Inside While Live",
+     "Lockout / Tagout"
+    ],
+    "permits": []
+   },
+   {
+    "id": "auto-body",
+    "t": "Body shop welding and fume",
+    "procs": [
+     "p3-weldshop",
+     "hotwork"
+    ],
+    "cks": [
+     "cl4-weldshop",
+     "cl-hotwork"
+    ],
+    "regs": [
+     "nfpa",
+     "bis-ptw-hygiene"
+    ],
+    "talks": [
+     "Weld Fume Is Not Just Smoke",
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "auto-paint",
+    "t": "Paint shop, solvents and ovens",
+    "procs": [
+     "p3-paintshop",
+     "painting",
+     "chemicals"
+    ],
+    "cks": [
+     "cl4-paintshop",
+     "cl-painting",
+     "cl-chemical"
+    ],
+    "regs": [
+     "petroleum",
+     "static-electricity",
+     "how-rules"
+    ],
+    "talks": [
+     "Paint Shop – Solvents, Static & Isocyanates"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "auto-ev",
+    "t": "EV batteries, HV work and charging",
+    "procs": [
+     "p3-ev-battery",
+     "battery-solar",
+     "p3-licell"
+    ],
+    "cks": [
+     "cl4-ev-battery",
+     "cl-battery"
+    ],
+    "regs": [
+     "battery-solar-codes",
+     "electricity",
+     "epr-regimes"
+    ],
+    "talks": [
+     "High-Voltage Batteries – Orange Means Danger",
+     "Lithium Cells – Signs of Thermal Runaway"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "auto-track",
+    "t": "Test track and dynamometers",
+    "procs": [
+     "p3-test-track",
+     "traffic"
+    ],
+    "cks": [
+     "cl4-test-track"
+    ],
+    "regs": [
+     "mv-act"
+    ],
+    "talks": [
+     "Test Track Rules"
+    ],
+    "permits": []
+   },
+   {
+    "id": "auto-logistics",
+    "t": "Forklifts, docks and material handling",
+    "procs": [
+     "forklift",
+     "p3-loading-dock",
+     "manual"
+    ],
+    "cks": [
+     "cl-forklift",
+     "cl4-loading-dock"
+    ],
+    "regs": [
+     "pit-racking"
+    ],
+    "talks": [
+     "Forklifts & Pedestrians",
+     "Loading Dock – Chock Before You Load",
+     "Manual Handling"
+    ],
+    "permits": []
+   },
+   {
+    "id": "auto-util",
+    "t": "Substations, DG, compressors and fire systems",
+    "procs": [
+     "substation",
+     "pressure",
+     "firesys",
+     "p3-dg-room"
+    ],
+    "cks": [
+     "cl-substation",
+     "cl-firesys",
+     "cl4-dg-room"
+    ],
+    "regs": [
+     "ht-codes",
+     "fire-systems"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "DG Room – It Can Start by Itself"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "machinery-codes",
+   "petroleum",
+   "static-electricity",
+   "battery-solar-codes",
+   "electricity",
+   "ht-codes",
+   "fire-systems",
+   "how-rules",
+   "epr-regimes",
+   "pit-racking",
+   "crane-codes",
+   "mv-act",
+   "osha-1910",
+   "iso-machinery"
+  ],
+  "procs": [
+   "p3-press",
+   "p3-robot",
+   "p3-weldshop",
+   "p3-paintshop",
+   "p3-ev-battery",
+   "p3-test-track",
+   "machine",
+   "loto",
+   "hotwork",
+   "painting",
+   "forklift",
+   "p3-loading-dock",
+   "lifting",
+   "tackles",
+   "electrical",
+   "substation",
+   "pressure",
+   "firesys",
+   "hira",
+   "ptw"
+  ],
+  "cks": [
+   "cl4-press",
+   "cl4-robot",
+   "cl4-weldshop",
+   "cl4-paintshop",
+   "cl4-ev-battery",
+   "cl4-test-track",
+   "cl-loto",
+   "cl-forklift",
+   "cl4-loading-dock",
+   "cl-substation",
+   "cl-firesys",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Press Shop – Hands Out of the Die",
+   "Robot Cells – Nobody Inside While Live",
+   "Weld Fume Is Not Just Smoke",
+   "Paint Shop – Solvents, Static & Isocyanates",
+   "High-Voltage Batteries – Orange Means Danger",
+   "Test Track Rules",
+   "Lockout / Tagout",
+   "Forklifts & Pedestrians",
+   "Hot Work & Fire",
+   "Noise",
+   "Manual Handling",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Safety shoes (metatarsal in press/die areas)",
+   "Safety glasses",
+   "Hearing protection in press and body shops",
+   "Cut-resistant gloves for blanks/panels",
+   "Welding PPE (helmet, leathers) in body shop",
+   "Supplied-air/PAPR and antistatic coveralls in paint shop",
+   "Class 0 insulating gloves and arc-rated face shield for HV work",
+   "Helmet and harness for overhead conveyors/structures"
+  ],
+  "statutory": [
+   "OSH Code/Factories registration; hazardous-process classification where paint-shop solvents, ED and chemicals exceed thresholds; Safety Officer (500+; 250+ hazardous), Safety Committee, OHC",
+   "Power presses and robots: operators 18+ and authorised; state dangerous-operations schedules (power presses, spray painting, lead, chrome) with medical examinations",
+   "Petroleum Rules licence for thinner/solvent storage; MSIHC for bulk chemicals; CEIG approval for HT, EV charging and DG; Fire NOC",
+   "Lifting machines (EOT, die cranes) and pressure vessels (compressors, autoclaves) tested by competent persons; forklift operator authorisation",
+   "Hazardous-waste authorisation (paint sludge, oils, batteries); EPR for batteries/e-waste/used oil; CTE/CTO with VOC conditions",
+   "Test tracks: CMVR test-agency rules where applicable; MV Act for vehicle movements; accident reporting to DISH/CEIG"
+  ],
+  "cats": [
+   "GUARD",
+   "PPE",
+   "FIRE",
+   "CHEM",
+   "ELEC",
+   "LIFT",
+   "VEHICLE",
+   "TOOLS",
+   "HOUSE",
+   "NOISE",
+   "ERGO",
+   "HEAT",
+   "PROC",
+   "HEALTH"
+  ],
+  "kpis": [
+   "Interlock/guard bypasses found per cell audit",
+   "Isocyanate biological-monitoring results above guidance (painters)",
+   "HV procedure deviations (unproven isolation) per quarter"
+  ]
  },
  {
   "id": "chemical",
@@ -115,16 +1274,304 @@
    "factory"
   ],
   "sector": "sec-chemical",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Loss of containment and toxic release",
+   "Fire and explosion (flammables, dust, static)",
+   "Runaway reactions and reactor-charging fires",
+   "Confined-space entry into vessels and tanks",
+   "Tank-farm and loading-gantry incidents",
+   "Chlorine, ammonia and H2S exposure",
+   "Corrosive burns and chemical splashes",
+   "Pressure systems and relief failures",
+   "Hot work in process areas",
+   "Process-safety gaps (MoC, PHA, integrity)"
+  ],
+  "tasks": [
+   {
+    "id": "chem-psm",
+    "t": "Process safety management and change",
+    "procs": [
+     "psm",
+     "moc",
+     "hira"
+    ],
+    "cks": [
+     "cl-psm"
+    ],
+    "regs": [
+     "msihc",
+     "api-ccps",
+     "is-17893"
+    ],
+    "talks": [
+     "Life-Saving Rules",
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   },
+   {
+    "id": "chem-reactor",
+    "t": "Reactor charging and solvent handling",
+    "procs": [
+     "p3-reactor",
+     "p3-solvent"
+    ],
+    "cks": [
+     "cl4-reactor",
+     "cl4-solvent"
+    ],
+    "regs": [
+     "static-electricity",
+     "petroleum"
+    ],
+    "talks": [
+     "Charging the Reactor Safely",
+     "Solvents & Static"
+    ],
+    "permits": []
+   },
+   {
+    "id": "chem-tank",
+    "t": "Tank farm, cleaning and entry",
+    "procs": [
+     "tanks",
+     "tankclean",
+     "confined"
+    ],
+    "cks": [
+     "cl-tanks",
+     "cl-tankclean",
+     "cl-confined"
+    ],
+    "regs": [
+     "tank-standards"
+    ],
+    "talks": [
+     "Tank Entry",
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry",
+     "Hot work"
+    ]
+   },
+   {
+    "id": "chem-toxic",
+    "t": "Toxic gas systems and emergency response",
+    "procs": [
+     "toxicgas",
+     "emergency"
+    ],
+    "cks": [
+     "cl-toxicgas",
+     "cl-emergency"
+    ],
+    "regs": [
+     "toxic-gas-codes",
+     "chem-accident-rules"
+    ],
+    "talks": [
+     "Chlorine & Ammonia Leaks",
+     "Emergency Response"
+    ],
+    "permits": []
+   },
+   {
+    "id": "chem-dust",
+    "t": "Powder handling and combustible dust",
+    "procs": [
+     "dust"
+    ],
+    "cks": [
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Combustible Dust"
+    ],
+    "permits": []
+   },
+   {
+    "id": "chem-hot",
+    "t": "Hot work, isolation and maintenance",
+    "procs": [
+     "hotwork",
+     "loto",
+     "ptw"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl-loto"
+    ],
+    "regs": [
+     "is-17893",
+     "oisd"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Hot work",
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "chem-chem",
+    "t": "Chemical handling, labs and health",
+    "procs": [
+     "chemicals",
+     "lab",
+     "health"
+    ],
+    "cks": [
+     "cl-chemical",
+     "cl-lab"
+    ],
+    "regs": [
+     "ghs-india",
+     "bis-ptw-hygiene"
+    ],
+    "talks": [
+     "Chemical Safety & SDS"
+    ],
+    "permits": []
+   },
+   {
+    "id": "chem-fire",
+    "t": "Fire protection and pressure systems",
+    "procs": [
+     "fire",
+     "firesys",
+     "pressure"
+    ],
+    "cks": [
+     "cl-firesys",
+     "cl-fire"
+    ],
+    "regs": [
+     "fire-systems",
+     "boilers-2025"
+    ],
+    "talks": [
+     "Emergency Response",
+     "Hot Work & Fire"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "msihc",
+   "chem-accident-rules",
+   "pli-act",
+   "osh-code",
+   "oisd",
+   "api-ccps",
+   "tank-standards",
+   "static-electricity",
+   "toxic-gas-codes",
+   "dust-codes",
+   "pngrb",
+   "petroleum",
+   "gas-cylinders",
+   "boilers-2025",
+   "how-rules",
+   "air-water",
+   "ccts",
+   "comah-seveso",
+   "osha-1910",
+   "iso-machinery"
+  ],
+  "procs": [
+   "psm",
+   "p3-reactor",
+   "p3-solvent",
+   "tanks",
+   "tankclean",
+   "toxicgas",
+   "dust",
+   "chemicals",
+   "confined",
+   "hotwork",
+   "loto",
+   "moc",
+   "pressure",
+   "emergency",
+   "firesys",
+   "lab",
+   "respiratory",
+   "health",
+   "committee",
+   "incident"
+  ],
+  "cks": [
+   "cl-psm",
+   "cl4-reactor",
+   "cl4-solvent",
+   "cl-tanks",
+   "cl-tankclean",
+   "cl-toxicgas",
+   "cl-dust",
+   "cl-chemical",
+   "cl-confined",
+   "cl-hotwork",
+   "cl-emergency",
+   "cl-firesys"
+  ],
+  "talks": [
+   "Chemical Safety & SDS",
+   "Charging the Reactor Safely",
+   "Solvents & Static",
+   "Tank Entry",
+   "Confined Space",
+   "Chlorine & Ammonia Leaks",
+   "Combustible Dust",
+   "Hot Work & Fire",
+   "Lockout / Tagout",
+   "Emergency Response",
+   "Life-Saving Rules",
+   "Near Miss Reporting"
+  ],
+  "ppe": [
+   "Antistatic FR coveralls and conductive shoes",
+   "Chemical goggles/face shield",
+   "Chemical gloves per SDS",
+   "Helmet",
+   "Escape respirator in toxic-gas areas; SCBA for ERT",
+   "Respirator (A2P3) for dispensing",
+   "Harness for tank-top work"
+  ],
+  "statutory": [
+   "MSIHC: site notification, safety report (3-yr), annual safety audit, on-site plan (6-monthly rehearsal), off-site plan/District Crisis Group drill, SDS; PLI insurance; Chemical Accidents Rules",
+   "OSH Code Ch. XII hazardous processes; Safety Officer (250+), Safety Committee, OHC/medical officer; Karnataka Safety Audit Rules 2024",
+   "PESO licences (petroleum, cylinders, SMPV), CEIG, Boilers Act, Fire NOC, CTE/CTO with OCEMS, HW authorisation, EIA/EC; CCTS if chlor-alkali/refinery/petrochemical/fertiliser; BRSR if listed",
+   "Static control per IS 7689; hazardous-area classification and Ex register (IS 5572/60079)",
+   "Reaction hazard assessment and HAZOP for every process; MoC; relief design basis documented",
+   "Pre-employment and periodic medicals per state schedules; exposure monitoring against Sch. II; occupational diseases notified"
+  ],
+  "cats": [
+   "CHEM",
+   "FIRE",
+   "PROC",
+   "CONFINED",
+   "PRESSURE",
+   "ELEC",
+   "PPE",
+   "HEALTH",
+   "ENV",
+   "HOUSE",
+   "LIFT",
+   "HEIGHT",
+   "DUST",
+   "OTHER"
+  ],
+  "kpis": [
+   "Tier 1/Tier 2 process safety events (API 754) per year",
+   "Overdue PHA/HAZOP actions and relief-valve tests",
+   "Loss-of-containment near misses reported per month"
+  ]
  },
  {
   "id": "pharma",
@@ -141,16 +1588,300 @@
    "factory"
   ],
   "sector": "sec-chemical",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Solvent fires and static in recovery/dispensing",
+   "Reactor-charging flash fires and runaway reactions",
+   "Potent compound exposure (OEB 4/5)",
+   "Clean-room interlocks, fumigation and gas suppression",
+   "Confined-space entry into reactors, centrifuges, tanks",
+   "Pressure vessels: autoclaves, reactors, boilers",
+   "Toxic gases (chlorine, HCl, ammonia) and corrosives",
+   "Lab hazards (QC/R&D/microbiology)",
+   "Dust explosion in milling/granulation",
+   "Gowning heat stress and ergonomics"
+  ],
+  "tasks": [
+   {
+    "id": "ph-solvent",
+    "t": "Solvent storage, dispensing and recovery",
+    "procs": [
+     "p3-solvent",
+     "chemicals"
+    ],
+    "cks": [
+     "cl4-solvent",
+     "cl-chemical"
+    ],
+    "regs": [
+     "petroleum",
+     "static-electricity"
+    ],
+    "talks": [
+     "Solvents & Static"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "ph-reactor",
+    "t": "Reactor charging and vessel entry",
+    "procs": [
+     "p3-reactor",
+     "psm",
+     "confined"
+    ],
+    "cks": [
+     "cl4-reactor",
+     "cl-confined"
+    ],
+    "regs": [
+     "msihc",
+     "is-17893"
+    ],
+    "talks": [
+     "Charging the Reactor Safely",
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "ph-potent",
+    "t": "Potent compounds and containment",
+    "procs": [
+     "p3-potent",
+     "respiratory",
+     "health"
+    ],
+    "cks": [
+     "cl4-potent"
+    ],
+    "regs": [
+     "state-dangerous-ops",
+     "niosh-acgih"
+    ],
+    "talks": [
+     "Potent Compounds – Gown Right, Degown Slower"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ph-cleanroom",
+    "t": "Clean rooms, HVAC and fumigation",
+    "procs": [
+     "p3-cleanroom",
+     "firesys",
+     "loto"
+    ],
+    "cks": [
+     "cl4-cleanroom",
+     "cl-firesys"
+    ],
+    "regs": [
+     "fire-systems"
+    ],
+    "talks": [
+     "Clean-Room Work – Interlocks, Fumigation & Gas Suppression",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Electrical (LV/HT)",
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "ph-lab",
+    "t": "QC, R&D and microbiology labs",
+    "procs": [
+     "lab",
+     "bio"
+    ],
+    "cks": [
+     "cl-lab",
+     "cl-bio"
+    ],
+    "regs": [
+     "lab-codes",
+     "bio-codes"
+    ],
+    "talks": [
+     "Chemical Safety & SDS"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ph-utility",
+    "t": "Boilers, chillers, toxic gases and cooling towers",
+    "procs": [
+     "pressure",
+     "toxicgas",
+     "p3-hvac",
+     "legionella"
+    ],
+    "cks": [
+     "cl-toxicgas",
+     "cl4-hvac",
+     "cl-legionella"
+    ],
+    "regs": [
+     "boilers-2025",
+     "toxic-gas-codes"
+    ],
+    "talks": [
+     "Chlorine & Ammonia Leaks",
+     "Refrigerant Rooms – Air You Cannot Smell"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ph-dust",
+    "t": "Milling, granulation and dust",
+    "procs": [
+     "dust"
+    ],
+    "cks": [
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Combustible Dust"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ph-waste",
+    "t": "Waste, effluent and environment",
+    "procs": [
+     "housekeeping",
+     "esg"
+    ],
+    "cks": [
+     "cl-environment"
+    ],
+    "regs": [
+     "how-rules",
+     "epr-regimes"
+    ],
+    "talks": [
+     "Housekeeping"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "msihc",
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "petroleum",
+   "static-electricity",
+   "chem-accident-rules",
+   "api-ccps",
+   "lab-codes",
+   "bio-codes",
+   "how-rules",
+   "dust-codes",
+   "boilers-2025",
+   "fire-systems",
+   "ghs-india",
+   "osha-1910",
+   "iso-machinery"
+  ],
+  "procs": [
+   "p3-solvent",
+   "p3-reactor",
+   "p3-potent",
+   "p3-cleanroom",
+   "psm",
+   "chemicals",
+   "confined",
+   "lab",
+   "bio",
+   "dust",
+   "pressure",
+   "toxicgas",
+   "p3-hvac",
+   "legionella",
+   "loto",
+   "hotwork",
+   "respiratory",
+   "health",
+   "moc",
+   "emergency"
+  ],
+  "cks": [
+   "cl4-solvent",
+   "cl4-reactor",
+   "cl4-potent",
+   "cl4-cleanroom",
+   "cl-chemical",
+   "cl-confined",
+   "cl-lab",
+   "cl-dust",
+   "cl-toxicgas",
+   "cl4-hvac",
+   "cl-psm",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Solvents & Static",
+   "Charging the Reactor Safely",
+   "Potent Compounds – Gown Right, Degown Slower",
+   "Clean-Room Work – Interlocks, Fumigation & Gas Suppression",
+   "Chemical Safety & SDS",
+   "Confined Space",
+   "Combustible Dust",
+   "Chlorine & Ammonia Leaks",
+   "Lockout / Tagout",
+   "Hot Work & Fire",
+   "Life-Saving Rules",
+   "Near Miss Reporting"
+  ],
+  "ppe": [
+   "Antistatic FR coveralls and conductive shoes in solvent areas",
+   "Chemical goggles/face shield",
+   "Solvent/API-rated gloves",
+   "PAPR or supplied-air for potent compounds",
+   "Cleanroom garments with task PPE over them",
+   "Heat-resistant gloves for autoclaves",
+   "Escape respirators where toxic gases stored"
+  ],
+  "statutory": [
+   "MSIHC where solvent/toxic thresholds exceeded: site notification, safety report, on-site plan, annual safety audit; PLI insurance",
+   "Petroleum Rules licence for Class A solvents; PESO for cylinders (chlorine, ammonia, hydrogen); Boilers Act for boilers/autoclaves where applicable",
+   "Schedule M (GMP) facility requirements overlap with safety: dedicated potent facilities, HVAC, containment; drug-licence inspections",
+   "Safety Officer (hazardous 250+), Safety Committee, OHC/medical officer; dangerous-operations medicals (solvents, cytotoxics, chrome)",
+   "HW authorisation (spent solvents, API waste), BMW for microbiology/cytotoxic, CTE/CTO with VOC/ETP; EPR e-waste",
+   "Occupational diseases (solvent poisoning, dermatitis, asthma) notifiable; exposure records retained"
+  ],
+  "cats": [
+   "CHEM",
+   "FIRE",
+   "PROC",
+   "HEALTH",
+   "CONFINED",
+   "PRESSURE",
+   "ELEC",
+   "PPE",
+   "DUST",
+   "ENV",
+   "HOUSE",
+   "ERGO",
+   "BIO",
+   "OTHER"
+  ],
+  "kpis": [
+   "Containment-breach incidents (potent suites) per quarter",
+   "Solvent exposure/biological monitoring results above action level",
+   "Static/earthing non-conformities found per audit"
+  ]
  },
  {
   "id": "food",
@@ -165,16 +1896,305 @@
   "est": [
    "factory"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Ammonia refrigeration leaks",
+   "CIP chemicals: caustic, acid, peracetic, hypochlorite",
+   "Silo/hopper engulfment and dust explosion (flour, sugar, milk powder)",
+   "Conveyor, filler and packaging-machine entanglement",
+   "Hot ovens, fryers, kettles and steam",
+   "Cold rooms and CA stores: entrapment and asphyxia",
+   "CO2 in carbonation and dry-ice areas",
+   "Slips on wet floors and glass injuries",
+   "Boilers, hot water and LPG/PNG ovens",
+   "Forklifts, docks and manual handling"
+  ],
+  "tasks": [
+   {
+    "id": "food-ammonia",
+    "t": "Ammonia refrigeration plant",
+    "procs": [
+     "p3-ammonia-ref",
+     "toxicgas",
+     "emergency"
+    ],
+    "cks": [
+     "cl4-ammonia-ref",
+     "cl-toxicgas"
+    ],
+    "regs": [
+     "toxic-gas-codes",
+     "msihc"
+    ],
+    "talks": [
+     "Ammonia – Smell It, Leave It",
+     "Chlorine & Ammonia Leaks"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "food-cip",
+    "t": "CIP and sanitation chemicals",
+    "procs": [
+     "p3-cip",
+     "chemicals"
+    ],
+    "cks": [
+     "cl4-cip",
+     "cl-chemical"
+    ],
+    "regs": [
+     "ghs-india",
+     "bis-ptw-hygiene"
+    ],
+    "talks": [
+     "Never Mix Cleaning Chemicals"
+    ],
+    "permits": []
+   },
+   {
+    "id": "food-silo",
+    "t": "Silos, hoppers and powder dust",
+    "procs": [
+     "p3-silo",
+     "dust",
+     "confined"
+    ],
+    "cks": [
+     "cl4-silo",
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Grain & Sugar Silos – Never Walk the Pile",
+     "Combustible Dust"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "food-bakery",
+    "t": "Ovens, fryers and hot processes",
+    "procs": [
+     "p3-bakery",
+     "pressure"
+    ],
+    "cks": [
+     "cl4-bakery"
+    ],
+    "regs": [
+     "gas-cylinders",
+     "boilers-2025"
+    ],
+    "talks": [
+     "Hot Ovens & Fryers"
+    ],
+    "permits": []
+   },
+   {
+    "id": "food-bottling",
+    "t": "Bottling, canning and packaging lines",
+    "procs": [
+     "p3-bottling",
+     "machine",
+     "noise"
+    ],
+    "cks": [
+     "cl4-bottling"
+    ],
+    "regs": [
+     "machinery-codes",
+     "noise-rules"
+    ],
+    "talks": [
+     "Bottling Line – Guards, Glass & CO2",
+     "Noise"
+    ],
+    "permits": []
+   },
+   {
+    "id": "food-cold",
+    "t": "Cold rooms, freezers and CA stores",
+    "procs": [
+     "p3-coldroom",
+     "forklift"
+    ],
+    "cks": [
+     "cl4-coldroom",
+     "cl-forklift"
+    ],
+    "regs": [
+     "pit-racking"
+    ],
+    "talks": [
+     "Cold Room – Never Alone, Never Locked In",
+     "Forklifts & Pedestrians"
+    ],
+    "permits": []
+   },
+   {
+    "id": "food-dock",
+    "t": "Docks, yard and manual handling",
+    "procs": [
+     "p3-loading-dock",
+     "manual",
+     "traffic"
+    ],
+    "cks": [
+     "cl4-loading-dock"
+    ],
+    "regs": [
+     "mv-act"
+    ],
+    "talks": [
+     "Loading Dock – Chock Before You Load",
+     "Manual Handling"
+    ],
+    "permits": []
+   },
+   {
+    "id": "food-maint",
+    "t": "Maintenance: isolation, hot work, electrical",
+    "procs": [
+     "loto",
+     "hotwork",
+     "electrical",
+     "firesys"
+    ],
+    "cks": [
+     "cl-loto",
+     "cl-hotwork",
+     "cl-firesys"
+    ],
+    "regs": [
+     "is-17893",
+     "fire-systems"
+    ],
+    "talks": [
+     "Lockout / Tagout",
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Hot work",
+     "Electrical (LV/HT)"
+    ]
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "toxic-gas-codes",
+   "msihc",
+   "gas-cylinders",
+   "dust-codes",
+   "machinery-codes",
+   "boilers-2025",
+   "pit-racking",
+   "fire-systems",
+   "electricity",
+   "ghs-india",
+   "bis-ptw-hygiene",
+   "how-rules",
+   "air-water",
+   "osha-1910",
+   "noise-rules"
+  ],
+  "procs": [
+   "p3-ammonia-ref",
+   "p3-cip",
+   "p3-silo",
+   "p3-bakery",
+   "p3-bottling",
+   "p3-coldroom",
+   "p3-loading-dock",
+   "toxicgas",
+   "dust",
+   "confined",
+   "machine",
+   "loto",
+   "forklift",
+   "manual",
+   "pressure",
+   "hotwork",
+   "electrical",
+   "firesys",
+   "chemicals",
+   "legionella"
+  ],
+  "cks": [
+   "cl4-ammonia-ref",
+   "cl4-cip",
+   "cl4-silo",
+   "cl4-bakery",
+   "cl4-bottling",
+   "cl4-coldroom",
+   "cl4-loading-dock",
+   "cl-loto",
+   "cl-forklift",
+   "cl-dust",
+   "cl-firesys",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Ammonia – Smell It, Leave It",
+   "Never Mix Cleaning Chemicals",
+   "Grain & Sugar Silos – Never Walk the Pile",
+   "Hot Ovens & Fryers",
+   "Bottling Line – Guards, Glass & CO2",
+   "Cold Room – Never Alone, Never Locked In",
+   "Combustible Dust",
+   "Forklifts & Pedestrians",
+   "Lockout / Tagout",
+   "Noise",
+   "Manual Handling",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Non-slip safety shoes/gumboots",
+   "Hairnet and safety glasses",
+   "Chemical goggles + face shield and gauntlets for CIP",
+   "Cut-resistant gloves in glass/knife areas",
+   "Heat-resistant gauntlets at ovens/fryers",
+   "Hearing protection on bottling lines",
+   "Freezer suits and insulated gloves for cold stores",
+   "Escape respirator in ammonia areas"
+  ],
+  "statutory": [
+   "OSH Code/Factories registration; Safety Officer and Committee thresholds; canteen/crèche/welfare per state rules; women's night-work conditions",
+   "Ammonia: MSIHC where thresholds exceeded (verify quantity), SMPV/Gas Cylinders Rules, pressure vessels registered; CO2 tanks under SMPV; boilers under Boilers Act with certified attendants",
+   "FSSAI licence with Schedule 4 hygiene — chemical control and pest-control records overlap with safety",
+   "Dangerous machines (mixers, slicers, bottling lines) guarded per state schedules; young persons excluded; lifting/forklift authorisation",
+   "Fire NOC (LPG ovens, cold stores, high-piled storage); CTE/CTO and ETP consent; HW authorisation (spent chemicals, oils)",
+   "Notifiable occupational diseases (baker's asthma, NIHL) and accident reporting within 12 h/48 h"
+  ],
+  "cats": [
+   "CHEM",
+   "GUARD",
+   "CONFINED",
+   "FIRE",
+   "HEAT",
+   "HOUSE",
+   "PPE",
+   "VEHICLE",
+   "PRESSURE",
+   "NOISE",
+   "DUST",
+   "ERGO",
+   "ELEC",
+   "HEALTH"
+  ],
+  "kpis": [
+   "Ammonia detector alarms and leak events per quarter",
+   "Jam-clearing/guard-bypass observations per 100 line-hours",
+   "Chemical splash/first-aid cases in sanitation per month"
+  ]
  },
  {
   "id": "foundry",
@@ -191,16 +2211,295 @@
    "hazardous_process_factory"
   ],
   "sector": "sec-foundry",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Molten-metal explosions (water/moisture) and burns",
+   "Furnace failures and run-outs",
+   "Ladle, crane and lifting-gear failure",
+   "Silica dust and silicosis",
+   "CO and metal fumes",
+   "Heat stress and radiant heat",
+   "Noise and hand-arm vibration (fettling)",
+   "Quench fires and furnace atmospheres in heat treatment",
+   "Forging hammer/press crush and flying scale",
+   "Sand/resin chemicals (phenol, isocyanates, amines)"
+  ],
+  "tasks": [
+   {
+    "id": "fdy-melt",
+    "t": "Melting, pouring and casting",
+    "procs": [
+     "foundry",
+     "cylinders"
+    ],
+    "cks": [
+     "cl-foundry"
+    ],
+    "regs": [
+     "foundry-codes"
+    ],
+    "talks": [
+     "Molten Metal – Water Is the Enemy"
+    ],
+    "permits": []
+   },
+   {
+    "id": "fdy-lift",
+    "t": "Ladle and crane lifting",
+    "procs": [
+     "lifting",
+     "tackles",
+     "towercrane"
+    ],
+    "cks": [
+     "cl-tackles",
+     "cl-lifting"
+    ],
+    "regs": [
+     "crane-codes",
+     "lifting-gear-codes"
+    ],
+    "talks": [
+     "Lifting Gear – Check Before You Rig",
+     "Lifting Operations"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "fdy-dust",
+    "t": "Silica, fume and health surveillance",
+    "procs": [
+     "respiratory",
+     "health"
+    ],
+    "cks": [
+     "cl-ppe"
+    ],
+    "regs": [
+     "state-dangerous-ops",
+     "niosh-acgih"
+    ],
+    "talks": [
+     "Dust & Silica"
+    ],
+    "permits": []
+   },
+   {
+    "id": "fdy-heat",
+    "t": "Heat stress and noise",
+    "procs": [
+     "heat",
+     "noise"
+    ],
+    "cks": [
+     "cl-heat"
+    ],
+    "regs": [
+     "osha-heat-nep",
+     "noise-rules"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Noise"
+    ],
+    "permits": []
+   },
+   {
+    "id": "fdy-forge",
+    "t": "Forging hammers and presses",
+    "procs": [
+     "p3-press",
+     "machine",
+     "loto"
+    ],
+    "cks": [
+     "cl4-press",
+     "cl-loto"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Press Shop – Hands Out of the Die",
+     "Lockout / Tagout"
+    ],
+    "permits": []
+   },
+   {
+    "id": "fdy-ht",
+    "t": "Heat treatment furnaces and quench",
+    "procs": [
+     "p3-heat-treat",
+     "pressure"
+    ],
+    "cks": [
+     "cl4-heat-treat"
+    ],
+    "regs": [
+     "gas-cylinders"
+    ],
+    "talks": [
+     "Quench Tanks & Furnace Atmospheres"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "fdy-maint",
+    "t": "Furnace maintenance, hot work and entry",
+    "procs": [
+     "hotwork",
+     "electrical",
+     "confined"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl-confined"
+    ],
+    "regs": [
+     "is-17893"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Confined Space"
+    ],
+    "permits": [
+     "Hot work",
+     "Confined space entry",
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "fdy-env",
+    "t": "Waste, emissions and emergency",
+    "procs": [
+     "housekeeping",
+     "emergency",
+     "incident"
+    ],
+    "cks": [
+     "cl-environment",
+     "cl-emergency"
+    ],
+    "regs": [
+     "how-rules",
+     "air-water"
+    ],
+    "talks": [
+     "Emergency Response",
+     "Housekeeping"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "foundry-codes",
+   "state-dangerous-ops",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "osh-code",
+   "crane-codes",
+   "lifting-gear-codes",
+   "machinery-codes",
+   "fire-systems",
+   "gas-cylinders",
+   "electricity",
+   "is-17893",
+   "how-rules",
+   "air-water",
+   "noise-rules",
+   "osha-1910",
+   "niosh-acgih"
+  ],
+  "procs": [
+   "foundry",
+   "p3-heat-treat",
+   "p3-press",
+   "lifting",
+   "tackles",
+   "loto",
+   "machine",
+   "respiratory",
+   "heat",
+   "noise",
+   "hotwork",
+   "cylinders",
+   "electrical",
+   "health",
+   "ppe",
+   "emergency",
+   "incident",
+   "confined",
+   "housekeeping",
+   "committee"
+  ],
+  "cks": [
+   "cl-foundry",
+   "cl-tackles",
+   "cl-lifting",
+   "cl-loto",
+   "cl-ppe",
+   "cl-heat",
+   "cl-statutory-factory",
+   "cl-chemical",
+   "cl-firesys",
+   "cl4-heat-treat",
+   "cl4-press",
+   "cl-hotwork"
+  ],
+  "talks": [
+   "Molten Metal – Water Is the Enemy",
+   "Quench Tanks & Furnace Atmospheres",
+   "Press Shop – Hands Out of the Die",
+   "Lifting Gear – Check Before You Rig",
+   "Dust & Silica",
+   "Heat Stress",
+   "Noise",
+   "Lockout / Tagout",
+   "Hot Work & Fire",
+   "PPE Basics",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Aluminised/FR clothing and face shield with gold visor at furnaces/pouring",
+   "Metatarsal safety boots and spats",
+   "Heat-resistant gloves",
+   "FFP3/PAPR for silica and fumes",
+   "Hearing protection",
+   "Safety glasses in fettling",
+   "Helmet in crane areas",
+   "Anti-vibration gloves for grinding (supplementary)"
+  ],
+  "statutory": [
+   "Dangerous-operations schedules (foundry, lead, chrome, sand-blasting, cyanide heat treatment): medical exams, PPE, LEV; Sch. II PELs; silicosis notifiable",
+   "Lifting gear (ladles) tested; furnaces earthed/CEIG; KSPCB/TNPCB cupola & furnace emission norms; HW authorisation (slag, spent sand classification)",
+   "Fire NOC; heat-stress plan; safety committee/officer thresholds; Karnataka safety audit where applicable",
+   "Press/hammer guarding per state schedules; gas-fired furnaces with safety devices; pressure vessels tested",
+   "Hearing conservation above 90 dB(A); audiometry; NIHL and silicosis notifiable; chest X-ray/PFT per schedules"
+  ],
+  "cats": [
+   "HOTMETAL",
+   "LIFT",
+   "DUST",
+   "HEAT",
+   "NOISE",
+   "GUARD",
+   "FIRE",
+   "PPE",
+   "ELEC",
+   "HOUSE",
+   "PRESSURE",
+   "CHEM",
+   "PROC",
+   "HEALTH"
+  ],
+  "kpis": [
+   "Burn injuries (all severities) per 100 workers per year",
+   "Respirable silica samples above PEL (%)",
+   "Lifting-gear/ladle inspection items overdue"
+  ]
  },
  {
   "id": "heavy",
@@ -217,16 +2516,309 @@
    "hazardous_process_factory"
   ],
   "sector": "sec-heavy",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Hot meal and kiln/preheater blockage clearing (cement)",
+   "Fuel gases and CO poisoning (steel)",
+   "Molten metal, slag and hot-metal transport",
+   "Coal mills, dust explosions and conveyor entanglement",
+   "Confined spaces: silos, kilns, digesters, bunkers",
+   "Mobile plant and rail traffic in plant",
+   "Chemicals (chlorine in pulp, acids, caustic)",
+   "Falls from preheater towers, stacks and structures",
+   "Noise, heat, silica and cement dust",
+   "Energy/carbon compliance data integrity (CCTS/CBAM)"
+  ],
+  "tasks": [
+   {
+    "id": "hvy-cement",
+    "t": "Kiln, preheater and hot meal",
+    "procs": [
+     "p3-cement-kiln",
+     "confined"
+    ],
+    "cks": [
+     "cl4-cement-kiln"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Hot Meal Burns"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "hvy-steel",
+    "t": "Fuel gases, CO and hot metal",
+    "procs": [
+     "p3-steel-gas",
+     "foundry"
+    ],
+    "cks": [
+     "cl4-steel-gas",
+     "cl-foundry"
+    ],
+    "regs": [
+     "foundry-codes",
+     "msihc"
+    ],
+    "talks": [
+     "CO – The Silent Killer in Steel Plants",
+     "Molten Metal – Water Is the Enemy"
+    ],
+    "permits": [
+     "Hot work",
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "hvy-coal",
+    "t": "Coal handling, bunkers and dust",
+    "procs": [
+     "p3-chp-ash",
+     "dust"
+    ],
+    "cks": [
+     "cl4-chp-ash",
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Coal Bunkers & Conveyors",
+     "Combustible Dust"
+    ],
+    "permits": []
+   },
+   {
+    "id": "hvy-crusher",
+    "t": "Captive mines, crushers and haul roads",
+    "procs": [
+     "p3-crusher",
+     "blasting",
+     "traffic"
+    ],
+    "cks": [
+     "cl4-crusher",
+     "cl-blasting"
+    ],
+    "regs": [
+     "mines",
+     "blasting-codes"
+    ],
+    "talks": [
+     "Haul Roads & Dumpers",
+     "Blasting Day"
+    ],
+    "permits": []
+   },
+   {
+    "id": "hvy-lift",
+    "t": "Cranes, lifting and forklifts",
+    "procs": [
+     "lifting",
+     "tackles",
+     "towercrane",
+     "forklift"
+    ],
+    "cks": [
+     "cl-lifting",
+     "cl-tackles"
+    ],
+    "regs": [
+     "crane-codes"
+    ],
+    "talks": [
+     "Lifting Operations"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "hvy-loto",
+    "t": "Isolation, machinery and HT",
+    "procs": [
+     "loto",
+     "machine",
+     "substation",
+     "electrical"
+    ],
+    "cks": [
+     "cl-loto",
+     "cl-substation"
+    ],
+    "regs": [
+     "ht-codes"
+    ],
+    "talks": [
+     "Lockout / Tagout",
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "hvy-health",
+    "t": "Dust, heat, noise and health",
+    "procs": [
+     "respiratory",
+     "heat",
+     "noise",
+     "health"
+    ],
+    "cks": [
+     "cl-heat",
+     "cl-ppe"
+    ],
+    "regs": [
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Dust & Silica",
+     "Heat Stress",
+     "Noise"
+    ],
+    "permits": []
+   },
+   {
+    "id": "hvy-carbon",
+    "t": "Carbon, energy and process safety reporting",
+    "procs": [
+     "ghg",
+     "esg",
+     "psm"
+    ],
+    "cks": [
+     "cl-ghg",
+     "cl-esg"
+    ],
+    "regs": [
+     "ccts",
+     "cbam",
+     "ec-act"
+    ],
+    "talks": [
+     "Carbon Counts Too"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "ec-act",
+   "ccts",
+   "cbam",
+   "brsr",
+   "ghg-standards",
+   "osh-code",
+   "foundry-codes",
+   "dust-codes",
+   "mines",
+   "boilers-2025",
+   "how-rules",
+   "air-water",
+   "eia-2006",
+   "msihc",
+   "state-dangerous-ops",
+   "iso-14001",
+   "ht-codes",
+   "crane-codes",
+   "is-17893",
+   "fire-systems"
+  ],
+  "procs": [
+   "p3-cement-kiln",
+   "p3-steel-gas",
+   "p3-chp-ash",
+   "p3-crusher",
+   "ghg",
+   "esg",
+   "foundry",
+   "dust",
+   "confined",
+   "loto",
+   "machine",
+   "lifting",
+   "tackles",
+   "forklift",
+   "respiratory",
+   "heat",
+   "noise",
+   "pressure",
+   "psm",
+   "committee"
+  ],
+  "cks": [
+   "cl4-cement-kiln",
+   "cl4-steel-gas",
+   "cl4-chp-ash",
+   "cl4-crusher",
+   "cl-ghg",
+   "cl-esg",
+   "cl-foundry",
+   "cl-dust",
+   "cl-confined",
+   "cl-loto",
+   "cl-statutory-factory",
+   "cl-environment"
+  ],
+  "talks": [
+   "Hot Meal Burns",
+   "CO – The Silent Killer in Steel Plants",
+   "Coal Bunkers & Conveyors",
+   "Haul Roads & Dumpers",
+   "Molten Metal – Water Is the Enemy",
+   "Combustible Dust",
+   "Confined Space",
+   "Lockout / Tagout",
+   "Dust & Silica",
+   "Heat Stress",
+   "Carbon Counts Too",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Helmet, safety boots, safety glasses",
+   "FFP3 respirator in dust areas",
+   "Aluminised PPE for hot meal/hot metal",
+   "Personal CO monitor in gas areas",
+   "Hearing protection",
+   "Harness for tower/structure work",
+   "Hi-vis in plant traffic areas",
+   "Heat-resistant gloves"
+  ],
+  "statutory": [
+   "EC Act designated consumer: energy manager, mandatory energy audit, PAT/CCTS GEI targets (cement, aluminium, pulp & paper, chlor-alkali from Oct 2025; refineries, petrochemicals, textiles from Jan 2026; iron & steel draft), verified report, CCC trading",
+   "CBAM data for EU customers (steel, aluminium, cement, fertiliser); BRSR/BRSR Core if listed",
+   "Factories/OSH Code, MSIHC where applicable, Mines Act for captive mines (DGMS), boilers, CEIG, SPCB OCEMS, HW/fly-ash rules, Fire NOC",
+   "Gas-safety organisation and permits for fuel-gas lines (steel); hot-meal/blockage procedures (cement) per DGFASLI/industry guidelines",
+   "Confined-space and conveyor rules per Factories/OSH; ash pond/dyke norms (CEA/CPCB); AFR co-processing authorisations",
+   "Silicosis/CO poisoning notifiable; dangerous-operations medicals; audiometry"
+  ],
+  "cats": [
+   "HOTMETAL",
+   "CONFINED",
+   "DUST",
+   "FIRE",
+   "VEHICLE",
+   "LIFT",
+   "ELEC",
+   "GUARD",
+   "HEIGHT",
+   "HEAT",
+   "NOISE",
+   "PPE",
+   "ENV",
+   "PROC"
+  ],
+  "kpis": [
+   "Hot-meal/burn incidents and CO alarm events per quarter",
+   "Conveyor/crusher LOTO compliance (% audited)",
+   "Verified GHG intensity vs CCTS target (progress %)"
+  ]
  },
  {
   "id": "textiles",
@@ -241,16 +2833,309 @@
   "est": [
    "factory"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Cotton dust and byssinosis",
+   "Machine entanglement (cards, ring frames, looms, cutters)",
+   "Dye-house chemicals: caustic, acids, peroxide, hydrosulphite",
+   "HT dyeing machines, boilers and steam",
+   "Stenter and lint fires; blocked exits in dense halls",
+   "Heat and humidity in sheds",
+   "Noise in ring and weaving sheds",
+   "Ergonomics and repetitive work in garments",
+   "ETP/ZLD chemicals and H2S",
+   "Women's safety, night shifts and welfare"
+  ],
+  "tasks": [
+   {
+    "id": "tex-dust",
+    "t": "Cotton dust and lung health",
+    "procs": [
+     "p3-cotton-dust",
+     "respiratory",
+     "health"
+    ],
+    "cks": [
+     "cl4-cotton-dust"
+    ],
+    "regs": [
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Cotton Dust & Monday Chest Tightness",
+     "Dust & Silica"
+    ],
+    "permits": []
+   },
+   {
+    "id": "tex-machines",
+    "t": "Spinning, weaving and garment machinery",
+    "procs": [
+     "p3-textile-machines",
+     "machine",
+     "loto"
+    ],
+    "cks": [
+     "cl4-textile-machines",
+     "cl-loto"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Carding & Ring Frames – Stop Before You Clear",
+     "Lockout / Tagout"
+    ],
+    "permits": []
+   },
+   {
+    "id": "tex-dye",
+    "t": "Dye house, chemicals and boilers",
+    "procs": [
+     "p3-dyehouse",
+     "chemicals",
+     "pressure"
+    ],
+    "cks": [
+     "cl4-dyehouse",
+     "cl-chemical"
+    ],
+    "regs": [
+     "boilers-2025",
+     "ghs-india"
+    ],
+    "talks": [
+     "Dye House Chemicals",
+     "Chemical Safety & SDS"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "tex-heat",
+    "t": "Humidification, heat and air washers",
+    "procs": [
+     "p3-humidification",
+     "heat",
+     "legionella"
+    ],
+    "cks": [
+     "cl4-humidification",
+     "cl-heat"
+    ],
+    "regs": [
+     "osha-heat-nep"
+    ],
+    "talks": [
+     "Heat in the Spinning Shed",
+     "Heat Stress"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "tex-fire",
+    "t": "Fire, exits and housekeeping",
+    "procs": [
+     "fire",
+     "firesys",
+     "housekeeping"
+    ],
+    "cks": [
+     "cl-fire",
+     "cl-firesys"
+    ],
+    "regs": [
+     "fire-systems",
+     "nbc-2016",
+     "tn-fire",
+     "ka-fire"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Housekeeping"
+    ],
+    "permits": []
+   },
+   {
+    "id": "tex-noise",
+    "t": "Noise and manual handling",
+    "procs": [
+     "noise",
+     "manual"
+    ],
+    "cks": [
+     "cl-ppe"
+    ],
+    "regs": [
+     "noise-rules"
+    ],
+    "talks": [
+     "Noise",
+     "Manual Handling"
+    ],
+    "permits": []
+   },
+   {
+    "id": "tex-etp",
+    "t": "ETP, ZLD and confined spaces",
+    "procs": [
+     "toxicgas",
+     "confined",
+     "p3-sewer"
+    ],
+    "cks": [
+     "cl-confined",
+     "cl-toxicgas"
+    ],
+    "regs": [
+     "air-water"
+    ],
+    "talks": [
+     "Confined Space",
+     "Sewer & Septic Tanks – No Manual Entry"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "tex-welfare",
+    "t": "Welfare, women's safety and seasonal workers",
+    "procs": [
+     "health",
+     "night-lone",
+     "training",
+     "p3-seasonal"
+    ],
+    "cks": [
+     "cl-welfare",
+     "cl-night",
+     "cl4-seasonal"
+    ],
+    "regs": [
+     "osh-code",
+     "contract-labour"
+    ],
+    "talks": [
+     "Women's Safety & Respect at Work",
+     "New Season, New Workers – Buddy Up"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "machinery-codes",
+   "boilers-2025",
+   "tn-boilers",
+   "ka-boilers",
+   "fire-systems",
+   "nbc-2016",
+   "tn-fire",
+   "ka-fire",
+   "air-water",
+   "noise-rules",
+   "ghs-india",
+   "contract-labour",
+   "osha-1910",
+   "ilo"
+  ],
+  "procs": [
+   "p3-cotton-dust",
+   "p3-textile-machines",
+   "p3-dyehouse",
+   "p3-humidification",
+   "machine",
+   "loto",
+   "chemicals",
+   "pressure",
+   "fire",
+   "firesys",
+   "heat",
+   "noise",
+   "respiratory",
+   "manual",
+   "health",
+   "toxicgas",
+   "confined",
+   "night-lone",
+   "p3-seasonal",
+   "housekeeping"
+  ],
+  "cks": [
+   "cl4-cotton-dust",
+   "cl4-textile-machines",
+   "cl4-dyehouse",
+   "cl4-humidification",
+   "cl-loto",
+   "cl-chemical",
+   "cl-fire",
+   "cl-firesys",
+   "cl-heat",
+   "cl-welfare",
+   "cl-night",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Cotton Dust & Monday Chest Tightness",
+   "Carding & Ring Frames – Stop Before You Clear",
+   "Dye House Chemicals",
+   "Heat in the Spinning Shed",
+   "Dust & Silica",
+   "Lockout / Tagout",
+   "Chemical Safety & SDS",
+   "Hot Work & Fire",
+   "Noise",
+   "Manual Handling",
+   "Women's Safety & Respect at Work",
+   "Heat Stress"
+  ],
+  "ppe": [
+   "Head covering; no loose dupatta/scarf",
+   "Safety shoes/non-slip footwear",
+   "FFP2 respirator in blow room, card and waste rooms",
+   "Hearing protection in ring/weaving sheds",
+   "Chemical goggles, gauntlets, apron, gumboots in dye house",
+   "Chain-mail glove for band knife",
+   "Heat gloves at stenters/HT doors",
+   "Safety glasses at looms/cutting"
+  ],
+  "statutory": [
+   "Factories/OSH Code registration; Safety Officer and Committee thresholds; welfare (canteen 250+, crèche 50+ women); women's night-work conditions (TN/KA)",
+   "Humidification (Factories Act s.15 / state rules): hygrometer records, wet-bulb limits, water quality",
+   "Cotton-dust and textile-machinery schedules under state dangerous-operations rules; byssinosis and NIHL notifiable; medical examinations",
+   "Boilers Act/IBR registration and certified attendants/BOEs; pressure vessels (HT dyeing machines) tested; thermic-fluid heaters per state rules",
+   "Fire NOC for garment halls/godowns; exits per NBC; TNPCB/KSPCB consents, ZLD/CETP norms for dyeing (Tiruppur); HW authorisation for ETP sludge",
+   "Contract/migrant worker registration; minimum wages; Shram Suvidha returns; child labour prohibited"
+  ],
+  "cats": [
+   "DUST",
+   "GUARD",
+   "CHEM",
+   "HEAT",
+   "FIRE",
+   "PRESSURE",
+   "NOISE",
+   "ERGO",
+   "HOUSE",
+   "PPE",
+   "ELEC",
+   "CONFINED",
+   "HEALTH",
+   "PROC"
+  ],
+  "kpis": [
+   "Cotton-dust results above action level (% of stations)",
+   "Spirometry coverage (% of exposed workers tested in year)",
+   "Machine guard defects open > 7 days"
+  ]
  },
  {
   "id": "plastics",
@@ -265,16 +3150,296 @@
   "est": [
    "factory"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Injection-moulding clamp and mould-area crush",
+   "Hot plastic purging and barrel burns",
+   "Extruder dies, nip rolls and winders",
+   "Two-roll mill and calender nips",
+   "Thermal decomposition fumes (PVC, PU, POM, PTFE)",
+   "Solvent inks and adhesives: fire and exposure",
+   "Granulators and blade handling",
+   "Mould/reel lifting and manual handling",
+   "Dust (resin, masterbatch, carbon black)",
+   "Noise and heat"
+  ],
+  "tasks": [
+   {
+    "id": "pl-imm",
+    "t": "Injection moulding machines",
+    "procs": [
+     "p3-moulding",
+     "machine",
+     "loto"
+    ],
+    "cks": [
+     "cl4-moulding",
+     "cl-loto"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Moulding Machines – Interlocks Save Hands",
+     "Hot Plastic & Purging"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pl-ext",
+    "t": "Extrusion and film lines",
+    "procs": [
+     "p3-extruder"
+    ],
+    "cks": [
+     "cl4-extruder"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Hot Plastic & Purging"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pl-rubber",
+    "t": "Rubber mills, calenders and curing",
+    "procs": [
+     "p3-calender",
+     "respiratory"
+    ],
+    "cks": [
+     "cl4-calender"
+    ],
+    "regs": [
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Two-Roll Mills – The Trip Bar Is Your Life"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pl-print",
+    "t": "Solvent printing and lamination",
+    "procs": [
+     "p3-printing",
+     "p3-solvent",
+     "chemicals"
+    ],
+    "cks": [
+     "cl4-printing",
+     "cl4-solvent"
+    ],
+    "regs": [
+     "petroleum",
+     "static-electricity"
+    ],
+    "talks": [
+     "Printing Solvents & Dryers",
+     "Solvents & Static"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "pl-lift",
+    "t": "Mould and reel handling",
+    "procs": [
+     "lifting",
+     "tackles",
+     "forklift",
+     "manual"
+    ],
+    "cks": [
+     "cl-tackles",
+     "cl-forklift"
+    ],
+    "regs": [
+     "lifting-gear-codes",
+     "pit-racking"
+    ],
+    "talks": [
+     "Lifting Gear – Check Before You Rig",
+     "Forklifts & Pedestrians"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pl-dust",
+    "t": "Resin, masterbatch and carbon-black dust",
+    "procs": [
+     "dust",
+     "housekeeping"
+    ],
+    "cks": [
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Combustible Dust"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pl-fire",
+    "t": "Fire protection and electrical",
+    "procs": [
+     "fire",
+     "firesys",
+     "electrical"
+    ],
+    "cks": [
+     "cl-fire",
+     "cl-firesys"
+    ],
+    "regs": [
+     "fire-systems"
+    ],
+    "talks": [
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "pl-health",
+    "t": "Noise, heat, PPE and health",
+    "procs": [
+     "noise",
+     "heat",
+     "health",
+     "ppe"
+    ],
+    "cks": [
+     "cl-ppe",
+     "cl-heat"
+    ],
+    "regs": [
+     "noise-rules"
+    ],
+    "talks": [
+     "Noise",
+     "Heat Stress",
+     "PPE Basics"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "machinery-codes",
+   "petroleum",
+   "static-electricity",
+   "dust-codes",
+   "fire-systems",
+   "lifting-gear-codes",
+   "pit-racking",
+   "electricity",
+   "how-rules",
+   "epr-regimes",
+   "noise-rules",
+   "osha-1910",
+   "iso-machinery",
+   "ghs-india"
+  ],
+  "procs": [
+   "p3-moulding",
+   "p3-extruder",
+   "p3-calender",
+   "p3-printing",
+   "p3-solvent",
+   "machine",
+   "loto",
+   "chemicals",
+   "lifting",
+   "tackles",
+   "forklift",
+   "manual",
+   "dust",
+   "fire",
+   "firesys",
+   "electrical",
+   "noise",
+   "heat",
+   "respiratory",
+   "health"
+  ],
+  "cks": [
+   "cl4-moulding",
+   "cl4-extruder",
+   "cl4-calender",
+   "cl4-printing",
+   "cl4-solvent",
+   "cl-loto",
+   "cl-tackles",
+   "cl-forklift",
+   "cl-dust",
+   "cl-fire",
+   "cl-ppe",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Moulding Machines – Interlocks Save Hands",
+   "Hot Plastic & Purging",
+   "Two-Roll Mills – The Trip Bar Is Your Life",
+   "Printing Solvents & Dryers",
+   "Solvents & Static",
+   "Lockout / Tagout",
+   "Lifting Gear – Check Before You Rig",
+   "Forklifts & Pedestrians",
+   "Combustible Dust",
+   "Noise",
+   "Hot Work & Fire",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Safety shoes",
+   "Safety glasses (face shield for purging)",
+   "Heat-resistant gloves/sleeves",
+   "Hearing protection",
+   "Respirator per material (A/P combined for fumes)",
+   "Cut-resistant gloves for blades",
+   "Antistatic FR clothing and conductive shoes in printing/solvent areas",
+   "Fitted overalls, no loose sleeves at mills"
+  ],
+  "statutory": [
+   "Factories/OSH Code registration; state dangerous-machine schedules (rubber mills, calenders, power presses) with guarding/trip requirements; young persons excluded",
+   "Petroleum Rules licence for inks/solvents; hazardous-area classification and Ex equipment; static control (IS 7689)",
+   "Plastic Waste Management Rules 2016 (EPR, registration), HW authorisation (purge, solvent, ink waste); CTE/CTO with VOC conditions",
+   "Safety Officer/Committee thresholds; medicals for solvent/dust-exposed workers; noise ≥ 90 dB(A) hearing conservation",
+   "Fire NOC (solvent stores, foam/plastic storage); electrical CEIG where applicable; lifting gear tests (mould cranes)"
+  ],
+  "cats": [
+   "GUARD",
+   "HEAT",
+   "CHEM",
+   "FIRE",
+   "LIFT",
+   "TOOLS",
+   "DUST",
+   "NOISE",
+   "HOUSE",
+   "PPE",
+   "ELEC",
+   "ERGO",
+   "PROC",
+   "HEALTH"
+  ],
+  "kpis": [
+   "Interlock test failures per machine per month",
+   "Trip-bar stopping-distance tests passed (% of mills)",
+   "LEL alarms in printing per month"
+  ]
  },
  {
   "id": "electronics",
@@ -289,16 +3454,302 @@
   "est": [
    "factory"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Solder flux fume (asthma) and lead exposure",
+   "HF and strong acids/bases at wet benches",
+   "Toxic and pyrophoric specialty gases (silane, arsine, phosphine)",
+   "Lithium cell storage and thermal runaway",
+   "Clean-room HVAC, fumigation and gas suppression",
+   "Solvents (IPA, NMP, PGMEA) and flammable storage",
+   "Nitrogen/cryogen asphyxiation",
+   "ESD, HV test and laser hazards",
+   "Ergonomics and repetitive microscope work",
+   "E-waste and hazardous waste"
+  ],
+  "tasks": [
+   {
+    "id": "el-solder",
+    "t": "Soldering, reflow and lead hygiene",
+    "procs": [
+     "p3-soldering",
+     "respiratory",
+     "health"
+    ],
+    "cks": [
+     "cl4-soldering"
+    ],
+    "regs": [
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Soldering Fume & Lead – Wash Before You Eat"
+    ],
+    "permits": []
+   },
+   {
+    "id": "el-fab",
+    "t": "Wet benches, HF and specialty gases",
+    "procs": [
+     "p3-fab-chem",
+     "chemicals",
+     "toxicgas",
+     "cylinders"
+    ],
+    "cks": [
+     "cl4-fab-chem",
+     "cl-chemical"
+    ],
+    "regs": [
+     "gas-cylinders",
+     "msihc"
+    ],
+    "talks": [
+     "HF Acid – Calcium Gluconate Now",
+     "Chemical Safety & SDS"
+    ],
+    "permits": []
+   },
+   {
+    "id": "el-cell",
+    "t": "Lithium cells and packs",
+    "procs": [
+     "p3-licell",
+     "battery-solar"
+    ],
+    "cks": [
+     "cl4-licell",
+     "cl-battery"
+    ],
+    "regs": [
+     "battery-solar-codes",
+     "epr-regimes"
+    ],
+    "talks": [
+     "Lithium Cells – Signs of Thermal Runaway"
+    ],
+    "permits": []
+   },
+   {
+    "id": "el-clean",
+    "t": "Clean rooms and HVAC",
+    "procs": [
+     "p3-cleanroom",
+     "p3-hvac",
+     "loto"
+    ],
+    "cks": [
+     "cl4-cleanroom",
+     "cl4-hvac"
+    ],
+    "regs": [
+     "fire-systems"
+    ],
+    "talks": [
+     "Clean-Room Work – Interlocks, Fumigation & Gas Suppression",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "el-solvent",
+    "t": "Solvent storage and fire",
+    "procs": [
+     "p3-solvent",
+     "fire",
+     "firesys"
+    ],
+    "cks": [
+     "cl4-solvent",
+     "cl-firesys"
+    ],
+    "regs": [
+     "petroleum",
+     "static-electricity"
+    ],
+    "talks": [
+     "Solvents & Static"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "el-elec",
+    "t": "Electrical rooms, DG and HV test",
+    "procs": [
+     "electrical",
+     "substation",
+     "p3-dg-room"
+    ],
+    "cks": [
+     "cl-substation",
+     "cl4-dg-room"
+    ],
+    "regs": [
+     "electricity",
+     "ht-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "DG Room – It Can Start by Itself"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "el-ergo",
+    "t": "Ergonomics and PPE",
+    "procs": [
+     "manual",
+     "health",
+     "ppe"
+    ],
+    "cks": [
+     "cl-ppe"
+    ],
+    "regs": [
+     "iso-machinery"
+    ],
+    "talks": [
+     "Manual Handling",
+     "PPE Basics"
+    ],
+    "permits": []
+   },
+   {
+    "id": "el-waste",
+    "t": "E-waste and hazardous waste",
+    "procs": [
+     "housekeeping",
+     "esg"
+    ],
+    "cks": [
+     "cl-environment"
+    ],
+    "regs": [
+     "epr-regimes",
+     "how-rules"
+    ],
+    "talks": [
+     "Housekeeping"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "gas-cylinders",
+   "msihc",
+   "battery-solar-codes",
+   "epr-regimes",
+   "how-rules",
+   "petroleum",
+   "static-electricity",
+   "fire-systems",
+   "electricity",
+   "ht-codes",
+   "lab-codes",
+   "osha-1910",
+   "nfpa",
+   "iso-machinery"
+  ],
+  "procs": [
+   "p3-soldering",
+   "p3-fab-chem",
+   "p3-licell",
+   "p3-cleanroom",
+   "p3-solvent",
+   "p3-hvac",
+   "p3-dg-room",
+   "chemicals",
+   "toxicgas",
+   "cylinders",
+   "battery-solar",
+   "loto",
+   "electrical",
+   "substation",
+   "fire",
+   "firesys",
+   "respiratory",
+   "health",
+   "manual",
+   "housekeeping"
+  ],
+  "cks": [
+   "cl4-soldering",
+   "cl4-fab-chem",
+   "cl4-licell",
+   "cl4-cleanroom",
+   "cl4-solvent",
+   "cl4-hvac",
+   "cl-chemical",
+   "cl-battery",
+   "cl-loto",
+   "cl-substation",
+   "cl-firesys",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Soldering Fume & Lead – Wash Before You Eat",
+   "HF Acid – Calcium Gluconate Now",
+   "Lithium Cells – Signs of Thermal Runaway",
+   "Clean-Room Work – Interlocks, Fumigation & Gas Suppression",
+   "Solvents & Static",
+   "Chemical Safety & SDS",
+   "Lockout / Tagout",
+   "Electrical Safety on Site",
+   "Battery Rooms & Solar DC",
+   "Manual Handling",
+   "Life-Saving Rules",
+   "Near Miss Reporting"
+  ],
+  "ppe": [
+   "ESD footwear and wrist strap (with resistor)",
+   "Safety glasses",
+   "Nitrile gloves for solvents/flux",
+   "Chemical goggles + face shield, laminate gloves, apron at wet benches",
+   "FFP3 for filter/dross changes",
+   "Heat-resistant gloves at solder pots",
+   "SCBA for ERT gas response",
+   "Cryo gloves/face shield for LN2"
+  ],
+  "statutory": [
+   "Factories/OSH Code registration; lead and solvent dangerous-operations schedules with medicals; occupational asthma/lead poisoning notifiable",
+   "PESO: Gas Cylinders Rules for toxic/flammable/pyrophoric gases; SMPV for bulk N2/CO2/LN2; MSIHC where thresholds exceeded (chlorine, arsine, silane — verify)",
+   "Petroleum Rules for IPA/solvent storage; hazardous-area classification; Fire NOC incl. clean-agent systems",
+   "E-Waste Management Rules 2022 and Battery Waste Rules 2022 (EPR); HW authorisation (solder dross, etchants, cyanide, HF waste); CTE/CTO with scrubber/ETP conditions",
+   "BIS CRS for cells/electronics; ISM fab EHS conditions; CEIG for HT/DG/BESS",
+   "Safety Officer/Committee thresholds; OHC; exposure records retained"
+  ],
+  "cats": [
+   "CHEM",
+   "FIRE",
+   "ELEC",
+   "HEALTH",
+   "PPE",
+   "HOUSE",
+   "ERGO",
+   "PRESSURE",
+   "ENV",
+   "GUARD",
+   "CONFINED",
+   "PROC",
+   "OTHER",
+   "SECURITY"
+  ],
+  "kpis": [
+   "Blood-lead results above action level (% of tested)",
+   "TGMS/gas alarms and false-alarm rate per month",
+   "LEV stations failing smoke test (% per audit)"
+  ]
  },
  {
   "id": "wind",
@@ -315,16 +3766,317 @@
    "construction_site"
   ],
   "sector": "sec-power",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Falls during tower climbing and transitions",
+   "Rescue delay and suspension trauma",
+   "Rotor movement/pitch while in hub; stored energy",
+   "Electrical: 690 V converters, 33 kV switchgear, back-feed",
+   "Lightning and high wind",
+   "Blade work: rope access, composite dust and resins",
+   "Remote-site emergencies and road accidents",
+   "Heat inside towers; snakebite",
+   "Crane lifts of nacelles and blades (construction)",
+   "Dropped objects"
+  ],
+  "tasks": [
+   {
+    "id": "wind-climb",
+    "t": "Tower climbing and fall arrest",
+    "procs": [
+     "p3-wtg-climb",
+     "wah"
+    ],
+    "cks": [
+     "cl4-wtg-climb",
+     "cl-wah"
+    ],
+    "regs": [
+     "ieee-bs",
+     "ansi-assp"
+    ],
+    "talks": [
+     "Climbing the Tower – Clip, Check, Climb",
+     "Falls from Height"
+    ],
+    "permits": [
+     "Work at height"
+    ]
+   },
+   {
+    "id": "wind-rescue",
+    "t": "Rescue and remote emergencies",
+    "procs": [
+     "p3-wtg-rescue",
+     "p3-remote-er"
+    ],
+    "cks": [
+     "cl4-wtg-rescue",
+     "cl4-remote-er"
+    ],
+    "regs": [
+     "dm-act"
+    ],
+    "talks": [
+     "Rescue in 15 Minutes",
+     "Remote Site – Know Your Way to Hospital"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wind-nacelle",
+    "t": "Nacelle, hub and isolation",
+    "procs": [
+     "p3-wtg-nacelle",
+     "loto",
+     "substation"
+    ],
+    "cks": [
+     "cl4-wtg-nacelle",
+     "cl-loto",
+     "cl-substation"
+    ],
+    "regs": [
+     "electricity",
+     "ht-codes"
+    ],
+    "talks": [
+     "Rotor Lock Before Hub Entry",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "wind-blade",
+    "t": "Blade inspection and repair",
+    "procs": [
+     "p3-blade",
+     "wah",
+     "drones"
+    ],
+    "cks": [
+     "cl4-blade"
+    ],
+    "regs": [
+     "drone-rules"
+    ],
+    "talks": [
+     "Blade Work Weather Call"
+    ],
+    "permits": [
+     "Work at height",
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "wind-weather",
+    "t": "Lightning, wind and heat",
+    "procs": [
+     "p3-wtg-weather",
+     "heat"
+    ],
+    "cks": [
+     "cl4-wtg-weather",
+     "cl-heat"
+    ],
+    "regs": [
+     "dm-act"
+    ],
+    "talks": [
+     "Lightning – 30 km Out, We Come Down",
+     "Heat Stress"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wind-erect",
+    "t": "Erection, cranes and civil works",
+    "procs": [
+     "lifting",
+     "towercrane",
+     "traffic",
+     "excavation"
+    ],
+    "cks": [
+     "cl-lifting",
+     "cl-towercrane",
+     "cl-excavation"
+    ],
+    "regs": [
+     "crane-codes",
+     "bocw-act"
+    ],
+    "talks": [
+     "Lifting Operations",
+     "Tower Crane Zone"
+    ],
+    "permits": [
+     "Lifting (critical)",
+     "Excavation"
+    ]
+   },
+   {
+    "id": "wind-sub",
+    "t": "Pooling substation and BESS",
+    "procs": [
+     "substation",
+     "electrical",
+     "battery-solar",
+     "firesys"
+    ],
+    "cks": [
+     "cl-substation",
+     "cl-battery",
+     "cl-firesys"
+    ],
+    "regs": [
+     "ht-codes",
+     "battery-solar-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "Battery Rooms & Solar DC"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "wind-contract",
+    "t": "Contractors, training and reporting",
+    "procs": [
+     "contractor",
+     "training",
+     "incident",
+     "security"
+    ],
+    "cks": [
+     "cl-contractor",
+     "cl-training"
+    ],
+    "regs": [
+     "osh-code",
+     "contract-labour"
+    ],
+    "talks": [
+     "Life-Saving Rules",
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "electricity",
+   "ht-codes",
+   "osh-code",
+   "osh-central-rules",
+   "bocw-act",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "crane-codes",
+   "lifting-gear-codes",
+   "battery-solar-codes",
+   "fire-systems",
+   "drone-rules",
+   "dm-act",
+   "mv-act",
+   "contract-labour",
+   "osha-1910",
+   "osha-1926",
+   "nfpa",
+   "ieee-bs",
+   "ansi-assp"
+  ],
+  "procs": [
+   "p3-wtg-climb",
+   "p3-wtg-rescue",
+   "p3-wtg-nacelle",
+   "p3-blade",
+   "p3-wtg-weather",
+   "p3-remote-er",
+   "wah",
+   "loto",
+   "substation",
+   "electrical",
+   "battery-solar",
+   "lifting",
+   "towercrane",
+   "tackles",
+   "traffic",
+   "heat",
+   "drones",
+   "contractor",
+   "incident",
+   "emergency"
+  ],
+  "cks": [
+   "cl4-wtg-climb",
+   "cl4-wtg-rescue",
+   "cl4-wtg-nacelle",
+   "cl4-blade",
+   "cl4-wtg-weather",
+   "cl4-remote-er",
+   "cl-wah",
+   "cl-loto",
+   "cl-substation",
+   "cl-lifting",
+   "cl-battery",
+   "cl-firstaid"
+  ],
+  "talks": [
+   "Climbing the Tower – Clip, Check, Climb",
+   "Rescue in 15 Minutes",
+   "Rotor Lock Before Hub Entry",
+   "Blade Work Weather Call",
+   "Lightning – 30 km Out, We Come Down",
+   "Remote Site – Know Your Way to Hospital",
+   "Falls from Height",
+   "Lockout / Tagout",
+   "Electrical Safety on Site",
+   "Lifting Operations",
+   "Heat Stress",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Climbing helmet with chin strap",
+   "Full-body harness, twin lanyards, guided fall arrester (EN 361/355/353-1)",
+   "Safety boots",
+   "Gloves",
+   "Headlamp and tool tethers",
+   "Arc-rated PPE and Class 0 gloves for electrical work",
+   "Personal descender in nacelle",
+   "Sun/heat protection and water"
+  ],
+  "statutory": [
+   "CEA Safety Regulations 2023: CEIG approval of WTG electrical systems/pooling substations, periodic inspection, competent persons, accident notice 48 h",
+   "OSH Code/Central Rules 2026 (work at height, confined, welfare) and BOCW/state rules during erection; contractor licences; migrant registration",
+   "GWO or equivalent competence recorded; medical fitness for climbing; PPE/fall-arrest system inspections (6-monthly/annual)",
+   "Fire NOC for substations/BESS; Battery Waste Rules; Drone Rules 2021 for inspections; Explosives Rules where blasting for foundations",
+   "MNRE/SERC/TANGEDCO/KREDL connectivity and safety conditions; AAI NOC for height; IMD/SDMA weather compliance",
+   "Accident/dangerous-occurrence reporting (OSH Code/BOCW, CEA, police for fatal); ESI/EC coverage for technicians"
+  ],
+  "cats": [
+   "HEIGHT",
+   "ELEC",
+   "PROC",
+   "LIFT",
+   "VEHICLE",
+   "HEAT",
+   "PPE",
+   "FIRE",
+   "CONFINED",
+   "HOUSE",
+   "TOOLS",
+   "SECURITY",
+   "ENV",
+   "OTHER"
+  ],
+  "kpis": [
+   "Rescue drills completed on schedule (% of teams)",
+   "Weather stop-work events vs tasks continued past limit",
+   "Vehicle incidents per 100,000 km on site roads"
+  ]
  },
  {
   "id": "solar",
@@ -341,16 +4093,317 @@
    "construction_site"
   ],
   "sector": "sec-power",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "DC shock and arc flash (strings live in daylight)",
+   "Falls from fragile roofs and edges",
+   "BESS thermal runaway and off-gas explosion",
+   "Heat stress and dehydration in open fields",
+   "HT (11–33 kV) switchyards and inverter stations",
+   "Module handling in wind; manual handling",
+   "Trench/cable work and tracker motion",
+   "Snakebite, grass fires and remote emergencies",
+   "Lightning",
+   "Theft, security and lone working"
+  ],
+  "tasks": [
+   {
+    "id": "sol-dc",
+    "t": "DC strings, inverters and isolation",
+    "procs": [
+     "p3-solar-dc",
+     "battery-solar",
+     "loto"
+    ],
+    "cks": [
+     "cl4-solar-dc",
+     "cl-battery"
+    ],
+    "regs": [
+     "battery-solar-codes",
+     "electricity"
+    ],
+    "talks": [
+     "Solar DC Is Live in Daylight",
+     "Battery Rooms & Solar DC"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "sol-roof",
+    "t": "Rooftop PV and fragile roofs",
+    "procs": [
+     "p3-fragile-roof",
+     "wah"
+    ],
+    "cks": [
+     "cl4-fragile-roof",
+     "cl-wah"
+    ],
+    "regs": [
+     "bocw-act",
+     "bis-construction-2"
+    ],
+    "talks": [
+     "Fragile Roofs Kill",
+     "Falls from Height"
+    ],
+    "permits": [
+     "Work at height"
+    ]
+   },
+   {
+    "id": "sol-bess",
+    "t": "Battery energy storage",
+    "procs": [
+     "p3-bess",
+     "p3-licell",
+     "firesys"
+    ],
+    "cks": [
+     "cl4-bess",
+     "cl4-licell"
+    ],
+    "regs": [
+     "battery-solar-codes",
+     "fire-systems"
+    ],
+    "talks": [
+     "BESS Alarm Response",
+     "Lithium Cells – Signs of Thermal Runaway"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "sol-ht",
+    "t": "HT switchyard and inverter stations",
+    "procs": [
+     "substation",
+     "electrical"
+    ],
+    "cks": [
+     "cl-substation"
+    ],
+    "regs": [
+     "ht-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "sol-heat",
+    "t": "Heat, weather and remote emergencies",
+    "procs": [
+     "heat",
+     "p3-wtg-weather",
+     "p3-remote-er"
+    ],
+    "cks": [
+     "cl-heat",
+     "cl4-wtg-weather",
+     "cl4-remote-er"
+    ],
+    "regs": [
+     "osha-heat-nep",
+     "dm-act"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Remote Site – Know Your Way to Hospital",
+     "Lightning – 30 km Out, We Come Down"
+    ],
+    "permits": []
+   },
+   {
+    "id": "sol-build",
+    "t": "Park construction: trenches, piling, lifts, traffic",
+    "procs": [
+     "excavation",
+     "lifting",
+     "traffic",
+     "piling"
+    ],
+    "cks": [
+     "cl-excavation",
+     "cl-lifting"
+    ],
+    "regs": [
+     "bis-construction",
+     "mv-act"
+    ],
+    "talks": [
+     "Excavation Collapse",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": [
+     "Excavation",
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "sol-om",
+    "t": "Cleaning, vegetation, security and drones",
+    "procs": [
+     "manual",
+     "housekeeping",
+     "security",
+     "drones"
+    ],
+    "cks": [
+     "cl-security",
+     "cl-observation"
+    ],
+    "regs": [
+     "drone-rules",
+     "security-codes"
+    ],
+    "talks": [
+     "Manual Handling",
+     "Housekeeping"
+    ],
+    "permits": []
+   },
+   {
+    "id": "sol-contract",
+    "t": "Contractors, training and reporting",
+    "procs": [
+     "contractor",
+     "training",
+     "incident"
+    ],
+    "cks": [
+     "cl-contractor",
+     "cl-training"
+    ],
+    "regs": [
+     "osh-code",
+     "contract-labour"
+    ],
+    "talks": [
+     "Life-Saving Rules",
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "electricity",
+   "ht-codes",
+   "battery-solar-codes",
+   "osh-code",
+   "osh-central-rules",
+   "bocw-act",
+   "ka-bocw-rules",
+   "tn-bocw-rules",
+   "bis-construction-2",
+   "fire-systems",
+   "dm-act",
+   "drone-rules",
+   "mv-act",
+   "security-codes",
+   "epr-regimes",
+   "osha-1926",
+   "osha-1910",
+   "nfpa",
+   "ieee-bs",
+   "ec-act"
+  ],
+  "procs": [
+   "p3-solar-dc",
+   "p3-fragile-roof",
+   "p3-bess",
+   "p3-licell",
+   "p3-remote-er",
+   "p3-wtg-weather",
+   "battery-solar",
+   "wah",
+   "loto",
+   "substation",
+   "electrical",
+   "heat",
+   "excavation",
+   "lifting",
+   "traffic",
+   "manual",
+   "security",
+   "drones",
+   "contractor",
+   "incident"
+  ],
+  "cks": [
+   "cl4-solar-dc",
+   "cl4-fragile-roof",
+   "cl4-bess",
+   "cl4-licell",
+   "cl4-remote-er",
+   "cl4-wtg-weather",
+   "cl-battery",
+   "cl-wah",
+   "cl-substation",
+   "cl-heat",
+   "cl-excavation",
+   "cl-security"
+  ],
+  "talks": [
+   "Solar DC Is Live in Daylight",
+   "Fragile Roofs Kill",
+   "BESS Alarm Response",
+   "Lithium Cells – Signs of Thermal Runaway",
+   "Battery Rooms & Solar DC",
+   "Heat Stress",
+   "Lightning – 30 km Out, We Come Down",
+   "Remote Site – Know Your Way to Hospital",
+   "Falls from Height",
+   "Electrical Safety on Site",
+   "Excavation Collapse",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Non-conductive helmet and tinted safety glasses",
+   "EH-rated safety boots",
+   "Insulating gloves (class per voltage) with protectors and arc-rated face shield",
+   "Harness with twin lanyards for roofs",
+   "Cut-resistant gloves for modules",
+   "Sun protection and hydration pack",
+   "Snake gaiters for vegetation work",
+   "Hi-vis"
+  ],
+  "statutory": [
+   "CEA Safety Regulations 2023: CEIG approval before energising (thresholds), periodic inspection, electrical accident reports within 48 h; BIS QCO/ALMM for modules and inverters",
+   "OSH Code/BOCW registration for construction phase; contractor licences; welfare (water, shade, toilets) for field crews; migrant registration",
+   "Fire NOC for BESS/inverter buildings; NFPA 855/IEC 62933-type design documentation; Battery Waste Rules 2022 EPR; HW for damaged modules/oils",
+   "Rooftop: owner's structural certificate; municipal permission; asbestos-sheet handling restrictions; fragile-roof controls under BOCW rules",
+   "Drone Rules 2021 for aerial inspection; Explosives Rules where any blasting; MV Act for site vehicles",
+   "Net-metering/SERC safety conditions; AAI/forest/CRZ clearances where applicable"
+  ],
+  "cats": [
+   "ELEC",
+   "HEIGHT",
+   "FIRE",
+   "HEAT",
+   "PPE",
+   "VEHICLE",
+   "EXCAV",
+   "LIFT",
+   "PROC",
+   "ENV",
+   "HOUSE",
+   "SECURITY",
+   "TOOLS",
+   "OTHER"
+  ],
+  "kpis": [
+   "Test-before-touch deviations on DC work per quarter",
+   "Fragile-roof/edge-protection non-conformities per roof audit",
+   "Heat-illness cases per 1,000 field workers (Apr–Jun)"
+  ]
  },
  {
   "id": "power",
@@ -367,16 +4420,307 @@
    "other"
   ],
   "sector": "sec-power",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Electrocution and arc flash at HT switchyards and lines",
+   "Boiler/turbine pressure systems and steam",
+   "Coal handling: conveyors, dust explosions, bunker fires",
+   "Ash handling and ash-pond dykes",
+   "Confined spaces (boilers, ducts, ESPs, bunkers)",
+   "Falls from structures, towers and lines",
+   "Battery rooms, DG sets and transformer-oil fires",
+   "Hot work, SF6, hydrogen and chlorine",
+   "Heat stress near boilers and turbines",
+   "Mobile plant and rail traffic"
+  ],
+  "tasks": [
+   {
+    "id": "pwr-ht",
+    "t": "HT switchyard operations and permits",
+    "procs": [
+     "substation",
+     "electrical",
+     "loto"
+    ],
+    "cks": [
+     "cl-substation",
+     "cl-loto"
+    ],
+    "regs": [
+     "ht-codes",
+     "electricity"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "Lockout / Tagout",
+     "Working Near Overhead Lines"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "pwr-lines",
+    "t": "Lines, towers and structures",
+    "procs": [
+     "wah",
+     "electrical",
+     "lifting"
+    ],
+    "cks": [
+     "cl-wah",
+     "cl-lifting"
+    ],
+    "regs": [
+     "electricity",
+     "crane-codes"
+    ],
+    "talks": [
+     "Falls from Height",
+     "Working Near Overhead Lines"
+    ],
+    "permits": [
+     "Work at height",
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "pwr-boiler",
+    "t": "Boiler, turbine and pressure systems",
+    "procs": [
+     "pressure",
+     "confined",
+     "hotwork"
+    ],
+    "cks": [
+     "cl-confined",
+     "cl-hotwork"
+    ],
+    "regs": [
+     "boilers-2025"
+    ],
+    "talks": [
+     "Confined Space",
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Confined space entry",
+     "Hot work"
+    ]
+   },
+   {
+    "id": "pwr-coal",
+    "t": "Coal and ash handling",
+    "procs": [
+     "p3-chp-ash",
+     "dust"
+    ],
+    "cks": [
+     "cl4-chp-ash",
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Coal Bunkers & Conveyors",
+     "Combustible Dust"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pwr-battery",
+    "t": "Battery rooms, DG sets and fire systems",
+    "procs": [
+     "battery-solar",
+     "p3-dg-room",
+     "firesys"
+    ],
+    "cks": [
+     "cl-battery",
+     "cl4-dg-room",
+     "cl-firesys"
+    ],
+    "regs": [
+     "battery-solar-codes",
+     "fire-systems"
+    ],
+    "talks": [
+     "Battery Rooms & Solar DC",
+     "DG Room – It Can Start by Itself"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pwr-chem",
+    "t": "Chlorine, hydrogen and water treatment",
+    "procs": [
+     "toxicgas",
+     "chemicals",
+     "legionella"
+    ],
+    "cks": [
+     "cl-toxicgas",
+     "cl-legionella"
+    ],
+    "regs": [
+     "toxic-gas-codes"
+    ],
+    "talks": [
+     "Chlorine & Ammonia Leaks"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pwr-heat",
+    "t": "Heat, noise and health",
+    "procs": [
+     "heat",
+     "noise",
+     "health"
+    ],
+    "cks": [
+     "cl-heat"
+    ],
+    "regs": [
+     "osha-heat-nep"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Noise"
+    ],
+    "permits": []
+   },
+   {
+    "id": "pwr-carbon",
+    "t": "Carbon and energy compliance",
+    "procs": [
+     "ghg",
+     "esg"
+    ],
+    "cks": [
+     "cl-ghg"
+    ],
+    "regs": [
+     "ccts",
+     "ec-act"
+    ],
+    "talks": [
+     "Carbon Counts Too"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "electricity",
+   "ht-codes",
+   "battery-solar-codes",
+   "fire-systems",
+   "crane-codes",
+   "boilers-2025",
+   "tn-boilers",
+   "ka-boilers",
+   "dust-codes",
+   "toxic-gas-codes",
+   "is-17893",
+   "ccts",
+   "ec-act",
+   "how-rules",
+   "air-water",
+   "osha-1926",
+   "osha-1910",
+   "nfpa",
+   "ieee-bs",
+   "ghg-standards"
+  ],
+  "procs": [
+   "substation",
+   "electrical",
+   "loto",
+   "wah",
+   "lifting",
+   "pressure",
+   "confined",
+   "hotwork",
+   "p3-chp-ash",
+   "dust",
+   "battery-solar",
+   "p3-dg-room",
+   "firesys",
+   "fire",
+   "toxicgas",
+   "legionella",
+   "heat",
+   "emergency",
+   "incident",
+   "ghg"
+  ],
+  "cks": [
+   "cl-substation",
+   "cl-loto",
+   "cl-wah",
+   "cl-confined",
+   "cl-hotwork",
+   "cl4-chp-ash",
+   "cl-dust",
+   "cl-battery",
+   "cl4-dg-room",
+   "cl-firesys",
+   "cl-toxicgas",
+   "cl-emergency"
+  ],
+  "talks": [
+   "Electrical Safety on Site",
+   "Working Near Overhead Lines",
+   "Lockout / Tagout",
+   "Falls from Height",
+   "Confined Space",
+   "Hot Work & Fire",
+   "Coal Bunkers & Conveyors",
+   "Combustible Dust",
+   "Battery Rooms & Solar DC",
+   "DG Room – It Can Start by Itself",
+   "Heat Stress",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Helmet, EH-rated safety boots, safety glasses",
+   "Arc-rated clothing and face shield per arc-flash study",
+   "Insulating gloves with protectors",
+   "Harness for structures/towers",
+   "FFP3 in coal/ash areas",
+   "Hearing protection in turbine hall",
+   "Hi-vis in plant traffic",
+   "Heat-resistant gloves near steam lines"
+  ],
+  "statutory": [
+   "Electricity Act & CEA Safety Regulations 2023: CEIG approval before energising, periodic inspection, competent persons, accident notice 48 h",
+   "Fire NOC, Battery Waste Rules 2022, BIS QCO for modules/inverters, MNRE/BEE standards; BOCW/OSH Code for construction crews; AAI NOC for tall structures",
+   "Boilers Act 2025/IBR: registration, annual certificate, certified attendants/BOEs; turbine/pressure vessels tested",
+   "CHP/AHP: Factories dust/conveyor rules; CPCB fly-ash notification; ash-dyke safety (CEA guidelines); OCEMS",
+   "MSIHC/PESO for hydrogen, chlorine, fuel oil; CCTS obligations for thermal plants; HW/used-oil rules",
+   "CCTS/BRSR relevance for RE procurement and Scope 2"
+  ],
+  "cats": [
+   "ELEC",
+   "PRESSURE",
+   "HEIGHT",
+   "CONFINED",
+   "DUST",
+   "FIRE",
+   "HEAT",
+   "VEHICLE",
+   "LIFT",
+   "CHEM",
+   "PPE",
+   "HOUSE",
+   "NOISE",
+   "PROC"
+  ],
+  "kpis": [
+   "HT permit deviations and near-contact events per quarter",
+   "Boiler/pressure inspections overdue",
+   "Conveyor pull-cord/guard defects open > 7 days"
+  ]
  },
  {
   "id": "oilgas",
@@ -393,16 +4737,303 @@
    "other"
   ],
   "sector": "sec-terminal",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Tank and UST leaks; loading-gantry fires",
+   "Static ignition during decanting and dispensing",
+   "Vapour clouds and overfill",
+   "LPG leak, jet fire and BLEVE",
+   "Hot work and confined entry in tanks and dykes",
+   "Tank-lorry movements and forecourt traffic",
+   "H2S and benzene exposure",
+   "Pipeline integrity and third-party damage",
+   "Lightning and monsoon flooding of bunds",
+   "Security and sabotage"
+  ],
+  "tasks": [
+   {
+    "id": "og-tank",
+    "t": "Tank farm integrity, cleaning and entry",
+    "procs": [
+     "tanks",
+     "tankclean",
+     "confined"
+    ],
+    "cks": [
+     "cl-tanks",
+     "cl-tankclean"
+    ],
+    "regs": [
+     "tank-standards",
+     "api-ccps"
+    ],
+    "talks": [
+     "Tank Entry",
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry",
+     "Hot work"
+    ]
+   },
+   {
+    "id": "og-gantry",
+    "t": "Loading gantries and process safety",
+    "procs": [
+     "psm",
+     "chemicals",
+     "traffic"
+    ],
+    "cks": [
+     "cl-psm",
+     "cl-chemical"
+    ],
+    "regs": [
+     "oisd",
+     "static-electricity"
+    ],
+    "talks": [
+     "Life-Saving Rules",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": []
+   },
+   {
+    "id": "og-station",
+    "t": "Retail outlets and site fuel points",
+    "procs": [
+     "p3-fuel-station"
+    ],
+    "cks": [
+     "cl4-fuel-station"
+    ],
+    "regs": [
+     "petroleum",
+     "oisd"
+    ],
+    "talks": [
+     "Fuel Station – Static & Decanting"
+    ],
+    "permits": []
+   },
+   {
+    "id": "og-lpg",
+    "t": "LPG bottling and bulk LPG",
+    "procs": [
+     "p3-lpg-bottling",
+     "cylinders"
+    ],
+    "cks": [
+     "cl4-lpg-bottling"
+    ],
+    "regs": [
+     "gas-cylinders",
+     "oisd"
+    ],
+    "talks": [
+     "LPG Cylinders – Leaks & BLEVE"
+    ],
+    "permits": []
+   },
+   {
+    "id": "og-hot",
+    "t": "Hot work, isolation and permits",
+    "procs": [
+     "hotwork",
+     "ptw",
+     "loto"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl-loto"
+    ],
+    "regs": [
+     "is-17893",
+     "oisd"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Hot work",
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "og-fire",
+    "t": "Fire protection and emergency",
+    "procs": [
+     "fire",
+     "firesys",
+     "emergency"
+    ],
+    "cks": [
+     "cl-firesys",
+     "cl-emergency"
+    ],
+    "regs": [
+     "fire-systems",
+     "chem-accident-rules"
+    ],
+    "talks": [
+     "Emergency Response"
+    ],
+    "permits": []
+   },
+   {
+    "id": "og-pipe",
+    "t": "Pipelines, excavation and electrical",
+    "procs": [
+     "psm",
+     "excavation",
+     "electrical"
+    ],
+    "cks": [
+     "cl-excavation",
+     "cl-electrical"
+    ],
+    "regs": [
+     "pngrb",
+     "electricity"
+    ],
+    "talks": [
+     "Excavation Collapse",
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Excavation"
+    ]
+   },
+   {
+    "id": "og-sec",
+    "t": "Security and incident reporting",
+    "procs": [
+     "security",
+     "incident"
+    ],
+    "cks": [
+     "cl-security"
+    ],
+    "regs": [
+     "security-codes"
+    ],
+    "talks": [
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "petroleum",
+   "gas-cylinders",
+   "tank-standards",
+   "static-electricity",
+   "oisd",
+   "pngrb",
+   "msihc",
+   "chem-accident-rules",
+   "pli-act",
+   "fire-systems",
+   "is-17893",
+   "how-rules",
+   "ep-act",
+   "electricity",
+   "ht-codes",
+   "mv-act",
+   "dm-act",
+   "api-ccps",
+   "nfpa",
+   "osha-1910"
+  ],
+  "procs": [
+   "tanks",
+   "tankclean",
+   "psm",
+   "p3-fuel-station",
+   "p3-lpg-bottling",
+   "hotwork",
+   "confined",
+   "fire",
+   "firesys",
+   "traffic",
+   "electrical",
+   "chemicals",
+   "cylinders",
+   "loto",
+   "ptw",
+   "emergency",
+   "incident",
+   "security",
+   "excavation",
+   "health"
+  ],
+  "cks": [
+   "cl-tanks",
+   "cl-tankclean",
+   "cl-psm",
+   "cl4-fuel-station",
+   "cl4-lpg-bottling",
+   "cl-hotwork",
+   "cl-confined",
+   "cl-loto",
+   "cl-fire",
+   "cl-firesys",
+   "cl-chemical",
+   "cl-emergency"
+  ],
+  "talks": [
+   "Fuel Station – Static & Decanting",
+   "LPG Cylinders – Leaks & BLEVE",
+   "Tank Entry",
+   "Confined Space",
+   "Hot Work & Fire",
+   "Lockout / Tagout",
+   "Emergency Response",
+   "Struck by Plant & Vehicles",
+   "Chemical Safety & SDS",
+   "Life-Saving Rules",
+   "Near Miss Reporting",
+   "Monsoon Safety"
+  ],
+  "ppe": [
+   "Antistatic FR coveralls and conductive safety shoes",
+   "Helmet and safety glasses",
+   "Nitrile/chemical gloves",
+   "Escape respirator/SCBA where H2S or LPG release possible",
+   "Hearing protection at pumps/compressors",
+   "Harness for tank-top work",
+   "Face shield for decanting/sampling",
+   "Lifejacket at jetties"
+  ],
+  "statutory": [
+   "Petroleum Rules 2002 licences & safety distances; Gas Cylinders/SMPV Rules; OISD standards (105, 116, 117, 118, 129, 244); Fire NOC; CPCB vapour recovery; SPCB consent; HW (tank bottoms)",
+   "MSIHC where thresholds exceeded; PLI; PNGRB for pipelines/CGD; static-electricity control per IS 7689 / NFPA 77; Boilers Act for any boilers",
+   "Retail outlets: Petroleum Rules licence, OISD-117/118 layouts, vapour recovery (CPCB), CEIG; staff training by OMCs",
+   "LPG bottling: Gas Cylinders/SMPV licences, OISD-144/150, MSIHC MAH status with on/off-site plans and mock drills, PESO inspections",
+   "Permit system per OISD-105/IS 17893; hot-work and tank-entry certificates; lifting/pressure tests",
+   "Accident reporting to PESO (explosions/fires), DISH, SPCB; PLI insurance"
+  ],
+  "cats": [
+   "FIRE",
+   "CHEM",
+   "PROC",
+   "CONFINED",
+   "VEHICLE",
+   "ELEC",
+   "PRESSURE",
+   "HOUSE",
+   "PPE",
+   "HEIGHT",
+   "SECURITY",
+   "ENV",
+   "HEALTH",
+   "OTHER"
+  ],
+  "kpis": [
+   "Loss-of-primary-containment events (any size) per quarter",
+   "Earthing/bonding non-compliance at decanting per 100 deliveries",
+   "Hot-work permits with LEL ≠ 0 % caught at audit"
+  ]
  },
  {
   "id": "warehouse",
@@ -419,16 +5050,302 @@
    "factory"
   ],
   "sector": "sec-warehouse",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Forklift/pedestrian collisions",
+   "Racking collapse and falling loads",
+   "Dock-edge falls, trailer creep and drive-offs",
+   "Fire in high-piled storage and battery charging",
+   "Cold rooms and freezers: entrapment and cold stress",
+   "Ammonia/CO2 refrigeration leaks",
+   "Manual handling and repetitive picking",
+   "Falls from mezzanines and ladders",
+   "Yard traffic, night shifts and lone working",
+   "Security and workplace violence"
+  ],
+  "tasks": [
+   {
+    "id": "wh-forklift",
+    "t": "Forklifts, racking and aisles",
+    "procs": [
+     "forklift",
+     "traffic"
+    ],
+    "cks": [
+     "cl-forklift"
+    ],
+    "regs": [
+     "pit-racking"
+    ],
+    "talks": [
+     "Forklifts & Pedestrians"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wh-dock",
+    "t": "Loading docks and trailers",
+    "procs": [
+     "p3-loading-dock",
+     "manual"
+    ],
+    "cks": [
+     "cl4-loading-dock"
+    ],
+    "regs": [
+     "mv-act"
+    ],
+    "talks": [
+     "Loading Dock – Chock Before You Load",
+     "Manual Handling"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wh-cold",
+    "t": "Cold stores and refrigeration",
+    "procs": [
+     "p3-coldroom",
+     "p3-ammonia-ref",
+     "toxicgas"
+    ],
+    "cks": [
+     "cl4-coldroom",
+     "cl4-ammonia-ref",
+     "cl-toxicgas"
+    ],
+    "regs": [
+     "toxic-gas-codes"
+    ],
+    "talks": [
+     "Cold Room – Never Alone, Never Locked In",
+     "Ammonia – Smell It, Leave It"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wh-fire",
+    "t": "Fire, sprinklers and charging areas",
+    "procs": [
+     "fire",
+     "firesys",
+     "battery-solar"
+    ],
+    "cks": [
+     "cl-fire",
+     "cl-firesys",
+     "cl-battery"
+    ],
+    "regs": [
+     "fire-systems",
+     "nbc-2016"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Battery Rooms & Solar DC"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "wh-height",
+    "t": "Mezzanines, ladders and housekeeping",
+    "procs": [
+     "wah",
+     "housekeeping"
+    ],
+    "cks": [
+     "cl-wah"
+    ],
+    "regs": [
+     "bis-construction"
+    ],
+    "talks": [
+     "Falls from Height",
+     "Housekeeping"
+    ],
+    "permits": [
+     "Work at height"
+    ]
+   },
+   {
+    "id": "wh-night",
+    "t": "Night shifts, welfare and security",
+    "procs": [
+     "night-lone",
+     "security",
+     "health"
+    ],
+    "cks": [
+     "cl-night",
+     "cl-security",
+     "cl-welfare"
+    ],
+    "regs": [
+     "ka-shops",
+     "tn-shops"
+    ],
+    "talks": [
+     "Women's Safety & Respect at Work",
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wh-dg",
+    "t": "Hazardous goods storage",
+    "procs": [
+     "chemicals",
+     "p3-dg-container"
+    ],
+    "cks": [
+     "cl-chemical",
+     "cl4-dg-container"
+    ],
+    "regs": [
+     "ghs-india",
+     "msihc"
+    ],
+    "talks": [
+     "Chemical Safety & SDS",
+     "Dangerous Goods Containers"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wh-elec",
+    "t": "Electrical, DG and isolation",
+    "procs": [
+     "electrical",
+     "p3-dg-room",
+     "loto"
+    ],
+    "cks": [
+     "cl-electrical",
+     "cl4-dg-room"
+    ],
+    "regs": [
+     "electricity"
+    ],
+    "talks": [
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   }
+  ],
+  "regs": [
+   "pit-racking",
+   "fire-systems",
+   "toxic-gas-codes",
+   "ka-shops",
+   "tn-shops",
+   "osh-code",
+   "osh-central-rules",
+   "nbc-2016",
+   "mv-act",
+   "bis-construction",
+   "ghs-india",
+   "msihc",
+   "electricity",
+   "how-rules",
+   "ir-code",
+   "epr-regimes",
+   "security-codes",
+   "contract-labour",
+   "osha-1910",
+   "iso-45001"
+  ],
+  "procs": [
+   "forklift",
+   "p3-loading-dock",
+   "manual",
+   "p3-coldroom",
+   "p3-ammonia-ref",
+   "toxicgas",
+   "fire",
+   "firesys",
+   "wah",
+   "electrical",
+   "battery-solar",
+   "housekeeping",
+   "security",
+   "emergency",
+   "night-lone",
+   "chemicals",
+   "p3-dg-container",
+   "p3-dg-room",
+   "loto",
+   "health"
+  ],
+  "cks": [
+   "cl-forklift",
+   "cl4-loading-dock",
+   "cl4-coldroom",
+   "cl4-ammonia-ref",
+   "cl-toxicgas",
+   "cl-fire",
+   "cl-firesys",
+   "cl-battery",
+   "cl-wah",
+   "cl-welfare",
+   "cl-night",
+   "cl-security"
+  ],
+  "talks": [
+   "Forklifts & Pedestrians",
+   "Loading Dock – Chock Before You Load",
+   "Manual Handling",
+   "Cold Room – Never Alone, Never Locked In",
+   "Ammonia – Smell It, Leave It",
+   "Battery Rooms & Solar DC",
+   "Falls from Height",
+   "Housekeeping",
+   "Hot Work & Fire",
+   "Women's Safety & Respect at Work",
+   "Dangerous Goods Containers",
+   "Near Miss Reporting"
+  ],
+  "ppe": [
+   "Safety shoes",
+   "Hi-vis vest",
+   "Gloves (cut-resistant for strapping/blades)",
+   "Helmet in racking/overhead areas",
+   "Freezer suits and insulated gloves in cold stores",
+   "Hearing protection near reefers/compressors",
+   "Harness for mezzanine-edge/MEWP work",
+   "Escape respirator in ammonia areas"
+  ],
+  "statutory": [
+   "Shops & Establishments/OSH Code registration; Fire NOC for storage occupancy (NBC Part 4); forklift operator authorisation & RTO; PESO for LPG forklifts; MSIHC for ammonia above threshold",
+   "Welfare, working hours, women night work (Karnataka S&E 2026 amendment); e-waste/battery EPR handling",
+   "Racking inspections (weekly/annual expert) and SWL notices; dock equipment and tail-lift examinations; MEWP/forklift operator records",
+   "Cold stores: door-release/alarm provisions; ammonia/CO2 pressure vessels under SMPV/state rules; FSSAI for food storage",
+   "DG storage: MSIHC thresholds, Petroleum/Gas Cylinders licences, segregation; fire NOC conditions for hazardous storage",
+   "Contract labour licences; POSH committee; accident reporting under OSH Code/state rules"
+  ],
+  "cats": [
+   "VEHICLE",
+   "LIFT",
+   "HEIGHT",
+   "FIRE",
+   "HOUSE",
+   "ERGO",
+   "CHEM",
+   "ELEC",
+   "PPE",
+   "SECURITY",
+   "PROC",
+   "HEALTH",
+   "HEAT",
+   "OTHER"
+  ],
+  "kpis": [
+   "Forklift–pedestrian near misses per 1,000 truck-hours",
+   "Racking red/amber damage items open > 24 h",
+   "Dock drive-off/trailer-creep events per quarter"
+  ]
  },
  {
   "id": "mining",
@@ -444,16 +5361,300 @@
    "mine"
   ],
   "sector": "sec-mining",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Blasting flyrock, misfires and vibration",
+   "Bench, dump and highwall failure",
+   "HEMM collisions, rollovers and run-overs on haul roads",
+   "Crusher blockage clearing and conveyor nips",
+   "Silica dust and silicosis",
+   "Noise and whole-body vibration",
+   "Flooding, inrush and monsoon slope failure",
+   "Electrical (HT to pumps/crushers) and lightning",
+   "Fuel storage and explosives magazines",
+   "Heat and remote-site emergencies"
+  ],
+  "tasks": [
+   {
+    "id": "min-blast",
+    "t": "Blasting and explosives",
+    "procs": [
+     "blasting"
+    ],
+    "cks": [
+     "cl-blasting"
+    ],
+    "regs": [
+     "blasting-codes",
+     "explosives"
+    ],
+    "talks": [
+     "Blasting Day"
+    ],
+    "permits": []
+   },
+   {
+    "id": "min-haul",
+    "t": "Haul roads and HEMM",
+    "procs": [
+     "p3-crusher",
+     "traffic"
+    ],
+    "cks": [
+     "cl4-crusher",
+     "cl-daily"
+    ],
+    "regs": [
+     "mines",
+     "mv-act"
+    ],
+    "talks": [
+     "Haul Roads & Dumpers",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": []
+   },
+   {
+    "id": "min-crusher",
+    "t": "Crushing and screening plant",
+    "procs": [
+     "p3-crusher",
+     "machine",
+     "loto"
+    ],
+    "cks": [
+     "cl4-crusher",
+     "cl-loto"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Haul Roads & Dumpers",
+     "Lockout / Tagout"
+    ],
+    "permits": []
+   },
+   {
+    "id": "min-dust",
+    "t": "Dust, noise and health",
+    "procs": [
+     "respiratory",
+     "dust",
+     "noise",
+     "health"
+    ],
+    "cks": [
+     "cl-dust",
+     "cl-ppe"
+    ],
+    "regs": [
+     "state-dangerous-ops",
+     "niosh-acgih"
+    ],
+    "talks": [
+     "Dust & Silica",
+     "Noise"
+    ],
+    "permits": []
+   },
+   {
+    "id": "min-bench",
+    "t": "Benches, dumps and water",
+    "procs": [
+     "excavation",
+     "water"
+    ],
+    "cks": [
+     "cl-excavation"
+    ],
+    "regs": [
+     "mines"
+    ],
+    "talks": [
+     "Excavation Collapse",
+     "Monsoon Safety"
+    ],
+    "permits": [
+     "Excavation"
+    ]
+   },
+   {
+    "id": "min-elec",
+    "t": "Electrical and substations",
+    "procs": [
+     "electrical",
+     "substation"
+    ],
+    "cks": [
+     "cl-electrical",
+     "cl-substation"
+    ],
+    "regs": [
+     "electricity",
+     "ht-codes"
+    ],
+    "talks": [
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "min-fuel",
+    "t": "Diesel storage and refuelling",
+    "procs": [
+     "p3-fuel-station",
+     "tanks"
+    ],
+    "cks": [
+     "cl4-fuel-station",
+     "cl-tanks"
+    ],
+    "regs": [
+     "petroleum"
+    ],
+    "talks": [
+     "Fuel Station – Static & Decanting"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "min-er",
+    "t": "Emergency, heat and first aid",
+    "procs": [
+     "emergency",
+     "p3-remote-er",
+     "heat",
+     "incident"
+    ],
+    "cks": [
+     "cl-emergency",
+     "cl4-remote-er",
+     "cl-heat"
+    ],
+    "regs": [
+     "dm-act"
+    ],
+    "talks": [
+     "Emergency Response",
+     "Heat Stress"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "mines",
+   "blasting-codes",
+   "explosives",
+   "osh-code",
+   "dust-codes",
+   "mv-act",
+   "eia-2006",
+   "noise-rules",
+   "machinery-codes",
+   "state-dangerous-ops",
+   "electricity",
+   "ht-codes",
+   "petroleum",
+   "dm-act",
+   "how-rules",
+   "bis-ppe-2",
+   "is-17893",
+   "ilo",
+   "osha-1926"
+  ],
+  "procs": [
+   "blasting",
+   "p3-crusher",
+   "traffic",
+   "excavation",
+   "machine",
+   "loto",
+   "respiratory",
+   "dust",
+   "noise",
+   "health",
+   "electrical",
+   "substation",
+   "p3-fuel-station",
+   "tanks",
+   "water",
+   "emergency",
+   "p3-remote-er",
+   "heat",
+   "incident",
+   "lifting"
+  ],
+  "cks": [
+   "cl-blasting",
+   "cl4-crusher",
+   "cl-daily",
+   "cl-excavation",
+   "cl-dust",
+   "cl-loto",
+   "cl-ppe",
+   "cl-electrical",
+   "cl-substation",
+   "cl4-fuel-station",
+   "cl-emergency",
+   "cl4-remote-er"
+  ],
+  "talks": [
+   "Blasting Day",
+   "Haul Roads & Dumpers",
+   "Struck by Plant & Vehicles",
+   "Excavation Collapse",
+   "Dust & Silica",
+   "Noise",
+   "Lockout / Tagout",
+   "Electrical Safety on Site",
+   "Fuel Station – Static & Decanting",
+   "Monsoon Safety",
+   "Heat Stress",
+   "Emergency Response"
+  ],
+  "ppe": [
+   "Helmet with chin strap",
+   "Safety boots",
+   "Hi-vis",
+   "FFP3 respirator in dust zones",
+   "Hearing protection (SNR ≥ 30)",
+   "Safety glasses/goggles",
+   "Gloves",
+   "Seat belts in HEMM; harness for elevated conveyor work"
+  ],
+  "statutory": [
+   "Mines Act/OSH Code mines provisions; DGMS regulations, manager/blaster certification, DGMS accident notices; Explosives Rules; state minor-mineral concession rules; EC/consents",
+   "Mines Act/MMR 1961: manager, foreman/mate certificates, shot-firer competency; DGMS accident/dangerous-occurrence notices and returns; Mines Vocational Training Rules",
+   "Explosives Rules 2008: magazine licence (LE forms), transport, shot-firer licence; PESO; Ammonium Nitrate Rules",
+   "Dust/noise: DGMS circulars on respirable dust and silicosis surveillance (periodic chest X-ray); audiometry",
+   "Haul-road, dump and bench standards per DGMS circulars; HEMM maintenance and operator authorisation; MV Act on public roads",
+   "Crusher siting norms (SPCB); diesel storage per Petroleum Rules; CCTS indirectly (cement captive mines)"
+  ],
+  "cats": [
+   "VEHICLE",
+   "EXCAV",
+   "DUST",
+   "GUARD",
+   "ELEC",
+   "NOISE",
+   "FIRE",
+   "HEAT",
+   "PPE",
+   "LIFT",
+   "HOUSE",
+   "ENV",
+   "PROC",
+   "OTHER"
+  ],
+  "kpis": [
+   "HEMM collisions/near misses per 10,000 trips",
+   "Misfires per 1,000 holes",
+   "Respirable silica samples above limit (%)"
+  ]
  },
  {
   "id": "water",
@@ -470,16 +5671,298 @@
    "other"
   ],
   "sector": "sec-water",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Chlorine and H2S release",
+   "Sewer, septic and sump entry (manual-scavenging prohibition)",
+   "Drowning in tanks, lagoons and clarifiers",
+   "Biological exposure (sewage, aerosols)",
+   "Electrical in wet pump rooms",
+   "Chemical dosing (alum, lime, hypochlorite, polymer, acids)",
+   "Slips and falls on wet walkways and into open channels",
+   "Pumping-station and pipeline works (excavation)",
+   "Biogas/methane from digesters",
+   "Lone working at remote stations"
+  ],
+  "tasks": [
+   {
+    "id": "wat-chlorine",
+    "t": "Chlorination and toxic gas",
+    "procs": [
+     "toxicgas",
+     "emergency"
+    ],
+    "cks": [
+     "cl-toxicgas",
+     "cl-emergency"
+    ],
+    "regs": [
+     "toxic-gas-codes",
+     "msihc"
+    ],
+    "talks": [
+     "Chlorine & Ammonia Leaks",
+     "Emergency Response"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wat-sewer",
+    "t": "Sewers, septic tanks and sumps",
+    "procs": [
+     "p3-sewer",
+     "confined"
+    ],
+    "cks": [
+     "cl4-sewer",
+     "cl-confined"
+    ],
+    "regs": [
+     "bio-codes",
+     "osh-code"
+    ],
+    "talks": [
+     "Sewer & Septic Tanks – No Manual Entry",
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "wat-bio",
+    "t": "Biological hazards and water hygiene",
+    "procs": [
+     "bio",
+     "legionella",
+     "health"
+    ],
+    "cks": [
+     "cl-bio",
+     "cl-legionella"
+    ],
+    "regs": [
+     "bio-codes"
+    ],
+    "talks": [
+     "First Aid – What Everyone Should Know"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wat-elec",
+    "t": "Pump rooms and electrical",
+    "procs": [
+     "electrical",
+     "loto",
+     "substation"
+    ],
+    "cks": [
+     "cl-electrical",
+     "cl-loto"
+    ],
+    "regs": [
+     "electricity"
+    ],
+    "talks": [
+     "Electrical Safety on Site",
+     "Lockout / Tagout"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "wat-chem",
+    "t": "Chemical dosing and labs",
+    "procs": [
+     "chemicals",
+     "lab"
+    ],
+    "cks": [
+     "cl-chemical",
+     "cl-lab"
+    ],
+    "regs": [
+     "ghs-india",
+     "lab-codes"
+    ],
+    "talks": [
+     "Chemical Safety & SDS"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wat-water",
+    "t": "Work over open water and tanks",
+    "procs": [
+     "water"
+    ],
+    "cks": [
+     "cl-water"
+    ],
+    "regs": [
+     "water-codes"
+    ],
+    "talks": [
+     "Working Over Water"
+    ],
+    "permits": []
+   },
+   {
+    "id": "wat-pipe",
+    "t": "Pipelines, trenches and road works",
+    "procs": [
+     "excavation",
+     "traffic",
+     "roadworks"
+    ],
+    "cks": [
+     "cl-excavation",
+     "cl-roadworks"
+    ],
+    "regs": [
+     "bis-construction",
+     "road-works-codes"
+    ],
+    "talks": [
+     "Excavation Collapse"
+    ],
+    "permits": [
+     "Excavation"
+    ]
+   },
+   {
+    "id": "wat-gas",
+    "t": "Digesters, biogas and hot work",
+    "procs": [
+     "pressure",
+     "hotwork",
+     "confined"
+    ],
+    "cks": [
+     "cl-hotwork"
+    ],
+    "regs": [
+     "static-electricity"
+    ],
+    "talks": [
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Hot work",
+     "Confined space entry"
+    ]
+   }
+  ],
+  "regs": [
+   "toxic-gas-codes",
+   "msihc",
+   "gas-cylinders",
+   "air-water",
+   "bio-codes",
+   "osh-code",
+   "osh-central-rules",
+   "electricity",
+   "how-rules",
+   "lab-codes",
+   "is-17893",
+   "ghs-india",
+   "water-codes",
+   "road-works-codes",
+   "security-codes",
+   "bis-construction-2",
+   "bis-ptw-hygiene",
+   "osha-1910"
+  ],
+  "procs": [
+   "toxicgas",
+   "p3-sewer",
+   "confined",
+   "bio",
+   "legionella",
+   "electrical",
+   "loto",
+   "substation",
+   "chemicals",
+   "lab",
+   "water",
+   "excavation",
+   "traffic",
+   "roadworks",
+   "hotwork",
+   "pressure",
+   "emergency",
+   "health",
+   "night-lone",
+   "incident"
+  ],
+  "cks": [
+   "cl-toxicgas",
+   "cl4-sewer",
+   "cl-confined",
+   "cl-bio",
+   "cl-legionella",
+   "cl-electrical",
+   "cl-loto",
+   "cl-chemical",
+   "cl-lab",
+   "cl-water",
+   "cl-excavation",
+   "cl-emergency"
+  ],
+  "talks": [
+   "Chlorine & Ammonia Leaks",
+   "Sewer & Septic Tanks – No Manual Entry",
+   "Confined Space",
+   "Electrical Safety on Site",
+   "Lockout / Tagout",
+   "Chemical Safety & SDS",
+   "Working Over Water",
+   "Excavation Collapse",
+   "Hot Work & Fire",
+   "First Aid – What Everyone Should Know",
+   "Emergency Response",
+   "Monsoon Safety"
+  ],
+  "ppe": [
+   "Gumboots/non-slip safety boots",
+   "Chemical and cut-resistant gloves",
+   "Goggles/face shield for dosing",
+   "Escape respirator (chlorine) and SCBA for ERT",
+   "Lifejacket near open water",
+   "Harness and retrieval line for sumps",
+   "FFP3 for biological aerosols",
+   "Hi-vis for road/pipeline works"
+  ],
+  "statutory": [
+   "MSIHC for chlorine (tonners); Gas Cylinders Rules; Water Act consents/discharge norms; Factories/OSH Code; CEA; Bio-medical/HW for sludge; Public Health Acts",
+   "Prohibition of manual scavenging (PEMSR Act 2013): mechanised cleaning, no manual sewer/septic entry; Supreme Court compensation directions",
+   "Chlorine: site notification where tonners exceed thresholds; IS 4263 kits; on-site plan and district drills",
+   "Confined-space permits per Factories/OSH Code and IS 17893; electrical CEIG; pressure vessels (digesters)",
+   "ULB/contractor rules for pipeline works (IRC:SP:55 traffic management, utility clearances)",
+   "Disease notification for sewage-related illness; vaccination and medical surveillance records"
+  ],
+  "cats": [
+   "CHEM",
+   "CONFINED",
+   "ELEC",
+   "BIO",
+   "HEIGHT",
+   "EXCAV",
+   "HOUSE",
+   "PPE",
+   "FIRE",
+   "VEHICLE",
+   "HEALTH",
+   "PROC",
+   "ENV",
+   "OTHER"
+  ],
+  "kpis": [
+   "Manual sewer/septic entry attempts reported (target zero)",
+   "Chlorine detector alarms and changeover incidents per quarter",
+   "Confined-space permits with complete gas logs (% audited)"
+  ]
  },
  {
   "id": "ports",
@@ -495,16 +5978,315 @@
    "port",
    "other"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Struck by containers, cranes and yard vehicles",
+   "Falls from container tops, hold ladders and quay edges",
+   "Hold/enclosed-space atmospheres and fumigants",
+   "Mooring-line snap-back and falls into water",
+   "Dangerous goods: leaks, fires, misdeclaration",
+   "Hot work and confined spaces on vessels (shipyards)",
+   "Bulk-cargo dust (coal, ore, fertiliser, sulphur)",
+   "Heat on steel decks; night work and fatigue",
+   "Lifting-appliance failure and wind",
+   "Security (ISPS) and traffic"
+  ],
+  "tasks": [
+   {
+    "id": "port-crane",
+    "t": "Quay cranes, yard equipment and lashing",
+    "procs": [
+     "p3-quay-crane",
+     "lifting",
+     "tackles"
+    ],
+    "cks": [
+     "cl4-quay-crane",
+     "cl-tackles"
+    ],
+    "regs": [
+     "crane-codes",
+     "lifting-gear-codes"
+    ],
+    "talks": [
+     "Container Tops & Twistlocks",
+     "Lifting Operations"
+    ],
+    "permits": [
+     "Lifting (critical)"
+    ]
+   },
+   {
+    "id": "port-hold",
+    "t": "Ship holds and enclosed spaces",
+    "procs": [
+     "p3-hold-entry",
+     "confined"
+    ],
+    "cks": [
+     "cl4-hold-entry",
+     "cl-confined"
+    ],
+    "regs": [
+     "water-codes",
+     "osha-maritime-ag"
+    ],
+    "talks": [
+     "Ship Holds – Test Before Entry",
+     "Confined Space"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "port-moor",
+    "t": "Mooring and ship–shore access",
+    "procs": [
+     "p3-mooring",
+     "water"
+    ],
+    "cks": [
+     "cl4-mooring",
+     "cl-water"
+    ],
+    "regs": [
+     "water-codes"
+    ],
+    "talks": [
+     "Mooring Lines – Snap-Back Zones",
+     "Working Over Water"
+    ],
+    "permits": []
+   },
+   {
+    "id": "port-dg",
+    "t": "Dangerous goods and fumigated containers",
+    "procs": [
+     "p3-dg-container",
+     "chemicals",
+     "emergency"
+    ],
+    "cks": [
+     "cl4-dg-container",
+     "cl-emergency"
+    ],
+    "regs": [
+     "un-ghs",
+     "explosives",
+     "msihc"
+    ],
+    "talks": [
+     "Dangerous Goods Containers",
+     "Emergency Response"
+    ],
+    "permits": []
+   },
+   {
+    "id": "port-ship",
+    "t": "Shipyard hot work, tanks and height",
+    "procs": [
+     "hotwork",
+     "tankclean",
+     "painting",
+     "wah"
+    ],
+    "cks": [
+     "cl-hotwork",
+     "cl-tankclean",
+     "cl-painting"
+    ],
+    "regs": [
+     "osha-maritime-ag",
+     "is-17893"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Tank Entry"
+    ],
+    "permits": [
+     "Hot work",
+     "Confined space entry",
+     "Work at height"
+    ]
+   },
+   {
+    "id": "port-bulk",
+    "t": "Bulk cargo and dust",
+    "procs": [
+     "dust",
+     "respiratory",
+     "p3-chp-ash"
+    ],
+    "cks": [
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Combustible Dust",
+     "Dust & Silica"
+    ],
+    "permits": []
+   },
+   {
+    "id": "port-traffic",
+    "t": "Yard traffic, forklifts and CFS docks",
+    "procs": [
+     "traffic",
+     "forklift",
+     "p3-loading-dock"
+    ],
+    "cks": [
+     "cl-forklift",
+     "cl4-loading-dock"
+    ],
+    "regs": [
+     "mv-act",
+     "pit-racking"
+    ],
+    "talks": [
+     "Forklifts & Pedestrians",
+     "Struck by Plant & Vehicles"
+    ],
+    "permits": []
+   },
+   {
+    "id": "port-heat",
+    "t": "Heat, night work and security",
+    "procs": [
+     "heat",
+     "night-lone",
+     "health",
+     "security"
+    ],
+    "cks": [
+     "cl-heat",
+     "cl-night",
+     "cl-security"
+    ],
+    "regs": [
+     "osha-heat-nep",
+     "security-codes"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "water-codes",
+   "osha-maritime-ag",
+   "crane-codes",
+   "lifting-gear-codes",
+   "un-ghs",
+   "explosives",
+   "msihc",
+   "dust-codes",
+   "is-17893",
+   "mv-act",
+   "pit-racking",
+   "security-codes",
+   "petroleum",
+   "gas-cylinders",
+   "dm-act",
+   "ilo",
+   "osha-1910",
+   "eia-2006"
+  ],
+  "procs": [
+   "p3-quay-crane",
+   "p3-hold-entry",
+   "p3-mooring",
+   "p3-dg-container",
+   "lifting",
+   "tackles",
+   "confined",
+   "water",
+   "chemicals",
+   "emergency",
+   "hotwork",
+   "tankclean",
+   "painting",
+   "wah",
+   "dust",
+   "traffic",
+   "forklift",
+   "p3-loading-dock",
+   "heat",
+   "security"
+  ],
+  "cks": [
+   "cl4-quay-crane",
+   "cl4-hold-entry",
+   "cl4-mooring",
+   "cl4-dg-container",
+   "cl-tackles",
+   "cl-confined",
+   "cl-water",
+   "cl-emergency",
+   "cl-hotwork",
+   "cl-tankclean",
+   "cl-forklift",
+   "cl-heat"
+  ],
+  "talks": [
+   "Container Tops & Twistlocks",
+   "Ship Holds – Test Before Entry",
+   "Mooring Lines – Snap-Back Zones",
+   "Dangerous Goods Containers",
+   "Lifting Operations",
+   "Confined Space",
+   "Working Over Water",
+   "Hot Work & Fire",
+   "Tank Entry",
+   "Forklifts & Pedestrians",
+   "Heat Stress",
+   "Life-Saving Rules"
+  ],
+  "ppe": [
+   "Helmet with chin strap",
+   "Hi-vis",
+   "Safety boots",
+   "Impact-rated gloves for lashing",
+   "Lifejacket (150 N) near water edges and in boats",
+   "Harness for container tops/hold ladders where fitted",
+   "FFP3 for bulk-cargo dust",
+   "Personal multi-gas monitor for hold entry"
+  ],
+  "statutory": [
+   "Dock Workers (Safety, Health & Welfare) Regulations 1990 under OSH Code: lifting-appliance tests/examinations, hold access, ventilation, PPE, welfare; DGFASLI Dock Safety Inspectorate inspections and accident notices",
+   "Major Port Authorities Act 2021 / Indian Ports Act 1908 port regulations: DG handling, berthing/mooring, ISPS security; IMDG Code via DG Shipping",
+   "Explosives/Ammonium Nitrate Rules and PESO for Class 1/AN; MSIHC for bulk chemical terminals; Petroleum/Gas Cylinders for fuel/LPG berths",
+   "Fumigation under Insecticides Act 1968 and PPQS accreditation; gas-free certificates before hold/container entry",
+   "Shipyards/ship repair: Factories/OSH Code, hot-work and enclosed-space permits; Recycling of Ships Act 2019 for breaking yards",
+   "EC/CRZ clearances, SPCB dust norms for bulk cargo; stevedore/contract labour licences; women's night-work conditions"
+  ],
+  "cats": [
+   "LIFT",
+   "VEHICLE",
+   "HEIGHT",
+   "CONFINED",
+   "CHEM",
+   "FIRE",
+   "DUST",
+   "HEAT",
+   "PPE",
+   "HOUSE",
+   "SECURITY",
+   "ELEC",
+   "PROC",
+   "OTHER"
+  ],
+  "kpis": [
+   "Pedestrian-in-operational-area violations per 1,000 moves",
+   "Hold/enclosed-space entries with complete gas logs (%)",
+   "DG misdeclarations/refusals per 1,000 DG units"
+  ]
  },
  {
   "id": "agri",
@@ -520,16 +6302,312 @@
    "factory",
    "plantation"
   ],
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Cane-yard and mill vehicle traffic",
+   "Mill rollers, carriers, centrifugals and conveyors",
+   "Bagasse and grain-dust fires and explosions",
+   "Silo and bin engulfment",
+   "Phosphine fumigation poisoning",
+   "Boilers, pans, hot liquor, SO2 and lime",
+   "Hexane solvent-extraction fires (oil mills)",
+   "Manual handling of 50–100 kg bags; heat",
+   "Seasonal/migrant workers without induction; child-labour risk",
+   "Pesticides on plantations; snakebite"
+  ],
+  "tasks": [
+   {
+    "id": "ag-sugar",
+    "t": "Sugar mill: cane yard to sugar house",
+    "procs": [
+     "p3-sugar",
+     "pressure",
+     "confined"
+    ],
+    "cks": [
+     "cl4-sugar"
+    ],
+    "regs": [
+     "boilers-2025",
+     "state-dangerous-ops"
+    ],
+    "talks": [
+     "Sugar Mill Season Start"
+    ],
+    "permits": [
+     "Confined space entry",
+     "Hot work"
+    ]
+   },
+   {
+    "id": "ag-grain",
+    "t": "Rice, flour and oil mills: dust and silos",
+    "procs": [
+     "p3-grain-mill",
+     "dust",
+     "p3-silo"
+    ],
+    "cks": [
+     "cl4-grain-mill",
+     "cl4-silo",
+     "cl-dust"
+    ],
+    "regs": [
+     "dust-codes"
+    ],
+    "talks": [
+     "Grain Dust & Elevators",
+     "Grain & Sugar Silos – Never Walk the Pile"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "ag-season",
+    "t": "Seasonal and migrant workforce",
+    "procs": [
+     "p3-seasonal",
+     "training",
+     "contractor",
+     "health"
+    ],
+    "cks": [
+     "cl4-seasonal",
+     "cl-welfare",
+     "cl-contractor"
+    ],
+    "regs": [
+     "contract-labour",
+     "child-labour",
+     "ss-code"
+    ],
+    "talks": [
+     "New Season, New Workers – Buddy Up",
+     "Women's Safety & Respect at Work"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ag-traffic",
+    "t": "Yard traffic, forklifts and loading",
+    "procs": [
+     "traffic",
+     "forklift",
+     "p3-loading-dock"
+    ],
+    "cks": [
+     "cl-daily",
+     "cl4-loading-dock"
+    ],
+    "regs": [
+     "mv-act"
+    ],
+    "talks": [
+     "Struck by Plant & Vehicles",
+     "Loading Dock – Chock Before You Load"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ag-machine",
+    "t": "Machinery guarding and isolation",
+    "procs": [
+     "machine",
+     "loto",
+     "tools"
+    ],
+    "cks": [
+     "cl-loto",
+     "cl-tools"
+    ],
+    "regs": [
+     "machinery-codes"
+    ],
+    "talks": [
+     "Lockout / Tagout",
+     "Angle Grinder Rules"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ag-fire",
+    "t": "Fire, bagasse and solvents",
+    "procs": [
+     "fire",
+     "firesys",
+     "p3-solvent"
+    ],
+    "cks": [
+     "cl-fire",
+     "cl-firesys",
+     "cl4-solvent"
+    ],
+    "regs": [
+     "fire-systems",
+     "petroleum"
+    ],
+    "talks": [
+     "Hot Work & Fire",
+     "Solvents & Static"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "ag-heat",
+    "t": "Heat, manual handling and emergencies",
+    "procs": [
+     "heat",
+     "manual",
+     "p3-remote-er"
+    ],
+    "cks": [
+     "cl-heat",
+     "cl4-remote-er"
+    ],
+    "regs": [
+     "osha-heat-nep"
+    ],
+    "talks": [
+     "Heat Stress",
+     "Manual Handling"
+    ],
+    "permits": []
+   },
+   {
+    "id": "ag-chem",
+    "t": "Chemicals, fumigants and biological hazards",
+    "procs": [
+     "chemicals",
+     "toxicgas",
+     "bio"
+    ],
+    "cks": [
+     "cl-chemical",
+     "cl-bio"
+    ],
+    "regs": [
+     "ghs-india",
+     "bio-codes"
+    ],
+    "talks": [
+     "Chemical Safety & SDS"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "factories-act",
+   "ka-factories-rules",
+   "tn-factories-rules",
+   "state-dangerous-ops",
+   "boilers-2025",
+   "tn-boilers",
+   "ka-boilers",
+   "dust-codes",
+   "machinery-codes",
+   "petroleum",
+   "contract-labour",
+   "child-labour",
+   "ss-code",
+   "mv-act",
+   "fire-systems",
+   "how-rules",
+   "air-water",
+   "ilo"
+  ],
+  "procs": [
+   "p3-sugar",
+   "p3-grain-mill",
+   "p3-silo",
+   "p3-seasonal",
+   "p3-solvent",
+   "dust",
+   "confined",
+   "pressure",
+   "machine",
+   "loto",
+   "tools",
+   "traffic",
+   "forklift",
+   "p3-loading-dock",
+   "manual",
+   "heat",
+   "fire",
+   "firesys",
+   "training",
+   "p3-remote-er"
+  ],
+  "cks": [
+   "cl4-sugar",
+   "cl4-grain-mill",
+   "cl4-silo",
+   "cl4-seasonal",
+   "cl4-solvent",
+   "cl-dust",
+   "cl-confined",
+   "cl-loto",
+   "cl-daily",
+   "cl-heat",
+   "cl-welfare",
+   "cl-statutory-factory"
+  ],
+  "talks": [
+   "Sugar Mill Season Start",
+   "Grain Dust & Elevators",
+   "Grain & Sugar Silos – Never Walk the Pile",
+   "New Season, New Workers – Buddy Up",
+   "Struck by Plant & Vehicles",
+   "Lockout / Tagout",
+   "Combustible Dust",
+   "Hot Work & Fire",
+   "Heat Stress",
+   "Manual Handling",
+   "Women's Safety & Respect at Work",
+   "Solvents & Static"
+  ],
+  "ppe": [
+   "Helmet and hi-vis in cane yard",
+   "Safety boots",
+   "FFP2 for bagasse/grain dust",
+   "Face shield and apron for lime, sulphur and hot liquor",
+   "Hearing protection in mill house",
+   "Gloves",
+   "Harness for silo/stack work",
+   "Heat gloves at pans and boilers"
+  ],
+  "statutory": [
+   "Seasonal-factory provisions under OSH Code/Factories; ESI exemption for seasonal factories (verify) — EC coverage required; Safety Officer/Committee thresholds in season",
+   "Boilers Act 2025/IBR for bagasse/husk boilers with certified attendants; pressure vessels (pans, evaporators) tested; co-gen CEIG",
+   "State dangerous-machine schedules (centrifugals, mill rollers, hullers); young persons barred; weights rules for bag handling",
+   "Insecticides Act 1968: fumigation only by licensed operators (PPQS); Petroleum Rules for hexane/ethanol; MSIHC for distilleries",
+   "Inter-state migrant and contract labour registration; Child & Adolescent Labour Act; welfare (water, toilets, crèche, housing); wages via bank",
+   "SPCB consents (spent wash, husk boilers, dust), bagasse storage fire NOC; Plantations provisions for estate workers"
+  ],
+  "cats": [
+   "VEHICLE",
+   "GUARD",
+   "DUST",
+   "FIRE",
+   "CONFINED",
+   "PRESSURE",
+   "CHEM",
+   "ERGO",
+   "HEAT",
+   "PPE",
+   "HOUSE",
+   "ELEC",
+   "HEALTH",
+   "PROC"
+  ],
+  "kpis": [
+   "Cane-yard/vehicle incidents per crushing season",
+   "Seasonal workers inducted before first shift (%)",
+   "Bagasse/grain-dust fire events per season"
+  ]
  },
  {
   "id": "facilities",
@@ -546,16 +6624,315 @@
    "other"
   ],
   "sector": "sec-corporate",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Fire and evacuation in occupied buildings (hospitals, malls, offices)",
+   "DG sets, fuel and electrical rooms",
+   "HVAC plant rooms and refrigerant leaks",
+   "Lifts and escalators: shaft falls and entrapment",
+   "Housekeeping chemicals, sharps and biomedical waste",
+   "Façade and height access for cleaning and maintenance",
+   "Events and crowd management",
+   "Contractor control (hot work, confined spaces, electrical)",
+   "Legionella in cooling towers and water systems",
+   "Security, violence and women's safety at night"
+  ],
+  "tasks": [
+   {
+    "id": "fac-fire",
+    "t": "Fire systems and evacuation",
+    "procs": [
+     "fire",
+     "firesys",
+     "emergency"
+    ],
+    "cks": [
+     "cl-fire",
+     "cl-firesys",
+     "cl-emergency"
+    ],
+    "regs": [
+     "fire-systems",
+     "nbc-2016",
+     "ka-fire",
+     "tn-fire"
+    ],
+    "talks": [
+     "Emergency Response",
+     "Hot Work & Fire"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "fac-dg",
+    "t": "DG sets and electrical rooms",
+    "procs": [
+     "p3-dg-room",
+     "electrical",
+     "loto"
+    ],
+    "cks": [
+     "cl4-dg-room",
+     "cl-electrical",
+     "cl-loto"
+    ],
+    "regs": [
+     "electricity"
+    ],
+    "talks": [
+     "DG Room – It Can Start by Itself",
+     "Electrical Safety on Site"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "fac-hvac",
+    "t": "HVAC plant rooms and cooling towers",
+    "procs": [
+     "p3-hvac",
+     "legionella"
+    ],
+    "cks": [
+     "cl4-hvac",
+     "cl-legionella"
+    ],
+    "regs": [
+     "ods-rules"
+    ],
+    "talks": [
+     "Refrigerant Rooms – Air You Cannot Smell"
+    ],
+    "permits": [
+     "Hot work"
+    ]
+   },
+   {
+    "id": "fac-lift",
+    "t": "Lifts and escalators",
+    "procs": [
+     "p3-lift-mr"
+    ],
+    "cks": [
+     "cl4-lift-mr"
+    ],
+    "regs": [
+     "ka-lifts",
+     "tn-lifts"
+    ],
+    "talks": [
+     "Lift Shafts – Never Open a Landing Door Blind"
+    ],
+    "permits": [
+     "Electrical (LV/HT)"
+    ]
+   },
+   {
+    "id": "fac-hk",
+    "t": "Housekeeping, waste and sanitation",
+    "procs": [
+     "p3-housekeeping",
+     "bio",
+     "p3-sewer"
+    ],
+    "cks": [
+     "cl4-housekeeping",
+     "cl-bio",
+     "cl4-sewer"
+    ],
+    "regs": [
+     "bio-codes",
+     "security-codes"
+    ],
+    "talks": [
+     "Housekeeping Chemicals & Sharps",
+     "Sewer & Septic Tanks – No Manual Entry"
+    ],
+    "permits": [
+     "Confined space entry"
+    ]
+   },
+   {
+    "id": "fac-height",
+    "t": "Façade, roof and height access",
+    "procs": [
+     "wah",
+     "scaffold"
+    ],
+    "cks": [
+     "cl-wah"
+    ],
+    "regs": [
+     "bis-construction"
+    ],
+    "talks": [
+     "Falls from Height"
+    ],
+    "permits": [
+     "Work at height"
+    ]
+   },
+   {
+    "id": "fac-events",
+    "t": "Events and crowd management",
+    "procs": [
+     "p3-events",
+     "security"
+    ],
+    "cks": [
+     "cl4-events",
+     "cl-security"
+    ],
+    "regs": [
+     "security-codes",
+     "dm-act"
+    ],
+    "talks": [
+     "Crowd Events – Exits, Marshals, Headcount"
+    ],
+    "permits": []
+   },
+   {
+    "id": "fac-contract",
+    "t": "Contractor permits and control",
+    "procs": [
+     "contractor",
+     "ptw",
+     "hotwork",
+     "confined",
+     "training"
+    ],
+    "cks": [
+     "cl-contractor",
+     "cl-hotwork",
+     "cl-confined"
+    ],
+    "regs": [
+     "is-17893"
+    ],
+    "talks": [
+     "Life-Saving Rules",
+     "Confined Space"
+    ],
+    "permits": [
+     "Hot work",
+     "Confined space entry"
+    ]
+   }
+  ],
+  "regs": [
+   "osh-code",
+   "osh-central-rules",
+   "ka-shops",
+   "tn-shops",
+   "nbc-2016",
+   "fire-systems",
+   "ka-fire",
+   "tn-fire",
+   "ka-lifts",
+   "tn-lifts",
+   "electricity",
+   "ods-rules",
+   "bio-codes",
+   "security-codes",
+   "is-17893",
+   "dm-act",
+   "how-rules",
+   "epr-regimes",
+   "ecsbc",
+   "iso-45001"
+  ],
+  "procs": [
+   "fire",
+   "firesys",
+   "emergency",
+   "p3-dg-room",
+   "p3-hvac",
+   "p3-lift-mr",
+   "p3-housekeeping",
+   "p3-events",
+   "p3-sewer",
+   "legionella",
+   "bio",
+   "electrical",
+   "loto",
+   "wah",
+   "contractor",
+   "ptw",
+   "hotwork",
+   "confined",
+   "security",
+   "night-lone"
+  ],
+  "cks": [
+   "cl-fire",
+   "cl-firesys",
+   "cl-emergency",
+   "cl4-dg-room",
+   "cl4-hvac",
+   "cl4-lift-mr",
+   "cl4-housekeeping",
+   "cl4-events",
+   "cl-legionella",
+   "cl-bio",
+   "cl-contractor",
+   "cl-security"
+  ],
+  "talks": [
+   "DG Room – It Can Start by Itself",
+   "Refrigerant Rooms – Air You Cannot Smell",
+   "Lift Shafts – Never Open a Landing Door Blind",
+   "Housekeeping Chemicals & Sharps",
+   "Crowd Events – Exits, Marshals, Headcount",
+   "Sewer & Septic Tanks – No Manual Entry",
+   "Emergency Response",
+   "Hot Work & Fire",
+   "Falls from Height",
+   "Electrical Safety on Site",
+   "Women's Safety & Respect at Work",
+   "First Aid – What Everyone Should Know"
+  ],
+  "ppe": [
+   "Non-slip shoes for housekeeping",
+   "Gloves and goggles for chemicals",
+   "Puncture-resistant gloves for waste",
+   "Harness/helmet for façade and height work",
+   "Hearing protection in DG/plant rooms",
+   "Insulated gloves/arc PPE for electrical rooms",
+   "Hi-vis for event stewards/traffic",
+   "FFP2 for dusty/biological tasks"
+  ],
+  "statutory": [
+   "Shops & Establishments/OSH Code registration; working hours, women's night work (KA 2026 amendment), contract labour licences, POSH committee",
+   "Fire NOC/fire safety certificate (occupancy-based; TN 2025 Act categories — verify), fire drills, fire-systems ITM (IS/NFPA 25); high-rise provisions",
+   "Lifts/escalators licensed and inspected under TN 1997/KA 2012 Acts; DG and HT installations under CEA with CEIG approvals; CPCB DG norms",
+   "Clinical Establishments/NABH for hospitals: BMW Rules 2016 authorisation, AERB for radiology, oxygen (PESO) — safety overlaps",
+   "Prohibition of manual scavenging (PEMSR Act); mechanised sewer/septic cleaning contracts",
+   "Events: police/fire/municipal permissions, PESO for pyro, structural certificates; NDMA crowd guidelines; ECSBC/BEE for energy"
+  ],
+  "cats": [
+   "FIRE",
+   "ELEC",
+   "HEIGHT",
+   "CHEM",
+   "HOUSE",
+   "BIO",
+   "PPE",
+   "SECURITY",
+   "PROC",
+   "CONFINED",
+   "HEALTH",
+   "ERGO",
+   "ENV",
+   "OTHER"
+  ],
+  "kpis": [
+   "Fire-system impairments open > 24 h",
+   "Lift entrapments with release > 30 min",
+   "Contractor permits audited vs issued (% compliant)"
+  ]
  },
  {
   "id": "corporate",
@@ -571,15 +6948,244 @@
    "office"
   ],
   "sector": "sec-corporate",
-  "hazards": [],
-  "tasks": [],
-  "regs": [],
-  "procs": [],
-  "cks": [],
-  "talks": [],
-  "ppe": [],
-  "statutory": [],
-  "cats": [],
-  "kpis": []
+  "hazards": [
+   "Misstatement/greenwashing in BRSR and CCTS data",
+   "Missed statutory deadlines across sites",
+   "Unverifiable OSH KPIs (LTIFR, fatalities)",
+   "Data inconsistencies across filings (EC Act, CCTS, CBAM, BRSR)",
+   "Weak legal registers and audit follow-up at sites",
+   "Value-chain OSH and human-rights gaps",
+   "Inadequate incident escalation to the board",
+   "Travel and site-visit risks for corporate staff",
+   "Psychosocial risk and overwork (ISO 45003)",
+   "Business continuity and crisis management"
+  ],
+  "tasks": [
+   {
+    "id": "corp-brsr",
+    "t": "BRSR, GHG inventory and assurance",
+    "procs": [
+     "esg",
+     "ghg",
+     "committee"
+    ],
+    "cks": [
+     "cl-esg",
+     "cl-ghg"
+    ],
+    "regs": [
+     "brsr",
+     "ccts",
+     "ghg-standards"
+    ],
+    "talks": [
+     "Carbon Counts Too"
+    ],
+    "permits": []
+   },
+   {
+    "id": "corp-legal",
+    "t": "Legal register and statutory returns",
+    "procs": [
+     "committee",
+     "moc",
+     "incident"
+    ],
+    "cks": [
+     "cl-statutory-factory",
+     "cl-statutory-construction",
+     "cl-environment"
+    ],
+    "regs": [
+     "shram-suvidha",
+     "ec-act",
+     "epr-regimes"
+    ],
+    "talks": [
+     "Near Miss Reporting"
+    ],
+    "permits": []
+   },
+   {
+    "id": "corp-audit",
+    "t": "Multi-site audits and governance",
+    "procs": [
+     "hira",
+     "committee",
+     "training",
+     "contractor"
+    ],
+    "cks": [
+     "cl-observation",
+     "cl-training",
+     "cl-contractor"
+    ],
+    "regs": [
+     "iso-45001",
+     "ka-safety-audit",
+     "dgfasli-policy"
+    ],
+    "talks": [
+     "Hierarchy of Controls",
+     "Life-Saving Rules",
+     "Top 10 Unsafe Acts We See"
+    ],
+    "permits": []
+   },
+   {
+    "id": "corp-cbam",
+    "t": "CBAM, CCTS and energy compliance",
+    "procs": [
+     "ghg",
+     "esg"
+    ],
+    "cks": [
+     "cl-ghg"
+    ],
+    "regs": [
+     "cbam",
+     "ccts",
+     "ec-act"
+    ],
+    "talks": [
+     "Carbon Counts Too"
+    ],
+    "permits": []
+   },
+   {
+    "id": "corp-people",
+    "t": "People, wellbeing and security",
+    "procs": [
+     "health",
+     "night-lone",
+     "security"
+    ],
+    "cks": [
+     "cl-welfare",
+     "cl-night",
+     "cl-security"
+    ],
+    "regs": [
+     "ir-code",
+     "security-codes",
+     "iso-45001"
+    ],
+    "talks": [
+     "Women's Safety & Respect at Work",
+     "First Aid – What Everyone Should Know"
+    ],
+    "permits": []
+   },
+   {
+    "id": "corp-crisis",
+    "t": "Crisis management and incident escalation",
+    "procs": [
+     "emergency",
+     "incident",
+     "security"
+    ],
+    "cks": [
+     "cl-emergency",
+     "cl-incident"
+    ],
+    "regs": [
+     "dm-act",
+     "iso-14001"
+    ],
+    "talks": [
+     "Emergency Response"
+    ],
+    "permits": []
+   }
+  ],
+  "regs": [
+   "brsr",
+   "ccts",
+   "cbam",
+   "ec-act",
+   "ghg-standards",
+   "epr-regimes",
+   "ecsbc",
+   "ods-rules",
+   "iso-14001",
+   "iso-45001",
+   "ir-code",
+   "shram-suvidha",
+   "dgfasli-policy",
+   "ka-safety-audit",
+   "tn-dish",
+   "osh-code",
+   "dm-act",
+   "security-codes",
+   "contract-labour",
+   "child-labour"
+  ],
+  "procs": [
+   "ghg",
+   "esg",
+   "committee",
+   "moc",
+   "training",
+   "incident",
+   "hira",
+   "contractor",
+   "health",
+   "emergency",
+   "security",
+   "night-lone"
+  ],
+  "cks": [
+   "cl-ghg",
+   "cl-esg",
+   "cl-statutory-factory",
+   "cl-statutory-construction",
+   "cl-environment",
+   "cl-training",
+   "cl-observation",
+   "cl-contractor",
+   "cl-incident",
+   "cl-emergency"
+  ],
+  "talks": [
+   "Carbon Counts Too",
+   "Hierarchy of Controls",
+   "Life-Saving Rules",
+   "Top 10 Unsafe Acts We See",
+   "Spot the Unsafe Condition",
+   "Near Miss Reporting",
+   "Women's Safety & Respect at Work",
+   "First Aid – What Everyone Should Know",
+   "Emergency Response"
+  ],
+  "ppe": [
+   "Site-visit kit: helmet, safety shoes, hi-vis, safety glasses",
+   "Hearing protection where issued by site",
+   "Task PPE per site rules when entering process areas",
+   "Respirator where the site requires"
+  ],
+  "statutory": [
+   "SEBI BRSR/BRSR Core assurance (top 1,000 listed; value chain ≥ 2 %); EC Act returns/audits; CCTS verified reports; EPR registrations/returns; CBAM customer data; Form V; HW Form 4; OSH Code annual return",
+   "EC Act: energy manager/auditor, mandatory audits, PAT/CCTS targets; verified GHG reports by accredited verifiers",
+   "BRSR Core: reasonable assurance of OSH KPIs (LTIFR, fatalities, complaints) consistent with site registers and statutory notices",
+   "OSH Code annual returns and multi-site legal registers; Safety Officer/Committee and audit requirements per state (KA Safety Audit Rules 2024)",
+   "EPR registrations/returns (plastic, e-waste, battery, used oil); POSH annual reports; ISO 45001/14001 certification maintenance"
+  ],
+  "cats": [
+   "PROC",
+   "ENV",
+   "HOUSE",
+   "PPE",
+   "FIRE",
+   "ELEC",
+   "HEALTH",
+   "ERGO",
+   "SECURITY",
+   "OTHER"
+  ],
+  "kpis": [
+   "LTIFR and fatality count reconciled between sites and BRSR Core (variance = 0)",
+   "Statutory filings on time across sites (%)",
+   "Verified Scope 1+2 intensity vs CCTS/SBTi target (progress %)"
+  ]
  }
 ]

@@ -125,7 +125,7 @@ async def new_matrix_version(matrix_id: str, request: Request, user: AuthUser = 
     async with db.tx() as c:
         n = (await c.fetchval("select coalesce(max(version), 0) + 1 from risk_matrix_versions where matrix_id = $1", m["id"]))
         row = await db.one(
-            "insert into risk_matrix_versions (matrix_id, version, likelihood_labels, severity_labels, bands, status, effective_from) values ($1,$2,$3,$4,$5,'draft',$6::date) returning *",
+            "insert into risk_matrix_versions (matrix_id, version, likelihood_labels, severity_labels, bands, status, effective_from) values ($1,$2,$3,$4,$5,'draft',$6::text::date) returning *",
             [m["id"], n, [x.model_dump(by_alias=True) for x in inp.likelihood_labels] if inp.likelihood_labels else (cur["likelihood_labels"] if cur else []),
              [x.model_dump(by_alias=True) for x in inp.severity_labels] if inp.severity_labels else (cur["severity_labels"] if cur else []),
              [x.model_dump(by_alias=True) for x in inp.bands] if inp.bands else (cur["bands"] if cur else []), inp.effective_from], c,
@@ -147,7 +147,7 @@ async def update_matrix_version(version_id: str, request: Request, user: AuthUse
     inp = parse(MatrixVersionIn, await json_body(request))
     async with db.tx() as c:
         row = await db.one(
-            "update risk_matrix_versions set likelihood_labels = coalesce($2, likelihood_labels), severity_labels = coalesce($3, severity_labels), bands = coalesce($4, bands), effective_from = coalesce($5::date, effective_from) where id = $1 returning *",
+            "update risk_matrix_versions set likelihood_labels = coalesce($2, likelihood_labels), severity_labels = coalesce($3, severity_labels), bands = coalesce($4, bands), effective_from = coalesce($5::text::date, effective_from) where id = $1 returning *",
             [v["id"], [x.model_dump(by_alias=True) for x in inp.likelihood_labels] if inp.likelihood_labels else None,
              [x.model_dump(by_alias=True) for x in inp.severity_labels] if inp.severity_labels else None,
              [x.model_dump(by_alias=True) for x in inp.bands] if inp.bands else None, inp.effective_from], c,

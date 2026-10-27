@@ -79,6 +79,7 @@ export default function QuickReport() {
       return;
     }
     if (d.siteId) { located.current = true; return; }
+    if (ref.sites.length === 0) return; // reference data not pulled yet: wait rather than guess
     const last = readLastLocation(me.id);
     if (last && ref.sites.some((s) => s.id === last.siteId)) { located.current = true; set((p) => ({ ...p, siteId: last.siteId, areaId: last.areaId, assetId: last.assetId ?? null })); return; }
     if (geo.state === "ok") {

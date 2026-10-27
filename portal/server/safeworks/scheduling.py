@@ -67,7 +67,7 @@ async def ensure_scheduled_run(conn, schedule: dict, now: datetime | None = None
         due = next_due(schedule["frequency"] or {}, now)
         if due is None:
             return None
-        await conn.execute("update inspection_schedules set next_due_at = $2, updated_at = now() where id = $1", schedule["id"], due)
+        await db._db(conn).execute("update inspection_schedules set next_due_at = $2, updated_at = now() where id = $1", schedule["id"], due)
     if due - now > timedelta(days=int(schedule["lead_days"] or 0)):
         return None
     existing = await db.one("select id from inspection_runs where schedule_id = $1 and due_at = $2", [schedule["id"], due], conn)
@@ -87,7 +87,7 @@ async def ensure_scheduled_run(conn, schedule: dict, now: datetime | None = None
         [str(_uuid.uuid4()), tmpl["org_id"], case_no, tmpl["active_version_id"], schedule["site_id"], schedule["area_id"], schedule["asset_id"], schedule["id"], due, schedule["assignee_user_id"]], conn,
     )
     nxt = next_due(schedule["frequency"] or {}, due)
-    await conn.execute("update inspection_schedules set next_due_at = $2, updated_at = now() where id = $1", schedule["id"], nxt)
+    await db._db(conn).execute("update inspection_schedules set next_due_at = $2, updated_at = now() where id = $1", schedule["id"], nxt)
     recipients = [schedule["assignee_user_id"]] if schedule["assignee_user_id"] else await users_with_roles(conn, schedule["site_id"], [schedule["assignee_role"]] if schedule["assignee_role"] else ["site_safety_officer"], tmpl["org_id"])
     area_name = ""
     if schedule["area_id"]:
@@ -109,7 +109,7 @@ async def mark_missed(conn, now: datetime | None = None) -> int:
             where r.status = 'scheduled' and r.due_at + make_interval(hours => sc.grace_hours) < $1""", [now], conn,
     )
     for r in rows:
-        await conn.execute("update inspection_runs set status = 'missed', version = version + 1, updated_at = now() where id = $1", r["id"])
+        await db._db(conn).execute("update inspection_runs set status = 'missed', version = version + 1, updated_at = now() where id = $1", r["id"])
         officers = await users_with_roles(conn, r["site_id"], ["site_safety_officer"], r["org_id"])
         await notify(conn, org_id=r["org_id"], recipients=officers, event_type="inspection_missed", record_type="inspection_run", record_id=r["id"], key="inspection_missed",
                      params={"caseNo": r["case_no"], "due": r["due_at"].astimezone(db.TZ).strftime("%d %b %Y, %H:%M"), "template": pick(r["template_name"], "en"), "site": pick(r["site_name"], "en"), "area": ""},

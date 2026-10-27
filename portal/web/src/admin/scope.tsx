@@ -61,7 +61,7 @@ export function ScopeProvider({ children }: { children: ReactNode }) {
       }
       (setters[what] as (s: RefState<any>) => void)({ data: list, loaded: true, error: null });
     } catch (e) {
-      (setters[what] as (s: RefState<any>) => void)((prev: RefState<any>) => ({ ...prev, loaded: true, error: e }));
+      (setters[what] as (fn: (prev: RefState<any>) => RefState<any>) => void)((prev: RefState<any>) => ({ ...prev, loaded: true, error: e }));
     }
   }, []);
 
@@ -73,7 +73,7 @@ export function ScopeProvider({ children }: { children: ReactNode }) {
   const loadAreas = useCallback(async (sid: string, force = false) => {
     if (!sid) return [];
     if (!force && areas[sid]) return areas[sid];
-    if (!force && areaLoads.current[sid]) return areaLoads.current[sid];
+    if (!force && sid in areaLoads.current) return areaLoads.current[sid];
     const p = api.get(`/admin/sites/${sid}/areas`).then((r) => {
       const list = asList<Area>(r).slice().sort((a, b) => a.sort - b.sort);
       setAreas((prev) => ({ ...prev, [sid]: list }));

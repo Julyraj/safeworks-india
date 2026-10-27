@@ -51,14 +51,14 @@ async def get_site(conn, site_id: str) -> dict:
 async def user_name(conn, user_id: str | None) -> str:
     if not user_id:
         return ""
-    return await conn.fetchval(
+    return await db._db(conn).fetchval(
         "select coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) from users u left join people p on p.id = u.person_id where u.id = $1", user_id
     ) or ""
 
 
 async def user_has_site(conn, user_id: str, site_id: str) -> bool:
     """The user holds any role at the site (or an all-sites role) and is active."""
-    return bool(await conn.fetchval(
+    return bool(await db._db(conn).fetchval(
         """select 1 from users u join user_site_roles r on r.user_id = u.id
             where u.id = $1 and u.status = 'active' and (r.site_id = $2 or r.site_id is null) and (r.expires_at is null or r.expires_at > now()) limit 1""",
         user_id, site_id,
@@ -147,7 +147,7 @@ def compute_due(rule: dict, start: datetime, site: dict) -> datetime:
 
 async def touch(conn, table: str, record_id: str) -> int:
     """Bump version and updated_at; returns the new version."""
-    return await conn.fetchval(f"update {table} set version = version + 1, updated_at = now() where id = $1 returning version", record_id)
+    return await db._db(conn).fetchval(f"update {table} set version = version + 1, updated_at = now() where id = $1 returning version", record_id)
 
 
 def ensure_status(record: dict, allowed: tuple[str, ...], *, as_conflict: bool = True) -> None:

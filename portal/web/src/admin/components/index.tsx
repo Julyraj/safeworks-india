@@ -257,8 +257,8 @@ export function CountLine({ total, loading }: { total: number | undefined; loadi
 
 /* ------------------------------------------------------------- i18n inputs */
 export function I18nInput({ value, onChange, textarea, required, label, hint, error }: { value: I18n | Record<string, string> | null | undefined; onChange: (v: I18n) => void; textarea?: boolean; required?: boolean; label: ReactNode; hint?: ReactNode; error?: ReactNode }) {
-  const v: Record<string, string> = { en: "", ...(value ?? {}) };
-  const set = (l: Lang, s: string) => onChange({ ...(v as I18n), [l]: s, en: l === "en" ? s : v.en });
+  const v: Record<string, string> = Object.assign({ en: "" }, value ?? {});
+  const set = (l: Lang, s: string) => { const next: Record<string, string> = { ...v, [l]: s }; onChange(next as I18n); };
   return (
     <Field label={label} required={required} hint={hint} error={error}>
       <div className="lang-grid">

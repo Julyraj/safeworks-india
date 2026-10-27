@@ -225,7 +225,7 @@ async def _source_reevaluate(conn, actor: AuthUser | None, a: dict) -> None:
         await observations.close_if_done(conn, actor, a["source_id"])
     elif a["source_type"] == "inspection_answer" and a["source_id"]:
         from . import inspections
-        run_id = await conn.fetchval("select run_id from inspection_answers where id = $1", a["source_id"])
+        run_id = await db._db(conn).fetchval("select run_id from inspection_answers where id = $1", a["source_id"])
         if run_id:
             await inspections.close_if_done(conn, run_id)
 
@@ -241,7 +241,7 @@ async def request(conn, actor: AuthUser, action_id: str, payload: ActionRequestC
     if payload.type == "date_change" and not payload.proposed_due_at:
         raise bad_request("Choose the proposed date.", key="err.date_required")
     settings = await org_settings(a["org_id"], conn)
-    earlier = await conn.fetchval("select count(*) from action_requests where action_id = $1 and type = 'date_change'", a["id"]) if payload.type == "date_change" else 0
+    earlier = await db._db(conn).fetchval("select count(*) from action_requests where action_id = $1 and type = 'date_change'", a["id"]) if payload.type == "date_change" else 0
     needs_head = payload.type == "date_change" and (earlier or 0) + 1 >= int(settings.get("dateChangeRequestsBeforeSiteHead", 3))
     req = await db.one(
         """insert into action_requests (action_id, type, requested_by, proposed_due_at, reason_code, reason)

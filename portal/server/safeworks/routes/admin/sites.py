@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, Request
 
 from ... import db
 from ...audit import audit
+from ...auth import forget_all
 from ...defaults import default_areas
 from ...errors import HttpError, bad_request, not_found
 from ...http import JSON, json_body, opt_uuid, page_params, uuid_param
@@ -50,13 +51,14 @@ async def create_site(request: Request, user: AuthUser = Depends(console_user)):
         row = await db.one(
             """insert into sites (org_id, code, name_i18n, address, state, district, lat, lng, geofence_radius_m, industry_code, establishment_type, appropriate_government,
                                   rule_set_code, rule_set_effective_from, risk_matrix_version_id, hazardous_process, working_calendar, worker_count, site_head_user_id, created_by, updated_by)
-               values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14::date,$15,$16,$17,$18,$19,$20,$20) returning *""",
+               values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14::text::date,$15,$16,$17,$18,$19,$20,$20) returning *""",
             [user.org_id, inp.code, inp.name.dump(), inp.address, inp.state, inp.district, inp.lat, inp.lng, inp.geofence_radius_m, inp.industry_code, inp.establishment_type,
              inp.appropriate_government, inp.rule_set_code, inp.rule_set_effective_from, inp.risk_matrix_version_id, inp.hazardous_process,
              inp.working_calendar.model_dump(by_alias=True) if inp.working_calendar else {"weeklyOff": [0], "shiftStart": "08:00", "shiftEnd": "17:00"}, inp.worker_count,
              inp.site_head_user_id, user.id], c,
         )
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="site", record_id=row["id"], site_id=row["id"], changes={"code": inp.code, "name": inp.name.dump()})
+    forget_all()  # all-sites roles see the new site at once
     return JSON(site_view(row), status_code=201)
 
 
@@ -100,6 +102,7 @@ async def delete_site(site_id: str, request: Request, user: AuthUser = Depends(c
     async with db.tx() as c:
         await c.execute("update sites set active = false, deleted_at = now(), deleted_by = $2, delete_reason = $3, version = version + 1, updated_at = now() where id = $1", s["id"], user.id, reason)
         await audit(c, org_id=user.org_id, actor=user, action="delete", record_type="site", record_id=s["id"], site_id=s["id"], reason=reason)
+    forget_all()
     return JSON({"ok": True})
 
 
@@ -133,10 +136,12 @@ async def setup_site(site_id: str, request: Request, user: AuthUser = Depends(co
         if ind["category_codes"]:
             await c.execute("update categories set active = true, updated_at = now() where org_id = $1 and code = any($2::text[])", user.org_id, list(ind["category_codes"]))
         if ind["template_codes"]:
+            # a template that lists industries gains this one; a template with no industry list already applies everywhere
             await c.execute(
-                """update inspection_templates t set applies_to = jsonb_set(coalesce(applies_to, '{}'::jsonb), '{industries}',
-                       (select to_jsonb(array(select distinct x from unnest(array_append(coalesce(array(select jsonb_array_elements_text(applies_to->'industries')), '{}'), $3)) x)))), updated_at = now()
-                    where t.org_id = $1 and t.code = any($2::text[]) and t.deleted_at is null""", user.org_id, list(ind["template_codes"]), ind["code"])
+                """update inspection_templates t set applies_to = jsonb_set(applies_to, '{industries}', (applies_to->'industries') || to_jsonb($3::text)), updated_at = now()
+                    where t.org_id = $1 and t.code = any($2::text[]) and t.deleted_at is null
+                      and jsonb_typeof(applies_to->'industries') = 'array' and jsonb_array_length(applies_to->'industries') > 0
+                      and not (applies_to->'industries') ? $3""", user.org_id, list(ind["template_codes"]), ind["code"])
         # QR codes: one for the site, one per area
         async def ensure_qr(target_type: str, target_id: str, label: str) -> dict:
             q = await db.one("select * from qr_codes where target_type = $1 and target_id = $2 and active", [target_type, target_id], c)
@@ -153,6 +158,7 @@ async def setup_site(site_id: str, request: Request, user: AuthUser = Depends(co
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="site", record_id=s["id"], site_id=s["id"],
                     changes={"setup": True, "industryCode": ind["code"], "areas": len(created_areas), "qrCodes": len(posters)})
     clear_org_cache(user.org_id)
+    forget_all()
     site = await db.one("select * from sites where id = $1", [s["id"]])
     return JSON({"site": site_view(site), "areas": [area_view(a) for a in await db.q("select * from areas where site_id = $1 and deleted_at is null order by sort", [s["id"]])], "posters": posters})
 
@@ -185,7 +191,7 @@ async def site_rule_set(site_id: str, request: Request, user: AuthUser = Depends
     elif not rs["enabled"]:
         raise bad_request("This rule set is not enabled.", key="err.rule_set_disabled")
     async with db.tx() as c:
-        await c.execute("update sites set rule_set_code = $2, rule_set_effective_from = $3::date, version = version + 1, updated_at = now(), updated_by = $4 where id = $1",
+        await c.execute("update sites set rule_set_code = $2, rule_set_effective_from = $3::text::date, version = version + 1, updated_at = now(), updated_by = $4 where id = $1",
                         s["id"], inp.code, inp.effective_from, user.id)
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="site", record_id=s["id"], site_id=s["id"],
                     changes={"ruleSetCode": [s["rule_set_code"], inp.code], "effectiveFrom": inp.effective_from})
@@ -308,7 +314,7 @@ async def create_asset(request: Request, user: AuthUser = Depends(console_user))
     async with db.tx() as c:
         row = await db.one(
             """insert into assets (org_id, site_id, area_id, asset_class, tag_no, serial_no, make_model, swl_kg, owner_employer_id, status, status_reason, next_exam_due)
-               values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::date) returning *""",
+               values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::text::date) returning *""",
             [user.org_id, inp.site_id, inp.area_id, inp.asset_class, inp.tag_no, inp.serial_no, inp.make_model, inp.swl_kg, inp.owner_employer_id, inp.status, inp.status_reason, inp.next_exam_due], c,
         )
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="asset", record_id=row["id"], site_id=inp.site_id, changes={"tagNo": inp.tag_no, "assetClass": inp.asset_class})
@@ -325,7 +331,7 @@ async def update_asset(asset_id: str, request: Request, user: AuthUser = Depends
     async with db.tx() as c:
         row = await db.one(
             """update assets set area_id = $2, asset_class = $3, tag_no = $4, serial_no = $5, make_model = $6, swl_kg = $7, owner_employer_id = $8, status = $9, status_reason = $10,
-                                next_exam_due = $11::date, version = version + 1, updated_at = now() where id = $1 returning *""",
+                                next_exam_due = $11::text::date, version = version + 1, updated_at = now() where id = $1 returning *""",
             [a["id"], inp.area_id, inp.asset_class, inp.tag_no, inp.serial_no, inp.make_model, inp.swl_kg, inp.owner_employer_id, inp.status, inp.status_reason, inp.next_exam_due], c,
         )
         await audit(c, org_id=user.org_id, actor=user, action="update", record_type="asset", record_id=a["id"], site_id=a["site_id"],
