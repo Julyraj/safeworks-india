@@ -1,7 +1,11 @@
-# SafeWorks Portal server (Python 3.12+)
+# SafeWorks Portal server (Python 3.12+). All permissive licences (MIT / BSD / Apache-2.0 / PSF).
 fastapi==0.162.0
 uvicorn[standard]==0.54.0
 asyncpg==0.32.0
 pydantic==2.14.1
 python-multipart==0.0.32
 orjson==3.13.0
+pyotp==2.9.0
+cryptography==46.0.3
+pywebpush==2.0.3
+qrcode==8.2

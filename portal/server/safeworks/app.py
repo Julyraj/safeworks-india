@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import asyncio
-import base64
 import logging
 import mimetypes
 from contextlib import asynccontextmanager
@@ -16,6 +15,7 @@ from starlette.responses import FileResponse, RedirectResponse, Response
 
 from . import db
 from .config import DEV_FIELD_KEY, DEV_FILE_SECRET, config
+from .crypto import _load_key
 from .errors import HttpError
 from .http import JSON
 from .i18n import from_accept_language, t
@@ -52,13 +52,9 @@ async def lifespan(app: FastAPI):
     if config.is_prod:
         if not config.file_signing_secret or len(config.file_signing_secret) < 32 or config.file_signing_secret == DEV_FILE_SECRET:
             raise RuntimeError("FILE_SIGNING_SECRET must be at least 32 random characters in production.")
-        if not config.field_encryption_key or config.field_encryption_key == DEV_FIELD_KEY:
-            raise RuntimeError("FIELD_ENCRYPTION_KEY must be set in production (base64 of 32 random bytes).")
-        try:
-            if len(base64.b64decode(config.field_encryption_key + "=" * (-len(config.field_encryption_key) % 4))) != 32:
-                raise ValueError
-        except Exception:
-            raise RuntimeError("FIELD_ENCRYPTION_KEY must decode to exactly 32 bytes.")
+        if not config.field_encryption_key or config.field_encryption_key == DEV_FIELD_KEY or len(config.field_encryption_key.strip()) < 32:
+            raise RuntimeError("FIELD_ENCRYPTION_KEY must be set in production (base64 of 32 random bytes, or any random string of 32+ characters).")
+        _load_key()  # fails fast on an unusable key
     await db.init_pool()
     if config.auto_migrate:
         await migrate()

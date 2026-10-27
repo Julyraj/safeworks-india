@@ -77,6 +77,14 @@ async function recount() {
   const media = await mediaMeta();
   const live = media.filter((m) => m.status !== "failed");
   set({ pending, failed, uploads: { done: live.filter((m) => m.status === "uploaded").length, total: live.length } });
+  // the retry schedule: wake up when the earliest backed-off command or upload is due again
+  const due = [...items.filter((x) => x.status === "pending").map((x) => x.nextAttemptAt ?? 0), ...media.filter((m) => m.status === "queued" && m.uploadUrl).map((m) => m.nextAttemptAt ?? 0)].filter((t) => t > Date.now());
+  if (due.length && !running) scheduleRetry(Math.min(...due) - Date.now());
+}
+let retryTimer = 0;
+function scheduleRetry(ms: number) {
+  clearTimeout(retryTimer);
+  retryTimer = window.setTimeout(() => { if (navigator.onLine) void syncNow(); }, Math.max(500, ms) + 50);
 }
 
 /* ---------------------------------------------------------------- id resolution (§13.2) */
@@ -318,6 +326,7 @@ export function stopSync() {
   started = false;
   clearInterval(timer);
   clearTimeout(kickTimer);
+  clearTimeout(retryTimer);
 }
 /** Flip failed items back to pending and sync. */
 export async function retryFailed(commandIds?: string[]) {

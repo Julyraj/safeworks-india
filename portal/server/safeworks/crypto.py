@@ -1,6 +1,7 @@
 """Field encryption (AES-256-GCM) and keyed hashes for the reporter seal.
 
-FIELD_ENCRYPTION_KEY is base64 of 32 random bytes (`openssl rand -base64 32`). Outside production a fixed
+FIELD_ENCRYPTION_KEY is base64 of 32 random bytes (`openssl rand -base64 32`); any other random string of 32+ characters
+(e.g. Render's generated values) is accepted and run through SHA-256 to make the 32-byte key. Outside production a fixed
 development key is used so a local server starts without configuration.
 Ciphertext format: base64url(nonce[12] || ciphertext || tag), prefixed with "v1:" so the key can be rotated later.
 """
@@ -23,13 +24,18 @@ _key: bytes | None = None
 def _load_key() -> bytes:
     global _key
     if _key is None:
-        raw = config.field_encryption_key or ""
+        raw = (config.field_encryption_key or "").strip()
+        if not raw:
+            raise RuntimeError("FIELD_ENCRYPTION_KEY is not set")
+        k = b""
         try:
-            k = base64.b64decode(raw + "=" * (-len(raw) % 4))
-        except Exception as e:  # pragma: no cover - configuration error
-            raise RuntimeError("FIELD_ENCRYPTION_KEY is not valid base64") from e
+            k = base64.b64decode(raw + "=" * (-len(raw) % 4), validate=False)
+        except Exception:
+            k = b""
         if len(k) != 32:
-            raise RuntimeError("FIELD_ENCRYPTION_KEY must decode to exactly 32 bytes")
+            if len(raw) < 32:
+                raise RuntimeError("FIELD_ENCRYPTION_KEY must be base64 of 32 bytes or a random string of at least 32 characters")
+            k = hashlib.sha256(raw.encode("utf-8")).digest()
         _key = k
     return _key
 
