@@ -138,7 +138,7 @@ async def officer_loop(client: httpx.AsyncClient, token: str, me: dict, owners: 
                         own = [k for k in pull.json()["contractors"] if k["isOwnCompany"]]
                         employer = own[0]["id"] if own else (pull.json()["contractors"][0]["id"] if pull.json()["contractors"] else None)
                 body = {"clientUuid": str(uuid.uuid4()), "decision": "accept_assign", "categoryCodes": o["categoryCodes"] or ["HOUSE"], "likelihood": 2, "severity": 2, "is3786Code": "B-2",
-                        "employerInvolvedId": employer, "capturedAt": now_iso(),
+                        "employerInvolvedId": employer, "capturedAt": now_iso(), "interimControl": "Area barricaded (load test)",
                         "actions": [{"clientUuid": str(uuid.uuid4()), "title": "Load test action", "actionType": "corrective", "controlLevel": "administrative", "ownerUserId": random.choice(owners)}]}
                 await call(client, "triage", "POST", f"/api/v1/observations/{o['id']}/triage", token, json=body)
         await call(client, "dashboard", "GET", f"/api/v1/dashboard?siteIds={site['id']}", token)

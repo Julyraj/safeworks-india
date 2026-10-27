@@ -42,13 +42,15 @@ python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
 createdb safeworks                           # or use docker compose below
 export DATABASE_URL=postgres://USER:PASS@localhost:5432/safeworks
-python scripts/seed.py                       # master lists, company, 5 pilot sites, prints the first admin login
-python -m safeworks                          # http://localhost:8080  (admin console: /admin/)
+python scripts/seed.py                       # 2.0 configuration (matrix, rules, categories, 15 templates, 23 industries, 5 sites) and ADMIN01
+python -m safeworks                          # http://localhost:8080  (field app: /, QR form: /q/<token>, admin console: /admin/)
 ```
 
-`python scripts/seed.py --demo` adds sample users and about 180 observations. It is for testing only, and the demo password is `Safe@1234`.
+`python scripts/seed.py --demo` adds one user per role per site (`SO-TN1`, `SH-TN1`, `VER-TN1`, `OWN-TN1-1..3`, `WORKER-TN1-1..5`, same for TN2, TN3, KA1, KA2, plus `HSE01` and `AUD01`), contractors, people, 200 observations in every status with Tamil, Kannada, Hindi and English text, actions, inspection runs and notifications. The demo password is `DEMO_PASSWORD`, or the admin password when it is empty. The seed is idempotent. `ADMIN01` must set up an authenticator app at first sign-in (`OrgSettings.mfaRequiredRoles`, default admin, HSE manager, site head).
 
-For several CPU cores, set `WEB_CONCURRENCY` (number of API processes, e.g. `2` on a 2-vCPU server).
+The API contract is `docs/API.md` (types in `web/src/shared/types.ts`). Server-side texts (errors, notifications, posters, reports) are in `server/safeworks/i18n/{en,hi,ta,kn}.json`; the Hindi, Tamil and Kannada packs are drafts for review by site staff and can be overridden per company from the admin console.
+
+For several CPU cores, set `WEB_CONCURRENCY` (number of API processes, e.g. `2` on a 2-vCPU server). Background jobs (critical-alert watcher, reminder ladder and SLAs, inspection scheduler, closure notices, digests, push and email senders, retention dry run) run inside the API process when `RUN_JOBS=true`; one process wins each job through `job_marks`. `python -m safeworks.jobs` runs every job once.
 
 ## Free test server (Render, about 10 minutes)
 
@@ -100,32 +102,18 @@ pip install -r requirements-dev.txt
 TEST_DATABASE_URL=postgres://USER:PASS@localhost:5432/safeworks_test python -m pytest tests     # wipes that database
 ```
 
-There are 12 end-to-end tests of the workflow and the permission rules:
-- lockout and admin unlock
-- forced password change
-- admin-console access
-- photo rules
-- the full raise → close → reject → resubmit → approve cycle, including site isolation
-- no self-approval
-- safe behaviour and corrected-on-the-spot points
-- versioned edits
-- user creation, password reset and set
-- bulk import
-- dashboards and CSV export
-- settings
-
-And 5 tests of the HTTP layer: security headers, the 14 MB upload limit (also for uploads sent without a declared size), photo-link signatures and the web-folder boundary.
+32 end-to-end tests through the FastAPI TestClient against a fresh schema and the base seed, covering the brief's acceptance tests 1, 3–10, 12, 14–18, 20 and 22: exactly-once sync with three photos, QR without login and the 31st-in-an-hour 429, anonymity through the reporter seal, locked captured time and GPS, danger-now alerts and the 30-minute escalation, extreme-band interim control and stop-work alert, after-photo rule, verifier separation, not-effective reopening, date change and dispute, inspection submit blocks, any-Fail rule, template versions (approver ≠ author), site scope 404s, duplicate suggestions and merge notices, disabled rule packs, audit chain verification after a direct `update audit_log`, plus MFA, enrolment codes, password rules, sync conflicts saved as comments, admin-cannot-triage, the reminder ladder job, Web Push without VAPID keys, CSV exports with a BOM and Tamil text, site setup and posters.
 
 ## Load test
 
 ```bash
 cd portal/server
 pip install -r requirements-dev.txt
-BASE_URL=https://your-server ADMIN_ID=ADMIN01 ADMIN_PASSWORD=… USERS=100 DURATION=1800 python scripts/loadtest.py
-# scale gate: USERS=1000 SITES=10 RAMP=120
+python scripts/seed.py --demo        # the run signs in as SO-TN1, OWN-TN1-1..3 and WORKER-TN1-1..5
+BASE_URL=https://your-server ADMIN_PASSWORD=… USERS=300 DURATION=120 REPORT=loadtest-report.json python scripts/loadtest.py
 ```
 
-The test creates load-test users on sites `LT01…` and signs everyone in, like a shift-start rush. It then runs safety officers and supervisors through the real screens with real photo uploads. Finally it cuts uploads off mid-way and retries them, checking that no point is lost or duplicated. The pass mark is under 0.1% failed requests, 95% of screens in under 2 s, and a 2-photo upload in under 10 s. Deactivate the `LT-` users afterwards on a live system. Run the test from a different machine than the server, so the two do not compete for CPU: at 1,000 users the test itself needs about one CPU core. Each response carries a `Server-Timing` header, and the report shows time inside the server next to the time seen by the test machine; API requests slower than `SLOW_MS` (default 1000) are logged.
+A 300-user mixed run: workers pull, push observations with a photo and upload it, list their reports and notifications; owners open their actions; officers work the inbox, triage with an action and open the dashboard. The JSON report has p50/p95/max per request type and the server's own `Server-Timing`; the exit status is non-zero when any request fails. `ADMIN01` is not used because it needs MFA; `DEMO_PASSWORD` falls back to `ADMIN_PASSWORD` exactly like the seed.
 
 ## Android app
 
@@ -133,19 +121,17 @@ GitHub Actions builds `SafeWorks-Portal.apk` on every push to `main` (releases t
 
 ## Configuration
 
-See `.env.example` and `server/safeworks/config.py`. The main settings:
+Every variable is listed with one line each in `server/.env.example`. The ones that matter most:
 
 | Setting | Purpose |
 | --- | --- |
 | `DATABASE_URL` | PostgreSQL connection |
-| `FILE_SIGNING_SECRET` | Signs photo links. Required in production, 32+ characters. |
-| `STORAGE_DIR` | Where photos are stored |
-| `STORAGE_DRIVER` | `disk` (default) or `db`, which keeps photos in PostgreSQL for hosts without a persistent disk |
-| `SEED_ON_START`, `SEED_DEMO` | Run the idempotent seed (and sample data) when the container starts |
-| `PUBLIC_URL` | Links in emails |
-| `SMTP_URL` | Email delivery. Without it, emails stay queued. |
-| `CORS_ORIGINS` | Origins allowed for the Android app |
-| `TRUST_PROXY` | Set to `true` behind a reverse proxy |
-| `APP_TIMEZONE` | Defaults to `Asia/Kolkata` |
-| `WEB_CONCURRENCY` | Number of API processes (default 1; the Docker image uses 2) |
-| `DB_POOL_MAX` | Database connections per API process (default 20) |
+| `FILE_SIGNING_SECRET` | Signs file links, public upload tickets and status links. Required in production, 32+ characters. |
+| `FIELD_ENCRYPTION_KEY` | AES-GCM key for phones, QR reporter contacts, anonymous-report seals and TOTP secrets (`openssl rand -base64 32`; any 32+ character random string also works). Required in production. |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | Web Push. When unset, push rows are marked failed with a clear error and nothing else changes. |
+| `STORAGE_DIR` / `STORAGE_DRIVER` | Where photos, voice notes and reports live: `disk` (default) or `db` for hosts without a persistent disk |
+| `SEED_ON_START`, `SEED_DEMO`, `SEED_ORG_NAME`, `SEED_ADMIN_PASSWORD`, `DEMO_PASSWORD` | Seeding at container start |
+| `PUBLIC_URL` | Address in QR posters, status links and emails |
+| `SMTP_URL`, `MAIL_FROM` | Email delivery. Without it, emails stay queued. |
+| `QR_PER_TOKEN_HOUR`, `QR_PER_IP_HOUR`, `EXPORTS_PER_HOUR` | Public-form and export rate limits (design defaults 30, 10, 10) |
+| `CORS_ORIGINS`, `TRUST_PROXY`, `APP_TIMEZONE`, `WEB_CONCURRENCY`, `DB_POOL_MAX`, `RUN_JOBS` | Hosting and process settings |
