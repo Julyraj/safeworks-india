@@ -1,140 +1,202 @@
-"""Sign in, sign out, who am I, change password."""
+"""Sign in (password, MFA, enrolment code), sign out, change password."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, Request
 
-from .. import db
+from .. import db, mfa
 from ..audit import audit
-from ..auth import create_session, forget_token, load_memberships, require_user, revoke_user_sessions, token_from
+from ..auth import USER_SQL, build_user, create_session, forget_token, forget_user_in_cache, promote_session, require_user, revoke_user_sessions, token_from
 from ..config import config
-from ..errors import HttpError, bad_request, forbidden, unauthorized
+from ..errors import HttpError, forbidden, unauthorized
 from ..http import JSON, client_ip, json_body
+from ..profile import me_payload
 from ..ratelimit import login_limiter
-from ..rbac import ROLE_LABEL, AuthUser, can_use_admin_console
-from ..security import dummy_verify, hash_password, password_problem, verify_password
-from ..validation import In, Str, parse
+from ..rbac import AuthUser
+from ..schemas import EnrolRequest, LoginRequest, MfaCode, PasswordChange, parse
+from ..security import dummy_verify, hash_password, password_problem, sha256, verify_password
+from ..settings import org_settings
 
-router = APIRouter()
-
-
-class LoginIn(In):
-    employee_id: Str(64) = ""
-    password: str = ""
-    app: str = "portal"
+router = APIRouter(prefix="/api/v1/auth")
 
 
-class ChangeIn(In):
-    current_password: str
-    new_password: str
-
-
-GENERIC = "Employee ID or password is incorrect."
-
-
-async def me_payload(user_id: str) -> dict:
-    u = await db.one(
-        """select u.id, u.org_id, u.employee_id, u.name, u.designation, u.phone, u.email, u.must_change_password, o.name as org_name
-             from users u join organisations o on o.id = u.org_id where u.id = $1""",
-        [user_id],
+async def _register_device(conn, user_id: str, device_uuid: str | None, platform: str | None, app_version: str | None) -> str | None:
+    if not device_uuid:
+        return None
+    row = await db.one(
+        """insert into devices (user_id, device_uuid, platform, app_version) values ($1, $2, $3, $4)
+           on conflict (device_uuid) do update set user_id = excluded.user_id, platform = coalesce(nullif(excluded.platform, ''), devices.platform),
+               app_version = coalesce(nullif(excluded.app_version, ''), devices.app_version), last_seen_at = now(), revoked_at = null
+           returning id""",
+        [user_id, device_uuid[:200], platform or "", app_version or ""], conn,
     )
-    memberships = await load_memberships(user_id)
-    sites = {s["id"]: s for s in await db.q("select id, code, name from sites where org_id = $1", [u["org_id"]])}
-    unread = await db.one("select count(*)::int as n from notifications where user_id = $1 and read_at is null", [user_id])
-    return {
-        "id": u["id"], "employeeId": u["employee_id"], "name": u["name"], "designation": u["designation"], "phone": u["phone"],
-        "email": u["email"], "mustChangePassword": u["must_change_password"], "company": u["org_name"],
-        "roles": [
-            {"role": m.role, "roleLabel": ROLE_LABEL.get(m.role, m.role), "siteId": m.site_id,
-             "siteCode": sites.get(m.site_id, {}).get("code") if m.site_id else None,
-             "siteName": sites.get(m.site_id, {}).get("name") if m.site_id else "All sites"}
-            for m in memberships
-        ],
-        "unreadNotifications": unread["n"] if unread else 0,
-    }
+    return row["id"]
 
 
-@router.post("/api/auth/login")
+async def _login_response(conn, user: AuthUser, session: dict, *, must_change: bool) -> dict:
+    out = {"token": session["token"], "expiresAt": session["expiresAt"], "mustChangePassword": must_change}
+    if not must_change:
+        out["me"] = await me_payload(user, conn)
+    return out
+
+
+@router.post("/login")
 async def login(request: Request):
-    body = await json_body(request)
-    inp = parse(LoginIn, body)
-    if not inp.employee_id:
-        raise bad_request("employeeId: Enter your employee ID.")
-    if not inp.password:
-        raise bad_request("password: Enter your password.")
-    if len(inp.password) > 200:
-        raise bad_request("password: too long")
-    app_kind = "admin" if inp.app == "admin" else "portal"
+    inp = parse(LoginRequest, await json_body(request))
     ip = client_ip(request)
-    login_limiter.check(f"login:{ip}:{inp.employee_id.lower()}", 20)
+    login_limiter.check(f"login:{ip}:{inp.login.lower()}", 30)
     ua = request.headers.get("user-agent", "")
-    user = await db.one(
-        """select id, org_id, password_hash, active, failed_attempts, locked_until, must_change_password
-             from users where lower(employee_id) = lower($1) order by active desc limit 1""",
-        [inp.employee_id],
-    )
-    if not user or not user["active"]:
+    login = inp.login.strip().lower()
+    row = await db.one(USER_SQL + " where lower(u.employee_code) = $1 or lower(u.email) = $1 order by (u.status = 'active') desc, u.created_at limit 1", [login])
+    if not row or row["status"] != "active":
         await dummy_verify(inp.password)
-        await audit("login.failed", org_id=user["org_id"] if user else None, actor_id=user["id"] if user else None, entity="user",
-                    entity_id=inp.employee_id, ip=ip, details={"reason": "inactive" if user else "unknown", "app": app_kind})
-        raise unauthorized(GENERIC)
-    if user["locked_until"] and user["locked_until"] > datetime.now(timezone.utc):
-        await dummy_verify(inp.password)
-        until = user["locked_until"].astimezone(db.TZ).strftime("%I:%M %p")
-        raise HttpError(423, f"This account is locked after too many wrong passwords. Try again after {until}, or ask your admin to unlock it.", "locked")
-    if not await verify_password(inp.password, user["password_hash"]):
-        fails = user["failed_attempts"] + 1
-        lock = fails >= config.max_failed_logins
-        await db.execute(
-            "update users set failed_attempts = $2, locked_until = case when $3 then now() + make_interval(mins => $4) else locked_until end where id = $1",
-            [user["id"], 0 if lock else fails, lock, config.lock_minutes],
-        )
-        await audit("login.locked" if lock else "login.failed", org_id=user["org_id"], actor_id=user["id"], entity="user", entity_id=user["id"], ip=ip,
-                    details={"attempt": fails, "app": app_kind})
-        if lock:
-            raise HttpError(423, f"Too many wrong passwords. The account is locked for {config.lock_minutes} minutes, or ask your admin to unlock it.", "locked")
-        raise unauthorized(GENERIC)
-    memberships = await load_memberships(user["id"])
-    if app_kind == "admin" and not can_use_admin_console(memberships):
-        await audit("login.denied_admin", org_id=user["org_id"], actor_id=user["id"], entity="user", entity_id=user["id"], ip=ip)
-        raise forbidden("This login does not have admin console access.")
-    if not memberships:
-        raise forbidden("Your login has no site or role yet. Ask your admin to assign one.")
+        async with db.tx() as c:
+            await audit(c, org_id=row["org_id"] if row else None, actor_user_id=row["id"] if row else None, action="login_failed", record_type="user", record_id=login,
+                        changes={"reason": "inactive" if row else "unknown", "kind": inp.kind}, ip=ip)
+        if row:
+            raise forbidden("This account is not active. Contact your safety officer.", key="err.account_inactive")
+        raise unauthorized("Login or password is incorrect.", key="err.login_invalid")
+    if row["locked_until"] and row["locked_until"] > datetime.now(timezone.utc):
+        minutes = int((row["locked_until"] - datetime.now(timezone.utc)).total_seconds() // 60) + 1
+        raise HttpError(429, f"Too many failed attempts. Try again in {minutes} minutes.", "rate_limited", key="err.login_locked", params={"minutes": minutes})
+    if not await verify_password(inp.password, row["password_hash"]):
+        async with db.tx() as c:
+            failed = await c.fetchval(
+                """update users set failed_attempts = case when locked_until is not null and locked_until < now() then 1 else failed_attempts + 1 end,
+                                    locked_until = case when locked_until is not null and locked_until < now() then null else locked_until end
+                    where id = $1 returning failed_attempts""", row["id"])
+            locked = False
+            if failed >= config.max_failed_logins:
+                await c.execute("update users set locked_until = now() + make_interval(mins => $2), failed_attempts = 0 where id = $1", row["id"], config.lock_minutes)
+                locked = True
+            await audit(c, org_id=row["org_id"], actor_user_id=row["id"], action="login_failed", record_type="user", record_id=row["id"],
+                        changes={"reason": "password", "kind": inp.kind, "locked": locked}, ip=ip)
+        raise unauthorized("Login or password is incorrect.", key="err.login_invalid")
+    if row["expires_at"] and row["expires_at"] < datetime.now(timezone.utc):
+        raise forbidden("This account has expired.", key="err.account_expired")
     async with db.tx() as c:
-        await db.execute("update users set failed_attempts = 0, locked_until = null, last_login_at = now() where id = $1", [user["id"]], c)
-        session = await create_session(user["id"], app_kind, ip, ua, c)
-    await audit("login", org_id=user["org_id"], actor_id=user["id"], entity="user", entity_id=user["id"], ip=ip, details={"app": app_kind})
-    return JSON({"token": session["token"], "expiresAt": session["expiresAt"], "mustChangePassword": user["must_change_password"], "user": await me_payload(user["id"])})
+        device_id = await _register_device(c, row["id"], inp.device_uuid, inp.platform, inp.app_version)
+        user = await build_user({**row, "kind": inp.kind}, c)
+        if inp.kind == "admin" and not user.can_use_admin_console:
+            raise forbidden("Admin console access only.", key="err.admin_console_only")
+        settings = await org_settings(user.org_id, c)
+        need_mfa = mfa.roles_need_mfa(user.role_set(), settings)
+        await c.execute("update users set failed_attempts = 0, locked_until = null, last_login_at = now() where id = $1", row["id"])
+        if need_mfa:
+            session = await create_session(user.id, inp.kind, ip, ua, mfa_passed=False, device_id=device_id, conn=c)
+            await audit(c, org_id=user.org_id, actor=user, action="login", record_type="user", record_id=user.id, changes={"stage": "preauth", "kind": inp.kind, "mfaEnrolled": user.mfa_enabled}, ip=ip)
+            return JSON({"token": session["token"], "expiresAt": session["expiresAt"], "mfaRequired": True, "mfaEnrolled": user.mfa_enabled, "mustChangePassword": user.must_change_password})
+        session = await create_session(user.id, inp.kind, ip, ua, device_id=device_id, conn=c)
+        user.session_id = session["sessionId"]
+        user.kind = inp.kind
+        await audit(c, org_id=user.org_id, actor=user, action="login", record_type="user", record_id=user.id, changes={"kind": inp.kind}, ip=ip)
+        return JSON(await _login_response(c, user, session, must_change=user.must_change_password))
 
 
-@router.post("/api/auth/logout")
-async def logout(request: Request, u: AuthUser = Depends(require_user("any", allow_must_change=True))):
-    await db.execute("update sessions set revoked_at = now() where id = $1", [u.session_id])
-    t = token_from(request)
-    if t:
-        forget_token(t)
+@router.post("/mfa/enrol")
+async def mfa_enrol(request: Request, user: AuthUser = Depends(require_user(allow_preauth=True, allow_must_change=True))):
+    org = await db.one("select name from organisations where id = $1", [user.org_id])
+    async with db.tx() as c:
+        out = await mfa.begin_enrol(c, user.id, user.email or user.employee_code, f"SafeWorks {org['name']}" if org else "SafeWorks")
+    forget_user_in_cache(user.id)
+    return JSON(out)
+
+
+async def _finish_mfa(request: Request, user: AuthUser, action: str) -> dict:
+    ip = client_ip(request)
+    async with db.tx() as c:
+        if not user.mfa_passed:
+            session = await promote_session(user.session_id, user.kind, c)
+            token = token_from(request) or ""
+            sess = {"token": token, "expiresAt": session["expiresAt"]}
+        else:
+            sess = {"token": token_from(request) or "", "expiresAt": (await db.one("select expires_at from sessions where id = $1", [user.session_id], c))["expires_at"]}
+        user.mfa_passed = True
+        user.mfa_enabled = True
+        await audit(c, org_id=user.org_id, actor=user, action=action, record_type="user", record_id=user.id, changes={"kind": user.kind}, ip=ip)
+        return await _login_response(c, user, sess, must_change=user.must_change_password)
+
+
+@router.post("/mfa/confirm")
+async def mfa_confirm(request: Request, user: AuthUser = Depends(require_user(allow_preauth=True, allow_must_change=True))):
+    inp = parse(MfaCode, await json_body(request))
+    row = await db.one("select mfa_secret_enc, mfa_enabled from users where id = $1", [user.id])
+    if not row or not row["mfa_secret_enc"]:
+        raise HttpError(400, "Set up your authenticator app first.", "bad_request", key="err.mfa_not_enrolled")
+    async with db.tx() as c:
+        ok = await mfa.confirm_enrol(c, user.id, row["mfa_secret_enc"], inp.code)
+    if not ok:
+        raise HttpError(401, "That code is not correct. Try again.", "unauthorized", key="err.mfa_code_invalid")
+    forget_user_in_cache(user.id)
+    return JSON(await _finish_mfa(request, user, "mfa_enrol"))
+
+
+@router.post("/mfa")
+async def mfa_verify(request: Request, user: AuthUser = Depends(require_user(allow_preauth=True, allow_must_change=True))):
+    inp = parse(MfaCode, await json_body(request))
+    row = await db.one("select mfa_secret_enc, mfa_enabled from users where id = $1", [user.id])
+    if not row or not row["mfa_enabled"]:
+        raise HttpError(403, "Set up your authenticator app first.", "mfa_required", key="err.mfa_not_enrolled")
+    if not mfa.verify_code(user.id, row["mfa_secret_enc"], inp.code):
+        async with db.tx() as c:
+            await audit(c, org_id=user.org_id, actor=user, action="login_failed", record_type="user", record_id=user.id, changes={"reason": "mfa"}, ip=client_ip(request))
+        raise HttpError(401, "That code is not correct. Try again.", "unauthorized", key="err.mfa_code_invalid")
+    return JSON(await _finish_mfa(request, user, "login"))
+
+
+@router.post("/enrol")
+async def enrol(request: Request):
+    inp = parse(EnrolRequest, await json_body(request))
+    ip = client_ip(request)
+    login_limiter.check(f"enrol:{ip}", 20)
+    code = inp.code.strip().upper().replace("-", "").replace(" ", "")
+    row = await db.one(
+        "select e.*, u.status from enrolment_codes e join users u on u.id = e.user_id where e.code_hash = $1 and e.used_at is null and e.expires_at > now()", [sha256(code)]
+    )
+    if not row or row["status"] != "active":
+        raise HttpError(400, "This enrolment code is not valid or has expired.", "bad_request", key="err.enrol_code_invalid")
+    problem = password_problem(inp.new_password, staff=False)
+    if problem:
+        raise HttpError(400, "Password rule not met.", "bad_request", key=problem)
+    pw_hash = await hash_password(inp.new_password)
+    async with db.tx() as c:
+        await c.execute("update enrolment_codes set used_at = now() where id = $1", row["id"])
+        await c.execute("update users set password_hash = $2, must_change_password = false, password_changed_at = now(), last_login_at = now(), failed_attempts = 0, locked_until = null where id = $1",
+                        row["user_id"], pw_hash)
+        urow = await db.one(USER_SQL + " where u.id = $1", [row["user_id"]], c)
+        device_id = await _register_device(c, row["user_id"], inp.device_uuid, inp.platform, inp.app_version)
+        user = await build_user({**urow, "kind": "field"}, c)
+        session = await create_session(user.id, "field", ip, request.headers.get("user-agent", ""), device_id=device_id, conn=c)
+        user.session_id = session["sessionId"]
+        await audit(c, org_id=user.org_id, actor=user, action="login", record_type="user", record_id=user.id, changes={"kind": "field", "via": "enrolment_code"}, ip=ip)
+        await audit(c, org_id=user.org_id, actor=user, action="password_reset", record_type="user", record_id=user.id, changes={"via": "enrolment_code"}, ip=ip)
+        return JSON(await _login_response(c, user, session, must_change=False))
+
+
+@router.post("/logout")
+async def logout(request: Request, user: AuthUser = Depends(require_user(allow_must_change=True, allow_preauth=True))):
+    token = token_from(request) or ""
+    async with db.tx() as c:
+        await c.execute("update sessions set revoked_at = now() where id = $1", user.session_id)
+        await audit(c, org_id=user.org_id, actor=user, action="logout", record_type="user", record_id=user.id, ip=client_ip(request))
+    forget_token(token)
     return JSON({"ok": True})
 
 
-@router.get("/api/me")
-async def me(u: AuthUser = Depends(require_user("any", allow_must_change=True))):
-    return JSON(await me_payload(u.id))
-
-
-@router.post("/api/auth/change-password")
-async def change_password(request: Request, u: AuthUser = Depends(require_user("any", allow_must_change=True))):
-    inp = parse(ChangeIn, await json_body(request))
-    row = await db.one("select password_hash from users where id = $1", [u.id])
-    if not row or not await verify_password(inp.current_password, row["password_hash"]):
-        raise bad_request("Current password is incorrect.")
-    problem = password_problem(inp.new_password)
+@router.post("/password")
+async def change_password(request: Request, user: AuthUser = Depends(require_user(allow_must_change=True))):
+    inp = parse(PasswordChange, await json_body(request))
+    row = await db.one("select password_hash from users where id = $1", [user.id])
+    if not row or not await verify_password(inp.current, row["password_hash"]):
+        raise HttpError(400, "Your current password is not correct.", "bad_request", key="err.password_current_wrong")
+    problem = password_problem(inp.new, staff=user.is_staff)
     if problem:
-        raise bad_request(problem)
-    if inp.new_password == inp.current_password:
-        raise bad_request("Choose a password different from the current one.")
-    h = await hash_password(inp.new_password)
-    await db.execute("update users set password_hash = $2, must_change_password = false, password_changed_at = now() where id = $1", [u.id, h])
-    await revoke_user_sessions(u.id, u.session_id)
-    await audit("password.changed", org_id=u.org_id, actor_id=u.id, entity="user", entity_id=u.id, ip=client_ip(request))
+        raise HttpError(400, "Password rule not met.", "bad_request", key=problem)
+    pw_hash = await hash_password(inp.new)
+    async with db.tx() as c:
+        await c.execute("update users set password_hash = $2, must_change_password = false, password_changed_at = now(), updated_at = now() where id = $1", user.id, pw_hash)
+        await revoke_user_sessions(user.id, user.session_id, c)
+        await audit(c, org_id=user.org_id, actor=user, action="password_reset", record_type="user", record_id=user.id, changes={"via": "self"}, ip=client_ip(request))
+    forget_user_in_cache(user.id)
     return JSON({"ok": True})
