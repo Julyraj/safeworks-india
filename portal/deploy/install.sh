@@ -188,7 +188,7 @@ if $FIRST_INSTALL; then
     echo "Admin console:  https://$DOMAIN/admin/"
     echo "Admin login:    ADMIN01 / $ADMIN_PASSWORD"
     if $DEMO; then
-      echo "Sample logins:  SO-PS01-1 (safety officer), SUP-PS01-1 (supervisor) … same password"
+      echo "Sample logins:  SO-TN1 (safety officer), OWN-TN1-1 (action owner), VER-TN1 (verifier), WORKER-TN1-1 (worker) … same password"
     fi
   } > "$LOGIN_FILE"
   umask 022
@@ -233,7 +233,7 @@ if [ -f "$LOGIN_FILE" ]; then
 fi
 if $FIRST_INSTALL; then
   echo " Admin login:    ADMIN01 / $ADMIN_PASSWORD"
-  $DEMO && echo " Sample logins:  SO-PS01-1 (safety officer), SUP-PS01-1 (supervisor), same password"
+  $DEMO && echo " Sample logins:  SO-TN1 (safety officer), OWN-TN1-1 (action owner), VER-TN1 (verifier), WORKER-TN1-1 (worker), same password"
 fi
 echo " Update later:   cd $(dirname "$PORTAL") && git pull && sudo bash portal/deploy/install.sh"
 echo "================================================================"

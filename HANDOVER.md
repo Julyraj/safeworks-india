@@ -35,7 +35,7 @@ Two products in one public repository, **https://github.com/Julyraj/safeworks-in
 ### 2.2 Portal 1.x (live now on Render, on `main`)
 1. Built in TypeScript, then **rewritten in Python** at the owner's request ("lowest risk"): FastAPI 0.162, asyncpg, uvicorn, PostgreSQL 16, pure-ASGI guard middleware, scrypt passwords, signed photo links, Server-Timing. Load test: **1,000 users, 0 failures in 69,349 requests, screens p95 167 ms**.
 2. Deployment kit: `portal/Dockerfile` (Node only builds the web; Python 3.12-slim runtime, non-root), `portal/docker-compose.yml`, `portal/deploy/install.sh` (one command on Ubuntu: Docker, firewall incl. Oracle iptables, `.env` with random secrets, Caddy HTTPS via `<ip-dashes>.sslip.io`, daily `pg_dump` + photo backups to `/var/backups/safeworks`, `restore.sh`), CI `.github/workflows/portal.yml` (pytest ×2, load test, Docker, Arm install test on `ubuntu-24.04-arm`, Android APK, releases `portal-v1.0.N`).
-3. **Render test server — LIVE: https://safeworks-portal.onrender.com** (Blueprint `render.yaml`, free plan, Singapore, `STORAGE_DRIVER=db`, `autoDeployTrigger: checksPass` = deploys a new `main` commit only after CI passes). Free-plan limits: sleeps after 15 min idle (~1 min to wake), free database expires 30 days after creation (created ~24 Oct 2026 → **expires around 23 Nov 2026** unless upgraded or recreated), Singapore region → test data only.
+3. **Render test server — LIVE: https://safeworks-portal.onrender.com** (Blueprint `render.yaml`, free plan, Singapore, `STORAGE_DRIVER=db`, `autoDeployTrigger: checksPass` = deploys a new `main` commit only after CI passes). Free-plan limits: sleeps after 15 min idle (~1 min to wake), free database expires 30 days after creation (created 25 Oct 2026 → **expires 24 Nov 2026**, deleted ~8 Dec unless upgraded or recreated), Singapore region → test data only.
 4. **Oracle Cloud Always Free** was chosen for testing but sign-up failed 3 times (card/verification). Advice given: use a credit card (not debit/prepaid), home Wi-Fi, wait a day; Plan B = Render (done). Production recommendation: AWS Lightsail Mumbai ~US$12/month or Oracle Mumbai when sign-up works.
 
 ### 2.3 Portal 2.0 (on branch `feature/safeworks-2.0`, in progress)
@@ -107,7 +107,7 @@ QR form for a site area: `https://<server>/q/<token>` (tokens are printed on the
 1. Review `CONTENT-REVIEW.md` (~30 library items) and `VERIFY.md` (legal clocks, form numbers, intervals) with a qualified person; name a legal reviewer before Phase 2 (incidents).
 2. Send PDF links for Karnataka state rules that still link only to the Labour Department home page (Karnataka sites block automated access), and the eGazette PDFs for OSH (Central) Rules 2026 G.S.R. 345(E) and IR (Central) Rules 2026 G.S.R. 342(E).
 3. Confirm the 5 real sites (names, state, type), user count, crew languages per site, pilot site.
-4. Decide production hosting (Lightsail Mumbai or Oracle Mumbai) before the pilot; the Render database expires ~23 Nov 2026.
+4. Decide production hosting (Lightsail Mumbai or Oracle Mumbai) before the pilot; the Render database expires 24 Nov 2026 (plan: `portal/docs/HOSTING.md`).
 5. Optional, paid or account-bound: SMTP for emails, Firebase for Android push, WhatsApp provider (Phase 2), a domain name.
 6. Delete the leftover GitHub branch `feature/document-downloads` (Claude's GitHub proxy can't delete branches).
 7. Translations are drafts — have site staff review Hindi, Tamil and Kannada.
