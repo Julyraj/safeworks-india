@@ -10,7 +10,7 @@ from ..errors import bad_request, conflict, forbidden, not_found
 from ..media import create_media_rows
 from ..notify import link_for, notify, users_with_roles
 from ..numbers import next_case_no
-from ..rbac import AuthUser, require_officer, require_scope
+from ..rbac import AuthUser, require_officer, require_scope, require_writer
 from ..schemas import (ActionCancelRequest, ActionCommentBody, ActionCompleteRequest, ActionCreateRequest, ActionDraft, ActionReassignRequest,
                        ActionRequestCreate, ActionRequestDecide, ActionVerifyRequest)
 from ..settings import org_settings
@@ -371,6 +371,7 @@ async def reassign(conn, actor: AuthUser, action_id: str, payload: ActionReassig
 
 
 async def add_comment(conn, actor: AuthUser, action_id: str, payload: ActionCommentBody) -> dict:
+    require_writer(actor)
     a = await load(conn, action_id)
     if not await can_view(conn, actor, a):
         raise not_found()

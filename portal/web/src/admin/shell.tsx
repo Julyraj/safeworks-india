@@ -59,11 +59,11 @@ export function Shell() {
     ] },
     { key: "oversight", items: [
       { to: "/audit-log", key: "auditLog", icon: <IconLog />, show: cfg || perms.isAuditor || officer },
-      { to: "/notifications-log", key: "notificationsLog", icon: <IconBell />, show: cfg || perms.isAuditor },
+      { to: "/notifications-log", key: "notificationsLog", icon: <IconBell />, show: cfg }, // server: admin and HSE manager only
       { to: "/privacy", key: "privacy", icon: <IconShield />, show: cfg },
       { to: "/retention", key: "retention", icon: <IconHistory />, show: perms.isAdmin },
       { to: "/settings", key: "settings", icon: <IconSettings />, show: perms.isAdmin },
-      { to: "/health", key: "health", icon: <IconLock />, show: perms.isAdmin },
+      { to: "/health", key: "health", icon: <IconLock />, show: cfg }, // server: admin and HSE manager
     ] },
   ], [cfg, officer, perms, attention.urgent]);
 

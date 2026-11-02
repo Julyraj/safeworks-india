@@ -117,6 +117,9 @@ def test_ladder_job_marks_overdue(ctx):
 
 def test_push_sender_without_vapid(ctx):
     from safeworks.jobs import send_pushes
+    # pushes created during quiet hours (21:00–07:00 India time) wait until morning; release them so the test does not
+    # depend on the time of day it runs
+    run(lambda c: c.execute("update notifications set send_after = null where channel = 'push' and status = 'queued'"))
     run_async(ctx, send_pushes)
     assert run(lambda c: c.fetchval("select count(*) from notifications where channel = 'push' and status = 'failed' and error like 'VAPID%'")) > 0
     assert ctx.post("W1", "/api/v1/me/devices", {"deviceUuid": "dev-W1", "platform": "web", "appVersion": "2.0.0", "subscription": {"endpoint": "https://push.example/abc", "keys": {"p256dh": "x", "auth": "y"}}}).status_code == 200

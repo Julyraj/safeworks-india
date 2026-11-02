@@ -5,6 +5,8 @@ Responses are built as plain camelCase dicts by `views.py` (fast path through or
 """
 from __future__ import annotations
 
+import re
+
 from datetime import datetime
 from typing import Any, ClassVar, Literal, TypeVar
 
@@ -542,6 +544,9 @@ class RoleGrant(In):
     expires_at: datetime | None = None
 
 
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")  # same rule as the console form
+
+
 class UserCreate(In):
     name: Str200
     employee_code: Str200 = ""
@@ -558,7 +563,7 @@ class UserCreate(In):
     @field_validator("email")
     @classmethod
     def _email(cls, v: str) -> str:
-        if v and ("@" not in v or " " in v):
+        if v and not EMAIL_RE.match(v):
             raise ValueError("Enter a valid email address.")
         return v.lower()
 
@@ -576,6 +581,13 @@ class UserUpdate(Edit):
     phone: Annotated[str, StringConstraints(max_length=30)] | None = None
     expires_at: datetime | None = None
     login_type: Literal["employee_code", "email", "enrolment_code"] | None = None
+
+    @field_validator("email")
+    @classmethod
+    def _email(cls, v: str | None) -> str | None:
+        if v and not EMAIL_RE.match(v):
+            raise ValueError("Enter a valid email address.")
+        return v
 
 
 class RolesBody(In):

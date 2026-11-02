@@ -51,6 +51,8 @@ async def dashboard(request: Request, user: AuthUser = Depends(require_user())):
     q = request.query_params
     to = parse_dt(q.get("to"), end_of_day=True) or datetime.now(timezone.utc)
     frm = parse_dt(q.get("from")) or (to - timedelta(days=90))
+    if frm > to:  # dates entered the wrong way round: use them as a range, like /insights
+        frm, to = (parse_dt(q.get("to")) if q.get("to") else to), parse_dt(q.get("from"), end_of_day=True)
     org = user.org_id
     lang = user.language
     settings = await org_settings(org)
@@ -153,9 +155,26 @@ async def dashboard(request: Request, user: AuthUser = Depends(require_user())):
 # Every list exports as CSV (UTF-8 with BOM) or as a real Excel workbook (.xlsx); /exports/report.xlsx puts a summary, the
 # reports, the actions and the department table in one workbook. One export = one audit row and one unit of the hourly limit.
 
-def _check_export(user: AuthUser) -> None:
-    if not any(user.can_view_site(s) for s in user.sites_in_scope()):
+EXPORT_ROLES = {"site_safety_officer", "site_head", "hse_manager", "admin", "auditor"}
+
+
+def export_sites(user: AuthUser) -> list[str]:
+    """Sites whose data this user may export: officer+, admin and auditor (API.md). Verifiers may read a site's records
+    but not take them away in bulk."""
+    return [s for s in user.sites_in_scope() if user.roles_at(s) & EXPORT_ROLES]
+
+
+def _check_export(user: AuthUser, q: dict | None = None) -> None:
+    allowed = export_sites(user)
+    if not allowed:
         raise forbidden()
+    if q is not None:
+        asked = [uuid_param(x) for x in (q.get("siteIds") or q.get("siteId") or "").split(",") if x]
+        if any(x not in allowed for x in asked):
+            raise not_found()
+        if not asked:  # no site chosen: only the sites this user may export, not every site they can see
+            q.pop("siteId", None)
+            q["siteIds"] = ",".join(allowed)
     try:
         export_limiter.check(f"export:{user.id}", config.exports_per_hour)
     except Exception:
@@ -212,7 +231,7 @@ async def action_rows(q: dict, user: AuthUser) -> list[list]:
 
 
 async def inspection_rows(request: Request, q: dict, user: AuthUser) -> list[list]:
-    sites = _sites(request, user)
+    sites = [uuid_param(x) for x in (q.get("siteIds") or q.get("siteId") or "").split(",") if x] or _sites(request, user)
     params: list = [sites]
     where = ["r.site_id = any($1::uuid[])"]
     if q.get("status"):
@@ -250,8 +269,8 @@ async def export_list(what: str, fmt: str, request: Request, user: AuthUser = De
         return await export_report(request, user)
     if what not in EXPORTS or fmt not in ("csv", "xlsx"):
         raise not_found()
-    _check_export(user)
     q = dict(request.query_params)
+    _check_export(user, q)
     if what == "observations":
         out = await observation_rows(q, user)
     elif what == "actions":
@@ -269,12 +288,12 @@ async def export_list(what: str, fmt: str, request: Request, user: AuthUser = De
 async def export_report(request: Request, user: AuthUser = Depends(require_user())):
     """One workbook: Summary (site-level insights for the period), Reports, Actions, Departments. Same filters as the lists
     (siteId(s), from, to); the period defaults to the last 90 days."""
-    _check_export(user)
     q = dict(request.query_params)
+    _check_export(user, q)
     frm, to = period(request.query_params)
     q.setdefault("from", frm.isoformat())
     q.setdefault("to", to.isoformat())
-    sites = _sites(request, user)
+    sites = q["siteIds"].split(",") if q.get("siteIds") else [uuid_param(q["siteId"])]
     lang = user.language
     data = await insights_data(user, "site", sites, frm, to)
     codes = await db.q("select code from sites where id = any($1::uuid[]) order by code", [sites])

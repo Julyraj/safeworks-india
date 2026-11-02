@@ -12,22 +12,49 @@ import { useActions, useNotifications, useObservations, useRuns } from "./offlin
 import { PageSkeleton } from "./components/common";
 import { APP_VERSION } from "./api";
 
-const Login = lazy(() => import("./pages/Login"));
-const ServerAddress = lazy(() => import("./pages/ServerAddress"));
-const Home = lazy(() => import("./pages/Home"));
-const QuickReport = lazy(() => import("./pages/QuickReport"));
-const Reports = lazy(() => import("./pages/Reports"));
-const ObservationDetail = lazy(() => import("./pages/ObservationDetail"));
-const Actions = lazy(() => import("./pages/Actions"));
-const ActionDetail = lazy(() => import("./pages/ActionDetail"));
-const Inspections = lazy(() => import("./pages/Inspections"));
-const RunRoute = lazy(() => import("./pages/RunRoute"));
-const Scan = lazy(() => import("./pages/Scan"));
-const Outbox = lazy(() => import("./pages/Outbox"));
-const Notifications = lazy(() => import("./pages/Notifications"));
-const Settings = lazy(() => import("./pages/Settings"));
-const More = lazy(() => import("./pages/More"));
-const Insights = lazy(() => import("./pages/Insights"));
+/* Every page is its own chunk. Each loader is kept so that, once the app is up with a connection, all pages are
+   fetched in the background: the service worker caches them, and a page never opened online still opens offline. */
+const PAGES = {
+  Login: () => import("./pages/Login"),
+  ServerAddress: () => import("./pages/ServerAddress"),
+  Home: () => import("./pages/Home"),
+  QuickReport: () => import("./pages/QuickReport"),
+  Reports: () => import("./pages/Reports"),
+  ObservationDetail: () => import("./pages/ObservationDetail"),
+  Actions: () => import("./pages/Actions"),
+  ActionDetail: () => import("./pages/ActionDetail"),
+  Inspections: () => import("./pages/Inspections"),
+  RunRoute: () => import("./pages/RunRoute"),
+  Scan: () => import("./pages/Scan"),
+  Outbox: () => import("./pages/Outbox"),
+  Notifications: () => import("./pages/Notifications"),
+  Settings: () => import("./pages/Settings"),
+  More: () => import("./pages/More"),
+  Insights: () => import("./pages/Insights"),
+};
+const Login = lazy(PAGES.Login);
+const ServerAddress = lazy(PAGES.ServerAddress);
+const Home = lazy(PAGES.Home);
+const QuickReport = lazy(PAGES.QuickReport);
+const Reports = lazy(PAGES.Reports);
+const ObservationDetail = lazy(PAGES.ObservationDetail);
+const Actions = lazy(PAGES.Actions);
+const ActionDetail = lazy(PAGES.ActionDetail);
+const Inspections = lazy(PAGES.Inspections);
+const RunRoute = lazy(PAGES.RunRoute);
+const Scan = lazy(PAGES.Scan);
+const Outbox = lazy(PAGES.Outbox);
+const Notifications = lazy(PAGES.Notifications);
+const Settings = lazy(PAGES.Settings);
+const More = lazy(PAGES.More);
+const Insights = lazy(PAGES.Insights);
+
+function prefetchPages() {
+  if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+  const run = () => { for (const load of Object.values(PAGES)) void load().catch(() => { /* retried on the next start */ }); };
+  const idle = (window as Window & { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback;
+  if (idle) idle(run); else setTimeout(run, 1500);
+}
 
 function RouteShell({ children }: { children: ReactNode }) {
   const loc = useLocation();
@@ -51,6 +78,7 @@ export function App() {
 
 function Shell() {
   const { t } = useI18n();
+  useEffect(() => { prefetchPages(); }, []);
   const nav = useNavigate();
   const loc = useLocation();
   const { me, logout, forceSignOutKeepData } = useSession();

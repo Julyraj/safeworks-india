@@ -134,6 +134,13 @@ def require_scope(user: AuthUser, site_id: str | None) -> None:
         raise not_found()
 
 
+def require_writer(user: AuthUser | None) -> None:
+    """Auditor-only accounts are read-only everywhere: the console (need_write) and the field API (reports, comments,
+    inspection runs, sync commands)."""
+    if user is not None and user.role_set() == {"auditor"}:
+        raise HttpError(403, "Auditor accounts are read-only.", "forbidden", key="err.forbidden")
+
+
 def require_officer(user: AuthUser, site_id: str | None) -> None:
     require_scope(user, site_id)
     if not user.is_officer_plus(site_id):

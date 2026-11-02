@@ -288,5 +288,6 @@
   "xlsx.actions_closed": "ಮುಚ್ಚಿದ ಕ್ರಮಗಳು",
   "xlsx.department": "ವಿಭಾಗ",
   "xlsx.departments": "ವಿಭಾಗಗಳು",
-  "xlsx.code": "ಕೋಡ್"
+  "xlsx.code": "ಕೋಡ್",
+  "err.immediate_action_required": "ಸುರಕ್ಷಿತಗೊಳಿಸಲು ನೀವು ಏನು ಮಾಡಿದಿರಿ ಎಂದು ತಿಳಿಸಿ."
 }

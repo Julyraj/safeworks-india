@@ -11,7 +11,7 @@ from ..i18n import pick, t
 from ..media import create_media_rows
 from ..notify import link_for, notify, users_with_roles
 from ..numbers import next_case_no
-from ..rbac import AuthUser, require_officer, require_scope
+from ..rbac import AuthUser, require_officer, require_scope, require_writer
 from ..reports import store_run_report
 from ..schemas import ActionDraft, Answer, RunStartRequest, RunSubmitRequest
 from ..settings import org_settings
@@ -85,6 +85,7 @@ def _visible(q: dict, answers_by_code: dict[str, Any]) -> bool:
 # ---------- start ----------
 
 async def start(conn, actor: AuthUser, payload: RunStartRequest) -> dict:
+    require_writer(actor)
     existing = await db.one("select id, case_no from inspection_runs where client_uuid = $1", [payload.client_uuid.lower()], conn)
     if existing:
         raise DuplicateRecord(existing["id"], existing["case_no"], "inspection_run")

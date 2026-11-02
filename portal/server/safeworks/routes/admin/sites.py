@@ -45,7 +45,7 @@ async def create_site(request: Request, user: AuthUser = Depends(console_user)):
     inp = parse(SiteIn, await json_body(request))
     if not inp.code:
         raise bad_request("Site code: 2 to 6 capital letters or digits.", key="err.site_code")
-    if not inp.name:
+    if not inp.name or not inp.name.en.strip():
         raise bad_request("name: required")
     if await db.one("select 1 from sites where org_id = $1 and code = $2", [user.org_id, inp.code]):
         raise HttpError(409, "This code is already in use.", "conflict", key="err.duplicate_code")

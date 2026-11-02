@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import math
 import secrets
+from datetime import timedelta
 from typing import Any
 
 from .. import db
@@ -14,7 +15,7 @@ from ..i18n import t
 from ..media import create_media_rows
 from ..notify import link_for, notify, users_with_roles
 from ..numbers import next_case_no
-from ..rbac import AuthUser, require_officer, require_scope
+from ..rbac import AuthUser, require_officer, require_scope, require_writer
 from ..schemas import CommentBody, ObservationCreate, QrObservationCreate, ReplyBody, TriageRequest
 from ..settings import org_settings
 from ..views import OBS_SELECT, action_summary, comment as comment_view, first_thumb, media_for, observation_summary, triage_record
@@ -57,10 +58,14 @@ async def reporter_id(conn, o: dict) -> str | None:
 
 # ---------- create ----------
 
+FUTURE_SKEW = timedelta(minutes=5)  # phone clocks drift a little; more than this ahead is treated as wrong
+
+
 async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrObservationCreate, *, site: dict, area_id: str | None, asset_id: str | None,
                  channel: str, device_id: str = "", qr_contact: dict | None = None) -> tuple[dict, list[dict]]:
     """Create an observation (app/web/on_behalf by a signed-in user, or a QR report without an account).
     Returns (observation row, uploads)."""
+    require_writer(actor)
     existing = await db.one("select id, case_no from observations where client_uuid = $1", [payload.client_uuid.lower()], conn)
     if existing:
         raise DuplicateRecord(existing["id"], existing["case_no"], "observation")
@@ -77,6 +82,11 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
         raise bad_request("Choose the area (no GPS fix).", key="err.area_required")
     if not payload.description.strip() and not payload.media:
         raise bad_request("Describe what you observed.", key="err.description_required")
+    # The phone and the QR form check these too; the server is the last line (a script or an old app must not skip them).
+    if not payload.category_codes:
+        raise bad_request("Choose at least one category.", key="err.category_required")
+    if payload.fixed_on_spot and not (payload.immediate_action or "").strip():
+        raise bad_request("Say what you did to make it safe.", key="err.immediate_action_required")
     if payload.category_codes:
         valid = await db.q("select code from categories where org_id = $1 and code = any($2::text[]) and deleted_at is null", [org_id, payload.category_codes], conn)
         if len(valid) != len(set(payload.category_codes)):
@@ -98,13 +108,21 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
         extra["onBehalfOf"] = on_behalf.model_dump(by_alias=True)
     if qr_contact and qr_contact.get("employerName"):
         extra["employerName"] = qr_contact["employerName"]
+    # A capture time in the future (a phone with a wrong clock) is not trusted: the report keeps the time it reached the
+    # server, and the claimed time is kept with the report's details for the record.
+    captured_at = payload.captured_at
+    if captured_at.tzinfo is None:  # no offset sent: India time, as everywhere else in the API
+        captured_at = captured_at.replace(tzinfo=db.TZ)
+    if captured_at > received + FUTURE_SKEW:
+        extra["capturedAtClaimed"] = captured_at.isoformat()
+        captured_at = received
     status_secret = secrets.token_urlsafe(12) if channel == "qr" else ""
     row = await db.one(
         """insert into observations (client_uuid, org_id, site_id, area_id, asset_id, case_no, lat, lng, accuracy_m, captured_at, received_at, device_id, channel,
                                      reporter_type, reporter_user_id, anonymous, reporter_contact_enc, type, category_codes, task_observed, description, description_lang,
                                      fixed_on_spot, immediate_action, imminent_danger, employer_involved_id, trade, status_secret)
            values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28) returning id""",
-        [payload.client_uuid.lower(), org_id, site["id"], area_id, asset_id, case_no, payload.lat, payload.lng, payload.accuracy_m, payload.captured_at, received, device_id,
+        [payload.client_uuid.lower(), org_id, site["id"], area_id, asset_id, case_no, payload.lat, payload.lng, payload.accuracy_m, captured_at, received, device_id,
          channel, payload.reporter_type, reporter_user_id, anonymous, contact_enc, payload.type, payload.category_codes, getattr(payload, "task_observed", "") or "",
          payload.description, payload.description_lang, payload.fixed_on_spot, payload.immediate_action or "", payload.imminent_danger, employer,
          getattr(payload, "trade", "") or "", status_secret], conn,
@@ -311,6 +329,7 @@ async def triage(conn, actor: AuthUser, obs_id: str, payload: TriageRequest) -> 
 # ---------- comments, replies, reopen, ack ----------
 
 async def add_comment(conn, actor: AuthUser, obs_id: str, payload: CommentBody) -> dict:
+    require_writer(actor)
     o = await load(conn, obs_id)
     mine = await is_mine(conn, actor, o)
     if not (mine or actor.is_officer_plus(o["site_id"])):

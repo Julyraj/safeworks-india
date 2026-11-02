@@ -8,7 +8,9 @@ Written as an EHS QA team (test architect, role-access specialist, functional/UI
 
 **Test types:** Positive · Negative · Security · Workflow · UI · Edge.
 
-## Possible defects found while reading the code (confirm by running the marked tests)
+## Defects found while writing and running this plan
+
+All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F9 came from reading the code, F10–F13 from running the plan. The ⚠ tests below now describe the fixed behaviour.
 
 | # | Where | What the code does | What it should do | Test |
 |---|---|---|---|---|
@@ -21,6 +23,10 @@ Written as an EHS QA team (test architect, role-access specialist, functional/UI
 | F7 | Dashboard (server) | "From" after "To" is not swapped or refused | Refuse, or swap the dates | EHS-DSH-009 |
 | F8 | Danger-now acknowledgement | Which roles may acknowledge was not confirmed | Only officers and site heads of the site | EHS-OBS-210 |
 | F9 | CSV exports | Text starting with `=`, `+`, `-` or `@` is written as-is, so Excel may run it as a formula ("CSV injection"). The `.xlsx` exports are safe. | Prefix such values with `'` in CSV | EHS-RPT-024 |
+| F10 | Field API | External auditors could create reports, comments and inspection runs from the phone app | Auditor-only accounts read-only everywhere | EHS-OBS-055 |
+| F11 | Site create | A site could be saved with an empty name | English name required | EHS-ADM-006 |
+| F12 | User create / edit | The server accepted `abc@` as an email | Same rule as the console form | EHS-ADM-097 |
+| F13 | Field app offline | A page never opened while online could not open offline (each page is downloaded on first use) | Fetch every page in the background after sign-in | Browser run step 1 |
 
 ---
 
@@ -89,6 +95,7 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | Action: decide requests / reassign / cancel / create manual | — | A | A | A | — | — | — | — | — |
 | Inspection run: start / answer / submit | C | C | C | C | C | C | C | — | — |
 | Inspection run: cancel | — | D | D | D | — | — | — | — | — |
+| Inspection run: reopen a submitted run | U | U | — | — | — | — | — | — | — |
 | Templates: create / edit / retire | C U | C U | site copy | site copy | — | — | — | R | — |
 | Templates: approve (approver ≠ author) | A | A | — | — | — | — | — | — | — |
 | Schedules | C U D | C U D | site | site | — | — | — | R | — |
@@ -290,7 +297,7 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | EHS-OBS-017 | Field Employee (REP) | Report | Description (500 characters) | Type exactly 500 characters and submit. | Positive | Saved; full text shown on the detail page. |
 | EHS-OBS-018 | Field Employee (REP) | Report | Description (501 characters) | Paste 501 characters. | Negative | Field stops at 500, or "Too long" on submit; the API refuses 501 with 400. |
 | EHS-OBS-019 | Field Employee (REP) | Report | No description and no photo | Choose type and category; no text, no photo; tap Submit. | Negative | "Add a photo or describe it"; API gives 400 "Describe what you observed." |
-| EHS-OBS-020 | Field Employee (REP) | API | Report dated in the future ⚠ F1 | Send a create with `capturedAt` = tomorrow. | Negative | Correct behaviour: refused (400) or clamped to the received time. If stored as tomorrow, log defect F1. |
+| EHS-OBS-020 | Field Employee (REP) | API | Report dated in the future ⚠ F1 | Send a create with `capturedAt` = tomorrow. | Negative | Saved with the captured time replaced by the received time (more than 5 minutes ahead is not trusted); the claimed time is kept in the report details. |
 | EHS-OBS-021 | Field Employee (REP) | API | Very old date | Send a create with `capturedAt` = 2020-01-01. | Edge | Stored with captured time 2020-01-01 and received time = now; list sorted by received time; no crash. |
 | EHS-OBS-022 | Field Employee (REP) | API | Bad date | `capturedAt: "yesterday"`. | Negative | 400 validation error. |
 | EHS-OBS-023 | Field Employee (REP) | Report | Description with Tamil text | Type a Tamil sentence, submit. | Positive | Saved and shown exactly; language recorded as `ta` when the phone is in Tamil. |
@@ -325,7 +332,7 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | EHS-OBS-052 | Supervisor (OWN) | Report | Create | `OWN-TN1-1` submits a report. | Positive | Saved; appears under Reports → Mine. |
 | EHS-OBS-053 | Verifier (VER) | Report | Create | `VER-TN1` submits a report. | Positive | Saved. |
 | EHS-OBS-054 | Safety Officer (SSO) | Report | Create | `SO-TN1` submits a report. | Positive | Saved; the "Score risk and assign owner now" button appears (see 2H). |
-| EHS-OBS-055 | External Auditor (AUD) | API | Create | `AUD01` calls the create API. | Security | 403 (auditor is read-only). |
+| EHS-OBS-055 | External Auditor (AUD) | API | Create ⚠ F10 | `AUD01` signs in to the field app and calls the create API. | Security | 403 "Auditor accounts are read-only." |
 | EHS-OBS-056 | Field Employee (REP) | Report | Case number format | Make reports at TN1 and KA1. | Positive | Numbers are `TN1-OBS-2026-…` and `KA1-OBS-2026-…`, each counting up per site. |
 | EHS-OBS-057 | Safety Officer (SSO) | Report | Report on behalf of a worker without a phone | Officer uses "on behalf of" with name and employer. | Positive | Channel "on behalf"; the person's name kept in the report details. |
 
@@ -769,8 +776,8 @@ Answer types in SafeWorks: pass/fail/N.A., number (with pass range), text, photo
 | EHS-INS-081 | Inspector | Run detail | Report link | Tap Report. | Positive | Locked report opens in a new tab through a 5-minute signed link; it prints to PDF with photos, signature, times and GPS. |
 | EHS-INS-082 | Any | Report link | Expired report link | Open the report link after 6 minutes. | Security | Refused "This link has expired. Refresh the page." |
 | EHS-INS-083 | Any | Report link | Report link used by another user | Send the link to another person; they open it in time. | Security | Refused (the link is tied to the user who asked for it). |
-| EHS-INS-084 | Safety Officer (SSO) | Run detail | Reopen a completed run | Reopen with reason "Wrong area". | Positive | Status "Reopened"; old report marked superseded; audit row. |
-| EHS-INS-085 | Safety Officer (SSO) | Run detail | Reopen without reason | Empty reason. | Negative | 400 "A reason code and text are required." |
+| EHS-INS-084 | EHS Manager (HSE) | Run detail | Reopen a completed run | `HSE01` reopens with reason "Wrong area". A safety officer tries the same first. | Positive | Officer: 403 (a submitted report is locked; only admin or HSE manager may reopen it). HSE: status "Reopened"; old report marked superseded; audit row. |
+| EHS-INS-085 | EHS Manager (HSE) | Run detail | Reopen without reason | Empty reason. | Negative | 400 "A reason code and text are required." |
 | EHS-INS-086 | Safety Officer (SSO) | Run detail | Cancel a scheduled run | Cancel with reason "Area closed". | Positive | Status "Cancelled". |
 | EHS-INS-087 | Safety Officer (SSO) | Run detail | Cancel a completed run | Try to cancel a completed run. | Negative | 409 (only scheduled or in-progress runs). |
 | EHS-INS-088 | Field Employee (REP) | API | Cancel a run | Worker calls cancel. | Security | 403. |

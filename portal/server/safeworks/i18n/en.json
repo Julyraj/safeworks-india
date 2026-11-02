@@ -288,5 +288,6 @@
   "xlsx.actions_closed": "Actions closed",
   "xlsx.department": "Department",
   "xlsx.departments": "Departments",
-  "xlsx.code": "Code"
+  "xlsx.code": "Code",
+  "err.immediate_action_required": "Say what you did to make it safe."
 }

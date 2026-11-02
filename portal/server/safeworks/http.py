@@ -111,6 +111,17 @@ def parse_dt(v: str | None, end_of_day: bool = False) -> datetime | None:
     return d.astimezone(timezone.utc)
 
 
+FORMULA_START = ("=", "+", "-", "@", "\t", "\r")
+
+
+def csv_safe(v: Any) -> Any:
+    """Text a spreadsheet would run as a formula (=, +, -, @, tab, CR first) gets a leading apostrophe ("CSV injection").
+    Numbers stay numbers; only text is changed."""
+    if isinstance(v, str) and v.startswith(FORMULA_START):
+        return "'" + v
+    return v
+
+
 def csv_response(rows: list[list[Any]], filename: str) -> Response:
     """UTF-8 CSV with a BOM so Excel opens Tamil, Kannada and Hindi text correctly."""
     import csv
@@ -119,6 +130,6 @@ def csv_response(rows: list[list[Any]], filename: str) -> Response:
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator="\r\n")
     for r in rows:
-        w.writerow(["" if v is None else (v.isoformat() if isinstance(v, datetime) else v) for v in r])
+        w.writerow(["" if v is None else (v.isoformat() if isinstance(v, datetime) else csv_safe(v)) for v in r])
     data = "﻿" + buf.getvalue()
     return Response(data.encode("utf-8"), media_type="text/csv; charset=utf-8", headers={"content-disposition": f'attachment; filename="{filename}"'})

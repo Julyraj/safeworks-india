@@ -288,5 +288,6 @@
   "xlsx.actions_closed": "बंद कार्रवाइयाँ",
   "xlsx.department": "विभाग",
   "xlsx.departments": "विभाग सूची",
-  "xlsx.code": "कोड"
+  "xlsx.code": "कोड",
+  "err.immediate_action_required": "बताएँ कि सुरक्षित करने के लिए आपने क्या किया।"
 }
