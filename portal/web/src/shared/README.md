@@ -5,7 +5,7 @@ Everything under `src/shared/` is used by all three pages built from this folder
 | File | What it gives you |
 |---|---|
 | `types.ts` | The API contract (mirrors the server's Pydantic models; see `portal/docs/API.md`). Import types from here only. |
-| `api.ts` | `createApi(tokenKey)` → `get/post/put/del/putBytes/download/file`, `ApiError`, `errorKey(e)`, `isNative`, `serverBase()`. All paths are relative to `/api/v1`. |
+| `api.ts` | `createApi(tokenKey)` → `get/post/put/del/putBytes/download/file`, `ApiError`, `errorKey(e)`, `isNative`, `serverBase()`, `openSignedPage(api, linkPath, body)` (opens a poster/report in a new tab through a 5-minute signed link; never a token in a URL). All paths are relative to `/api/v1`. |
 | `base.css` + `tokens.css` | Design tokens (copied from `/design/tokens.css` by `scripts/sync-tokens.mjs`) and every component class. Import `base.css` once per page. |
 | `i18n/` | `I18nProvider`, `useI18n()` → `{ t, lang, setLang, pick }`. Packs are flat JSON; the kit's strings are `shared.<lang>.json`; add your app's keys in `field.<lang>.json` / `admin.<lang>.json` / `qr.<lang>.json` and pass them as `packs`. `pick(obj)` reads `{en,hi,ta,kn}` objects from the server. |
 | `ui/index.tsx` | Components: `Button LinkButton BackButton Chip ChipBar Pill BandPill Card CardHead Sheet Confirm ToastProvider/useToast (show, error, success, undoable) Skeleton ListSkeleton EmptyState SearchEmpty ErrorCard ErrorBoundary Field Input Textarea Select Toggle Segmented Form Tabs Progress Banner RiskMatrix Thumb Lightbox Timeline KpiTile Bars DataTable Pagination ShortcutsHelp useShortcutsHelp SuccessMark I18nText`. |

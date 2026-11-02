@@ -6,9 +6,9 @@ Responses are built as plain camelCase dicts by `views.py` (fast path through or
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Literal, TypeVar
+from typing import Any, ClassVar, Literal, TypeVar
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, field_validator, model_validator
 from pydantic.alias_generators import to_camel
 from typing_extensions import Annotated
 
@@ -43,6 +43,26 @@ class In(BaseModel):
     """Base for request bodies: camelCase keys, unknown keys refused, defaults validated."""
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True, validate_default=True, extra="forbid", str_strip_whitespace=True)
+
+
+# Fields a response carries that an edit form may send back unchanged (the console edits the record it loaded).
+RESPONSE_ONLY_KEYS = frozenset({"id", "version", "updatedAt", "createdAt"})
+
+
+class Edit(In):
+    """Base for admin edit bodies: like `In` (unknown keys refused) but the read-only keys of the record's own response
+    shape (`RESPONSE_ONLY_KEYS` plus `echo_keys`) are dropped, so the console can PUT back the object it loaded."""
+
+    echo_keys: ClassVar[frozenset[str]] = frozenset()
+
+    @model_validator(mode="before")
+    @classmethod
+    def _drop_echoed(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            own = {f.alias or to_camel(n) for n, f in cls.model_fields.items()} | set(cls.model_fields)
+            drop = (RESPONSE_ONLY_KEYS | cls.echo_keys) - own
+            return {k: v for k, v in data.items() if k not in drop}
+        return data
 
 
 class Loose(In):
@@ -437,7 +457,9 @@ class WorkingCalendar(In):
     shift_end: Annotated[str, StringConstraints(pattern=r"^\d{2}:\d{2}$")] = "17:00"
 
 
-class SiteIn(In):
+class SiteIn(Edit):
+    echo_keys = frozenset({"areas", "qrCodes"})
+
     code: Annotated[str, StringConstraints(pattern=r"^[A-Z0-9]{2,6}$")] | None = None
     name: I18nText | None = None
     address: Str500 = ""
@@ -465,7 +487,9 @@ class SiteSetupIn(In):
     areas: list[Str200] | None = None
 
 
-class AreaIn(In):
+class AreaIn(Edit):
+    echo_keys = frozenset({"siteId"})
+
     code: Str200 = ""
     name: I18nText
     parent_area_id: UuidStr | None = None
@@ -477,7 +501,9 @@ class AreaIn(In):
     reason: Str2000 = ""
 
 
-class AssetIn(In):
+class AssetIn(Edit):
+    echo_keys = frozenset({"qrToken"})
+
     site_id: UuidStr | None = None
     area_id: UuidStr | None = None
     asset_class: AssetClass = "other"
@@ -497,6 +523,11 @@ class QrCodeIn(In):
     target_id: UuidStr
     label: Str200 = ""
     prefill: dict[str, Any] = Field(default_factory=dict)
+
+
+class PosterLinkBody(In):
+    lang: Annotated[str, StringConstraints(max_length=20)] | None = None  # e.g. "en,hi,ta,kn"
+    size: Literal["A4", "A5"] | None = None
 
 
 class QrCodeUpdate(In):
@@ -531,7 +562,9 @@ class UserCreate(In):
         return v.lower()
 
 
-class UserUpdate(In):
+class UserUpdate(Edit):
+    echo_keys = frozenset({"personId", "status", "mfaEnabled", "mustChangePassword", "lockedUntil", "failedAttempts", "lastLoginAt", "roles", "employerName", "devices"})
+
     name: Str200 | None = None
     email: Str200 | None = None
     employee_code: Str200 | None = None
@@ -552,7 +585,9 @@ class StatusBody(In):
     reason: Str2000 = ""
 
 
-class PersonIn(In):
+class PersonIn(Edit):
+    echo_keys = frozenset({"phoneMasked"})
+
     full_name: Str200
     employer_id: UuidStr | None = None
     phone: Annotated[str, StringConstraints(max_length=30)] = ""
@@ -563,7 +598,7 @@ class PersonIn(In):
     reason: Str2000 = ""
 
 
-class ContractorIn(In):
+class ContractorIn(Edit):
     name: Str200
     is_own_company: bool = False
     parent_id: UuidStr | None = None
@@ -585,7 +620,7 @@ class ExtraFieldIn(In):
     required: bool = False
 
 
-class CategoryIn(In):
+class CategoryIn(Edit):
     code: Annotated[str, StringConstraints(pattern=r"^[A-Z0-9_]{2,20}$")] | None = None
     parent_code: Str200 | None = None
     name: I18nText
@@ -620,7 +655,9 @@ class MatrixBand(Loose):
     response: I18nText
 
 
-class MatrixVersionIn(In):
+class MatrixVersionIn(Edit):
+    echo_keys = frozenset({"matrixId", "name", "size", "status", "statusLabel"})
+
     likelihood_labels: list[MatrixLabel] | None = None
     severity_labels: list[MatrixLabel] | None = None
     bands: list[MatrixBand] | None = None
@@ -631,7 +668,7 @@ class VersionIdBody(In):
     version_id: UuidStr
 
 
-class DueDateRuleIn(In):
+class DueDateRuleIn(Edit):
     id: UuidStr | None = None
     site_id: UuidStr | None = None
     band: Band
@@ -648,7 +685,7 @@ class LadderStep(In):
     channel: Literal["push", "email", "both"] = "push"
 
 
-class LadderIn(In):
+class LadderIn(Edit):
     id: UuidStr | None = None
     band: Band
     steps: list[LadderStep]
@@ -731,7 +768,9 @@ class TemplateCopyBody(In):
     name: I18nText | None = None
 
 
-class ScheduleIn(In):
+class ScheduleIn(Edit):
+    echo_keys = frozenset({"nextDueAt"})
+
     template_id: UuidStr
     site_id: UuidStr
     area_id: UuidStr | None = None
@@ -766,7 +805,7 @@ class PrivacyRequestUpdate(In):
     response: Str5000 | None = None
 
 
-class RetentionPolicyIn(In):
+class RetentionPolicyIn(Edit):
     id: UuidStr | None = None
     record_type: Str200
     retention_years: int = Field(ge=1)
@@ -782,8 +821,7 @@ class LegalHoldIn(In):
 
 
 class OrgSettingsIn(Loose):
-    name: Str200 | None = None
+    org_name: Str200 | None = None
     legal_name: Str200 | None = None
     address: Str500 | None = None
     phone: Annotated[str, StringConstraints(max_length=30)] | None = None
-    settings: dict[str, Any] | None = None

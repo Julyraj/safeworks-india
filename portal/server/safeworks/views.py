@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
+from .defaults import default_areas
 from . import db
 from .security import signed_file_url
 
@@ -97,7 +98,7 @@ def ladder(r: dict) -> dict:
 def industry(r: dict) -> dict:
     return {"code": r["code"], "name": r["name_i18n"], "tagline": r["tagline"], "icon": r["icon"], "establishmentTypes": list(r["establishment_types"] or []),
             "categoryCodes": list(r["category_codes"] or []), "templateCodes": list(r["template_codes"] or []), "hazards": list(r["hazards"] or []),
-            "ppe": list(r["ppe"] or []), "library": r["library"] or {}}
+            "ppe": list(r["ppe"] or []), "library": r["library"] or {}, "defaultAreas": [a[1]["en"] for a in default_areas(r["code"])]}
 
 
 def timer_rule(r: dict) -> dict:

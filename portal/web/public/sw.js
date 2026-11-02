@@ -2,7 +2,7 @@
    PWA opens with no signal. Never cached here: /api/ (signed-in, fresh responses; the outbox in IndexedDB owns retry),
    /files/ (signed photo URLs), /admin (console), /library (its own worker) and /q/ (the public form fetches its own
    data; its assets are still cached below because they live under /assets/). */
-const VERSION = "sw-portal-v2";
+const VERSION = "sw-portal-v3";
 const SHELL = ["/", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/favicon-32.png"];
 const NEVER = ["/api/", "/files/", "/admin", "/library", "/q/"];
 
@@ -16,6 +16,27 @@ self.addEventListener("activate", (e) => {
       .then((keys) => Promise.all(keys.filter((k) => k.startsWith("sw-portal-") && k !== VERSION).map((k) => caches.delete(k))))
       .then(() => self.clients.claim()),
   );
+});
+
+// Web Push (VAPID): the server sends {id, title, body, link, critical, eventType}; critical alerts stay until tapped
+self.addEventListener("push", (e) => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch { d = { title: e.data ? e.data.text() : "" }; }
+  e.waitUntil(self.registration.showNotification(d.title || "SafeWorks", {
+    body: d.body || "", tag: d.id ? `sw-${d.id}` : undefined, data: { link: d.link || "/" }, icon: "/icons/icon-192.png", badge: "/icons/favicon-32.png",
+    requireInteraction: !!d.critical, renotify: !!d.critical && !!d.id,
+  }));
+});
+
+// tapping a notification opens the record in an open SafeWorks window, or a new one
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const target = new URL((e.notification.data && e.notification.data.link) || "/", self.location.origin).href;
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+    const open = list.find((c) => c.url.startsWith(self.location.origin) && !new URL(c.url).pathname.startsWith("/admin"));
+    if (open) return open.focus().then((c) => (c && "navigate" in c ? c.navigate(target) : undefined));
+    return self.clients.openWindow(target);
+  }));
 });
 
 self.addEventListener("message", (e) => {

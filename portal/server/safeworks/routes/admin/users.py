@@ -8,7 +8,7 @@ from ...audit import audit
 from ...auth import forget_user_in_cache, revoke_user_sessions
 from ...crypto import encrypt
 from ...errors import HttpError, bad_request, forbidden, not_found
-from ...http import JSON, json_body, page_params, uuid_param
+from ...http import JSON, json_body, page_params, sort_sql, uuid_param
 from ...notify import notify
 from ...rbac import ALL_SITES_ROLES, ROLES, AuthUser
 from ...schemas import ContractorIn, PersonIn, RoleGrant, RolesBody, StatusBody, UserCreate, UserUpdate, parse
@@ -99,7 +99,7 @@ async def list_users(request: Request, user: AuthUser = Depends(console_user)):
         params.append(f"%{q['q'].strip()}%")
         where.append(f"(u.employee_code ilike ${len(params)} or u.email ilike ${len(params)} or p.full_name ilike ${len(params)})")
     total = await db.one(f"select count(*)::int as n from users u left join people p on p.id = u.person_id where {' and '.join(where)}", params)
-    rows = await db.q(USER_SELECT + f" where {' and '.join(where)} order by u.employee_code, u.email limit {size} offset {(page - 1) * size}", params)
+    rows = await db.q(USER_SELECT + f" where {' and '.join(where)} order by {sort_sql(request, {"lastLoginAt": "u.last_login_at", "name": "coalesce(nullif(p.full_name, ''), u.employee_code)", "status": "u.status"}, "u.employee_code, u.email")} limit {size} offset {(page - 1) * size}", params)
     items = []
     for r in rows:
         items.append(user_admin(r, await _roles(None, r["id"]), await _devices(None, r["id"])))
@@ -134,8 +134,19 @@ async def create_user(request: Request, user: AuthUser = Depends(console_user)):
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="user", record_id=row["id"],
                     changes={"name": inp.name, "employeeCode": inp.employee_code, "email": inp.email, "loginType": inp.login_type, "phone": inp.phone})
         await _set_roles(c, user, row["id"], inp.roles)
+        enrol_code, enrol_exp = None, None
+        if inp.login_type == "enrolment_code":
+            # workers without a password: the first one-time code is issued with the account (24 h, shown once)
+            raw = random_code(8)
+            enrol_exp = await c.fetchval("insert into enrolment_codes (org_id, user_id, code_hash, issued_by, expires_at) values ($1, $2, $3, $4, now() + interval '24 hours') returning expires_at",
+                                         user.org_id, row["id"], sha256(raw), user.id)
+            enrol_code = f"{raw[:4]}-{raw[4:]}"
+            await audit(c, org_id=user.org_id, actor=user, action="password_reset", record_type="user", record_id=row["id"], changes={"via": "enrolment_code", "expiresAt": enrol_exp})
         out = await _user_out(c, row["id"])
+    # one-time secrets (shown once in the console): a temporary password, or an enrolment code for enrolment_code logins
     out["tempPassword"] = temp if inp.login_type != "enrolment_code" else None
+    out["enrolmentCode"] = enrol_code
+    out["enrolmentExpiresAt"] = enrol_exp
     return JSON(out, status_code=201)
 
 

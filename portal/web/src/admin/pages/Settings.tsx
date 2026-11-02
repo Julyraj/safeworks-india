@@ -46,7 +46,7 @@ export default function Settings() {
         </Card>
         <Card>
           <CardHead title={t("settings.security")} />
-          <Field label={t("settings.mfaRoles")} hint={<span className="row" style={{ gap: 6 }}>{t("settings.mfaRolesHint")} {label("mfa_required_roles")}</span>}>
+          <Field label={t("settings.mfaRoles")} hint={<span className="row" style={{ gap: 6 }}>{t("settings.mfaRolesHint")} {label("mfa_roles")}</span>}>
             <ChipsSelect ariaLabel={t("settings.mfaRoles")} options={MFA_ROLES.map((r) => ({ value: r, label: t(`role.${r}`) }))} value={f.mfaRequiredRoles} onChange={(v) => canEdit && setF({ ...f, mfaRequiredRoles: v })} />
           </Field>
           <Field label={t("settings.languages")} hint={t("settings.languagesHint")}>
@@ -58,8 +58,8 @@ export default function Settings() {
           <CardHead title={t("settings.slas")} kicker={t("status.tagHint")} />
           <div className="form-grid">
             <Field label={t("settings.triageSla")} hint={label("triage_sla")}>{num("triageSlaWorkingDays", 1, 10)}</Field>
-            <Field label={t("settings.triageEscalate")} hint={label("triage_escalate")}>{num("triageEscalateWorkingDays", 1, 15)}</Field>
-            <Field label={t("settings.criticalAck")} hint={label("critical_ack")}>{num("criticalAckMinutes", 5, 240)}</Field>
+            <Field label={t("settings.triageEscalate")} hint={label("triage_sla")}>{num("triageEscalateWorkingDays", 1, 15)}</Field>
+            <Field label={t("settings.criticalAck")} hint={label("critical_ack_minutes")}>{num("criticalAckMinutes", 5, 240)}</Field>
             <Field label={t("settings.dateChangeBeforeHead")} hint={label("date_change_requests")}>{num("dateChangeRequestsBeforeSiteHead", 1, 10)}</Field>
             <Field label={t("settings.disputePause")} hint={label("dispute_pause")}>{num("disputePauseDays", 0, 14)}</Field>
           </div>
@@ -76,7 +76,7 @@ export default function Settings() {
           <CardHead title={t("settings.duplicates")} />
           <div className="form-grid">
             <Field label={t("settings.dupWindow")} hint={label("duplicate_window")}>{num("duplicateWindowHours", 1, 168)}</Field>
-            <Field label={t("settings.dupRadius")} hint={label("duplicate_radius")}>{num("duplicateRadiusM", 5, 500)}</Field>
+            <Field label={t("settings.dupRadius")} hint={label("duplicate_window")}>{num("duplicateRadiusM", 5, 500)}</Field>
           </div>
         </Card>
         <Card>

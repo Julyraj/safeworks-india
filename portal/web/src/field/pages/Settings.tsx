@@ -16,6 +16,7 @@ import { LangGrid, useOnlineOnly } from "../components/common";
 import ServerAddress from "./ServerAddress";
 import { APP_VERSION } from "../api";
 import { deviceInfo } from "../lib";
+import { disablePush, enablePush, pushState, type PushState } from "../push";
 
 const THEME_KEY = "sw.theme";
 export function applyTheme(v: string | null) {
@@ -30,8 +31,18 @@ export default function Settings({ onLogout }: { onLogout: () => void }) {
   const ref = useRefData();
   const sync = useSync();
   const { online } = useOnlineOnly();
-  const [digest, setDigest] = useState<Preferences["digest"]>("daily");
-  const [quiet, setQuiet] = useState(true);
+  const [digest, setDigest] = useState<Preferences["digest"]>(me?.preferences.digest ?? "daily");
+  const [quiet, setQuiet] = useState(me?.preferences.quietHours ?? true);
+  const [push, setPush] = useState<PushState | null>(null);
+  const [pushBusy, setPushBusy] = useState(false);
+  useEffect(() => { void pushState(me?.pushPublicKey).then(setPush); }, [me?.pushPublicKey]);
+  const togglePush = async (on: boolean) => {
+    if (!me?.pushPublicKey) return;
+    setPushBusy(true);
+    try { setPush(on ? await enablePush(me.pushPublicKey) : await disablePush()); }
+    catch (e) { const { key, message } = errorKey(e); toast.error(key === "error.generic" ? message : t(key)); }
+    finally { setPushBusy(false); }
+  };
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState(false);
   const [problem, setProblem] = useState(false);
@@ -69,6 +80,10 @@ export default function Settings({ onLogout }: { onLogout: () => void }) {
             <option value="daily">{t("settings.digest.daily")}</option><option value="weekly">{t("settings.digest.weekly")}</option><option value="off">{t("settings.digest.off")}</option>
           </Select>
         </Field>
+        {push && push !== "unsupported" ? (
+          <Toggle label={t("settings.push")} hint={push === "unconfigured" ? t("settings.pushUnconfigured") : push === "denied" ? t("settings.pushDenied") : t("settings.pushHint")}
+            checked={push === "on"} disabled={pushBusy || push === "unconfigured" || push === "denied" || !online} onChange={(v) => void togglePush(v)} />
+        ) : null}
         <Toggle label={t("settings.quietHours")} hint={t("settings.quietHint", { start: me?.org.settings.quietHours.start ?? "21:00", end: me?.org.settings.quietHours.end ?? "07:00" })} checked={quiet} onChange={setQuiet} />
         <p className="small muted">{t("settings.capHint", { cap: me?.org.settings.dailyPushCap ?? 5 })}</p>
         <Button variant="primary" size="sm" loading={busy} disabled={!online} title={online ? undefined : t("common.needsConnection")} onClick={() => save({})}>{t("common.save")}</Button>

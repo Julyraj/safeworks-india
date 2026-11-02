@@ -11,7 +11,7 @@ from ... import db
 from ...audit import audit, verify_chain
 from ...config import PORTAL_ROOT, config
 from ...errors import bad_request, not_found
-from ...http import JSON, json_body, page_params, parse_dt, uuid_param
+from ...http import JSON, json_body, page_params, parse_dt, sort_sql, uuid_param
 from ...i18n import LANGS, clear_overrides, keys as pack_keys, load_overrides, norm_lang, pack
 from ...rbac import AuthUser
 from ...retention import dry_run
@@ -24,15 +24,27 @@ router = APIRouter(prefix="/api/v1/admin")
 
 # ---------- translations ----------
 
-def _web_keys() -> list[str] | None:
-    p = PORTAL_ROOT / "web" / "src" / "shared" / "i18n" / "en.json"
-    if p.is_file():
+I18N_DIR = PORTAL_ROOT / "web" / "src" / "shared" / "i18n"
+
+
+def _web_pack(lang: str) -> dict[str, str] | None:
+    """The web packs for one language merged (shared, field, qr, admin: `<part>.<lang>.json`), or None when the web source is absent."""
+    files = sorted(I18N_DIR.glob(f"*.{lang}.json")) if I18N_DIR.is_dir() else []
+    if not files:
+        return None
+    out: dict[str, str] = {}
+    for f in files:
         try:
-            data = json.loads(p.read_text(encoding="utf-8"))
-            return sorted(k for k in data.keys() if not k.startswith("_"))
+            data = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
-            return None
-    return None
+            continue
+        out.update({k: v for k, v in data.items() if not k.startswith("_") and isinstance(v, str)})
+    return out
+
+
+def _web_keys() -> list[str] | None:
+    en = _web_pack("en")
+    return sorted(en.keys()) if en else None
 
 
 async def _pack_out(org_id: str, lang: str) -> dict:
@@ -42,12 +54,7 @@ async def _pack_out(org_id: str, lang: str) -> dict:
     base_keys = web if web else pack_keys()
     repo = pack(lang) if not web else {}
     if web:
-        wp = PORTAL_ROOT / "web" / "src" / "shared" / "i18n" / f"{lang}.json"
-        if wp.is_file():
-            try:
-                repo = json.loads(wp.read_text(encoding="utf-8"))
-            except Exception:
-                repo = {}
+        repo = _web_pack(lang) or {}
     translated = [k for k in base_keys if (overrides.get(k) or repo.get(k))]
     missing = [k for k in base_keys if k not in translated]
     return {"lang": lang, "total": len(base_keys), "translated": len(translated), "missing": missing, "overrides": overrides, "source": "web" if web else "server"}
@@ -81,7 +88,7 @@ async def put_translations(lang: str, request: Request, user: AuthUser = Depends
 async def export_translations(request: Request, user: AuthUser = Depends(console_user)):
     lang = norm_lang(request.query_params.get("lang", "en"))
     out = await _pack_out(user.org_id, lang)
-    merged = {**pack(lang), **out["overrides"]}
+    merged = {**(_web_pack(lang) or pack(lang)), **out["overrides"]}
     body = json.dumps({"lang": lang, "_status": "export", "strings": merged}, ensure_ascii=False, indent=2)
     return Response(body, media_type="application/json; charset=utf-8", headers={"content-disposition": f'attachment; filename="safeworks-{lang}.json"'})
 
@@ -141,9 +148,15 @@ async def audit_log(request: Request, user: AuthUser = Depends(console_user)):
     if q.get("siteId"):
         params.append(uuid_param(q["siteId"]))
         where.append(f"l.site_id = ${len(params)}")
+    if q.get("siteCode"):
+        params.append(q["siteCode"].upper())
+        where.append(f"s.code = ${len(params)}")
+    if q.get("q"):
+        params.append(f"%{q['q'].strip()}%")
+        where.append(f"(l.action ilike ${len(params)} or l.record_type ilike ${len(params)} or l.record_id ilike ${len(params)} or l.reason ilike ${len(params)})")
     base = "from audit_log l left join users u on u.id = l.actor_user_id left join people p on p.id = u.person_id left join sites s on s.id = l.site_id"
     total = await db.one(f"select count(*)::int as n {base} where {' and '.join(where)}", params)
-    rows = await db.q(f"select l.*, coalesce(p.full_name, u.employee_code) as actor_name, s.code as site_code {base} where {' and '.join(where)} order by l.id desc limit {size} offset {(page - 1) * size}", params)
+    rows = await db.q(f"select l.*, coalesce(p.full_name, u.employee_code) as actor_name, s.code as site_code {base} where {' and '.join(where)} order by {sort_sql(request, {"at": "l.id"}, "l.id desc")} limit {size} offset {(page - 1) * size}", params)
     return JSON(paged([audit_row(r) for r in rows], total["n"], page, size))
 
 
@@ -172,13 +185,19 @@ async def notifications_log(request: Request, user: AuthUser = Depends(console_u
     if q.get("from"):
         params.append(parse_dt(q["from"]))
         where.append(f"n.created_at >= ${len(params)}")
+    if q.get("to"):
+        params.append(parse_dt(q["to"], end_of_day=True))
+        where.append(f"n.created_at <= ${len(params)}")
+    if q.get("q"):
+        params.append(f"%{q['q'].strip()}%")
+        where.append(f"(n.title ilike ${len(params)} or n.event_type ilike ${len(params)})")
     total = await db.one(f"select count(*)::int as n from notifications n where {' and '.join(where)}", params)
     rows = await db.q(
         f"""select n.*, coalesce(p.full_name, u.employee_code) as recipient_name from notifications n join users u on u.id = n.recipient_user_id left join people p on p.id = u.person_id
-             where {' and '.join(where)} order by n.id desc limit {size} offset {(page - 1) * size}""", params)
+             where {' and '.join(where)} order by {sort_sql(request, {"at": "n.id"}, "n.id desc")} limit {size} offset {(page - 1) * size}""", params)
     items = [{"id": r["id"], "eventType": r["event_type"], "recordType": r["record_type"], "recordId": r["record_id"], "recipientName": r["recipient_name"], "channel": r["channel"],
               "language": r["language"], "title": r["title"], "critical": r["critical"], "status": r["status"], "attempts": r["attempts"], "sentAt": r["sent_at"], "error": r["error"],
-              "costEstimateInr": float(r["cost_estimate_inr"]), "createdAt": r["created_at"]} for r in rows]
+              "costEstimateInr": float(r["cost_estimate_inr"]), "at": r["created_at"]} for r in rows]
     return JSON(paged(items, total["n"], page, size))
 
 
@@ -215,9 +234,11 @@ async def create_notice(request: Request, user: AuthUser = Depends(console_user)
 @router.get("/privacy/requests")
 async def list_requests(user: AuthUser = Depends(console_user)):
     need_admin(user)
-    rows = await db.q("select * from privacy_requests where org_id = $1 order by received_at desc", [user.org_id])
+    rows = await db.q("""select r.*, coalesce(nullif(p.full_name, ''), u.employee_code) as handled_by_name from privacy_requests r
+                           left join users u on u.id = r.handled_by left join people p on p.id = u.person_id where r.org_id = $1 order by r.received_at desc""", [user.org_id])
     return JSON([{"id": r["id"], "personName": r["person_name"], "identifier": r["identifier"], "type": r["type"], "details": r["details"], "receivedAt": r["received_at"],
-                  "dueAt": r["due_at"], "status": r["status"], "handledBy": r["handled_by"], "response": r["response"], "closedAt": r["closed_at"]} for r in rows])
+                  "dueAt": r["due_at"], "status": r["status"], "handledBy": r["handled_by"], "handledByName": r["handled_by_name"], "response": r["response"],
+                  "closedAt": r["closed_at"]} for r in rows])
 
 
 @router.post("/privacy/requests")
@@ -225,7 +246,7 @@ async def create_request(request: Request, user: AuthUser = Depends(console_user
     need_admin(user)
     inp = parse(PrivacyRequestIn, await json_body(request))
     async with db.tx() as c:
-        row = await db.one("insert into privacy_requests (org_id, person_name, identifier, type, details, due_at) values ($1,$2,$3,$4,$5, now() + interval '30 days') returning id",
+        row = await db.one("insert into privacy_requests (org_id, person_name, identifier, type, details, due_at) values ($1,$2,$3,$4,$5, now() + interval '90 days') returning id",
                            [user.org_id, inp.person_name, inp.identifier, inp.type, inp.details], c)
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="privacy_request", record_id=row["id"], changes={"type": inp.type, "identifier": inp.identifier})
     return await list_requests(user)
@@ -272,8 +293,10 @@ async def put_policies(request: Request, user: AuthUser = Depends(console_user))
 
 @router.get("/legal-holds")
 async def list_holds(user: AuthUser = Depends(console_user)):
-    rows = await db.q("select * from legal_holds where org_id = $1 order by placed_at desc", [user.org_id])
-    return JSON([{"id": r["id"], "scopeType": r["scope_type"], "scopeId": r["scope_id"], "reason": r["reason"], "placedBy": r["placed_by"], "placedAt": r["placed_at"], "releasedAt": r["released_at"], "releasedBy": r["released_by"]} for r in rows])
+    rows = await db.q("""select h.*, coalesce(nullif(p.full_name, ''), u.employee_code) as placed_by_name from legal_holds h
+                           left join users u on u.id = h.placed_by left join people p on p.id = u.person_id where h.org_id = $1 order by h.placed_at desc""", [user.org_id])
+    return JSON([{"id": r["id"], "scopeType": r["scope_type"], "scopeId": r["scope_id"], "reason": r["reason"], "placedBy": r["placed_by"], "placedByName": r["placed_by_name"],
+                  "placedAt": r["placed_at"], "releasedAt": r["released_at"], "releasedBy": r["released_by"]} for r in rows])
 
 
 @router.post("/legal-holds")

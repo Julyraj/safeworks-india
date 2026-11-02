@@ -448,7 +448,8 @@ export async function adoptServerId(store: RecordStore, clientUuid: string, serv
   const local = await tx.store.index("byClientUuid").get(clientUuid);
   if (local) {
     if (local.id !== serverId) await tx.store.delete(local.id);
-    await tx.store.put({ ...local, id: serverId, caseNo: caseNo ?? local.caseNo } as never);
+    // the server has the record now: it is no longer a phone-only placeholder (screens fetch its detail by the server id)
+    await tx.store.put({ ...local, id: serverId, caseNo: caseNo ?? local.caseNo, local: false } as never);
   }
   await tx.done;
   emit(store);

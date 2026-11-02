@@ -8,6 +8,7 @@ from fastapi import Depends, Request
 
 from ...auth import require_user
 from ...errors import HttpError, forbidden, not_found
+from ...http import json_body
 from ...rbac import AuthUser
 
 console_user = require_user("admin")
@@ -50,16 +51,28 @@ def scope_sites(user: AuthUser, site_id: str | None = None) -> list[str]:
     return scope
 
 
-async def read_csv(request: Request, required: list[str]) -> list[dict[str, str]]:
-    """Reads a CSV body (raw text or multipart `file`) with a header row; returns dict rows with stripped values."""
+async def csv_body(request: Request) -> tuple[str, dict]:
+    """The CSV text of an import request plus the other JSON fields. The console sends JSON `{csv, ...}`;
+    raw `text/csv` and multipart `file` uploads are accepted too (curl, scripts)."""
     ctype = request.headers.get("content-type", "")
     if ctype.startswith("multipart/form-data"):
         form = await request.form()
         f = form.get("file")
         raw = (await f.read()) if f is not None and hasattr(f, "read") else b""
-    else:
-        raw = await request.body()
-    text = raw.decode("utf-8-sig", errors="replace")
+        return raw.decode("utf-8-sig", errors="replace"), {k: v for k, v in form.items() if k != "file" and isinstance(v, str)}
+    if ctype.startswith("application/json"):
+        body = await json_body(request)
+        if not isinstance(body, dict) or not isinstance(body.get("csv"), str):
+            raise HttpError(400, "Send the file as JSON {\"csv\": \"…\"}.", "bad_request", key="err.import_bad_header", params={"header": "csv"})
+        return body["csv"].lstrip("﻿"), {k: v for k, v in body.items() if k != "csv"}
+    raw = await request.body()
+    return raw.decode("utf-8-sig", errors="replace"), {}
+
+
+async def read_csv(request: Request, required: list[str], text: str | None = None) -> list[dict[str, str]]:
+    """Reads a CSV (see `csv_body`) with a header row; returns dict rows with stripped, lower-cased keys."""
+    if text is None:
+        text, _ = await csv_body(request)
     reader = csv.DictReader(io.StringIO(text))
     header = [h.strip().lower() for h in (reader.fieldnames or [])]
     if any(r not in header for r in required):

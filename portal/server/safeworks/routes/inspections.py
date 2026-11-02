@@ -1,13 +1,17 @@
 """Inspections: templates in scope, runs (list, detail, start, answers, submit, report, reopen, cancel)."""
 from __future__ import annotations
 
+from datetime import datetime, timezone
+from urllib.parse import urlencode
+
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import Response
 
-from .. import db
+from .. import db, links
+from ..audit import audit
 from ..auth import require_user
 from ..errors import not_found
-from ..http import JSON, json_body, page_params, uuid_param
+from ..http import JSON, json_body, page_params, sort_sql, uuid_param
 from ..rbac import AuthUser
 from ..reports import read_run_report
 from ..schemas import AnswersBody, ReasonBody, RunStartRequest, RunSubmitRequest, parse
@@ -16,6 +20,7 @@ from ..workflow import inspections as insp_wf
 from ..workflow.common import DuplicateRecord
 
 router = APIRouter(prefix="/api/v1/inspections")
+link_router = APIRouter(prefix="/api/v1/links")  # signed-link pages, no bearer token (links.py)
 
 
 async def templates_for_site(conn, org_id: str, site_id: str | None) -> list[dict]:
@@ -82,7 +87,7 @@ async def list_runs(request: Request, user: AuthUser = Depends(require_user())):
         params.append(uuid_param(q["templateId"]))
         where.append(f"t.id = ${len(params)}")
     total = await db.one(f"select count(*)::int as n from inspection_runs r join inspection_template_versions v on v.id = r.template_version_id join inspection_templates t on t.id = v.template_id where {' and '.join(where)}", params)
-    rows = await db.q(RUN_SELECT + f" where {' and '.join(where)} order by coalesce(r.due_at, r.started_at, r.created_at) desc limit {size} offset {(page - 1) * size}", params)
+    rows = await db.q(RUN_SELECT + f" where {' and '.join(where)} order by {sort_sql(request, {"dueAt": "coalesce(r.due_at, r.started_at, r.created_at)", "caseNo": "r.case_no", "status": "r.status"}, "coalesce(r.due_at, r.started_at, r.created_at) desc")} limit {size} offset {(page - 1) * size}", params)
     return JSON(paged([run_summary(r) for r in rows], total["n"], page, size))
 
 
@@ -118,16 +123,43 @@ async def submit_run(run_id: str, request: Request, user: AuthUser = Depends(req
     return JSON(out)
 
 
-@router.get("/runs/{run_id}/report")
-async def run_report(run_id: str, user: AuthUser = Depends(require_user())):
-    rid = uuid_param(run_id)
+async def _report_run(rid: str, user: AuthUser) -> dict:
     run = await insp_wf.load(None, rid)
-    if not insp_wf.can_view(user, run):
+    if not insp_wf.can_view(user, run) or not run["report_media_id"]:
         raise not_found()
-    data = await read_run_report(None, rid)
+    return run
+
+
+async def _report_response(run: dict) -> Response:
+    data = await read_run_report(None, run["id"])
     if data is None:
         raise not_found()
-    return Response(data, media_type="text/html; charset=utf-8", headers={"content-disposition": f'inline; filename="{run["case_no"]}.html"'})
+    return Response(data, media_type="text/html; charset=utf-8", headers={"content-disposition": f'inline; filename="{run["case_no"]}.html"', "cache-control": "private, no-store"})
+
+
+@router.get("/runs/{run_id}/report")
+async def run_report(run_id: str, user: AuthUser = Depends(require_user())):
+    """The locked report for API clients that send the bearer header; browsers open it through `report-link`."""
+    return await _report_response(await _report_run(uuid_param(run_id), user))
+
+
+@router.post("/runs/{run_id}/report-link")
+async def run_report_link(run_id: str, user: AuthUser = Depends(require_user())):
+    """A 5-minute signed link to the report (bound to this run and this user; scope checked now and again on open)."""
+    run = await _report_run(uuid_param(run_id), user)
+    ticket, exp = links.issue(links.PURPOSE_RUN_REPORT, run["id"], user.id)
+    async with db.tx() as c:
+        await audit(c, org_id=user.org_id, actor=user, action="export", record_type="inspection_run", record_id=run["id"], site_id=run["site_id"],
+                    changes={"signedLink": "report", "expiresAt": exp})
+    return JSON({"url": f"/api/v1/links/inspection-runs/{run['id']}/report?{urlencode({'t': ticket})}", "expiresAt": datetime.fromtimestamp(exp, timezone.utc)})
+
+
+@link_router.get("/inspection-runs/{run_id}/report")
+async def run_report_by_link(run_id: str, request: Request):
+    """Opens a report from a signed link (no bearer token): signature, expiry and record binding, then the user's scope again."""
+    rid = uuid_param(run_id)
+    user = await links.redeem(links.PURPOSE_RUN_REPORT, rid, request.query_params.get("t", ""))
+    return await _report_response(await _report_run(rid, user))
 
 
 @router.post("/runs/{run_id}/reopen")

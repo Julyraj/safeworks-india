@@ -261,5 +261,6 @@
   "sys.returned_question": "सुरक्षा अधिकारी का प्रश्न: {question}",
   "sys.reopened": "फिर खोला गया: {reason}",
   "sys.late_answers": "सबमिट के बाद देर से प्राप्त उत्तर: {count}",
-  "sys.closure_summary_none": "उठाई गई कार्रवाइयाँ पूरी और सत्यापित हुईं।"
+  "sys.closure_summary_none": "उठाई गई कार्रवाइयाँ पूरी और सत्यापित हुईं।",
+  "err.new_owner_required": "नया स्वामी चुनें।"
 }

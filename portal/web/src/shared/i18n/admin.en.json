@@ -42,7 +42,6 @@
   "reason.hint": "Recorded in the audit log with your name and the time.",
   "picker.userPlaceholder": "Type a name or employee code…",
   "picker.noUsers": "No matching users at this site.",
-
   "reg.searchPlaceholder": "Search…",
   "reg.from": "From",
   "reg.to": "To",
@@ -53,7 +52,6 @@
   "reg.applyFilter": "Apply this saved filter",
   "reg.removeFilter": "Remove saved filter {name}",
   "reg.exportStarted": "Export downloaded.",
-
   "csv.columns": "Columns",
   "csv.drop": "Drop a CSV file here",
   "csv.chooseFile": "Choose file",
@@ -85,7 +83,6 @@
   "csv.problem": "Problem",
   "csv.noErrors": "No rows were rejected.",
   "csv.another": "Import another file",
-
   "login.tagline": "Admin console for officers, managers and administrators",
   "login.id": "Employee code or email",
   "login.idHint": "Staff sign in with the email on their account; others with their employee code.",
@@ -114,7 +111,6 @@
   "login.setPassword": "Set password",
   "login.changePassword": "Change password",
   "login.passwordChanged": "Password changed.",
-
   "dash.title": "Dashboard",
   "dash.exportView": "Export this view",
   "dash.n": "n = {n}",
@@ -145,7 +141,6 @@
   "dash.noDataHint": "Widen the dates or pick another site.",
   "dash.noRepeat": "No repeat findings",
   "dash.noRepeatHint": "Nothing failed twice in a row at the same place.",
-
   "attention.title": "What needs attention",
   "attention.refresh": "Refresh",
   "attention.updated": "updated {time}",
@@ -174,7 +169,6 @@
   "attention.health": "Backups and health warnings",
   "attention.health.hint": "Failed sends, rejected syncs or a stale backup.",
   "attention.health.go": "Open health",
-
   "obs.case": "Case",
   "obs.type": "Type",
   "obs.received": "Received",
@@ -218,7 +212,6 @@
   "obs.reporterType.contractor": "Contractor",
   "obs.reporterType.temporary": "Temporary",
   "obs.reporterType.visitor": "Visitor",
-
   "triage.title": "Triage",
   "triage.decisionLabel": "Decision",
   "triage.decision.accept_assign": "Accept and assign",
@@ -303,7 +296,6 @@
   "triage.err.question": "Write the question.",
   "triage.err.master": "Pick the master report.",
   "triage.done": "Triage recorded: {decision}.",
-
   "act.case": "Action",
   "act.titleCol": "Title",
   "act.searchPh": "Action no., title, owner…",
@@ -374,7 +366,6 @@
   "act.event.reminder_sent": "Reminder sent",
   "act.event.escalated": "Escalated",
   "act.event.verification": "Verification",
-
   "ins.run": "Run",
   "ins.result": "Result",
   "ins.inspector": "Inspector",
@@ -405,14 +396,13 @@
   "ins.reopened": "Run reopened.",
   "ins.cancel": "Cancel run",
   "ins.cancelled": "Run cancelled.",
-
   "sites.sub": "{count, plural, one {# site} other {# sites}} in your scope",
   "sites.new": "New site",
   "sites.searchPh": "Code, name, district…",
   "sites.empty": "No sites yet",
   "sites.emptyHint": "Create the first one — pick an industry and the categories, templates and QR posters are set up for you.",
   "sites.code": "Code",
-  "sites.codeRule": "2–8 capital letters or digits, e.g. TN1. Used in case numbers.",
+  "sites.codeRule": "2–6 capital letters or digits, e.g. TN1. Used in case numbers.",
   "sites.name": "Site name",
   "sites.nameHint": "Translations can be added after creation.",
   "sites.type": "Establishment type",
@@ -482,7 +472,6 @@
   "sites.deactivate": "Deactivate site",
   "sites.deactivateBody": "The site is hidden from pickers; records and history are kept. Give the reason for the audit log.",
   "sites.deactivated": "Site deactivated.",
-
   "areas.add": "Add area",
   "areas.edit": "Edit area",
   "areas.count": "{count, plural, one {# area} other {# areas}}",
@@ -495,7 +484,6 @@
   "areas.owner": "Area owner",
   "areas.removed": "Area {name} removed.",
   "areas.importTitle": "Import areas from CSV",
-
   "assets.pickSite": "Pick a site in the top bar to see its equipment.",
   "assets.pickSiteHint": "Equipment registers are per site.",
   "assets.add": "Add equipment",
@@ -520,7 +508,6 @@
   "assets.emptyHint": "Add lifting gear, extinguishers, scaffolds and other inspected items.",
   "assets.removed": "Equipment {tag} removed.",
   "assets.importTitle": "Import equipment from CSV",
-
   "qr.new": "New QR code",
   "qr.create": "Create",
   "qr.created": "QR code created.",
@@ -551,7 +538,6 @@
   "qr.deactivate": "Deactivate",
   "qr.prefillAnonymous": "Anonymous by default",
   "qr.prefillAnonymousHint": "The QR form opens with the anonymous toggle on.",
-
   "people.tab": "People",
   "people.name": "Name",
   "people.workerType": "Worker type",
@@ -563,7 +549,6 @@
   "people.phoneKept": "Leave blank to keep {masked}.",
   "people.removed": "{name} removed.",
   "people.importTitle": "Import people from CSV",
-
   "contractors.tab": "Contractors",
   "contractors.name": "Contractor",
   "contractors.contact": "Contact",
@@ -592,7 +577,6 @@
   "trade.housekeeping": "Housekeeping",
   "trade.security": "Security",
   "trade.other": "Other",
-
   "users.new": "New user",
   "users.create": "Create user",
   "users.name": "Name",
@@ -665,7 +649,6 @@
   "users.noDevices": "No devices registered.",
   "users.failedAttempts": "Failed attempts",
   "users.created": "Created",
-
   "cats.sub": "Observation categories and the fields, recipients and defaults each one brings.",
   "cats.add": "Add category",
   "cats.code": "Code",
@@ -713,7 +696,6 @@
   "cats.emptyHint": "Seed the default categories or add your own.",
   "cats.removed": "Category {name} removed.",
   "cats.reordered": "Order saved.",
-
   "matrix.sub": "Likelihood × severity bands. Versions are frozen on every rated record.",
   "matrix.newDraft": "New draft version",
   "matrix.draftCreated": "Draft v{v} created.",
@@ -757,7 +739,6 @@
   "colour.red": "Red",
   "colour.grey": "Grey",
   "colour.blue": "Blue",
-
   "due.sub": "How long each band gets, and who is reminded when.",
   "due.rulesTab": "Due-date rules",
   "due.laddersTab": "Reminder ladders",
@@ -788,7 +769,6 @@
   "due.atDue": "At due time",
   "due.before": "{span} before due",
   "due.after": "{span} after due",
-
   "rules.sub": "Statutory timer packs per state and site type. Enable with a named reviewer; assign to sites with an effective date.",
   "rules.disclaimer": "Timers follow the brief's rule table; the status label says how far each was verified. Nothing here is legal advice.",
   "rules.code": "Code",
@@ -824,7 +804,6 @@
   "rules.form": "Form",
   "rules.basis.from_learned_at": "from learned-at time",
   "rules.basis.from_condition_met": "from condition met",
-
   "templates.sub": "Versioned checklists. Edit a draft, submit for review, another HSE manager approves.",
   "templates.template": "Template",
   "templates.code": "Code",
@@ -879,7 +858,6 @@
   "templates.type.confined_space": "Confined space",
   "templates.type.audit": "Audit",
   "templates.type.other": "Other",
-
   "builder.settings": "Checklist settings",
   "builder.passMark": "Pass mark (%)",
   "builder.passMarkHint": "Score excludes N/A answers.",
@@ -961,7 +939,6 @@
   "answer.date": "Date",
   "answer.single_choice": "Single choice",
   "answer.multi_choice": "Multiple choice",
-
   "sched.new": "New schedule",
   "sched.edit": "Edit schedule",
   "sched.count": "{count, plural, one {# schedule} other {# schedules}}",
@@ -996,7 +973,6 @@
   "day.4": "Thu",
   "day.5": "Fri",
   "day.6": "Sat",
-
   "lang.sub": "Completeness per language, company overrides, import and export.",
   "lang.export": "Export JSON",
   "lang.import": "Import JSON",
@@ -1014,7 +990,6 @@
   "lang.pending": "{n} unsaved",
   "lang.overridesNote": "Overrides apply to the app and the console without a release; blank clears an override.",
   "lang.saved": "{n} overrides saved.",
-
   "audit.sub": "Every change, login, export and sensitive view, hash-chained.",
   "audit.verify": "Verify chain",
   "audit.chainOk": "Chain intact: {rows} rows verified at {at}.",
@@ -1031,7 +1006,6 @@
   "audit.empty": "No audit rows",
   "audit.emptyHint": "Every write lands here; widen the dates.",
   "audit.maskedNote": "Phones and contacts are masked inside changes.",
-
   "notif.sub": "Pushes and emails sent by the ladder, alerts and digests.",
   "notif.event": "Event",
   "notif.recipient": "Recipient",
@@ -1044,7 +1018,6 @@
   "notif.searchPh": "Event, title, recipient…",
   "notif.empty": "No notifications sent",
   "notif.emptyHint": "Reminders and alerts appear here once the jobs run.",
-
   "privacy.sub": "DPDP: notices, requests and the 90-day grievance clock.",
   "privacy.requests": "Requests",
   "privacy.notices": "Notices",
@@ -1067,7 +1040,7 @@
   "privacy.type.grievance": "Grievance",
   "privacy.status.open": "Open",
   "privacy.status.in_progress": "In progress",
-  "privacy.status.done": "Done",
+  "privacy.status.answered": "Answered",
   "privacy.status.rejected": "Rejected",
   "privacy.requester": "Requester",
   "privacy.requesterRef": "Employee id or mobile",
@@ -1076,29 +1049,23 @@
   "privacy.due": "Due",
   "privacy.closed": "Closed",
   "privacy.assignee": "Assignee",
-  "privacy.channel": "Channel",
   "privacy.logRequest": "Log a request",
   "privacy.slaNote": "Grievances must be answered within 90 days; escalation at 30 and 60 days.",
   "privacy.overdueN": "{n} overdue.",
   "privacy.noRequests": "No privacy requests",
   "privacy.noRequestsHint": "Requests from the rights portal and those you log by hand appear here.",
   "privacy.erasureNote": "Erasure is applied by the retention engine after legal-hold checks; records kept by law are anonymised instead.",
-
   "ret.sub": "Keep periods per record type, legal holds and the dry-run report. Nothing is deleted in 2.0.",
   "ret.noDeleteNote": "The retention job only reports what would be erased or anonymised; deletion is enabled in a later release after review.",
   "ret.dryRun": "Run dry run",
   "ret.dryRunDone": "Dry run finished.",
   "ret.dryRunTitle": "Dry-run report",
-  "ret.wouldErase": "Would erase",
-  "ret.wouldAnonymise": "Would anonymise",
   "ret.held": "Held",
   "ret.policies": "Policies",
   "ret.recordType": "Record type",
-  "ret.keepMonths": "Keep (months)",
   "ret.action": "Then",
   "ret.action.erase": "Erase",
   "ret.action.anonymise": "Anonymise",
-  "ret.action.keep": "Keep",
   "ret.basis": "Legal basis",
   "ret.holds": "Legal holds",
   "ret.holdsKicker": "Held records are never erased or anonymised",
@@ -1115,7 +1082,6 @@
   "ret.recordId": "Record id",
   "ret.recordIdHint": "Leave empty to hold every record of the type.",
   "ret.placeHold": "Place hold",
-
   "settings.sub": "Company identity and the defaults every site inherits.",
   "settings.org": "Company",
   "settings.orgName": "Company name",
@@ -1149,7 +1115,6 @@
   "settings.photoQuality": "JPEG quality",
   "settings.photoQualityHint": "0.3–1.0; 0.8 keeps a 1,600 px photo around 300 KB.",
   "settings.photoQualityRange": "Photo quality must be between 0.3 and 1.0.",
-
   "health.serverTime": "Server time {time}",
   "health.serverTimeK": "Server time",
   "health.ok": "OK",
@@ -1179,7 +1144,6 @@
   "health.staleJobs": "{n} jobs have not run in 6 h",
   "health.jobsFresh": "All jobs ran recently",
   "health.noJobs": "No job runs recorded yet.",
-
   "est.factory": "Factory",
   "est.hazardous_process_factory": "Hazardous-process factory",
   "est.construction_site": "Construction site",
@@ -1216,5 +1180,21 @@
   "asset.earth_moving": "Earth-moving machine",
   "asset.vehicle": "Vehicle",
   "asset.machine": "Machine",
-  "asset.other": "Other"
+  "asset.other": "Other",
+  "csv.tempPasswords": "Temporary passwords for {count} new users (employee code, password)",
+  "notif.channel.inapp": "In app",
+  "notif.channel.push": "Push",
+  "notif.channel.email": "Email",
+  "notif.channel.whatsapp": "WhatsApp",
+  "notif.channel.sms": "SMS",
+  "privacy.details": "What the person asked for",
+  "privacy.response": "Response sent",
+  "privacy.responseRequired": "Write the response before closing the request.",
+  "ret.keepYears": "Keep (years)",
+  "ret.candidates": "Records past the period",
+  "ret.holdsN": "{n} legal holds active",
+  "ret.noPolicies": "No retention policies",
+  "ret.noPoliciesHint": "The seed creates the default policies; run the seed again or ask the administrator.",
+  "ret.recordIdBad": "A record id looks like 8-4-4-4-12 letters and digits (copy it from the audit log).",
+  "act.disputeApproveHint": "Approving a dispute gives the action to someone else: choose the new owner."
 }

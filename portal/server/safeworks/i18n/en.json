@@ -261,5 +261,6 @@
   "sys.returned_question": "Question from the safety officer: {question}",
   "sys.reopened": "Reopened: {reason}",
   "sys.late_answers": "Late answers received after submit: {count}",
-  "sys.closure_summary_none": "The actions raised were completed and verified."
+  "sys.closure_summary_none": "The actions raised were completed and verified.",
+  "err.new_owner_required": "Choose the new owner."
 }

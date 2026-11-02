@@ -8,12 +8,12 @@ import type { ActionDraft, Answer, Media, MediaRef, Question, RunDetail as Detai
 import { useI18n } from "../../shared/i18n";
 import { Button, Card, CardHead, Chip, ChipBar, Confirm, ErrorCard, Field, Input, Lightbox, Pill, Progress, Select, Skeleton, Textarea, useToast, BandPill, Thumb } from "../../shared/ui";
 import { useBeforeUnload, useGeo } from "../../shared/hooks";
-import { IconAlert, IconCheck, IconForward, IconBack, IconPlus, IconExternal, IconFlag } from "../../shared/icons";
+import { IconAlert, IconCheck, IconForward, IconBack, IconPlus, IconExternal, IconFlag, IconTrash } from "../../shared/icons";
 import { fmtDateTime } from "../../shared/format";
 import { dueFromRule, ruleFor } from "../../shared/risk";
 import { signatureFromCanvas } from "../../shared/image";
 import { uuid } from "../../shared/storage";
-import { errorKey } from "../../shared/api";
+import { errorKey, openSignedPage } from "../../shared/api";
 import { api } from "../api";
 import { useSession, isOfficer, hasRole } from "../session";
 import { useDetail, useDraft, useRefData, useRuns, useActions, useObservations } from "../offline/store";
@@ -31,11 +31,13 @@ export default function RunRoute() {
   const { id = "" } = useParams();
   const { t } = useI18n();
   const { me } = useSession();
-  const { data: runs } = useRuns();
+  const { data: runs, loading: runsLoading } = useRuns();
   const local = runs.find((r) => r.id === id || r.clientUuid === id) ?? null;
-  const { data: detail, loading, error, reload, update } = useDetail<Detail>("run", local?.local ? null : id, () => api.get<Detail>(`/inspections/runs/${id}`));
+  // the URL may still carry the client UUID of a run started offline; once synced the record has its server id
+  const serverId = local ? (local.local ? null : local.id) : runsLoading ? null : id;
+  const { data: detail, loading, error, reload, update } = useDetail<Detail>("run", serverId, () => api.get<Detail>(`/inspections/runs/${serverId}`));
   const run = detail ?? local;
-  if (!run && loading) return <div className="page"><SubHead title={t("nav.inspections")} /><Skeleton lines={8} /></div>;
+  if (!run && (loading || runsLoading)) return <div className="page"><SubHead title={t("nav.inspections")} /><Skeleton lines={8} /></div>;
   if (!run) return <div className="page"><SubHead title={t("nav.inspections")} /><ErrorCard error={error ?? new Error(t("error.notFound"))} onRetry={reload} /></div>;
   const mineToAnswer = (run.status === "in_progress" || run.status === "scheduled") && (!run.inspectorUserId || run.inspectorUserId === me?.id || (detail?.can.answer ?? true));
   if (mineToAnswer) return <RunScreen run={run} detail={detail} />;
@@ -323,7 +325,7 @@ function QuestionCard({ q, a, onChange, siteId }: { q: Question; a: AnswerState 
           {q.actionOnFail ? (
             a?.action ? (
               <div className="action-draft">
-                <div className="row between"><span className="defaults-note"><IconFlag size={14} /> {t("run.actionDraft")}</span><BandPill band={a.action.band ?? "moderate"} /></div>
+                <div className="row between"><span className="defaults-note"><IconFlag size={14} /> {t("run.actionDraft")}</span><span className="row" style={{ gap: 6 }}><BandPill band={a.action.band ?? "moderate"} /><Button size="sm" variant="ghost" icon aria-label={t("common.remove")} title={t("common.remove")} onClick={() => onChange({ action: null })} data-testid="remove-draft"><IconTrash size={16} /></Button></span></div>
                 <Field label={t("action.titleField")} required><Input value={a.action.title} onChange={(e) => onChange({ action: { ...a.action!, title: e.target.value } })} maxLength={160} /></Field>
                 <div className="row" style={{ alignItems: "flex-start" }}>
                   <Field label={t("common.owner")} required><UserSelect users={users} value={a.action.ownerUserId} meId={me?.id} onChange={(id) => onChange({ action: { ...a.action!, ownerUserId: id } })} /></Field>
@@ -366,7 +368,7 @@ function RunDetailView({ run, detail, loading, error, reload, update }: { run: N
   return (
     <div className="page" style={{ maxWidth: 820 }}>
       <SubHead title={pick(run.templateName)} kicker={<span className="row" style={{ gap: 6 }}><span className="mono">{run.caseNo || t("common.pendingNumber")}</span><RunStatusChip status={run.status} result={run.result} />{run.tagStatus ? <Pill tone={run.tagStatus === "safe_to_use" ? "green" : "red"} dot>{t(`run.${run.tagStatus === "safe_to_use" ? "safeToUse" : "doNotUse"}`)}</Pill> : null}</span>}
-        right={detail?.reportUrl || (run.status === "completed" || run.status === "closed") ? <Button size="sm" disabled={!online} title={online ? undefined : t("common.needsConnection")} onClick={() => window.open(api.file(detail?.reportUrl ?? `/api/v1/inspections/runs/${run.id}/report`), "_blank", "noopener")}><IconExternal size={16} /> {t("run.report")}</Button> : null} />
+        right={detail?.reportUrl || (run.status === "completed" || run.status === "closed") ? <Button size="sm" disabled={!online || ("local" in run && !!run.local)} title={online ? undefined : t("common.needsConnection")} onClick={() => openSignedPage(api, `/inspections/runs/${run.id}/report-link`).catch((e) => { const { key, message } = errorKey(e); toast.error(key === "error.generic" ? message : t(key)); })}><IconExternal size={16} /> {t("run.report")}</Button> : null} />
       <PendingMarkers targetId={run.id} />
       {error && !detail ? <ErrorCard error={error} onRetry={reload} /> : null}
       <Card>

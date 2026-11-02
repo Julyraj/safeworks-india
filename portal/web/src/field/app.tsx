@@ -199,8 +199,8 @@ function TopBar() {
   const title = useMemo(() => {
     const p = loc.pathname;
     if (p === "/") return t("app.name");
+    if (p.startsWith("/reports")) return t("nav.reports"); // before "/report", which it also starts with
     if (p.startsWith("/report")) return t("report.title");
-    if (p.startsWith("/reports")) return t("nav.reports");
     if (p.startsWith("/o/")) return t("obs.title");
     if (p.startsWith("/actions")) return t("nav.actions");
     if (p.startsWith("/a/")) return t("action.title");

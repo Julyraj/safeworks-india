@@ -151,6 +151,8 @@ function DecideSheet({ action, request, onClose, onDone }: { action: ActionDetai
   const { t, lang } = useI18n();
   const toast = useToast();
   const [decision, setDecision] = useState<ActionRequestDecide["decision"]>("approved");
+  // an approved dispute moves the action to someone else, so it needs the new owner like a reassignment (server rule)
+  const needsOwner = decision === "reassigned" || (decision === "approved" && request.type === "dispute");
   const [note, setNote] = useState("");
   const [newDue, setNewDue] = useState(request.proposedDueAt ?? action.dueAt);
   const [owner, setOwner] = useState<{ id: string; name: string }>({ id: "", name: "" });
@@ -159,11 +161,11 @@ function DecideSheet({ action, request, onClose, onDone }: { action: ActionDetai
   return (
     <Sheet title={`${t("act.decideRequest")} · ${t(`act.request.${request.type}`)}`} onClose={onClose} footer={<>
       <Button onClick={onClose}>{t("common.cancel")}</Button>
-      <Button variant="primary" loading={busy} disabled={decision === "reassigned" && !owner.id} onClick={async () => {
+      <Button variant="primary" loading={busy} disabled={needsOwner && !owner.id} onClick={async () => {
         setBusy(true); setErr("");
         try {
           const body: ActionRequestDecide = { decision, note: note || undefined };
-          if (decision === "reassigned") body.newOwnerUserId = owner.id;
+          if (needsOwner) body.newOwnerUserId = owner.id;
           if (decision === "approved" && request.type === "date_change") body.newDueAt = newDue;
           onDone(await api.post<ActionDetail>(`/actions/${action.id}/requests/${request.id}/decide`, body)); toast.success(t("act.decided"));
         } catch (e) { setErr(errMessage(e)); } finally { setBusy(false); }
@@ -176,7 +178,7 @@ function DecideSheet({ action, request, onClose, onDone }: { action: ActionDetai
         </Select>
       </Field>
       {decision === "approved" && request.type === "date_change" ? <Field label={t("act.newDue")} required hint={t("act.originalKept")}><Input type="datetime-local" value={datetimeLocalValue(newDue)} onChange={(e) => setNewDue(fromDatetimeLocal(e.target.value))} /></Field> : null}
-      {decision === "reassigned" ? <UserPicker label={t("act.newOwner")} required value={owner.id} valueName={owner.name} siteId={action.siteId} roleHint="action_owner" onChange={(id, u: UserAdmin | null) => setOwner({ id, name: u?.name ?? "" })} /> : null}
+      {needsOwner ? <UserPicker label={t("act.newOwner")} required hint={decision === "approved" ? t("act.disputeApproveHint") : undefined} value={owner.id} valueName={owner.name} siteId={action.siteId} roleHint="action_owner" onChange={(id, u: UserAdmin | null) => setOwner({ id, name: u?.name ?? "" })} /> : null}
       <Field label={t("common.note")} optional><Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} /></Field>
       {err ? <div className="error-card"><p style={{ margin: 0 }}>{err}</p></div> : null}
     </Sheet>

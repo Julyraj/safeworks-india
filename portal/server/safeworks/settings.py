@@ -66,8 +66,9 @@ def merge_settings(raw: Any) -> dict[str, Any]:
             out[k] = [str(x) for x in v]
         elif k == "defaultLanguage" and isinstance(v, str):
             out[k] = v
-        else:
+        elif k in DEFAULT_SETTINGS:
             out[k] = v
+        # anything else is not a setting (keeps typos and echoed fields out of organisations.settings)
     return out
 
 

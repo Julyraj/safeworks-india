@@ -10,6 +10,7 @@ import { fmtDate, fmtDateTime, relative } from "../../shared/format";
 import { IconKey, IconLock, IconPlus, IconShield, IconTrash, IconUsers } from "../../shared/icons";
 import { api, dateInputValue, errMessage, localCsv } from "../api";
 import { useScope } from "../scope";
+import type { UserCreated } from "../types";
 import { useAuth } from "../auth";
 import { CountLine, CsvImport, Drawer, ExportButton, FilterSelect, KV, PageHead, RegisterSearch, SavedFilters, SecretOnce, langOptions, useRegister, useRowNav, useUrlFilters, AsyncButton } from "../components";
 
@@ -143,9 +144,9 @@ function UserSheet({ user, onClose, onSaved }: { user?: UserAdmin; onClose: () =
           const u2 = await api.post<UserAdmin>(`/admin/users/${user.id}/roles`, { roles: f.roles });
           toast.success(t("common.saved")); onSaved({ ...u, ...u2, roles: u2.roles ?? f.roles as SiteRole[] }); onClose();
         } else {
-          const r = await api.post<UserAdmin & { tempPassword?: string; enrolmentCode?: string; code?: string; expiresAt?: string }>("/admin/users", f);
-          const { tempPassword, enrolmentCode, code, ...u } = r;
-          setSecret({ user: u as UserAdmin, tempPassword, code: enrolmentCode ?? code, expiresAt: r.expiresAt });
+          const r = await api.post<UserAdmin & UserCreated>("/admin/users", f);
+          const { tempPassword, enrolmentCode, enrolmentExpiresAt, ...u } = r;
+          setSecret({ user: u, tempPassword: tempPassword ?? undefined, code: enrolmentCode ?? undefined, expiresAt: enrolmentExpiresAt ?? undefined });
         }
       } catch (e) { setErr(errMessage(e)); } finally { setBusy(false); }
     }} data-testid="save-user">{user ? t("common.save") : t("users.create")}</Button></>}>

@@ -114,6 +114,27 @@ export function createApi(tokenKey: string): Api {
   };
 }
 
+/** Opens a server page (QR poster, inspection report) in a new tab through a short-lived signed link.
+    A new tab cannot send the bearer header and a token must never go into a URL, so the page asks the server for a
+    5-minute link bound to the record and the user (`POST …/poster-link`, `POST …/report-link`) and opens that.
+    The tab is opened inside the click (popup blockers allow it) and pointed at the link when it arrives. */
+export async function openSignedPage(api: Api, linkPath: string, body: unknown = {}): Promise<void> {
+  const tab = isNative ? null : window.open("", "_blank");
+  try {
+    const r = await api.post<{ url: string; expiresAt: string }>(linkPath, body);
+    const url = api.file(r.url);
+    if (tab) {
+      tab.opener = null;
+      tab.location.replace(url);
+    } else {
+      window.open(url, "_blank", "noopener");
+    }
+  } catch (e) {
+    tab?.close();
+    throw e;
+  }
+}
+
 /** Maps an error to a translation key the UI can show (plus the server message when there is one). */
 export function errorKey(e: unknown): { key: string; message: string } {
   if (e instanceof ApiError) {

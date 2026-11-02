@@ -59,7 +59,7 @@ def test_site_setup_and_poster(ctx):
     assert r.status_code == 200, r.text
     out = r.json()
     assert out["site"]["industryCode"] == "warehouse" and len(out["areas"]) >= 8 and len(out["posters"]) == len(out["areas"]) + 1
-    poster = ctx.get("ADMIN", out["posters"][1]["posterUrl"] + "?lang=en,ta,kn&size=A4")
+    poster = ctx.get("ADMIN", f"/api/v1/admin/qr-codes/{out['posters'][1]['id']}/poster?lang=en,ta,kn&size=A4")
     assert poster.status_code == 200 and "<svg" in poster.text and "Scan to report in 30 seconds" in poster.text and "ஸ்கேன்" in poster.text
     assert ctx.post("ADMIN", f"/api/v1/admin/sites/{sid}/setup", {"industryCode": "warehouse"}).json()["areas"].__len__() == len(out["areas"])  # idempotent
     # areas import, assets, QR rotate
@@ -70,7 +70,7 @@ def test_site_setup_and_poster(ctx):
     assert r.status_code == 201
     q = ctx.post("ADMIN", "/api/v1/admin/qr-codes", {"targetType": "asset", "targetId": r.json()["id"], "label": "FLT-01"})
     assert q.status_code == 201 and q.json()["url"].endswith(q.json()["token"])
-    rot = ctx.post("ADMIN", f"/api/v1/admin/qr-codes/{q.json()['id']}/rotate")
+    rot = ctx.post("ADMIN", f"/api/v1/admin/qr-codes/{q.json()['id']}/rotate", {"reason": "Poster damaged"})
     assert rot.status_code == 201 and rot.json()["token"] != q.json()["token"]
     assert ctx.client.get(f"/api/v1/public/qr/{q.json()['token']}").status_code == 410
     assert ctx.client.get(f"/api/v1/public/qr/{rot.json()['token']}").json()["asset"]["tagNo"] == "FLT-01"
@@ -131,3 +131,62 @@ def test_health_and_version(ctx):
     assert ctx.client.get("/api/v1/version").json()["version"] == "2.0.0"
     assert ctx.client.get("/api/v1/nothing").status_code in (401, 404)
     _ = now_iso
+
+
+def test_console_shapes_and_echoed_records(ctx):
+    """The console PUTs back the record it loaded (ids, versions, timestamps included) and sends CSV imports as JSON {csv}."""
+    hse = "HSE-admin"
+    sid = ctx.ids["siteA"]
+    site = ctx.get(hse, f"/api/v1/admin/sites/{sid}").json()
+    assert ctx.put(hse, f"/api/v1/admin/sites/{sid}", {**site, "district": "Chennai"}).status_code == 403  # people/site config is admin-only
+    area = ctx.get(hse, f"/api/v1/admin/sites/{sid}/areas").json()[0]
+    r = ctx.put(hse, f"/api/v1/admin/areas/{area['id']}", {**area, "name": {**area["name"], "en": area["name"]["en"] + " "}})
+    assert r.status_code == 200, r.text
+    assert ctx.put(hse, f"/api/v1/admin/areas/{area['id']}", {**area, "bogus": 1}).status_code == 400  # unknown keys are still refused
+    cat = ctx.get(hse, "/api/v1/admin/categories").json()[0]
+    assert ctx.put(hse, f"/api/v1/admin/categories/{cat['id']}", cat).status_code == 200
+    versions = ctx.get(hse, "/api/v1/admin/risk-matrices").json()
+    assert versions and all("matrixId" in v and "bands" in v for v in versions)
+    draft = ctx.post(hse, f"/api/v1/admin/risk-matrices/{versions[0]['matrixId']}/versions", {}).json()
+    assert ctx.put(hse, f"/api/v1/admin/risk-matrix-versions/{draft['id']}", draft).status_code == 200
+    rules = ctx.get(hse, "/api/v1/admin/due-date-rules").json()
+    assert ctx.put(hse, "/api/v1/admin/due-date-rules", rules).status_code == 200
+    ladders = ctx.get(hse, "/api/v1/admin/ladders").json()
+    assert ctx.put(hse, "/api/v1/admin/ladders", ladders).status_code == 200
+    # CSV as JSON {csv}; assets take the site from {siteId}
+    r = ctx.post(hse, "/api/v1/admin/assets/import", {"siteId": sid, "csv": "tag_no,asset_class,next_exam_due\nHOIST-2,lifting_appliance,2027-02-28\n"})
+    assert r.status_code == 200 and r.json()["created"] == 1, r.text
+    assert run(lambda c: c.fetchval("select next_exam_due::text from assets where tag_no = 'HOIST-2'")) == "2027-02-28"
+    r = ctx.post(hse, f"/api/v1/admin/sites/{sid}/areas/import", {"csv": "code,name,type,parent\nRAMP,Ramp,yard,\n"})
+    assert r.status_code == 200 and r.json()["created"] == 1
+    assert ctx.post(hse, "/api/v1/admin/assets/import", {"csv": 5}).status_code == 400
+    # sorting and filters the registers use
+    a = ctx.get(hse, "/api/v1/admin/audit-log?siteCode=TN1&sort=at&dir=asc&pageSize=5").json()
+    assert a["items"] and all(x["siteCode"] == "TN1" for x in a["items"]) and a["items"][0]["id"] < a["items"][-1]["id"]
+    assert ctx.get(hse, "/api/v1/admin/users?sort=lastLoginAt&dir=desc").status_code == 200
+    assert ctx.get(hse, f"/api/v1/observations?siteId={sid}&sort=receivedAt&dir=asc").status_code == 200
+    n = ctx.get(hse, "/api/v1/admin/notifications-log?pageSize=3").json()
+    assert n["items"] and "at" in n["items"][0] and "createdAt" not in n["items"][0]
+    # settings: the flat shape plus the organisation's own fields; unknown keys never reach organisations.settings
+    st = ctx.get(hse, "/api/v1/admin/settings").json()
+    assert {"orgName", "legalName", "address", "phone", "dailyPushCap"} <= set(st)
+    r = ctx.put(hse, "/api/v1/admin/settings", {**st, "dailyPushCap": 7, "typo": True})
+    assert r.status_code == 200 and r.json()["dailyPushCap"] == 7
+    stored = run(lambda c: c.fetchval("select settings::text from organisations where id = $1", uuid.UUID(ctx.ids["org"])))
+    assert "typo" not in stored and "orgName" not in stored
+    assert ctx.put(hse, "/api/v1/admin/settings", {**st, "orgName": "Renamed"}).status_code == 403  # organisation fields: admin only
+    # privacy requests and legal holds in the server's shapes
+    if "ADMIN" not in ctx.tokens:
+        from test_auth_scope import test_mfa_flow
+        test_mfa_flow(ctx)
+    reqs = ctx.post("ADMIN", "/api/v1/admin/privacy/requests", {"personName": "Selvi R", "identifier": "W1", "type": "access", "details": "Copy of my reports"}).json()
+    rid = [x for x in reqs if x["personName"] == "Selvi R"][0]["id"]
+    done = ctx.put("ADMIN", f"/api/v1/admin/privacy/requests/{rid}", {"status": "answered", "response": "Sent by email"}).json()
+    row = [x for x in done if x["id"] == rid][0]
+    assert row["status"] == "answered" and row["closedAt"] and row["handledByName"]
+    holds = ctx.post("ADMIN", "/api/v1/admin/legal-holds", {"scopeType": "observation", "scopeId": None, "reason": "Claim"}).json()
+    assert holds[0]["placedByName"] and holds[0]["scopeType"] == "observation"
+    # a new user who signs in with enrolment codes gets the first code with the account
+    r = ctx.post("ADMIN", "/api/v1/admin/users", {"name": "Code User", "employeeCode": "EC1", "loginType": "enrolment_code", "roles": [{"siteId": sid, "role": "reporter"}]})
+    assert r.status_code == 201 and r.json()["tempPassword"] is None and r.json()["enrolmentCode"] and r.json()["enrolmentExpiresAt"]
+    assert ctx.client.post("/api/v1/auth/enrol", json={"code": r.json()["enrolmentCode"], "newPassword": "Safe2026x"}).status_code == 200

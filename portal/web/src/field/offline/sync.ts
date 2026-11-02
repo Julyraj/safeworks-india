@@ -31,7 +31,7 @@ function set(patch: Partial<SyncState>) {
 export function getSyncState() { return state; }
 export function useSync(): SyncState & { syncNow: () => Promise<void> } {
   const s = useSyncExternalStore((fn) => { subs.add(fn); return () => subs.delete(fn); }, () => state, () => state);
-  return { ...s, syncNow };
+  return { ...s, syncNow: syncNowManual };
 }
 
 /* ---------------------------------------------------------------- log (for diagnostics) */
@@ -275,6 +275,20 @@ function mergeBy<T>(prev: T[], next: T[] | undefined, key: (x: T) => string, tom
   return [...map.values()];
 }
 
+/** Items waiting out a back-off after network errors go at once when the network comes back or the person taps Sync now
+    (the back-off protects a struggling server, not a phone that was simply offline). Rejected items stay Failed. */
+async function clearBackoff(): Promise<void> {
+  if (!offlineReady()) return;
+  const waiting = (await allOutbox()).filter((x) => x.status === "pending" && x.nextAttemptAt !== null);
+  if (waiting.length) await patchOutboxMany(waiting.map((w) => ({ commandId: w.commandId, patch: { nextAttemptAt: null } })));
+  for (const m of await mediaMeta()) if (m.status === "queued" && m.nextAttemptAt !== null) await patchMedia(m.clientUuid, { nextAttemptAt: null });
+}
+/** "Sync now" in the UI. */
+export async function syncNowManual(): Promise<void> {
+  await clearBackoff();
+  return syncNow();
+}
+
 /* ---------------------------------------------------------------- orchestration */
 let running: Promise<void> | null = null;
 let again = false;
@@ -315,7 +329,7 @@ export async function startSync(): Promise<void> {
   const last = await getMeta<string | null>("lastSyncedAt", null);
   set({ lastSyncedAt: last });
   await recount();
-  const onOnline = () => { set({ online: true }); kick(200); };
+  const onOnline = () => { set({ online: true }); void clearBackoff().then(() => kick(200)); };
   const onOffline = () => set({ online: false });
   const onVisible = () => { if (document.visibilityState === "visible") kick(300); };
   window.addEventListener("online", onOnline);

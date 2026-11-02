@@ -58,7 +58,10 @@ function TemplateList() {
   const [create, setCreate] = useState(false);
   const [copy, setCopy] = useState<TemplateVersion | null>(null);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
-  const canCreate = (perms.isHse || perms.canTriage) && !perms.readOnly;
+  // server rules: creating, editing, archiving and approving templates is safety configuration (admin, HSE manager);
+  // officers may copy a template (the copy is a draft that admin / HSE complete and approve)
+  const canCreate = (perms.isAdmin || perms.isHse) && !perms.readOnly;
+  const canCopy = (perms.isAdmin || perms.isHse || perms.canTriage) && !perms.readOnly;
   const rows = (state.data ?? []).filter((v) => !hidden.has(v.templateId) && (!q || `${v.code} ${pick(v.name)} ${v.type}`.toLowerCase().includes(q.toLowerCase())));
   const remove = (v: TemplateVersion) => {
     setHidden((h) => new Set(h).add(v.templateId));
@@ -70,7 +73,7 @@ function TemplateList() {
     { key: "version", label: t("templates.version"), render: (v) => <span className="row nowrap" style={{ gap: 4 }}>v{v.version}<Pill tone={STATUS_TONE[v.status]}>{t(`templates.status.${v.status}`)}</Pill></span>, width: 150 },
     { key: "applies", label: t("templates.appliesTo"), render: (v) => <span className="small">{[v.appliesTo.industries?.join(", "), v.appliesTo.areaTypes?.map((a) => t(`area.${a}`)).join(", "), v.appliesTo.assetClasses?.map((a) => t(`asset.${a}`)).join(", ")].filter(Boolean).join(" · ") || t("templates.appliesAll")}</span> },
     { key: "who", label: t("templates.author"), render: (v) => <span className="small">{v.authorName ?? "—"}{v.approvedByName ? ` → ${v.approvedByName}` : ""}<div className="cell-sub">{fmtDate(v.updatedAt, lang)}</div></span>, width: 170 },
-    { key: "tools", label: "", render: (v) => canCreate ? <span className="row-actions"><Button size="sm" variant="ghost" onClick={(e) => { e.stopPropagation(); setCopy(v); }} title={t("templates.copy")}><IconCopy size={14} /></Button>{perms.isHse ? <Button size="sm" variant="ghost" icon onClick={(e) => { e.stopPropagation(); remove(v); }} aria-label={t("templates.archive")}><IconTrash size={14} /></Button> : null}</span> : null, width: 90 },
+    { key: "tools", label: "", render: (v) => canCopy ? <span className="row-actions"><Button size="sm" variant="ghost" onClick={(e) => { e.stopPropagation(); setCopy(v); }} title={t("templates.copy")}><IconCopy size={14} /></Button>{canCreate ? <Button size="sm" variant="ghost" icon onClick={(e) => { e.stopPropagation(); remove(v); }} aria-label={t("templates.archive")}><IconTrash size={14} /></Button> : null}</span> : null, width: 90 },
   ];
   return (
     <div className="stack">
@@ -103,8 +106,8 @@ function NewTemplateSheet({ from, onClose, onCreated }: { from?: TemplateVersion
     <Sheet title={from ? t("templates.copyTitle", { name: pick(from.name) }) : t("templates.new")} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.cancel")}</Button><Button variant="primary" disabled={!valid} loading={busy} onClick={async () => {
       setBusy(true); setErr("");
       try {
-        const r = from ? await api.post(`/admin/inspections/templates/${from.templateId}/copy`, { code, name }) : await api.post("/admin/inspections/templates", { code, name, type });
-        const v = (Array.isArray(r) ? r[0] : r) as TemplateVersion;
+        // both answer the new template's draft version 1 (TemplateVersion)
+        const v = from ? await api.post<TemplateVersion>(`/admin/inspections/templates/${from.templateId}/copy`, { code, name }) : await api.post<TemplateVersion>("/admin/inspections/templates", { code, name, type });
         toast.success(t("templates.created")); onCreated(v);
       } catch (e) { setErr(errMessage(e)); } finally { setBusy(false); }
     }}>{from ? t("templates.copy") : t("templates.create")}</Button></>}>
@@ -123,15 +126,16 @@ function TemplateDetail({ id }: { id: string }) {
   const nav = useNavigate();
   const toast = useToast();
   const { perms, me } = useAuth();
-  const state = useLoad(() => api.get(`/admin/inspections/templates/${id}`).then((r) => { const l = asList<TemplateVersion>(r); return l.length ? l : [r as TemplateVersion]; }), [id]);
+  const state = useLoad(() => api.get<TemplateVersion[]>(`/admin/inspections/templates/${id}`), [id]); // every version, oldest first
   const versions = useMemo(() => [...(state.data ?? [])].sort((a, b) => b.version - a.version), [state.data]);
   const [sel, setSel] = useState<string>("");
   const [approveErr, setApproveErr] = useState("");
   const [confirmRetire, setConfirmRetire] = useState<TemplateVersion | null>(null);
   const [copy, setCopy] = useState<TemplateVersion | null>(null);
   const cur = versions.find((v) => v.id === sel) ?? versions.find((v) => v.status === "draft") ?? versions[0] ?? null;
-  const canEdit = (perms.isHse || perms.canTriage) && !perms.readOnly;
-  const canApprove = perms.isHse && !perms.readOnly;
+  const canEdit = (perms.isAdmin || perms.isHse) && !perms.readOnly; // safety configuration (server: admin, HSE manager)
+  const canCopy = (perms.isAdmin || perms.isHse || perms.canTriage) && !perms.readOnly;
+  const canApprove = (perms.isAdmin || perms.isHse) && !perms.readOnly; // never the author (server rule)
   const replace = (v: TemplateVersion) => state.setData((state.data ?? []).map((x) => (x.id === v.id ? v : x)).concat((state.data ?? []).some((x) => x.id === v.id) ? [] : [v]));
   const transition = async (v: TemplateVersion, what: "submit" | "approve" | "retire") => {
     setApproveErr("");
@@ -145,7 +149,7 @@ function TemplateDetail({ id }: { id: string }) {
     <>
       <PageHead title={pick(cur.name)} sub={`${cur.code} · ${t(`templates.type.${cur.type}`) === `templates.type.${cur.type}` ? cur.type : t(`templates.type.${cur.type}`)}`} tools={<>
         <Link className="btn sm" to="/templates">{t("templates.all")}</Link>
-        {canEdit ? <Button size="sm" onClick={() => setCopy(cur)}><IconCopy size={14} />{t("templates.copy")}</Button> : null}
+        {canCopy ? <Button size="sm" onClick={() => setCopy(cur)}><IconCopy size={14} />{t("templates.copy")}</Button> : null}
         {canEdit && !versions.some((v) => v.status === "draft" || v.status === "in_review") ? <Button size="sm" variant="primary" onClick={newVersion}><IconPlus size={14} />{t("templates.newVersion")}</Button> : null}
       </>} />
       <Tabs value={cur.id} onChange={setSel} tabs={versions.map((v) => ({ value: v.id, label: <span className="row nowrap" style={{ gap: 6 }}>v{v.version}<Pill tone={STATUS_TONE[v.status]}>{t(`templates.status.${v.status}`)}</Pill></span> }))} />

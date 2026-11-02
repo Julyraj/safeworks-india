@@ -64,22 +64,23 @@ async def _copy_sections(conn, from_version: str, to_version: str) -> None:
         )
 
 
-async def _out(conn, template_id: str) -> dict:
-    t = await db.one("select * from inspection_templates where id = $1", [template_id], conn)
+async def _versions(conn, template_id: str) -> list[dict]:
+    """Every version of a template as `TemplateVersion` documents, oldest first."""
     versions = await db.q("select id from inspection_template_versions where template_id = $1 order by version", [template_id], conn)
-    docs = await load_template_versions(conn, [v["id"] for v in versions])
-    return {"id": t["id"], "code": t["code"], "name": t["name_i18n"], "type": t["type"], "appliesTo": t["applies_to"] or {}, "activeVersionId": t["active_version_id"],
-            "ownerUserId": t["owner_user_id"], "updatedAt": t["updated_at"], "versions": docs}
+    return await load_template_versions(conn, [v["id"] for v in versions])
+
+
+async def _latest(conn, template_id: str) -> dict:
+    return (await _versions(conn, template_id))[-1]
 
 
 @router.get("/templates")
 async def list_templates(user: AuthUser = Depends(console_user)):
-    rows = await db.q(
-        """select t.*, v.version as active_version_no, (select count(*) from inspection_template_versions x where x.template_id = t.id)::int as version_count,
-                  (select max(x.version) from inspection_template_versions x where x.template_id = t.id and x.status = 'draft') as draft_version
-             from inspection_templates t left join inspection_template_versions v on v.id = t.active_version_id where t.org_id = $1 and t.deleted_at is null order by t.code""", [user.org_id])
-    return JSON([{"id": t["id"], "code": t["code"], "name": t["name_i18n"], "type": t["type"], "appliesTo": t["applies_to"] or {}, "activeVersionId": t["active_version_id"],
-                  "activeVersion": t["active_version_no"], "versionCount": t["version_count"], "draftVersion": t["draft_version"], "updatedAt": t["updated_at"]} for t in rows])
+    """One row per template: its newest version (a draft or in-review version when there is one, so work in progress shows)."""
+    rows = await db.q("""select distinct on (t.id) v.id from inspection_templates t join inspection_template_versions v on v.template_id = t.id
+                          where t.org_id = $1 and t.deleted_at is null order by t.id, v.version desc""", [user.org_id])
+    docs = await load_template_versions(None, [r["id"] for r in rows])
+    return JSON(sorted(docs, key=lambda d: d["code"]))
 
 
 @router.post("/templates")
@@ -95,14 +96,14 @@ async def create_template(request: Request, user: AuthUser = Depends(console_use
                          [t["id"], inp.title_fields, inp.scoring, inp.required_competence_type, user.id], c)
         await _write_sections(c, v["id"], inp.sections)
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="inspection_template", record_id=t["id"], changes={"code": inp.code, "version": 1})
-        out = await _out(c, t["id"])
+        out = await _latest(c, t["id"])
     return JSON(out, status_code=201)
 
 
 @router.get("/templates/{tid}")
 async def get_template(tid: str, user: AuthUser = Depends(console_user)):
     t = await _template(uuid_param(tid), user)
-    return JSON(await _out(None, t["id"]))
+    return JSON(await _versions(None, t["id"]))
 
 
 @router.delete("/templates/{tid}")
@@ -231,7 +232,7 @@ async def copy_template(tid: str, request: Request, user: AuthUser = Depends(con
         if src:
             await _copy_sections(c, src["id"], nv["id"])
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="inspection_template", record_id=nt["id"], changes={"copiedFrom": t["id"], "code": inp.code})
-        out = await _out(c, nt["id"])
+        out = await _latest(c, nt["id"])
     return JSON(out, status_code=201)
 
 

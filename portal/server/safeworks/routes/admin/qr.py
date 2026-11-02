@@ -3,25 +3,28 @@ from __future__ import annotations
 
 import html
 import io
+from datetime import datetime, timezone
+from urllib.parse import urlencode
 
 import qrcode
 import qrcode.image.svg
 from fastapi import APIRouter, Depends, Request
 from starlette.responses import Response
 
-from ... import db
+from ... import db, links
 from ...audit import audit
 from ...config import config
 from ...errors import not_found
 from ...http import JSON, json_body, opt_uuid, uuid_param
 from ...i18n import LANGS, pick, t
 from ...rbac import AuthUser
-from ...schemas import QrCodeIn, QrCodeUpdate, parse
+from ...schemas import PosterLinkBody, QrCodeIn, QrCodeUpdate, ReasonBody, parse
 from ...security import qr_token
 from ...views import qr_code as qr_view
 from ._common import console_user, need_site_config, scope_sites
 
 router = APIRouter(prefix="/api/v1/admin")
+link_router = APIRouter(prefix="/api/v1/links")  # signed-link pages, no bearer token (links.py)
 
 
 async def _target_info(q: dict) -> tuple[str | None, str, dict | None, dict | None, dict | None]:
@@ -70,17 +73,18 @@ async def create_qr(request: Request, user: AuthUser = Depends(console_user)):
 
 
 @router.post("/qr-codes/{qr_id}/rotate")
-async def rotate_qr(qr_id: str, user: AuthUser = Depends(console_user)):
+async def rotate_qr(qr_id: str, request: Request, user: AuthUser = Depends(console_user)):
     q = await db.one("select * from qr_codes where id = $1 and org_id = $2", [uuid_param(qr_id), user.org_id])
     if not q:
         raise not_found()
     site_id, name, *_ = await _target_info(q)
     need_site_config(user, site_id)
+    inp = parse(ReasonBody, await json_body(request))  # rotation retires printed posters: the reason goes in the audit log
     async with db.tx() as c:
         await c.execute("update qr_codes set active = false where id = $1", q["id"])
         row = await db.one("insert into qr_codes (org_id, token, target_type, target_id, label, prefill, rotated_from_id, created_by) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *",
                            [user.org_id, qr_token(), q["target_type"], q["target_id"], q["label"], q["prefill"], q["id"], user.id], c)
-        await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="qr_code", record_id=row["id"], site_id=site_id, changes={"rotatedFrom": q["id"]})
+        await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="qr_code", record_id=row["id"], site_id=site_id, changes={"rotatedFrom": q["id"]}, reason=inp.reason)
     return JSON(qr_view({**row, "target_name": name}, config.public_url), status_code=201)
 
 
@@ -107,16 +111,58 @@ def qr_svg(data: str) -> str:
     return svg.replace("<svg ", "<svg role='img' aria-label='QR code' ", 1)
 
 
-@router.get("/qr-codes/{qr_id}/poster")
-async def poster(qr_id: str, request: Request, user: AuthUser = Depends(console_user)):
+async def _poster_qr(qr_id: str, user: AuthUser) -> tuple[dict, tuple]:
+    """The QR row and its target info, or 404 when it is outside the user's organisation or sites."""
     q = await db.one("select * from qr_codes where id = $1 and org_id = $2", [uuid_param(qr_id), user.org_id])
     if not q:
         raise not_found()
-    site_id, name, site, area, asset = await _target_info(q)
-    if not site_id or site_id not in user.sites_in_scope():
+    info = await _target_info(q)
+    if not info[0] or info[0] not in user.sites_in_scope():
         raise not_found()
-    langs = [l for l in (request.query_params.get("lang") or "en,hi,ta,kn").split(",") if l in LANGS] or ["en"]
-    size = "A5" if request.query_params.get("size", "A4").upper() == "A5" else "A4"
+    return q, info
+
+
+def _poster_options(lang: str | None, size: str | None) -> tuple[list[str], str]:
+    langs = [l for l in (lang or "en,hi,ta,kn").split(",") if l in LANGS] or ["en"]
+    return langs, ("A5" if (size or "A4").upper() == "A5" else "A4")
+
+
+@router.get("/qr-codes/{qr_id}/poster")
+async def poster(qr_id: str, request: Request, user: AuthUser = Depends(console_user)):
+    """The poster for API clients that send the bearer header; browsers open it through `poster-link`."""
+    q, info = await _poster_qr(qr_id, user)
+    langs, size = _poster_options(request.query_params.get("lang"), request.query_params.get("size"))
+    return await _render_poster(q, info, user, langs, size)
+
+
+@router.post("/qr-codes/{qr_id}/poster-link")
+async def poster_link(qr_id: str, request: Request, user: AuthUser = Depends(console_user)):
+    """A 5-minute signed link to the printable poster (bound to this QR code and this user; scope checked now and again on open)."""
+    q, info = await _poster_qr(qr_id, user)
+    inp = parse(PosterLinkBody, await json_body(request))
+    langs, size = _poster_options(inp.lang, inp.size)
+    ticket, exp = links.issue(links.PURPOSE_POSTER, q["id"], user.id)
+    async with db.tx() as c:
+        await audit(c, org_id=user.org_id, actor=user, action="export", record_type="qr_code", record_id=q["id"], site_id=info[0],
+                    changes={"signedLink": "poster", "expiresAt": exp, "langs": langs, "size": size})
+    url = f"/api/v1/links/qr-codes/{q['id']}/poster?{urlencode({'t': ticket, 'lang': ','.join(langs), 'size': size})}"
+    return JSON({"url": url, "expiresAt": datetime.fromtimestamp(exp, timezone.utc)})
+
+
+@link_router.get("/qr-codes/{qr_id}/poster")
+async def poster_by_link(qr_id: str, request: Request):
+    """Opens a poster from a signed link (no bearer token): signature, expiry and record binding, then the user's scope again."""
+    rid = uuid_param(qr_id)
+    user = await links.redeem(links.PURPOSE_POSTER, rid, request.query_params.get("t", ""))
+    if not user.can_use_admin_console:
+        raise not_found()
+    q, info = await _poster_qr(rid, user)
+    langs, size = _poster_options(request.query_params.get("lang"), request.query_params.get("size"))
+    return await _render_poster(q, info, user, langs, size)
+
+
+async def _render_poster(q: dict, info: tuple, user: AuthUser, langs: list[str], size: str) -> Response:
+    site_id, name, site, area, asset = info
     org = await db.one("select name from organisations where id = $1", [user.org_id])
     url = f"{config.public_url}/q/{q['token']}"
     svg = qr_svg(url)

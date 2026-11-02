@@ -3,7 +3,6 @@
   "common.choose": "Choose…",
   "common.needsConnection": "Needs a connection — try again when you are online.",
   "common.offlineCopy": "Offline copy — last refreshed earlier on this phone.",
-
   "nav.main": "Main navigation",
   "nav.home": "Home",
   "nav.reports": "Reports",
@@ -17,12 +16,10 @@
   "nav.notifications": "Notifications",
   "nav.outbox": "Outbox",
   "nav.settings": "Settings",
-
   "shortcuts.reports": "Go to reports",
   "shortcuts.actions": "Go to actions",
   "shortcuts.inspections": "Go to inspections",
   "shortcuts.outbox": "Go to the outbox",
-
   "login.tagline": "Report a hazard in 30 seconds",
   "login.user": "Employee code or email",
   "login.userHint": "e.g. TN1-0042 or you@company.in",
@@ -53,7 +50,6 @@
   "login.currentPassword": "Current password",
   "login.changeAndContinue": "Change and continue",
   "login.library": "Safety library",
-
   "server.title": "Connect to your company's SafeWorks server",
   "server.address": "Server address",
   "server.hint": "The web address your safety team gave you, starting with https://",
@@ -62,13 +58,11 @@
   "server.unreachable": "Could not reach that address. Check the spelling and your connection.",
   "server.connected": "Connected (server {version}).",
   "server.connect": "Connect",
-
   "logout.blockedTitle": "Sync before signing out",
   "logout.blockedBody": "{count, plural, one {# item on this phone has not reached the server yet.} other {# items on this phone have not reached the server yet.}} Signing out would delete them. Sync first, then sign out.",
   "logout.blockedOffline": "You are offline — the items will sync as soon as you have signal.",
   "logout.keepHint": "If you must hand the phone over now, lock the app instead: your items stay encrypted on this phone and sync when you sign in again.",
   "logout.lockInstead": "Lock without deleting",
-
   "home.hello": "Hello {name}",
   "home.headline": "See something? Say something.",
   "home.report": "Report a hazard or good practice",
@@ -101,7 +95,6 @@
   "home.noRepeat": "No repeats — nothing came up twice.",
   "home.myActions": "My next actions",
   "home.myReports": "My recent reports",
-
   "report.title": "Quick report",
   "report.chooseLocation": "Choose site and area",
   "report.chooseArea": "Tap to choose the area",
@@ -145,7 +138,6 @@
   "report.willTell": "We will tell you when it is fixed.",
   "report.another": "Report another",
   "report.view": "View report",
-
   "reports.mine": "My reports",
   "reports.triage": "Triage",
   "reports.site": "Site",
@@ -158,7 +150,6 @@
   "reports.triageEmpty": "Inbox clear",
   "reports.triageEmptyBody": "Every report at your sites has been triaged.",
   "reports.triageBy": "Triage",
-
   "obs.title": "Report",
   "obs.actionsCount": "{open} of {total} actions open",
   "obs.ack": "Acknowledge",
@@ -189,7 +180,6 @@
   "channel.web": "web",
   "channel.qr": "QR poster",
   "channel.on_behalf": "on behalf",
-
   "triage.title": "Triage",
   "triage.open": "Triage",
   "triage.decision": "Decision",
@@ -250,7 +240,6 @@
   "triage.needReason": "Choose a reason.",
   "triage.needReasonText": "Explain in a few words.",
   "triage.needMaster": "Choose the master report.",
-
   "action.title": "Action",
   "action.titleField": "Title",
   "action.problem": "Problem",
@@ -343,7 +332,6 @@
   "action.event.reminder_sent": "Reminder sent",
   "action.event.escalated": "Escalated",
   "action.event.verification": "Verification",
-
   "actions.mine": "Mine",
   "actions.verify": "To verify",
   "actions.site": "Site",
@@ -354,7 +342,6 @@
   "actions.emptyBodySite": "Actions from every source at your sites appear here.",
   "actions.verifyEmpty": "Nothing to verify",
   "actions.verifyEmptyBody": "Completed actions that you did not own appear here for verification.",
-
   "insp.start": "Start inspection",
   "insp.begin": "Begin",
   "insp.mine": "Mine",
@@ -371,7 +358,6 @@
   "insp.items": "items",
   "insp.noTemplates": "No active templates on this phone — sync to fetch them.",
   "insp.noMatchShowingAll": "No template is mapped to this area or asset; showing all active templates.",
-
   "run.header": "Header",
   "run.headerOnce": "Filled once; site, time and GPS are locked",
   "run.inspector": "Inspector",
@@ -429,7 +415,6 @@
   "run.reopened": "Run reopened",
   "run.reopenHint": "The locked report is marked superseded; the inspector signs again.",
   "run.assignedTo": "Assigned to {name}",
-
   "scan.openCamera": "Open camera to scan",
   "scan.noDetector": "This browser cannot scan QR codes directly — scan with the phone camera app or type the code below.",
   "scan.cameraDenied": "Camera permission was refused. Type the code instead.",
@@ -443,7 +428,6 @@
   "scan.examOverdue": "overdue",
   "scan.startChecklist": "Start checklist",
   "scan.areaFound": "This QR is for {area}. Report what you see or start an inspection here.",
-
   "outbox.open": "Open outbox",
   "outbox.retryAll": "Retry failed",
   "outbox.exportDiag": "Export diagnostics",
@@ -478,7 +462,6 @@
   "media.uploading": "uploading",
   "media.uploaded": "uploaded",
   "media.failed": "upload failed",
-
   "notif.readAll": "Mark all read",
   "notif.empty": "No notifications",
   "notif.emptyBody": "Alerts, reminders and closure notices appear here.",
@@ -500,7 +483,6 @@
   "notif.event.inspection_missed": "Inspection missed",
   "notif.event.escalation": "Escalation",
   "notif.event.digest": "Digest",
-
   "settings.langHint": "Showing the app in {name}. Reports keep the language they were typed in.",
   "settings.appearance": "Appearance",
   "settings.theme.auto": "Auto",
@@ -533,7 +515,6 @@
   "settings.device": "Device id",
   "settings.library": "Safety library",
   "settings.openLibrary": "Open procedures, first aid and regulations",
-
   "photo.maxReached": "Up to {max} photos here.",
   "photo.notImage": "That file is not a photo.",
   "photo.tooLarge": "The photo is over 10 MB.",
@@ -552,7 +533,6 @@
   "voice.hint": "Up to {max} seconds",
   "voice.denied": "Microphone permission was refused.",
   "voice.removed": "Voice note removed",
-
   "trade.civil": "Civil",
   "trade.steel_fixing": "Steel fixing",
   "trade.shuttering": "Shuttering",
@@ -565,7 +545,6 @@
   "trade.operators": "Operators",
   "trade.housekeeping": "Housekeeping",
   "trade.security": "Security",
-
   "assetClass.lifting_appliance": "Lifting appliance",
   "assetClass.lifting_gear": "Lifting gear",
   "assetClass.pressure_plant": "Pressure plant",
@@ -585,7 +564,6 @@
   "asset.status.in_service": "In service",
   "asset.status.do_not_use": "Do not use",
   "asset.status.retired": "Retired",
-
   "qr.title": "Report a hazard",
   "qr.chooseLanguage": "Choose your language",
   "qr.chooseLanguageSub": "No sign-in needed. Takes about 30 seconds.",
@@ -609,5 +587,10 @@
   "qr.statusTitle": "Report status",
   "qr.statusNotFound": "No report matches this link. Check the case number and the secret in the link.",
   "qr.receivedAt": "received {time}",
-  "qr.statusPrivacy": "This page shows only the status — never who reported it."
+  "qr.statusPrivacy": "This page shows only the status — never who reported it.",
+  "action.disputeApproveHint": "Approving a dispute gives the action to someone else: choose the new owner.",
+  "settings.push": "Alerts on this phone",
+  "settings.pushHint": "Stop-work alerts and reminders arrive even when the app is closed.",
+  "settings.pushDenied": "Notifications are blocked for this site in the browser settings. Allow them there, then switch this on.",
+  "settings.pushUnconfigured": "The server has no push keys yet (VAPID); alerts come in the app and by email."
 }

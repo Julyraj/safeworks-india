@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, Request
 from .. import db
 from ..auth import require_user
 from ..errors import not_found
-from ..http import JSON, json_body, page_params, parse_dt, uuid_param
+from ..http import JSON, json_body, page_params, parse_dt, sort_sql, uuid_param
 from ..rbac import AuthUser
 from ..schemas import (ActionCancelRequest, ActionCommentBody, ActionCompleteRequest, ActionCreateRequest, ActionReassignRequest, ActionRequestCreate, ActionRequestDecide,
                        ActionVerifyRequest, SimpleTransition, parse)
@@ -68,7 +68,7 @@ async def list_actions(request: Request, user: AuthUser = Depends(require_user()
     params: list = []
     where = action_filters(q, user, params)
     total = await db.one(f"select count(*)::int as n from actions a where {' and '.join(where)}", params)
-    rows = await db.q(ACTION_SELECT + f" where {' and '.join(where)} order by a.due_at asc, a.created_at desc limit {size} offset {(page - 1) * size}", params)
+    rows = await db.q(ACTION_SELECT + f" where {' and '.join(where)} order by {sort_sql(request, {"dueAt": "a.due_at", "caseNo": "a.case_no", "status": "a.status"}, "a.due_at asc, a.created_at desc")} limit {size} offset {(page - 1) * size}", params)
     media = await media_for(None, "observation", [r["source_id"] for r in rows if r["source_type"] == "observation" and r["source_id"]])
     items = [action_summary(r, first_thumb(media.get(r["source_id"])) if r["source_type"] == "observation" else None) for r in rows]
     return JSON(paged(items, total["n"], page, size))

@@ -1,9 +1,9 @@
-/* Admin-console-only shapes. Everything that the field app also needs lives in ../shared/types.ts (the contract).
-   The routes below are listed in portal/docs/API.md without a body type; these are the shapes the console sends and
-   expects, kept here so they can be promoted into the contract when the server team confirms them. */
-import type { Lang, OrgSettings, Role, StatusLabel } from "../shared/types";
+/* Admin-console-only shapes: the response bodies of the admin routes that only the console uses. They match the server
+   (portal/server/safeworks/routes/admin/*.py) and are documented in portal/docs/API.md ("Admin shapes"). Everything the
+   field app also needs lives in ../shared/types.ts (the contract). */
+import type { Area, Lang, OrgSettings, QrCode, Role, Site, StatusLabel } from "../shared/types";
 
-/** GET/PUT /admin/settings */
+/** GET/PUT /admin/settings: OrgSettings plus the organisation's own fields (statusLabels are read-only). */
 export interface OrgSettingsAdmin extends OrgSettings {
   orgName: string;
   legalName: string;
@@ -11,49 +11,63 @@ export interface OrgSettingsAdmin extends OrgSettings {
   phone: string;
 }
 
-/** POST /admin/sites/{id}/setup response */
+/** POST /admin/sites/{id}/setup response: the site, all its areas, what the wizard did and one QR per area plus the site QR. */
 export interface SiteSetupResult {
-  siteId: string;
+  site: Site;
+  areas: Area[];
   areasCreated: number;
-  templatesEnabled: string[];
   categoriesEnabled: string[];
-  posters: { qrCodeId: string; label: string; targetType: "site" | "area" | "asset"; posterUrl: string }[];
+  templatesEnabled: string[];
+  posters: QrCode[];
 }
 
-/** GET /admin/notifications-log */
+/** POST /admin/users response: the user plus the one-time secret (shown once). */
+export interface UserCreated {
+  tempPassword: string | null; // employee_code and email logins
+  enrolmentCode: string | null; // enrolment_code logins: "ABCD-EFGH", valid 24 h
+  enrolmentExpiresAt: string | null;
+}
+
+/** GET /admin/notifications-log rows. */
 export interface NotificationLogRow {
   id: number;
   at: string;
   eventType: string;
-  channel: "push" | "email" | "both";
-  recipientName: string | null;
-  title: string;
-  status: "queued" | "sent" | "delivered" | "failed" | "acknowledged";
-  critical: boolean;
-  error: string;
-  recordType: string | null;
+  recordType: string;
   recordId: string | null;
+  recipientName: string | null;
+  channel: "inapp" | "push" | "email" | "whatsapp" | "sms";
+  language: Lang;
+  title: string;
+  critical: boolean;
+  status: "queued" | "sent" | "delivered" | "failed" | "acknowledged";
+  attempts: number;
+  sentAt: string | null;
+  error: string;
+  costEstimateInr: number;
 }
 
-/** GET/POST /admin/privacy/notices */
-export interface PrivacyNotice { id: string; version: number; effectiveFrom: string; body: Record<Lang, string>; createdByName: string | null; createdAt: string }
+/** GET/POST /admin/privacy/notices (one entry per version; body per language). */
+export interface PrivacyNotice { version: number; status: "active" | "retired"; effectiveFrom: string; body: Partial<Record<Lang, string>>; createdAt: string }
 export type PrivacyRequestType = "access" | "correction" | "erasure" | "nomination" | "grievance";
-export type PrivacyRequestStatus = "open" | "in_progress" | "done" | "rejected";
-/** GET/POST/PUT /admin/privacy/requests */
+export type PrivacyRequestStatus = "open" | "in_progress" | "answered" | "rejected";
+/** GET /admin/privacy/requests; POST {personName, identifier, type, details}; PUT {status, response}. Due 30 days after receipt. */
 export interface PrivacyRequest {
-  id: string; type: PrivacyRequestType; requesterName: string; requesterRef: string; siteId: string | null; channel: string;
-  receivedAt: string; dueAt: string; status: PrivacyRequestStatus; assigneeName: string | null; note: string; closedAt: string | null;
+  id: string; personName: string; identifier: string; type: PrivacyRequestType; details: string; receivedAt: string; dueAt: string;
+  status: PrivacyRequestStatus; handledBy: string | null; handledByName: string | null; response: string; closedAt: string | null;
 }
 
 /** GET/PUT /admin/retention-policies */
-export interface RetentionPolicy { recordType: string; keepMonths: number; action: "erase" | "anonymise" | "keep"; legalBasis: string; statusLabel: string }
-/** GET/POST /admin/legal-holds */
-export interface LegalHold { id: string; recordType: string; recordId: string | null; siteId: string | null; reason: string; createdByName: string; createdAt: string; releasedAt: string | null }
-/** POST /admin/retention/dry-run */
-export interface RetentionDryRun { ranAt: string; rows: { recordType: string; erase: number; anonymise: number; held: number }[] }
-
-/** Minimal shape of a template in the list (the latest version's header plus the active version id). */
-export interface TemplateHeader { templateId: string; code: string; name: Record<string, string>; type: string; activeVersionId: string | null; latestVersion: number; latestStatus: string }
+export interface RetentionPolicy { id?: string; recordType: string; retentionYears: number; basisNote: string; endAction: "erase" | "anonymise"; statusLabel: string }
+/** GET/POST /admin/legal-holds (POST {scopeType, scopeId?, reason}; scopeId null = every record of that type) */
+export interface LegalHold { id: string; scopeType: string; scopeId: string | null; reason: string; placedBy: string; placedByName: string | null; placedAt: string; releasedAt: string | null; releasedBy: string | null }
+/** POST /admin/retention/dry-run: counts only, nothing is deleted in 2.0. */
+export interface RetentionDryRun {
+  checkedAt: string;
+  byRecordType: Record<string, { candidates: number; endAction: "erase" | "anonymise"; retentionYears: number; legalHold: boolean }>;
+  legalHolds: number;
+  note: string;
+}
 
 /** Admin console: saved register filters (per screen, in localStorage). */
 export interface SavedFilter { name: string; values: Record<string, string> }

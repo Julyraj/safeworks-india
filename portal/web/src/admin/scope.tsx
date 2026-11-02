@@ -54,11 +54,7 @@ export function ScopeProvider({ children }: { children: ReactNode }) {
     const setters = { categories: setCategories, contractors: setContractors, matrices: setMatrices, dueRules: setDueRules, industries: setIndustries } as const;
     try {
       const r = await api.get(paths[what]);
-      let list = asList<unknown>(r);
-      if (what === "matrices") {
-        // GET /admin/risk-matrices may answer matrices with nested versions or a flat list of versions
-        list = list.flatMap((m: any) => (Array.isArray(m?.versions) ? m.versions : [m]));
-      }
+      const list = asList<unknown>(r); // GET /admin/risk-matrices answers a flat RiskMatrixVersion[] (each with matrixId, name, size)
       (setters[what] as (s: RefState<any>) => void)({ data: list, loaded: true, error: null });
     } catch (e) {
       (setters[what] as (fn: (prev: RefState<any>) => RefState<any>) => void)((prev: RefState<any>) => ({ ...prev, loaded: true, error: e }));

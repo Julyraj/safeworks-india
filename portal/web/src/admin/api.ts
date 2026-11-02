@@ -1,5 +1,5 @@
 /* The console's API client: one `createApi` instance keyed on the admin token plus a few helpers the registers share. */
-import { createApi, ApiError, type Query } from "../shared/api";
+import { createApi, ApiError, openSignedPage, type Query } from "../shared/api";
 import type { Paged } from "../shared/types";
 import { csvEscape } from "../shared/format";
 
@@ -55,14 +55,9 @@ export function localCsv(rows: Record<string, unknown>[], filename: string) {
   saveBlob(new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }), filename);
 }
 
-/** Opens a server HTML page (poster, inspection report) in a new tab with the bearer token passed as a query so the tab can load it. */
-export function openServerHtml(path: string, query: Query = {}) {
-  const q = new URLSearchParams();
-  for (const [k, v] of Object.entries(query)) if (v !== undefined && v !== null && v !== "") q.set(k, String(v));
-  const t = api.token();
-  if (t) q.set("access_token", t);
-  const url = `/api/v1${path}?${q.toString()}`;
-  window.open(url, "_blank", "noopener");
+/** Opens a server page (poster, inspection report) in a new tab through a signed link — never a token in the URL. */
+export function openServerPage(linkPath: string, body: unknown = {}): Promise<void> {
+  return openSignedPage(api, linkPath, body);
 }
 
 /** Tiny CSV parser (RFC 4180: quotes, doubled quotes, CRLF). Returns rows of cells. */

@@ -7,7 +7,7 @@ import { Button, DataTable, EmptyState, ErrorCard, Pagination, Pill, Progress, S
 import { useLoad } from "../../shared/hooks";
 import { fmtDateTime, dueText } from "../../shared/format";
 import { IconExternal, IconUndo, IconX } from "../../shared/icons";
-import { api, downloadCsv, openServerHtml } from "../api";
+import { api, downloadCsv, errMessage, openServerPage } from "../api";
 import { useScope } from "../scope";
 import { useAuth } from "../auth";
 import { CountLine, DateRange, Drawer, ExportButton, FilterSelect, KV, PageHead, ReasonSheet, RegisterSearch, SavedFilters, useRegister, useRowNav, useUrlFilters } from "../components";
@@ -20,6 +20,7 @@ export default function Inspections() {
   const nav = useNavigate();
   const { id } = useParams();
   const { siteId, siteName } = useScope();
+  const toast = useToast();
   const reg = useRegister<RunSummary>("inspections", "/inspections/runs");
   useUrlFilters(reg, ["status", "from", "to"]);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export default function Inspections() {
     { key: "inspector", label: t("ins.inspector"), render: (r) => r.inspectorName ?? <span className="muted">—</span>, width: 140 },
     { key: "dueAt", label: t("common.dueDate"), render: (r) => { const dt = dueText(r.dueAt, r.status === "scheduled" || r.status === "in_progress", t); return <span className={`nowrap${dt.late ? " chain-bad" : ""}`} title={fmtDateTime(r.dueAt, lang)}>{r.dueAt ? dt.text : "—"}</span>; }, sortable: true, width: 130 },
     { key: "actionsRaised", label: t("common.actions"), render: (r) => r.actionsRaised || "—", num: true, width: 80 },
-    { key: "report", label: t("ins.report"), render: (r) => r.status === "completed" || r.status === "closed" ? <Button size="sm" variant="ghost" onClick={(e) => { e.stopPropagation(); openServerHtml(`/inspections/runs/${r.id}/report`); }}><IconExternal size={14} />{t("ins.openReport")}</Button> : null, width: 120 },
+    { key: "report", label: t("ins.report"), render: (r) => r.status === "completed" || r.status === "closed" ? <Button size="sm" variant="ghost" onClick={(e) => { e.stopPropagation(); openServerPage(`/inspections/runs/${r.id}/report-link`).catch((er) => toast.error(errMessage(er))); }}><IconExternal size={14} />{t("ins.openReport")}</Button> : null, width: 120 },
   ];
 
   return (
@@ -71,7 +72,7 @@ function RunDrawer({ id, onClose, onChanged }: { id: string; onClose: () => void
   return (
     <Drawer title={d ? d.caseNo : t("common.loading")} kicker={d ? `${pick(d.templateName)} · ${siteName(d.siteId)}` : undefined} onClose={onClose} wide footer={d ? (
       <>
-        {(d.status === "completed" || d.status === "closed" || d.status === "reopened") ? <Button variant="primary" onClick={() => openServerHtml(`/inspections/runs/${d.id}/report`)}><IconExternal size={16} />{t("ins.openReport")}</Button> : null}
+        {(d.status === "completed" || d.status === "closed" || d.status === "reopened") ? <Button variant="primary" onClick={() => openServerPage(`/inspections/runs/${d.id}/report-link`).catch((er) => toast.error(errMessage(er)))}><IconExternal size={16} />{t("ins.openReport")}</Button> : null}
         {canReopen && !perms.readOnly ? <Button onClick={() => setReopen(true)}><IconUndo size={16} />{t("ins.reopen")}</Button> : null}
         {d.can.cancel && !perms.readOnly && (d.status === "scheduled" || d.status === "in_progress") ? <Button variant="danger" onClick={() => setCancel(true)}><IconX size={16} />{t("ins.cancel")}</Button> : null}
         <span className="grow" /><Button variant="ghost" onClick={onClose}>{t("common.close")}</Button>

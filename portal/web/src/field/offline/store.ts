@@ -93,6 +93,7 @@ export function useDetail<T>(kind: "observation" | "action" | "run", id: string 
     (async () => {
       const cached = offlineReady() ? await getDetail<T>(key) : null;
       if (cached && !cancelled) { setData(cached.value); setFetchedAt(cached.fetchedAt); setLoading(false); setStale(true); }
+      if (cancelled) return; // the record's id changed while the cache was read (e.g. it synced and got its server id)
       if (!getSyncState().online && cached) { setLoading(false); return; }
       try {
         const fresh = await fetcherRef.current();

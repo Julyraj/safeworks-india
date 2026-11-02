@@ -7,7 +7,7 @@ from .. import db
 from ..auth import require_user
 from ..crypto import hmac_id
 from ..errors import not_found
-from ..http import JSON, json_body, page_params, parse_dt, uuid_param
+from ..http import JSON, json_body, page_params, parse_dt, sort_sql, uuid_param
 from ..rbac import AuthUser, require_officer
 from ..schemas import ClosureSummaryBody, CommentBody, ObservationCreate, ReasonBody, ReplyBody, TriageRequest, parse
 from ..views import OBS_SELECT, paged
@@ -72,7 +72,8 @@ async def list_observations(request: Request, user: AuthUser = Depends(require_u
     page, size = page_params(request, 50, 200)
     params: list = []
     where, params = observation_filters(q, user, params)
-    order = "o.imminent_danger desc, (o.risk_band = 'extreme') desc, o.received_at asc" if q.get("status") == "submitted" else "o.received_at desc"
+    default = "o.imminent_danger desc, (o.risk_band = 'extreme') desc, o.received_at asc" if q.get("status") == "submitted" else "o.received_at desc"
+    order = sort_sql(request, {"receivedAt": "o.received_at", "caseNo": "o.case_no", "status": "o.status", "capturedAt": "o.captured_at"}, default)
     total = await db.one(f"select count(*)::int as n from observations o where {' and '.join(where)}", params)
     rows = await db.q(OBS_SELECT + f" where {' and '.join(where)} order by {order} limit {size} offset {(page - 1) * size}", params)
     items = await obs_wf.summary_for(None, user, rows)

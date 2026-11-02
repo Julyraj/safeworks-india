@@ -84,6 +84,17 @@ def page_params(request: Request, default_size: int = 50, max_size: int = 500) -
     return page, size
 
 
+def sort_sql(request: Request, columns: dict[str, str], default: str) -> str:
+    """`?sort=<key>&dir=asc|desc` → an ORDER BY body from a fixed whitelist (unknown keys fall back to `default`).
+    Rows with no value go last in either direction; the default order breaks ties so pages stay stable."""
+    key = request.query_params.get("sort", "")
+    col = columns.get(key)
+    if not col:
+        return default
+    direction = "desc" if request.query_params.get("dir", "asc").lower() == "desc" else "asc"
+    return f"{col} {direction} nulls last, {default}"
+
+
 def parse_dt(v: str | None, end_of_day: bool = False) -> datetime | None:
     if not v:
         return None

@@ -261,5 +261,6 @@
   "sys.returned_question": "ಸುರಕ್ಷತಾ ಅಧಿಕಾರಿಯ ಪ್ರಶ್ನೆ: {question}",
   "sys.reopened": "ಮತ್ತೆ ತೆರೆಯಲಾಗಿದೆ: {reason}",
   "sys.late_answers": "ಸಲ್ಲಿಸಿದ ನಂತರ ತಡವಾಗಿ ಬಂದ ಉತ್ತರಗಳು: {count}",
-  "sys.closure_summary_none": "ಎತ್ತಿದ ಕ್ರಮಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ."
+  "sys.closure_summary_none": "ಎತ್ತಿದ ಕ್ರಮಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
+  "err.new_owner_required": "ಹೊಸ ಮಾಲೀಕರನ್ನು ಆಯ್ಕೆಮಾಡಿ."
 }

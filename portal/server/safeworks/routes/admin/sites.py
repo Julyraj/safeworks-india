@@ -1,6 +1,8 @@
 """Admin: sites (with the 3-step setup wizard), areas, assets, site risk matrix and rule set."""
 from __future__ import annotations
 
+from datetime import date
+
 from fastapi import APIRouter, Depends, Request
 
 from ... import db
@@ -15,7 +17,7 @@ from ...security import qr_token
 from ...settings import clear_org_cache
 from ...views import area as area_view, asset as asset_view, paged, qr_code as qr_view, site as site_view
 from ...config import config
-from ._common import console_user, need_admin, need_safety_config, need_site_config, need_write, read_csv, scope_sites
+from ._common import console_user, csv_body, need_admin, need_safety_config, need_site_config, need_write, read_csv, scope_sites
 
 router = APIRouter(prefix="/api/v1/admin")
 
@@ -119,22 +121,35 @@ async def setup_site(site_id: str, request: Request, user: AuthUser = Depends(co
     async with db.tx() as c:
         est = ind["establishment_types"][0] if ind["establishment_types"] else s["establishment_type"]
         await c.execute("update sites set industry_code = $2, establishment_type = $3, version = version + 1, updated_at = now(), updated_by = $4 where id = $1", s["id"], ind["code"], est, user.id)
-        created_areas = []
-        names = inp.areas
-        if names:
-            spec = [(f"A{i + 1:02d}", {"en": n}, "other") for i, n in enumerate(names)]
+        site_areas = []   # every area of the setup (new or already there), each gets a QR
+        new_areas = 0
+        defaults = default_areas(ind["code"])
+        if inp.areas:
+            # names chosen in the wizard; a name that matches a default area keeps that area's code, translations and type
+            by_name = {d[1]["en"].strip().lower(): d for d in defaults}
+            spec, used = [], set()
+            for i, n in enumerate(x.strip() for x in inp.areas if x and x.strip()):
+                d = by_name.get(n.lower())
+                code = d[0] if d and d[0] not in used else f"A{i + 1:02d}"
+                used.add(code)
+                spec.append((code, d[1] if d else {"en": n}, d[2] if d else "other"))
         else:
-            spec = default_areas(ind["code"])
+            spec = defaults
         for i, (code, name, atype) in enumerate(spec):
             existing = await db.one("select id from areas where site_id = $1 and (code = $2 or name_i18n->>'en' = $3) and deleted_at is null", [s["id"], code, name["en"]], c)
             if existing:
-                created_areas.append(existing["id"])
+                site_areas.append(existing["id"])
                 continue
             row = await db.one("insert into areas (site_id, code, name_i18n, area_type, sort) values ($1, $2, $3, $4, $5) returning id", [s["id"], code, name, atype, i], c)
-            created_areas.append(row["id"])
+            site_areas.append(row["id"])
+            new_areas += 1
         # categories and templates: the industry profile lists what applies; activate them (they stay available to every site of the org)
+        categories_enabled: list[str] = []
         if ind["category_codes"]:
-            await c.execute("update categories set active = true, updated_at = now() where org_id = $1 and code = any($2::text[])", user.org_id, list(ind["category_codes"]))
+            rows = await db.q("update categories set active = true, updated_at = now() where org_id = $1 and code = any($2::text[]) and deleted_at is null returning code",
+                              [user.org_id, list(ind["category_codes"])], c)
+            categories_enabled = sorted(r["code"] for r in rows)
+        templates_enabled: list[str] = []
         if ind["template_codes"]:
             # a template that lists industries gains this one; a template with no industry list already applies everywhere
             await c.execute(
@@ -142,6 +157,9 @@ async def setup_site(site_id: str, request: Request, user: AuthUser = Depends(co
                     where t.org_id = $1 and t.code = any($2::text[]) and t.deleted_at is null
                       and jsonb_typeof(applies_to->'industries') = 'array' and jsonb_array_length(applies_to->'industries') > 0
                       and not (applies_to->'industries') ? $3""", user.org_id, list(ind["template_codes"]), ind["code"])
+            rows = await db.q("""select t.code from inspection_templates t join inspection_template_versions v on v.id = t.active_version_id
+                                  where t.org_id = $1 and t.code = any($2::text[]) and t.deleted_at is null order by t.code""", [user.org_id, list(ind["template_codes"])], c)
+            templates_enabled = [r["code"] for r in rows]
         # QR codes: one for the site, one per area
         async def ensure_qr(target_type: str, target_id: str, label: str) -> dict:
             q = await db.one("select * from qr_codes where target_type = $1 and target_id = $2 and active", [target_type, target_id], c)
@@ -150,17 +168,18 @@ async def setup_site(site_id: str, request: Request, user: AuthUser = Depends(co
             return await db.one("insert into qr_codes (org_id, token, target_type, target_id, label, created_by) values ($1, $2, $3, $4, $5, $6) returning *",
                                 [user.org_id, qr_token(), target_type, target_id, label, user.id], c)
         q = await ensure_qr("site", s["id"], s["code"])
-        posters.append({**qr_view({**q, "target_name": s["code"]}, config.public_url), "posterUrl": f"/api/v1/admin/qr-codes/{q['id']}/poster"})
-        for aid in created_areas:
+        posters.append(qr_view({**q, "target_name": s["code"]}, config.public_url))
+        for aid in site_areas:
             a = await db.one("select * from areas where id = $1", [aid], c)
             q = await ensure_qr("area", aid, f"{s['code']} / {a['name_i18n'].get('en', '')}")
-            posters.append({**qr_view({**q, "target_name": a["name_i18n"].get("en", "")}, config.public_url), "posterUrl": f"/api/v1/admin/qr-codes/{q['id']}/poster"})
+            posters.append(qr_view({**q, "target_name": a["name_i18n"].get("en", "")}, config.public_url))
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="site", record_id=s["id"], site_id=s["id"],
-                    changes={"setup": True, "industryCode": ind["code"], "areas": len(created_areas), "qrCodes": len(posters)})
+                    changes={"setup": True, "industryCode": ind["code"], "areas": len(site_areas), "areasCreated": new_areas, "qrCodes": len(posters)})
     clear_org_cache(user.org_id)
     forget_all()
     site = await db.one("select * from sites where id = $1", [s["id"]])
-    return JSON({"site": site_view(site), "areas": [area_view(a) for a in await db.q("select * from areas where site_id = $1 and deleted_at is null order by sort", [s["id"]])], "posters": posters})
+    return JSON({"site": site_view(site), "areas": [area_view(a) for a in await db.q("select * from areas where site_id = $1 and deleted_at is null order by sort", [s["id"]])],
+                 "areasCreated": new_areas, "categoriesEnabled": categories_enabled, "templatesEnabled": templates_enabled, "posters": posters})
 
 
 @router.post("/sites/{site_id}/risk-matrix")
@@ -356,13 +375,21 @@ async def delete_asset(asset_id: str, request: Request, user: AuthUser = Depends
 @router.post("/assets/import")
 async def import_assets(request: Request, user: AuthUser = Depends(console_user)):
     need_write(user)
-    rows = await read_csv(request, ["site_code", "tag_no", "asset_class"])
+    text, fields = await csv_body(request)
+    # the console imports into the site on screen: `siteId` in the body stands for a missing site_code column
+    default_site = None
+    if fields.get("siteId"):
+        default_site = await db.one("select id, code from sites where id = $1 and org_id = $2 and deleted_at is null", [uuid_param(str(fields["siteId"])), user.org_id])
+        if not default_site or not user.in_scope(default_site["id"]):
+            raise not_found()
+    rows = await read_csv(request, ["tag_no", "asset_class"] if default_site else ["site_code", "tag_no", "asset_class"], text)
     created = updated = skipped = 0
     errors = []
     classes = {"lifting_appliance", "lifting_gear", "pressure_plant", "boiler", "extinguisher", "first_aid_box", "ladder", "scaffold", "harness", "earth_pit", "insulating_mat", "rcd", "earth_moving", "vehicle", "machine", "other"}
     async with db.tx() as c:
         for i, r in enumerate(rows, start=2):
-            site = await db.one("select id from sites where org_id = $1 and code = $2 and deleted_at is null", [user.org_id, r.get("site_code", "").upper()], c)
+            code = (r.get("site_code") or (default_site["code"] if default_site else "")).upper()
+            site = await db.one("select id from sites where org_id = $1 and code = $2 and deleted_at is null", [user.org_id, code], c)
             if not site or not (user.is_admin or user.is_hse or user.is_officer_plus(site["id"])):
                 errors.append({"row": i, "message": f"unknown site {r.get('site_code')}"})
                 skipped += 1
@@ -375,15 +402,22 @@ async def import_assets(request: Request, user: AuthUser = Depends(console_user)
             if r.get("area_code"):
                 ar = await db.one("select id from areas where site_id = $1 and code = $2 and deleted_at is null", [site["id"], r["area_code"]], c)
                 area_id = ar["id"] if ar else None
-            swl = float(r["swl_kg"]) if r.get("swl_kg") else None
+            try:
+                swl = float(r["swl_kg"]) if r.get("swl_kg") else None
+                exam = date.fromisoformat(r["next_exam_due"]) if r.get("next_exam_due") else None
+            except ValueError:
+                errors.append({"row": i, "message": "swl_kg must be a number and next_exam_due a date (YYYY-MM-DD)"})
+                skipped += 1
+                continue
             existing = await db.one("select id from assets where site_id = $1 and tag_no = $2", [site["id"], r["tag_no"]], c)
             if existing:
-                await c.execute("update assets set asset_class = $2, serial_no = $3, make_model = $4, swl_kg = $5, area_id = coalesce($6, area_id), deleted_at = null, version = version + 1, updated_at = now() where id = $1",
-                                existing["id"], r["asset_class"], r.get("serial_no", ""), r.get("make_model", ""), swl, area_id)
+                await c.execute("""update assets set asset_class = $2, serial_no = $3, make_model = $4, swl_kg = $5, area_id = coalesce($6, area_id), next_exam_due = coalesce($7, next_exam_due),
+                                          deleted_at = null, version = version + 1, updated_at = now() where id = $1""",
+                                existing["id"], r["asset_class"], r.get("serial_no", ""), r.get("make_model", ""), swl, area_id, exam)
                 updated += 1
             else:
-                await c.execute("insert into assets (org_id, site_id, area_id, asset_class, tag_no, serial_no, make_model, swl_kg) values ($1,$2,$3,$4,$5,$6,$7,$8)",
-                                user.org_id, site["id"], area_id, r["asset_class"], r["tag_no"], r.get("serial_no", ""), r.get("make_model", ""), swl)
+                await c.execute("insert into assets (org_id, site_id, area_id, asset_class, tag_no, serial_no, make_model, swl_kg, next_exam_due) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)",
+                                user.org_id, site["id"], area_id, r["asset_class"], r["tag_no"], r.get("serial_no", ""), r.get("make_model", ""), swl, exam)
                 created += 1
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="asset", record_id="import", changes={"created": created, "updated": updated, "skipped": skipped})
     return JSON({"created": created, "updated": updated, "skipped": skipped, "errors": errors})

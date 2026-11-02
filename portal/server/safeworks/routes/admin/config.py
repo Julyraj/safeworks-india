@@ -99,14 +99,12 @@ async def reorder_categories(request: Request, user: AuthUser = Depends(console_
 # ---------- risk matrices ----------
 
 async def _matrix_out(conn, org_id: str) -> list[dict]:
+    """Every version of every matrix of the organisation, flat (`RiskMatrixVersion[]`; each carries matrixId, name and size)."""
     settings = await org_settings(org_id, conn)
     label = settings["statusLabels"].get("risk_matrix", "design default")
-    matrices = await db.q("select * from risk_matrices where org_id = $1 order by created_at", [org_id], conn)
-    out = []
-    for m in matrices:
-        versions = await db.q("select v.*, $2::text as name, $3::int as size from risk_matrix_versions v where v.matrix_id = $1 order by v.version", [m["id"], m["name"], m["size"]], conn)
-        out.append({"id": m["id"], "name": m["name"], "size": m["size"], "versions": [matrix_version({**v, "status_label": label}) for v in versions]})
-    return out
+    rows = await db.q("""select v.*, m.name, m.size from risk_matrix_versions v join risk_matrices m on m.id = v.matrix_id
+                          where m.org_id = $1 order by m.created_at, v.version""", [org_id], conn)
+    return [matrix_version({**v, "status_label": label if v["status"] != "draft" else "draft"}) for v in rows]
 
 
 @router.get("/risk-matrices")
@@ -282,7 +280,7 @@ async def list_industries(user: AuthUser = Depends(console_user)):
 @router.get("/settings")
 async def get_settings(user: AuthUser = Depends(console_user)):
     org = await get_org(user.org_id)
-    return JSON({"name": org["name"], "legalName": org["legalName"], "address": org["address"], "phone": org["phone"], **org["settings"]})
+    return JSON({**org["settings"], "orgName": org["name"], "legalName": org["legalName"], "address": org["address"], "phone": org["phone"]})
 
 
 @router.put("/settings")
@@ -292,18 +290,22 @@ async def put_settings(request: Request, user: AuthUser = Depends(console_user))
     body = await json_body(request)
     inp = parse(OrgSettingsIn, body)
     org = await db.one("select * from organisations where id = $1", [user.org_id])
-    # accept either {settings: {...}} or the flat OrgSettings shape
-    flat = {k: v for k, v in body.items() if k not in ("name", "legalName", "address", "phone", "settings")}
-    new_settings = merge_settings({**(org["settings"] or {}), **(inp.settings or {}), **flat})
-    if not user.is_admin and (inp.name or inp.legal_name or inp.address or inp.phone):
+    # the flat OrgSettings shape (what GET returns); unknown keys are dropped by merge_settings, statusLabels are server-owned
+    flat = {k: v for k, v in body.items() if k not in ("orgName", "legalName", "address", "phone", "statusLabels")}
+    new_settings = merge_settings({**(org["settings"] or {}), **flat})
+    new_settings["statusLabels"] = merge_settings(org["settings"])["statusLabels"]
+    org_fields = {"orgName": org["name"], "legalName": org["legal_name"], "address": org["address"], "phone": org["phone"]}
+    if not user.is_admin and any(body.get(k) is not None and body.get(k) != v for k, v in org_fields.items()):
         need_admin(user)
+    if inp.org_name is not None and not inp.org_name.strip():
+        raise bad_request("orgName: required")
     async with db.tx() as c:
         await c.execute(
             "update organisations set name = coalesce($2, name), legal_name = coalesce($3, legal_name), address = coalesce($4, address), phone = coalesce($5, phone), settings = $6, updated_at = now() where id = $1",
-            user.org_id, inp.name, inp.legal_name, inp.address, inp.phone, new_settings,
+            user.org_id, inp.org_name, inp.legal_name, inp.address, inp.phone, new_settings,
         )
         await audit(c, org_id=user.org_id, actor=user, action="config_change", record_type="organisation", record_id=user.org_id,
-                    changes={"settings": [merge_settings(org["settings"]), new_settings], "name": [org["name"], inp.name or org["name"]], "phone": inp.phone})
+                    changes={"settings": [merge_settings(org["settings"]), new_settings], "name": [org["name"], inp.org_name or org["name"]], "phone": inp.phone})
     clear_org_cache(user.org_id)
     clear_overrides(user.org_id)
     return await get_settings(user)

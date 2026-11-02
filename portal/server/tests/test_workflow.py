@@ -283,8 +283,10 @@ def test_template_versions(ctx):
         test_mfa_flow(ctx)
     r = ctx.post("ADMIN", f"/api/v1/admin/inspections/template-versions/{v2['id']}/approve")
     assert r.status_code == 200 and r.json()["status"] == "active"
-    t = ctx.get("ADMIN", f"/api/v1/admin/inspections/templates/{tid}").json()
-    assert t["activeVersionId"] == v2["id"] and [v["status"] for v in t["versions"]] == ["retired", "active"]
+    versions = ctx.get("ADMIN", f"/api/v1/admin/inspections/templates/{tid}").json()
+    assert [v["status"] for v in versions] == ["retired", "active"] and versions[1]["id"] == v2["id"]
+    listed = {v["templateId"]: v for v in ctx.get("ADMIN", "/api/v1/admin/inspections/templates").json()}
+    assert listed[tid]["id"] == v2["id"] and listed[tid]["status"] == "active"
     # the run in progress keeps version 1 and can still be submitted
     questions = ctx.get("SO1", f"/api/v1/inspections/runs/{run_['id']}").json()
     assert questions["templateVersionId"] == ctx.ids["t1Version"]

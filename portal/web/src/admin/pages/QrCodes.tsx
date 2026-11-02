@@ -7,7 +7,7 @@ import { Button, Confirm, DataTable, EmptyState, ErrorCard, Field, Input, Pill, 
 import { useLoad } from "../../shared/hooks";
 import { relative } from "../../shared/format";
 import { IconPlus, IconPrint, IconQr, IconRefresh } from "../../shared/icons";
-import { api, asList, errMessage, localCsv, openServerHtml } from "../api";
+import { api, asList, errMessage, localCsv, openServerPage } from "../api";
 import { useScope } from "../scope";
 import { useAuth } from "../auth";
 import { ChipsSelect, Copyable, ExportButton, FilterSelect, PageHead, useSiteAreas } from "../components";
@@ -93,10 +93,11 @@ function CreateQrSheet({ siteId, areas, onClose, onCreated }: { siteId: string; 
 
 function PosterSheet({ code, onClose }: { code: QrCode; onClose: () => void }) {
   const { t } = useI18n();
+  const toast = useToast();
   const [size, setSize] = useState<"A4" | "A5">("A4");
   const [langs, setLangs] = useState<Lang[]>(["en", "hi", "ta", "kn"]);
   return (
-    <Sheet title={`${t("qr.printPoster")} · ${code.label || code.targetName}`} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.close")}</Button><Button variant="primary" disabled={langs.length === 0} onClick={() => { openServerHtml(`/admin/qr-codes/${code.id}/poster`, { lang: langs.join(","), size }); onClose(); }}><IconPrint size={16} />{t("qr.openPoster")}</Button></>}>
+    <Sheet title={`${t("qr.printPoster")} · ${code.label || code.targetName}`} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.close")}</Button><Button variant="primary" disabled={langs.length === 0} onClick={() => { openServerPage(`/admin/qr-codes/${code.id}/poster-link`, { lang: langs.join(","), size }).then(onClose, (er) => toast.error(errMessage(er))); }}><IconPrint size={16} />{t("qr.openPoster")}</Button></>}>
       <p className="small muted">{t("qr.posterHint")}</p>
       <Field label={t("qr.size")}><Select value={size} onChange={(e) => setSize(e.target.value as "A4" | "A5")}><option value="A4">A4</option><option value="A5">A5</option></Select></Field>
       <Field label={t("qr.languages")}><ChipsSelect ariaLabel={t("qr.languages")} options={LANGS.map((l) => ({ value: l, label: LANG_NAMES[l] }))} value={langs} onChange={(v) => setLangs(LANGS.filter((l) => v.includes(l)))} /></Field>

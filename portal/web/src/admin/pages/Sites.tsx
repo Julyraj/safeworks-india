@@ -7,7 +7,7 @@ import { Button, Card, CardHead, Chip, ChipBar, DataTable, EmptyState, ErrorCard
 import { useLoad } from "../../shared/hooks";
 import { fmtDate } from "../../shared/format";
 import { IconCheckCircle, IconExternal, IconFactory, IconHelmet, IconMenu, IconPlus, IconPrint, IconSite, IconTrash, IconTruck, IconEdit } from "../../shared/icons";
-import { api, asList, errMessage, openServerHtml } from "../api";
+import { api, asList, errMessage, openServerPage } from "../api";
 import { useScope } from "../scope";
 import { useAuth } from "../auth";
 import type { SiteSetupResult } from "../types";
@@ -17,18 +17,6 @@ import { AssetsRegister } from "./Assets";
 const EST_TYPES: EstablishmentType[] = ["factory", "hazardous_process_factory", "construction_site", "mine", "port", "plantation", "office", "other"];
 const AREA_TYPES: AreaType[] = ["production", "utilities", "store", "yard", "scaffold_zone", "excavation_zone", "substation", "office", "canteen", "gate", "labour_camp", "loading_bay", "other"];
 const STATES = ["Tamil Nadu", "Karnataka", "Kerala", "Andhra Pradesh", "Telangana", "Maharashtra", "Gujarat", "Delhi", "Uttar Pradesh", "West Bengal", "Odisha", "Rajasthan", "Madhya Pradesh", "Haryana", "Punjab", "Bihar", "Jharkhand", "Chhattisgarh", "Goa", "Assam", "Other"];
-const DEFAULT_AREAS: Record<string, string[]> = {
-  construction_site: ["Gate", "Stores and laydown", "Block A levels", "Scaffold zone", "Excavation zone", "Batching plant", "Office", "Canteen", "Labour camp"],
-  factory: ["Gate", "Production hall", "Utilities", "Substation", "Stores", "Loading bay", "Canteen", "Office"],
-  hazardous_process_factory: ["Gate", "Process area", "Tank farm", "Utilities", "Substation", "Stores", "Loading bay", "Control room", "Canteen", "Office"],
-  mine: ["Gate", "Pit", "Haul road", "Crusher", "Workshop", "Explosives magazine", "Stores", "Office"],
-  port: ["Gate", "Berth", "Container yard", "Warehouse", "Workshop", "Office"],
-  plantation: ["Gate", "Field block A", "Processing shed", "Stores", "Office", "Labour lines"],
-  office: ["Reception", "Floors", "Pantry", "Utilities", "Parking"],
-  other: ["Gate", "Main area", "Stores", "Office"],
-};
-type IndustryExt = IndustryProfile & { defaultAreas?: string[] };
-
 function emptySite(): Partial<Site> {
   return { code: "", name: { en: "" }, address: "", state: "Tamil Nadu", district: "", lat: null, lng: null, geofenceRadiusM: 300, industryCode: null, establishmentType: "construction_site", appropriateGovernment: "state", ruleSetCode: null, ruleSetEffectiveFrom: null, riskMatrixVersionId: null, hazardousProcess: false, workingCalendar: { weeklyOff: [0], shiftStart: "08:00", shiftEnd: "17:00" }, workerCount: null, siteHeadUserId: null, active: true };
 }
@@ -80,7 +68,7 @@ function SiteWizard({ onDone }: { onDone: (siteId: string) => void }) {
   const { industries, loadIndustries, reloadSites, categories } = useScope();
   const [step, setStep] = useState(1);
   const [site, setSite] = useState<Partial<Site>>(emptySite());
-  const [industry, setIndustry] = useState<IndustryExt | null>(null);
+  const [industry, setIndustry] = useState<IndustryProfile | null>(null);
   const [areas, setAreas] = useState<string[]>([]);
   const [newArea, setNewArea] = useState("");
   const [busy, setBusy] = useState(false);
@@ -88,17 +76,17 @@ function SiteWizard({ onDone }: { onDone: (siteId: string) => void }) {
   const [result, setResult] = useState<{ site: Site; setup: SiteSetupResult } | null>(null);
   const [fieldErr, setFieldErr] = useState<Record<string, string>>({});
   useEffect(() => { loadIndustries().catch(() => undefined); }, [loadIndustries]);
-  const list = industries.data as IndustryExt[];
-  const pickIndustry = (i: IndustryExt) => {
+  const list = industries.data as IndustryProfile[];
+  const pickIndustry = (i: IndustryProfile) => {
     setIndustry(i);
     const est = i.establishmentTypes[0] ?? site.establishmentType ?? "other";
     setSite((s) => ({ ...s, industryCode: i.code, establishmentType: i.establishmentTypes.includes(s.establishmentType as EstablishmentType) ? s.establishmentType : est }));
-    setAreas(i.defaultAreas ?? DEFAULT_AREAS[est] ?? DEFAULT_AREAS.other);
+    setAreas(i.defaultAreas);
   };
   const validate1 = () => {
     const fe: Record<string, string> = {};
     if (!site.name?.en?.trim()) fe.name = t("csv.required");
-    if (!/^[A-Z0-9]{2,8}$/.test(site.code ?? "")) fe.code = t("sites.codeRule");
+    if (!/^[A-Z0-9]{2,6}$/.test(site.code ?? "")) fe.code = t("sites.codeRule");
     if (!site.district?.trim()) fe.district = t("csv.required");
     setFieldErr(fe);
     return Object.keys(fe).length === 0;
@@ -121,19 +109,19 @@ function SiteWizard({ onDone }: { onDone: (siteId: string) => void }) {
   if (result) {
     return (
       <>
-        <PageHead title={t("sites.readyTitle", { name: pick(result.site.name) })} sub={t("sites.readySub", { areas: result.setup.areasCreated, templates: result.setup.templatesEnabled?.length ?? 0, categories: result.setup.categoriesEnabled?.length ?? 0 })} />
+        <PageHead title={t("sites.readyTitle", { name: pick(result.site.name) })} sub={t("sites.readySub", { areas: result.setup.areasCreated, templates: result.setup.templatesEnabled.length, categories: result.setup.categoriesEnabled.length })} />
         <Card>
           <div className="row" style={{ marginBottom: 10 }}><IconCheckCircle style={{ color: "var(--green)" }} /><h3 style={{ margin: 0 }}>{t("sites.postersTitle")}</h3></div>
           <p className="small muted">{t("sites.postersHint")}</p>
           <div className="poster-list">
-            {(result.setup.posters ?? []).map((p) => (
-              <div className="pr" key={p.qrCodeId}>
-                <span className="grow"><strong>{p.label}</strong> <span className="small muted">· {t(`qr.target.${p.targetType}`)}</span></span>
-                <Button size="sm" onClick={() => openServerHtml(`/admin/qr-codes/${p.qrCodeId}/poster`, { lang: "en,hi,ta,kn", size: "A4" })}><IconPrint size={14} />{t("qr.printPoster")} A4</Button>
-                <Button size="sm" variant="ghost" onClick={() => openServerHtml(`/admin/qr-codes/${p.qrCodeId}/poster`, { lang: "en,hi,ta,kn", size: "A5" })}>A5</Button>
+            {result.setup.posters.map((p) => (
+              <div className="pr" key={p.id} data-poster={p.id}>
+                <span className="grow"><strong>{p.label || p.targetName}</strong> <span className="small muted">· {t(`qr.target.${p.targetType}`)}</span></span>
+                <Button size="sm" onClick={() => openServerPage(`/admin/qr-codes/${p.id}/poster-link`, { lang: "en,hi,ta,kn", size: "A4" }).catch((e) => toast.error(errMessage(e)))}><IconPrint size={14} />{t("qr.printPoster")} A4</Button>
+                <Button size="sm" variant="ghost" onClick={() => openServerPage(`/admin/qr-codes/${p.id}/poster-link`, { lang: "en,hi,ta,kn", size: "A5" }).catch((e) => toast.error(errMessage(e)))}>A5</Button>
               </div>
             ))}
-            {(result.setup.posters ?? []).length === 0 ? <p className="small muted">{t("sites.noPosters")}</p> : null}
+            {result.setup.posters.length === 0 ? <p className="small muted">{t("sites.noPosters")}</p> : null}
           </div>
           <div className="btn-group" style={{ marginTop: 14 }}>
             <Button variant="primary" onClick={() => onDone(result.site.id)}>{t("sites.openSite")}</Button>
@@ -153,7 +141,7 @@ function SiteWizard({ onDone }: { onDone: (siteId: string) => void }) {
           <Form onSubmit={() => { if (validate1()) setStep(2); }}>
             <div className="form-grid">
               <Field label={t("sites.name")} required hint={t("sites.nameHint")} error={fieldErr.name}><Input value={site.name?.en ?? ""} onChange={(e) => setSite({ ...site, name: { ...(site.name as I18n), en: e.target.value } })} autoFocus /></Field>
-              <Field label={t("sites.code")} required hint={t("sites.codeRule")} error={fieldErr.code}><Input value={site.code ?? ""} onChange={(e) => setSite({ ...site, code: e.target.value.toUpperCase() })} maxLength={8} style={{ textTransform: "uppercase" }} /></Field>
+              <Field label={t("sites.code")} required hint={t("sites.codeRule")} error={fieldErr.code}><Input value={site.code ?? ""} onChange={(e) => setSite({ ...site, code: e.target.value.toUpperCase() })} maxLength={6} style={{ textTransform: "uppercase" }} /></Field>
               <Field label={t("sites.state")} required><Select value={site.state} onChange={(e) => setSite({ ...site, state: e.target.value })}>{STATES.map((s) => <option key={s}>{s}</option>)}</Select></Field>
               <Field label={t("sites.district")} required error={fieldErr.district}><Input value={site.district ?? ""} onChange={(e) => setSite({ ...site, district: e.target.value })} /></Field>
               <Field label={t("sites.type")} required><Select value={site.establishmentType} onChange={(e) => setSite({ ...site, establishmentType: e.target.value as EstablishmentType })}>{EST_TYPES.map((x) => <option key={x} value={x}>{t(`est.${x}`)}</option>)}</Select></Field>

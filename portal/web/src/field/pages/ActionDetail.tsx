@@ -33,9 +33,10 @@ export default function ActionDetail() {
   const toast = useToast();
   const { me } = useSession();
   const ref = useRefData();
-  const { data: actions } = useActions();
+  const { data: actions, loading: listLoading } = useActions();
   const local = actions.find((a) => a.id === id || a.clientUuid === id) ?? null;
-  const { data: detail, loading, error, reload, update, stale } = useDetail<Detail>("action", local?.local ? null : id, () => api.get<Detail>(`/actions/${id}`));
+  const serverId = local ? (local.local ? null : local.id) : listLoading ? null : id; // the URL may carry the client UUID of a record created offline
+  const { data: detail, loading, error, reload, update, stale } = useDetail<Detail>("action", serverId, () => api.get<Detail>(`/actions/${serverId}`));
   const a = detail ?? local;
   const { online } = useOnlineOnly();
   const [sheet, setSheet] = useState<SheetKind>(null);
@@ -51,7 +52,7 @@ export default function ActionDetail() {
   }, [mediaMeta, outbox, id, local?.id]);
   const previews = useLocalMediaPreviews(localAfter.map((m) => m.clientUuid));
 
-  if (!a && loading) return <div className="page"><SubHead title={t("action.title")} /><Skeleton lines={8} /></div>;
+  if (!a && (loading || listLoading)) return <div className="page"><SubHead title={t("action.title")} /><Skeleton lines={8} /></div>;
   if (!a) return <div className="page"><SubHead title={t("action.title")} /><ErrorCard error={error ?? new Error(t("error.notFound"))} onRetry={reload} /></div>;
 
   const isOwner = a.ownerUserId === me?.id;
@@ -295,18 +296,20 @@ function DecideSheet({ req, siteId, onClose, onSubmit, busy }: { req: Detail["re
   const { me } = useSession();
   const ref = useRefData();
   const [decision, setDecision] = useState<ActionRequestDecide["decision"]>("approved");
+  // an approved dispute moves the action to someone else, so it needs the new owner like a reassignment (server rule)
+  const needsOwner = decision === "reassigned" || (decision === "approved" && req.type === "dispute");
   const [note, setNote] = useState("");
   const [owner, setOwner] = useState("");
   const [newDue, setNewDue] = useState(toLocalInput(req.proposedDueAt ?? new Date(Date.now() + 7 * 86_400_000).toISOString()));
   const users = assignable(ref, siteId);
   return (
-    <Sheet title={t("action.decide")} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.cancel")}</Button><Button variant="primary" loading={busy} disabled={decision === "reassigned" && !owner} onClick={() => onSubmit({ decision, note: note.trim() || undefined, newOwnerUserId: decision === "reassigned" ? owner : undefined, newDueAt: decision === "approved" && req.type === "date_change" ? fromLocalInput(newDue) : undefined })}>{t(`action.decision.${decision}`)}</Button></>}>
+    <Sheet title={t("action.decide")} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.cancel")}</Button><Button variant="primary" loading={busy} disabled={needsOwner && !owner} onClick={() => onSubmit({ decision, note: note.trim() || undefined, newOwnerUserId: needsOwner ? owner : undefined, newDueAt: decision === "approved" && req.type === "date_change" ? fromLocalInput(newDue) : undefined })}>{t(`action.decision.${decision}`)}</Button></>}>
       <p className="small muted">{req.requestedByName}: {t(`action.reason.${req.reasonCode}`)} — {req.reason}</p>
       <div className="decision-grid">
         {(["approved", "rejected", "reassigned"] as const).map((d) => <button key={d} type="button" className={`decision-btn${d === "rejected" ? " danger" : ""}`} aria-pressed={decision === d} onClick={() => setDecision(d)}>{t(`action.decision.${d}`)}</button>)}
       </div>
       {decision === "approved" && req.type === "date_change" ? <Field label={t("action.newDue")} required><Input type="datetime-local" value={newDue} onChange={(e) => setNewDue(e.target.value)} /></Field> : null}
-      {decision === "reassigned" ? <Field label={t("action.newOwner")} required><UserSelect users={users} value={owner} onChange={setOwner} allowEmpty meId={me?.id} /></Field> : null}
+      {needsOwner ? <Field label={t("action.newOwner")} required hint={decision === "approved" ? t("action.disputeApproveHint") : undefined}><UserSelect users={users} value={owner} onChange={setOwner} allowEmpty meId={me?.id} /></Field> : null}
       <Field label={t("common.note")} optional><Textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} /></Field>
       <p className="small muted">{userName(ref, me?.id, me, t)} · {t("action.decideHint")}</p>
     </Sheet>

@@ -77,6 +77,8 @@ export interface Me {
   org: { id: string; name: string; settings: OrgSettings };
   privacyNoticeVersion: number; // current notice version
   privacyAckedVersion: number | null;
+  preferences: { digest: "daily" | "weekly" | "off"; quietHours: boolean };
+  pushPublicKey: string | null; // Web Push (VAPID) key; null when the server has no VAPID keys
   serverTime: string;
 }
 export interface OrgSettings {
@@ -156,6 +158,7 @@ export interface ReminderLadder { id: string; band: Band; steps: { offsetMinutes
 export interface IndustryProfile {
   code: string; name: I18n; tagline: string; icon: string; establishmentTypes: EstablishmentType[]; categoryCodes: string[]; templateCodes: string[];
   hazards: string[]; ppe: string[]; library: { regs?: string[]; procs?: string[]; cks?: string[]; talks?: string[]; tasks?: { id: string; t: string }[] };
+  defaultAreas: string[]; // English names of the industry's default areas (the site wizard's step 2)
 }
 export interface RuleSet {
   code: string; name: string; state: string; siteType: string; regime: "legacy" | "osh_state_final" | "osh_central" | "draft";
@@ -525,4 +528,4 @@ export interface AuditRow { id: number; at: string; actorName: string | null; ac
 export interface AuditVerify { ok: boolean; rows: number; firstBadId: number | null; checkedAt: string }
 export interface TranslationPack { lang: Lang; total: number; translated: number; missing: string[]; overrides: Record<string, string> }
 export interface Health { serverTime: string; version: string; db: "ok" | "error"; storageDriver: "disk" | "db"; queuedEmails: number; failedNotifications24h: number; syncRejected24h: number; devicesByVersion: { appVersion: string; count: number }[]; lastJobRuns: { key: string; at: string }[]; backups: { lastAt: string | null; note: string } }
-export interface ImportResult { created: number; updated: number; skipped: number; errors: { row: number; message: string }[] }
+export interface ImportResult { created: number; updated: number; skipped: number; errors: { row: number; message: string }[]; tempPasswords?: Record<string, string> } // tempPasswords: users import only, employee code → one-time password

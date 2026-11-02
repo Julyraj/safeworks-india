@@ -24,12 +24,14 @@ export default function ObservationDetail() {
   const toast = useToast();
   const { me } = useSession();
   const ref = useRefData();
-  const { data: observations } = useObservations();
+  const { data: observations, loading: listLoading } = useObservations();
   const { data: actions } = useActions();
   const { data: outbox } = useOutbox();
   const local = observations.find((o) => o.id === id || o.clientUuid === id) ?? null;
   const isLocal = !!local?.local;
-  const { data: detail, loading, error, reload, update, stale } = useDetail<Detail>("observation", isLocal ? null : id, () => api.get<Detail>(`/observations/${id}`));
+  // the URL may still carry the client UUID of a report saved offline; once synced the record has its server id
+  const serverId = local ? (isLocal ? null : local.id) : listLoading ? null : id;
+  const { data: detail, loading, error, reload, update, stale } = useDetail<Detail>("observation", serverId, () => api.get<Detail>(`/observations/${serverId}`));
   const obs = detail ?? local;
   const officer = isOfficer(me, obs?.siteId);
   const [triage, setTriage] = useState(false);
@@ -48,7 +50,7 @@ export default function ObservationDetail() {
   const linkedActions = actions.filter((a) => a.sourceType === "observation" && (a.sourceId === obs?.id || a.sourceCaseNo === obs?.caseNo) && obs?.caseNo);
   const catName = (code: string) => pick(ref.categories.find((c) => c.code === code)?.name) || code;
 
-  if (!obs && loading) return <div className="page"><SubHead title={t("obs.title")} /><Skeleton lines={8} /></div>;
+  if (!obs && (loading || listLoading)) return <div className="page"><SubHead title={t("obs.title")} /><Skeleton lines={8} /></div>;
   if (!obs) return <div className="page"><SubHead title={t("obs.title")} /><ErrorCard error={error ?? new Error(t("error.notFound"))} onRetry={reload} /></div>;
 
   const area = ref.areas.find((a) => a.id === obs.areaId);

@@ -388,6 +388,9 @@ export function CsvImport({ columns, sample, onImport, onDone, title }: CsvImpor
           <div className="kpi"><span className="v">{result.updated}</span><span className="l">{t("csv.updated")}</span></div>
           <div className="kpi"><span className="v">{result.skipped}</span><span className="l">{t("csv.skipped")}</span></div>
         </div>
+        {result.tempPasswords && Object.keys(result.tempPasswords).length ? (
+          <SecretOnce label={t("csv.tempPasswords", { count: Object.keys(result.tempPasswords).length })} value={Object.entries(result.tempPasswords).map(([code, pw]) => `${code},${pw}`).join("\n")} />
+        ) : null}
         {result.errors.length ? (
           <div className="table-wrap"><table className="table"><thead><tr><th>{t("csv.row")}</th><th>{t("csv.problem")}</th></tr></thead>
             <tbody>{result.errors.map((e, i) => <tr key={i}><td className="num">{e.row}</td><td>{e.message}</td></tr>)}</tbody></table></div>

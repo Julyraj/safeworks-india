@@ -286,8 +286,8 @@ async def decide(conn, actor: AuthUser, action_id: str, request_id: str, payload
     decision = payload.decision
     new_owner = payload.new_owner_user_id
     if decision == "reassigned" or (decision == "approved" and req["type"] == "dispute"):
-        if not new_owner:
-            raise bad_request("Choose a different owner.", key="err.self_reassign")
+        if not new_owner:  # an approved dispute hands the action to someone else, like a reassignment
+            raise bad_request("Choose the new owner.", key="err.new_owner_required")
         if new_owner == a["owner_user_id"]:
             raise bad_request("Choose a different owner.", key="err.self_reassign")
         if not await user_has_site(conn, new_owner, a["site_id"]):
