@@ -221,5 +221,9 @@
 
   "privacy.title": "ನಿಮ್ಮ ಡೇಟಾ ಹೇಗೆ ಬಳಸಲಾಗುತ್ತದೆ",
   "privacy.ack": "ನಾನು ಗೌಪ್ಯತಾ ಸೂಚನೆಯನ್ನು ಓದಿದ್ದೇನೆ",
-  "privacy.contact": "ಗೌಪ್ಯತಾ ಸಂಪರ್ಕ"
+  "privacy.contact": "ಗೌಪ್ಯತಾ ಸಂಪರ್ಕ",
+
+  "charts.good": "ಉತ್ತಮ ಅಭ್ಯಾಸ",
+  "charts.atRisk": "ಅಪಾಯಕಾರಿ",
+  "charts.total": "ಒಟ್ಟು"
 }

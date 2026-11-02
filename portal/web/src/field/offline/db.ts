@@ -6,7 +6,7 @@
    happens in one IndexedDB transaction, so a crash never leaves a record without its command or vice versa. */
 import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 import type {
-  ActionSummary, Area, Asset, Category, Contractor, DirectoryUser, DueDateRule, IndustryProfile, MediaRef, Notification, ObservationSummary,
+  ActionSummary, Area, Asset, Category, Contractor, Department, DirectoryUser, DueDateRule, IndustryProfile, MediaRef, Notification, ObservationSummary,
   ReminderLadder, RiskMatrixVersion, RunSummary, Schedule, Site, SyncOp, TemplateVersion, Lang,
 } from "../../shared/types";
 
@@ -67,13 +67,13 @@ export type LocalAction = ActionSummary & { local?: boolean; commandId?: string 
 export type LocalRun = RunSummary & { local?: boolean; commandId?: string };
 
 export interface RefData {
-  sites: Site[]; areas: Area[]; assets: Asset[]; categories: Category[]; contractors: Contractor[]; directory: DirectoryUser[];
+  sites: Site[]; areas: Area[]; assets: Asset[]; categories: Category[]; contractors: Contractor[]; departments: Department[]; directory: DirectoryUser[];
   matrixVersions: RiskMatrixVersion[]; dueDateRules: DueDateRule[]; ladders: ReminderLadder[]; industries: IndustryProfile[];
   templates: TemplateVersion[]; schedules: Schedule[]; translations: Partial<Record<Lang, Record<string, string>>>;
   privacyNotice: { version: number; body: Record<string, string>; effectiveFrom: string } | null;
 }
 export const EMPTY_REF: RefData = {
-  sites: [], areas: [], assets: [], categories: [], contractors: [], directory: [], matrixVersions: [], dueDateRules: [], ladders: [],
+  sites: [], areas: [], assets: [], categories: [], contractors: [], departments: [], directory: [], matrixVersions: [], dueDateRules: [], ladders: [],
   industries: [], templates: [], schedules: [], translations: {}, privacyNotice: null,
 };
 export type RefKey = keyof RefData;

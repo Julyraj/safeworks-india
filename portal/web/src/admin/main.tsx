@@ -66,6 +66,7 @@ function Gate() {
             <Route path="qr" element={<QrCodes />} />
             <Route path="people" element={<People />} />
             <Route path="contractors" element={<People tab="contractors" />} />
+            <Route path="departments" element={<People tab="departments" />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<Users />} />
             <Route path="categories" element={<Categories />} />

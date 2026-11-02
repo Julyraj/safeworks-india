@@ -11,15 +11,21 @@ from ...errors import HttpError, bad_request, forbidden, not_found
 from ...http import JSON, json_body, page_params, sort_sql, uuid_param
 from ...notify import notify
 from ...rbac import ALL_SITES_ROLES, ROLES, AuthUser
-from ...schemas import ContractorIn, PersonIn, RoleGrant, RolesBody, StatusBody, UserCreate, UserUpdate, parse
+from ...schemas import ContractorIn, DepartmentIn, PersonIn, RoleGrant, RolesBody, StatusBody, UserCreate, UserUpdate, parse
 from ...security import hash_password, random_code, sha256, temp_password
-from ...views import contractor as contractor_view, paged, person as person_view, user_admin
+from ...views import contractor as contractor_view, department as department_view, paged, person as person_view, user_admin
 from ._common import console_user, need_admin, need_write, read_csv
 
 router = APIRouter(prefix="/api/v1/admin")
 
-USER_SELECT = """select u.*, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, p.employer_id, k.name as employer_name
-                   from users u left join people p on p.id = u.person_id left join contractors k on k.id = p.employer_id"""
+
+async def _check_department(conn, org_id: str, department_id: str | None) -> None:
+    if department_id and not await db.one("select 1 from departments where id = $1 and org_id = $2 and deleted_at is null", [department_id, org_id], conn):
+        raise bad_request("departmentId: unknown department", key="err.unknown_department")
+
+USER_SELECT = """select u.*, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, p.employer_id, k.name as employer_name,
+                          p.department_id, d.name_i18n->>'en' as department_name
+                   from users u left join people p on p.id = u.person_id left join contractors k on k.id = p.employer_id left join departments d on d.id = p.department_id"""
 
 
 async def _roles(conn, user_id: str) -> list[dict]:
@@ -119,12 +125,13 @@ async def create_user(request: Request, user: AuthUser = Depends(console_user)):
     if inp.email and await db.one("select 1 from users where lower(email) = lower($1)", [inp.email]):
         raise HttpError(409, "This email is already in use.", "conflict", key="err.duplicate_code")
     _validate_roles(inp.roles)
+    await _check_department(None, user.org_id, inp.department_id)
     temp = temp_password()
     pw_hash = await hash_password(temp)
     async with db.tx() as c:
         person = await db.one(
-            "insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, worker_type) values ($1,$2,$3,$4,$5,$6,$7,'employee') returning id",
-            [user.org_id, inp.name, inp.employer_id, encrypt(inp.phone) if inp.phone else "", inp.phone[-4:] if inp.phone else "", inp.language, inp.trade], c,
+            "insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, worker_type, department_id) values ($1,$2,$3,$4,$5,$6,$7,'employee',$8) returning id",
+            [user.org_id, inp.name, inp.employer_id, encrypt(inp.phone) if inp.phone else "", inp.phone[-4:] if inp.phone else "", inp.language, inp.trade, inp.department_id], c,
         )
         row = await db.one(
             """insert into users (org_id, person_id, login_type, employee_code, email, password_hash, must_change_password, language, expires_at, created_by)
@@ -132,7 +139,8 @@ async def create_user(request: Request, user: AuthUser = Depends(console_user)):
             [user.org_id, person["id"], inp.login_type, inp.employee_code or "", inp.email or "", pw_hash, inp.language, inp.expires_at, user.id], c,
         )
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="user", record_id=row["id"],
-                    changes={"name": inp.name, "employeeCode": inp.employee_code, "email": inp.email, "loginType": inp.login_type, "phone": inp.phone})
+                    changes={"name": inp.name, "employeeCode": inp.employee_code, "email": inp.email, "loginType": inp.login_type, "phone": inp.phone,
+                             "departmentId": inp.department_id})
         await _set_roles(c, user, row["id"], inp.roles)
         enrol_code, enrol_exp = None, None
         if inp.login_type == "enrolment_code":
@@ -161,7 +169,12 @@ async def update_user(user_id: str, request: Request, user: AuthUser = Depends(c
     need_admin(user)
     row = await _load(uuid_param(user_id), user)
     inp = parse(UserUpdate, await json_body(request))
+    set_department = "department_id" in inp.model_fields_set
+    if set_department:
+        await _check_department(None, user.org_id, inp.department_id)
     async with db.tx() as c:
+        if row["person_id"] and set_department:
+            await c.execute("update people set department_id = $2, updated_at = now() where id = $1", row["person_id"], inp.department_id)
         if row["person_id"]:
             await c.execute(
                 """update people set full_name = coalesce($2, full_name), employer_id = coalesce($3, employer_id), trade = coalesce($4, trade),
@@ -175,7 +188,7 @@ async def update_user(user_id: str, request: Request, user: AuthUser = Depends(c
                                 login_type = coalesce($6, login_type), updated_at = now() where id = $1""",
             row["id"], inp.email.lower() if inp.email else None, inp.employee_code, inp.language, inp.expires_at, inp.login_type,
         )
-        await audit(c, org_id=user.org_id, actor=user, action="update", record_type="user", record_id=row["id"], changes={k: v for k, v in inp.model_dump(by_alias=True).items() if v is not None})
+        await audit(c, org_id=user.org_id, actor=user, action="update", record_type="user", record_id=row["id"], changes={k: v for k, v in inp.model_dump(by_alias=True).items() if v is not None or k == "departmentId" and set_department})
         out = await _user_out(c, row["id"])
     forget_user_in_cache(row["id"])
     return JSON(out)
@@ -293,12 +306,20 @@ async def import_users(request: Request, user: AuthUser = Depends(console_user))
             employer = None
             if r.get("employer"):
                 employer = await db.one("select id from contractors where org_id = $1 and lower(name) = lower($2) and deleted_at is null", [user.org_id, r["employer"]], c)
+            department = None
+            if r.get("department"):
+                department = await db.one("select id from departments where org_id = $1 and lower(code) = lower($2) and deleted_at is null", [user.org_id, r["department"]], c)
+                if not department:
+                    errors.append({"row": i, "message": f"unknown department {r['department']}"})
+                    skipped += 1
+                    continue
+            dept_id = department["id"] if department else None
             lang = r.get("language") if r.get("language") in ("en", "hi", "ta", "kn") else "en"
             phone = r.get("phone", "")
             existing = await db.one("select id, person_id from users where org_id = $1 and lower(employee_code) = lower($2)", [user.org_id, code], c)
             if existing:
-                await c.execute("update people set full_name = $2, employer_id = coalesce($3, employer_id), trade = $4, updated_at = now() where id = $1",
-                                existing["person_id"], name, employer["id"] if employer else None, r.get("trade", ""))
+                await c.execute("update people set full_name = $2, employer_id = coalesce($3, employer_id), trade = $4, department_id = coalesce($5, department_id), updated_at = now() where id = $1",
+                                existing["person_id"], name, employer["id"] if employer else None, r.get("trade", ""), dept_id)
                 await c.execute("update users set email = coalesce(nullif($2, ''), email), language = $3, updated_at = now() where id = $1", existing["id"], r.get("email", "").lower(), lang)
                 await c.execute("insert into user_site_roles (user_id, site_id, role, granted_by) values ($1, $2, $3::role_t, $4) on conflict do nothing",
                                 existing["id"], site["id"] if site else None, role, user.id)
@@ -307,8 +328,8 @@ async def import_users(request: Request, user: AuthUser = Depends(console_user))
             else:
                 temp = temp_password()
                 person = await db.one(
-                    "insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade) values ($1,$2,$3,$4,$5,$6,$7) returning id",
-                    [user.org_id, name, employer["id"] if employer else None, encrypt(phone) if phone else "", phone[-4:] if phone else "", lang, r.get("trade", "")], c,
+                    "insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, department_id) values ($1,$2,$3,$4,$5,$6,$7,$8) returning id",
+                    [user.org_id, name, employer["id"] if employer else None, encrypt(phone) if phone else "", phone[-4:] if phone else "", lang, r.get("trade", ""), dept_id], c,
                 )
                 login_type = "email" if r.get("email") and role in ("site_safety_officer", "site_head", "hse_manager", "admin", "auditor") else "employee_code"
                 u = await db.one(
@@ -342,11 +363,13 @@ def _worker_type(v: str) -> str:
 async def create_person(request: Request, user: AuthUser = Depends(console_user)):
     need_admin(user)
     inp = parse(PersonIn, await json_body(request))
+    await _check_department(None, user.org_id, inp.department_id)
     async with db.tx() as c:
         row = await db.one(
-            "insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, worker_type, active) values ($1,$2,$3,$4,$5,$6,$7,$8,$9) returning *",
+            """insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, worker_type, active, department_id)
+               values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) returning *""",
             [user.org_id, inp.full_name, inp.employer_id, encrypt(inp.phone) if inp.phone else "", inp.phone[-4:] if inp.phone else "", inp.preferred_language, inp.trade,
-             _worker_type(inp.worker_type), inp.active], c,
+             _worker_type(inp.worker_type), inp.active, inp.department_id], c,
         )
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="person", record_id=row["id"], changes={"fullName": inp.full_name, "phone": inp.phone, "employerId": inp.employer_id})
     return JSON(person_view(row), status_code=201)
@@ -359,14 +382,20 @@ async def update_person(person_id: str, request: Request, user: AuthUser = Depen
     if not p:
         raise not_found()
     inp = parse(PersonIn, await json_body(request))
+    await _check_department(None, user.org_id, inp.department_id)
+    dept = inp.department_id if "department_id" in inp.model_fields_set else p["department_id"]
     async with db.tx() as c:
         row = await db.one(
             """update people set full_name = $2, employer_id = $3, phone_enc = case when $4 = '' then phone_enc else $4 end, phone_last4 = case when $5 = '' then phone_last4 else $5 end,
-                                preferred_language = $6, trade = $7, worker_type = $8, active = $9, version = version + 1, updated_at = now() where id = $1 returning *""",
+                                preferred_language = $6, trade = $7, worker_type = $8, active = $9, department_id = $10, version = version + 1, updated_at = now() where id = $1 returning *""",
             [p["id"], inp.full_name, inp.employer_id, encrypt(inp.phone) if inp.phone else "", inp.phone[-4:] if inp.phone else "", inp.preferred_language, inp.trade,
-             _worker_type(inp.worker_type), inp.active], c,
+             _worker_type(inp.worker_type), inp.active, dept], c,
         )
-        await audit(c, org_id=user.org_id, actor=user, action="update", record_type="person", record_id=p["id"], changes={"fullName": [p["full_name"], inp.full_name], "phone": inp.phone})
+        await audit(c, org_id=user.org_id, actor=user, action="update", record_type="person", record_id=p["id"],
+                    changes={"fullName": [p["full_name"], inp.full_name], "phone": inp.phone, "departmentId": [p["department_id"], dept]})
+        linked = await c.fetchval("select id from users where person_id = $1", p["id"])
+    if linked:
+        forget_user_in_cache(linked)
     return JSON(person_view(row))
 
 
@@ -411,6 +440,75 @@ async def import_people(request: Request, user: AuthUser = Depends(console_user)
                 created += 1
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="person", record_id="import", changes={"created": created, "updated": updated, "skipped": skipped})
     return JSON({"created": created, "updated": updated, "skipped": skipped, "errors": errors})
+
+
+# ---------- departments ----------
+
+DEPARTMENT_SELECT = """select d.*, (select count(*) from people p join users u on u.person_id = p.id where p.department_id = d.id and u.status = 'active')::int as member_count
+                         from departments d"""
+
+
+@router.get("/departments")
+async def list_departments(request: Request, user: AuthUser = Depends(console_user)):
+    rows = await db.q(DEPARTMENT_SELECT + " where d.org_id = $1 and d.deleted_at is null order by d.sort, d.code", [user.org_id])
+    return JSON([department_view(r) for r in rows])
+
+
+async def _department_code_free(org_id: str, code: str, own_id: str | None = None) -> None:
+    if await db.one("select 1 from departments where org_id = $1 and lower(code) = lower($2) and deleted_at is null and id is distinct from $3", [org_id, code, own_id]):
+        raise HttpError(409, "This code is already in use.", "conflict", key="err.duplicate_code")
+
+
+@router.post("/departments")
+async def create_department(request: Request, user: AuthUser = Depends(console_user)):
+    need_admin(user)
+    inp = parse(DepartmentIn, await json_body(request))
+    if not inp.name.en:
+        raise bad_request("name.en: required")
+    await _department_code_free(user.org_id, inp.code)
+    async with db.tx() as c:
+        row = await db.one("insert into departments (org_id, code, name_i18n, sort, active) values ($1,$2,$3,$4,$5) returning id",
+                           [user.org_id, inp.code.upper(), inp.name.dump(), inp.sort, inp.active], c)
+        await audit(c, org_id=user.org_id, actor=user, action="create", record_type="department", record_id=row["id"], changes={"code": inp.code.upper(), "name": inp.name.dump()})
+        out = await db.one(DEPARTMENT_SELECT + " where d.id = $1", [row["id"]], c)
+    return JSON(department_view(out), status_code=201)
+
+
+@router.put("/departments/{did}")
+async def update_department(did: str, request: Request, user: AuthUser = Depends(console_user)):
+    need_admin(user)
+    d = await db.one("select * from departments where id = $1 and org_id = $2 and deleted_at is null", [uuid_param(did), user.org_id])
+    if not d:
+        raise not_found()
+    inp = parse(DepartmentIn, await json_body(request))
+    if not inp.name.en:
+        raise bad_request("name.en: required")
+    await _department_code_free(user.org_id, inp.code, d["id"])
+    async with db.tx() as c:
+        await c.execute("update departments set code = $2, name_i18n = $3, sort = $4, active = $5, version = version + 1, updated_at = now() where id = $1",
+                        d["id"], inp.code.upper(), inp.name.dump(), inp.sort, inp.active)
+        await audit(c, org_id=user.org_id, actor=user, action="update", record_type="department", record_id=d["id"],
+                    changes={"code": [d["code"], inp.code.upper()], "name": [d["name_i18n"], inp.name.dump()], "active": [d["active"], inp.active]})
+        out = await db.one(DEPARTMENT_SELECT + " where d.id = $1", [d["id"]], c)
+    return JSON(department_view(out))
+
+
+@router.delete("/departments/{did}")
+async def delete_department(did: str, request: Request, user: AuthUser = Depends(console_user)):
+    """Soft delete. Members lose the department; actions and reports keep the snapshot they were recorded with."""
+    need_admin(user)
+    d = await db.one("select * from departments where id = $1 and org_id = $2 and deleted_at is null", [uuid_param(did), user.org_id])
+    if not d:
+        raise not_found()
+    reason = (await json_body(request) or {}).get("reason") or ""
+    async with db.tx() as c:
+        members = await c.fetch("select u.id from people p join users u on u.person_id = p.id where p.department_id = $1", d["id"])
+        await c.execute("update people set department_id = null, updated_at = now() where department_id = $1", d["id"])
+        await c.execute("update departments set active = false, deleted_at = now(), deleted_by = $2, delete_reason = $3, updated_at = now() where id = $1", d["id"], user.id, reason)
+        await audit(c, org_id=user.org_id, actor=user, action="delete", record_type="department", record_id=d["id"], reason=reason)
+    for m in members:
+        forget_user_in_cache(m["id"])
+    return JSON({"ok": True})
 
 
 # ---------- contractors ----------

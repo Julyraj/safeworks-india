@@ -400,6 +400,8 @@ async def can_view(conn, viewer: AuthUser, a: dict) -> bool:
         return False
     if viewer.can_view_site(a["site_id"]):
         return True
+    if viewer.department_id and a.get("department_id") == viewer.department_id:
+        return True  # read-only: the department's own assignments (the buttons stay with the owner, verifier and officers)
     return viewer.id in (a["owner_user_id"], a["verifier_user_id"], a["completed_by"], a["created_by"])
 
 

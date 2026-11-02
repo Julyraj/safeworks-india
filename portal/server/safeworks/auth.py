@@ -59,7 +59,7 @@ async def build_user(row: dict, conn=None) -> AuthUser:
     return AuthUser(
         id=row["id"], org_id=row["org_id"], name=row["name"], employee_code=row["employee_code"], email=row["email"],
         language=row["language"], login_type=row["login_type"], must_change_password=row["must_change_password"],
-        mfa_enabled=row["mfa_enabled"], employer_id=row.get("employer_id"), roles=await load_roles(row["id"], conn),
+        mfa_enabled=row["mfa_enabled"], employer_id=row.get("employer_id"), department_id=row.get("department_id"), roles=await load_roles(row["id"], conn),
         all_site_ids=await active_site_ids(row["org_id"], conn),
         session_id=row.get("session_id", ""), kind=row.get("kind", "field"), mfa_passed=bool(row.get("mfa_passed", True)),
         device_id=row.get("device_id") or "",
@@ -68,7 +68,7 @@ async def build_user(row: dict, conn=None) -> AuthUser:
 
 USER_SQL = """select u.id, u.org_id, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, u.employee_code, u.email,
                      u.language, u.login_type, u.must_change_password, u.mfa_enabled, u.status, u.expires_at, u.password_hash,
-                     u.failed_attempts, u.locked_until, u.mfa_secret_enc, u.person_id, p.employer_id
+                     u.failed_attempts, u.locked_until, u.mfa_secret_enc, u.person_id, p.employer_id, p.department_id
                 from users u left join people p on p.id = u.person_id"""
 
 
@@ -80,7 +80,7 @@ async def _lookup(token_hash: str) -> AuthUser | None:
     row = await db.one(
         """select s.id as session_id, s.kind, s.mfa_passed, s.device_id::text as device_id, s.expires_at, s.last_seen_at,
                   u.id, u.org_id, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, u.employee_code, u.email,
-                  u.language, u.login_type, u.must_change_password, u.mfa_enabled, p.employer_id
+                  u.language, u.login_type, u.must_change_password, u.mfa_enabled, p.employer_id, p.department_id
              from sessions s join users u on u.id = s.user_id left join people p on p.id = u.person_id
             where s.token_hash = $1 and s.revoked_at is null and s.expires_at > now() and u.status = 'active'
               and (u.expires_at is null or u.expires_at > now())""",

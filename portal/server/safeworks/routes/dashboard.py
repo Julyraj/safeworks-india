@@ -11,6 +11,8 @@ from ..auth import require_user
 from ..config import config
 from ..errors import forbidden, not_found, rate_limited
 from ..http import JSON, csv_response, parse_dt, uuid_param
+from ..xlsx import Sheet, xlsx_response
+from .insights import insights_data, period
 from ..i18n import pick, t
 from ..ratelimit import Limiter
 from ..rbac import AuthUser
@@ -148,6 +150,8 @@ async def dashboard(request: Request, user: AuthUser = Depends(require_user())):
 
 
 # ---------- exports ----------
+# Every list exports as CSV (UTF-8 with BOM) or as a real Excel workbook (.xlsx); /exports/report.xlsx puts a summary, the
+# reports, the actions and the department table in one workbook. One export = one audit row and one unit of the hourly limit.
 
 def _check_export(user: AuthUser) -> None:
     if not any(user.can_view_site(s) for s in user.sites_in_scope()):
@@ -158,63 +162,56 @@ def _check_export(user: AuthUser) -> None:
         raise rate_limited(f"Export limit reached ({config.exports_per_hour} per hour).", key="err.exports_limit", limit=config.exports_per_hour)
 
 
-async def _audit_export(user: AuthUser, what: str, n: int, filters: dict) -> None:
+async def _audit_export(user: AuthUser, what: str, n: int, filters: dict, fmt: str = "csv") -> None:
     async with db.tx() as c:
-        await audit(c, org_id=user.org_id, actor=user, action="export", record_type=what, record_id="csv", changes={"rows": n, "filters": filters})
+        await audit(c, org_id=user.org_id, actor=user, action="export", record_type=what, record_id=fmt, changes={"rows": n, "filters": filters})
 
 
-@router.get("/exports/observations.csv")
-async def export_observations(request: Request, user: AuthUser = Depends(require_user())):
-    _check_export(user)
-    q = dict(request.query_params)
+async def observation_rows(q: dict, user: AuthUser) -> list[list]:
     params: list = []
     where, params = observation_filters(q, user, params)
     rows = await db.q(
         f"""select o.case_no, o.site_id, s.code as site_code, a.name_i18n as area_name, o.type, o.category_codes, o.description, o.description_lang, o.status, o.risk_band, o.likelihood, o.severity,
                    o.imminent_danger, o.fixed_on_spot, o.anonymous, o.channel, o.reporter_type, k.name as employer, o.trade, o.captured_at, o.received_at, o.triaged_at, o.closed_at,
-                   o.closure_summary, o.is3786_code, o.lat, o.lng,
+                   o.closure_summary, o.is3786_code, o.lat, o.lng, d.name_i18n as department_name,
                    case when o.anonymous then '' else coalesce(p.full_name, u.employee_code, '') end as reporter
               from observations o join sites s on s.id = o.site_id left join areas a on a.id = o.area_id left join contractors k on k.id = o.employer_involved_id
-              left join users u on u.id = o.reporter_user_id left join people p on p.id = u.person_id
+              left join users u on u.id = o.reporter_user_id left join people p on p.id = u.person_id left join departments d on d.id = o.reporter_department_id
              where {' and '.join(where)} order by o.received_at desc limit 50000""", params)
     lang = user.language
     head = ["Case no", "Site", "Area", "Type", "Categories", "Description", "Language", "Status", "Band", "Likelihood", "Severity", "Danger now", "Fixed on spot", "Anonymous", "Channel",
-            "Reporter type", "Employer", "Trade", "Reporter", "Captured at", "Received at", "Triaged at", "Closed at", "Closure summary", "IS 3786", "Lat", "Lng"]
+            "Reporter type", "Employer", "Trade", "Reporter", "Reporter department", "Captured at", "Received at", "Triaged at", "Closed at", "Closure summary", "IS 3786", "Lat", "Lng"]
     out = [head]
     for r in rows:
-        reporter = r["reporter"] if user.sees_reporter_identity(r["site_id"]) else ""
+        named = user.sees_reporter_identity(r["site_id"])
         out.append([r["case_no"], r["site_code"], pick(r["area_name"], lang) if r["area_name"] else "", r["type"], ",".join(r["category_codes"] or []), r["description"], r["description_lang"],
                     r["status"], r["risk_band"], r["likelihood"], r["severity"], r["imminent_danger"], r["fixed_on_spot"], r["anonymous"], r["channel"], r["reporter_type"], r["employer"],
-                    r["trade"], reporter, r["captured_at"], r["received_at"], r["triaged_at"], r["closed_at"], r["closure_summary"], r["is3786_code"], r["lat"], r["lng"]])
-    await _audit_export(user, "observation", len(rows), q)
-    return csv_response(out, "observations.csv")
+                    r["trade"], r["reporter"] if named else "", pick(r["department_name"], lang) if named and r["department_name"] else "", r["captured_at"], r["received_at"],
+                    r["triaged_at"], r["closed_at"], r["closure_summary"], r["is3786_code"], r["lat"], r["lng"]])
+    return out
 
 
-@router.get("/exports/actions.csv")
-async def export_actions(request: Request, user: AuthUser = Depends(require_user())):
-    _check_export(user)
-    q = dict(request.query_params)
+async def action_rows(q: dict, user: AuthUser) -> list[list]:
     params: list = []
     where = action_filters(q, user, params)
     rows = await db.q(
-        f"""select a.case_no, s.code as site_code, a.source_type, a.title, a.problem, a.band, a.status, coalesce(p.full_name, u.employee_code) as owner, k.name as employer,
-                   a.action_type, a.control_level, a.original_due_at, a.due_at, a.created_at, a.completed_at, a.verified_at, a.completion_note, a.cause_addressed, a.verification_result,
-                   a.verification_method, a.reopen_count, a.interim_control
+        f"""select a.case_no, s.code as site_code, a.source_type, a.title, a.problem, a.band, a.status, coalesce(p.full_name, u.employee_code) as owner, d.name_i18n as department_name,
+                   k.name as employer, a.action_type, a.control_level, a.original_due_at, a.due_at, a.created_at, a.completed_at, a.verified_at, a.completion_note, a.cause_addressed,
+                   a.verification_result, a.verification_method, a.reopen_count, a.interim_control,
+                   (a.status in ('open','in_progress','reopened','disputed') and a.due_at < now()) as overdue
               from actions a join sites s on s.id = a.site_id join users u on u.id = a.owner_user_id left join people p on p.id = u.person_id
-              left join contractors k on k.id = a.responsible_employer_id where {' and '.join(where)} order by a.created_at desc limit 50000""", params)
-    head = ["Case no", "Site", "Source", "Title", "Problem", "Band", "Status", "Owner", "Employer", "Type", "Control level", "Original due", "Due", "Created", "Completed", "Verified",
-            "Completion note", "Cause addressed", "Verification result", "Verification method", "Reopen count", "Interim control"]
-    out = [head] + [[r["case_no"], r["site_code"], r["source_type"], r["title"], r["problem"], r["band"], r["status"], r["owner"], r["employer"], r["action_type"], r["control_level"],
-                     r["original_due_at"], r["due_at"], r["created_at"], r["completed_at"], r["verified_at"], r["completion_note"], r["cause_addressed"], r["verification_result"],
-                     r["verification_method"], r["reopen_count"], r["interim_control"]] for r in rows]
-    await _audit_export(user, "action", len(rows), q)
-    return csv_response(out, "actions.csv")
+              left join contractors k on k.id = a.responsible_employer_id left join departments d on d.id = a.department_id
+             where {' and '.join(where)} order by a.created_at desc limit 50000""", params)
+    lang = user.language
+    head = ["Case no", "Site", "Source", "Title", "Problem", "Band", "Status", "Overdue", "Owner", "Department", "Employer", "Type", "Control level", "Original due", "Due", "Created",
+            "Completed", "Verified", "Completion note", "Cause addressed", "Verification result", "Verification method", "Reopen count", "Interim control"]
+    return [head] + [[r["case_no"], r["site_code"], r["source_type"], r["title"], r["problem"], r["band"], r["status"], r["overdue"], r["owner"],
+                      pick(r["department_name"], lang) if r["department_name"] else "", r["employer"], r["action_type"], r["control_level"], r["original_due_at"], r["due_at"],
+                      r["created_at"], r["completed_at"], r["verified_at"], r["completion_note"], r["cause_addressed"], r["verification_result"], r["verification_method"],
+                      r["reopen_count"], r["interim_control"]] for r in rows]
 
 
-@router.get("/exports/inspections.csv")
-async def export_inspections(request: Request, user: AuthUser = Depends(require_user())):
-    _check_export(user)
-    q = dict(request.query_params)
+async def inspection_rows(request: Request, q: dict, user: AuthUser) -> list[list]:
     sites = _sites(request, user)
     params: list = [sites]
     where = ["r.site_id = any($1::uuid[])"]
@@ -239,8 +236,64 @@ async def export_inspections(request: Request, user: AuthUser = Depends(require_
     lang = user.language
     head = ["Case no", "Site", "Template", "Template name", "Version", "Area", "Asset", "Trigger", "Status", "Inspector", "Due", "Started", "Completed", "Score %", "Result", "Tag", "Failed",
             "Actions", "Repeat findings"]
-    out = [head] + [[r["case_no"], r["site_code"], r["template_code"], pick(r["template_name"], lang), r["version"], pick(r["area_name"], lang) if r["area_name"] else "", r["tag_no"],
-                     r["trigger"], r["status"], r["inspector"], r["due_at"], r["started_at"], r["completed_at"], float(r["score_pct"]) if r["score_pct"] is not None else "", r["result"],
-                     r["tag_status"], r["failed"], r["actions"], r["repeats"]] for r in rows]
-    await _audit_export(user, "inspection_run", len(rows), q)
-    return csv_response(out, "inspections.csv")
+    return [head] + [[r["case_no"], r["site_code"], r["template_code"], pick(r["template_name"], lang), r["version"], pick(r["area_name"], lang) if r["area_name"] else "", r["tag_no"],
+                      r["trigger"], r["status"], r["inspector"], r["due_at"], r["started_at"], r["completed_at"], float(r["score_pct"]) if r["score_pct"] is not None else "", r["result"],
+                      r["tag_status"], r["failed"], r["actions"], r["repeats"]] for r in rows]
+
+
+EXPORTS = {"observations": ("observation", "Reports"), "actions": ("action", "Actions"), "inspections": ("inspection_run", "Inspections")}
+
+
+@router.get("/exports/{what}.{fmt}")
+async def export_list(what: str, fmt: str, request: Request, user: AuthUser = Depends(require_user())):
+    if what == "report" and fmt == "xlsx":
+        return await export_report(request, user)
+    if what not in EXPORTS or fmt not in ("csv", "xlsx"):
+        raise not_found()
+    _check_export(user)
+    q = dict(request.query_params)
+    if what == "observations":
+        out = await observation_rows(q, user)
+    elif what == "actions":
+        out = await action_rows(q, user)
+    else:
+        out = await inspection_rows(request, q, user)
+    record_type, sheet = EXPORTS[what]
+    await _audit_export(user, record_type, len(out) - 1, q, fmt)
+    if fmt == "xlsx":
+        return xlsx_response([Sheet(sheet, out)], f"{what}.xlsx")
+    return csv_response(out, f"{what}.csv")
+
+
+@router.get("/exports/report.xlsx")
+async def export_report(request: Request, user: AuthUser = Depends(require_user())):
+    """One workbook: Summary (site-level insights for the period), Reports, Actions, Departments. Same filters as the lists
+    (siteId(s), from, to); the period defaults to the last 90 days."""
+    _check_export(user)
+    q = dict(request.query_params)
+    frm, to = period(request.query_params)
+    q.setdefault("from", frm.isoformat())
+    q.setdefault("to", to.isoformat())
+    sites = _sites(request, user)
+    lang = user.language
+    data = await insights_data(user, "site", sites, frm, to)
+    codes = await db.q("select code from sites where id = any($1::uuid[]) order by code", [sites])
+    r, a = data["reports"], data["actions"]
+    tl = lambda key: t(f"xlsx.{key}", lang, user.org_id)  # noqa: E731
+    summary: list[list] = [
+        [tl("title")], [tl("sites"), ", ".join(x["code"] for x in codes)], [tl("from"), frm], [tl("to"), to], [tl("generated"), datetime.now(timezone.utc)], [],
+        [tl("reports")], [tl("total"), r["total"]], [tl("good_practice"), r["goodPractice"]], [tl("at_risk"), r["atRisk"]],
+        [tl("near_miss"), r["nearMiss"]], [tl("open"), r["open"]], [tl("closed"), r["closed"]], [tl("danger_now"), r["dangerNow"]], [],
+        [tl("actions")], [tl("assigned"), a["assigned"]], [tl("open"), a["open"]], [tl("overdue"), a["overdue"]], [tl("awaiting_verification"), a["awaitingVerification"]],
+        [tl("verified"), a["verified"]], [tl("on_time_pct"), a["onTimePct"] if a["onTimePct"] is not None else "—"], [],
+        [tl("trend"), tl("reports"), tl("at_risk"), tl("good_practice"), tl("actions_closed")],
+        *[[x["period"], x["reports"], x["atRisk"], x["good"], x["actionsClosed"]] for x in data["trend"]],
+    ]
+    bold = [0, 6, 15, 23]
+    depts = [[tl("department"), tl("code"), tl("reports"), tl("assigned"), tl("open"), tl("overdue")]] + [
+        [pick(d["name"], lang), d["code"], d["reports"], d["assigned"], d["open"], d["overdue"]] for d in data["byDepartment"]]
+    obs = await observation_rows(q, user)
+    acts = await action_rows(q, user)
+    await _audit_export(user, "report", len(obs) + len(acts) - 2, q, "xlsx")
+    return xlsx_response([Sheet(tl("summary"), summary, header=False, bold_rows=bold), Sheet(tl("reports"), obs), Sheet(tl("actions"), acts), Sheet(tl("departments"), depts)],
+                         f"safeworks-report-{datetime.now(timezone.utc).astimezone(db.TZ).date().isoformat()}.xlsx")

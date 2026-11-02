@@ -74,6 +74,7 @@ export interface Me {
   roles: SiteRole[];
   sites: Site[]; // sites in scope (all active sites for all-sites roles)
   employerId: string | null;
+  departmentId?: string | null; // 2.1: company-wide department (null = none)
   org: { id: string; name: string; settings: OrgSettings };
   privacyNoticeVersion: number; // current notice version
   privacyAckedVersion: number | null;
@@ -144,8 +145,9 @@ export interface Contractor {
   id: string; name: string; isOwnCompany: boolean; parentId: string | null; registrationNo: string; contactName: string; phone: string; email: string;
   trades: string[]; siteIds: string[]; active: boolean; updatedAt: string;
 }
-export interface Person { id: string; fullName: string; employerId: string | null; phoneMasked: string; preferredLanguage: Lang; trade: string; workerType: ReporterType; active: boolean }
-export interface DirectoryUser { id: string; name: string; employeeCode: string; employerId: string | null; roles: SiteRole[]; active: boolean }
+export interface Department { id: string; code: string; name: I18n; active: boolean; sort: number; memberCount?: number | null; version: number; updatedAt: string }
+export interface Person { id: string; fullName: string; employerId: string | null; departmentId?: string | null; phoneMasked: string; preferredLanguage: Lang; trade: string; workerType: ReporterType; active: boolean }
+export interface DirectoryUser { id: string; name: string; employeeCode: string; employerId: string | null; departmentId?: string | null; roles: SiteRole[]; active: boolean }
 export interface RiskMatrixVersion {
   id: string; matrixId: string; name: string; size: 3 | 4 | 5; version: number; status: "draft" | "active" | "retired"; effectiveFrom: string | null;
   likelihoodLabels: { v: number; label: I18n }[];
@@ -333,6 +335,7 @@ export interface ActionSummary {
   status: ActionStatus;
   ownerUserId: string;
   ownerName: string;
+  departmentId?: string | null; // the owner's department when the action was assigned
   responsibleEmployerId: string | null;
   dueAt: string;
   originalDueAt: string;
@@ -462,6 +465,7 @@ export interface SyncPullResponse {
   assets: Asset[];
   categories: Category[];
   contractors: Contractor[];
+  departments?: Department[];
   directory: DirectoryUser[]; // people the viewer may assign to or see as names
   matrixVersions: RiskMatrixVersion[];
   dueDateRules: DueDateRule[];
@@ -520,12 +524,25 @@ export interface Paged<T> { items: T[]; total: number; page: number; pageSize: n
 export interface UserAdmin {
   id: string; name: string; personId: string | null; employeeCode: string; email: string; loginType: Me["loginType"]; status: "active" | "suspended" | "deactivated";
   language: Lang; mfaEnabled: boolean; mustChangePassword: boolean; lockedUntil: string | null; failedAttempts: number; expiresAt: string | null; lastLoginAt: string | null;
-  roles: SiteRole[]; employerId: string | null; employerName: string | null; devices: { id: string; platform: string; appVersion: string; lastSeenAt: string; revokedAt: string | null }[]; createdAt: string;
+  roles: SiteRole[]; employerId: string | null; employerName: string | null; departmentId?: string | null; departmentName?: string | null; devices: { id: string; platform: string; appVersion: string; lastSeenAt: string; revokedAt: string | null }[]; createdAt: string;
 }
-export interface UserCreate { name: string; employeeCode?: string; email?: string; loginType: Me["loginType"]; language: Lang; employerId?: string | null; trade?: string; phone?: string; roles: { siteId: string | null; role: Role; medicalData?: boolean; expiresAt?: string | null }[]; expiresAt?: string | null }
+export interface UserCreate { name: string; employeeCode?: string; email?: string; loginType: Me["loginType"]; language: Lang; employerId?: string | null; departmentId?: string | null; trade?: string; phone?: string; roles: { siteId: string | null; role: Role; medicalData?: boolean; expiresAt?: string | null }[]; expiresAt?: string | null }
 export interface QrCode { id: string; token: string; targetType: "site" | "area" | "asset"; targetId: string; targetName: string; label: string; prefill: Record<string, unknown>; active: boolean; scanCount: number; lastScanAt: string | null; createdAt: string; url: string }
 export interface AuditRow { id: number; at: string; actorName: string | null; actorRole: string; siteCode: string | null; action: string; recordType: string; recordId: string; changes: Record<string, unknown>; reason: string; hash: string }
 export interface AuditVerify { ok: boolean; rows: number; firstBadId: number | null; checkedAt: string }
 export interface TranslationPack { lang: Lang; total: number; translated: number; missing: string[]; overrides: Record<string, string> }
 export interface Health { serverTime: string; version: string; db: "ok" | "error"; storageDriver: "disk" | "db"; queuedEmails: number; failedNotifications24h: number; syncRejected24h: number; devicesByVersion: { appVersion: string; count: number }[]; lastJobRuns: { key: string; at: string }[]; backups: { lastAt: string | null; note: string } }
 export interface ImportResult { created: number; updated: number; skipped: number; errors: { row: number; message: string }[]; tempPasswords?: Record<string, string> } // tempPasswords: users import only, employee code → one-time password
+
+/* ---------------------------------------------------------------- insights (2.1) */
+export type InsightLevel = "me" | "department" | "site";
+export interface InsightCount { key: string; count: number }
+export interface Insights {
+  level: InsightLevel; siteIds: string[]; from: string; to: string; bucket: "week" | "month";
+  departmentId: string | null; departmentName: I18n | null;
+  reports: { total: number; goodPractice: number; atRisk: number; nearMiss: number; open: number; closed: number; dangerNow: number; fixedOnSpot: number };
+  actions: { assigned: number; open: number; overdue: number; awaitingVerification: number; verified: number; onTimePct: number | null };
+  byType: InsightCount[]; byStatus: InsightCount[]; byBand: InsightCount[]; byCategory: InsightCount[]; actionsByStatus: InsightCount[];
+  trend: { period: string; reports: number; atRisk: number; good: number; actionsClosed: number }[];
+  byDepartment: { departmentId: string; code: string; name: I18n; reports: number; assigned: number; open: number; overdue: number }[];
+}

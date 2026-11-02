@@ -62,17 +62,23 @@ def contractor(r: dict) -> dict:
     }
 
 
+def department(r: dict) -> dict:
+    return {"id": r["id"], "code": r["code"], "name": r["name_i18n"] or {"en": r["code"]}, "active": r["active"] and r.get("deleted_at") is None, "sort": r["sort"],
+            "memberCount": r.get("member_count"), "version": r["version"], "updatedAt": r["updated_at"]}
+
+
 def person(r: dict) -> dict:
     last4 = r.get("phone_last4") or ""
     return {
-        "id": r["id"], "fullName": r["full_name"], "employerId": r["employer_id"], "phoneMasked": ("••••••" + last4) if last4 else "",
+        "id": r["id"], "fullName": r["full_name"], "employerId": r["employer_id"], "departmentId": r.get("department_id"), "phoneMasked": ("••••••" + last4) if last4 else "",
         "preferredLanguage": r["preferred_language"], "trade": r["trade"], "workerType": "contractor" if r["worker_type"] == "contract" else r["worker_type"],
         "active": r["active"] and r.get("deleted_at") is None,
     }
 
 
 def directory_user(r: dict, roles: list[dict]) -> dict:
-    return {"id": r["id"], "name": r["name"], "employeeCode": r["employee_code"], "employerId": r.get("employer_id"), "roles": roles, "active": r["status"] == "active"}
+    return {"id": r["id"], "name": r["name"], "employeeCode": r["employee_code"], "employerId": r.get("employer_id"), "departmentId": r.get("department_id"), "roles": roles,
+            "active": r["status"] == "active"}
 
 
 def matrix_version(r: dict) -> dict:
@@ -272,7 +278,7 @@ def action_summary(r: dict, thumb: str | None = None) -> dict:
     return {
         "id": r["id"], "clientUuid": r["client_uuid"], "caseNo": r["case_no"], "siteId": r["site_id"], "areaId": r["area_id"], "sourceType": r["source_type"],
         "sourceId": r["source_id"], "sourceCaseNo": r.get("obs_case_no") or r.get("run_case_no"), "title": r["title"], "band": r["band"], "status": r["status"],
-        "ownerUserId": r["owner_user_id"], "ownerName": r.get("owner_name") or "", "responsibleEmployerId": r["responsible_employer_id"], "dueAt": r["due_at"],
+        "ownerUserId": r["owner_user_id"], "ownerName": r.get("owner_name") or "", "departmentId": r.get("department_id"), "responsibleEmployerId": r["responsible_employer_id"], "dueAt": r["due_at"],
         "originalDueAt": r["original_due_at"], "overdue": overdue, "completedAt": r["completed_at"], "verifiedAt": r["verified_at"], "reopenCount": r["reopen_count"],
         "pendingRequest": r.get("pending_request"), "thumbUrl": thumb, "version": r["version"], "updatedAt": r["updated_at"],
     }
@@ -322,7 +328,7 @@ def user_admin(r: dict, roles: list[dict], devices: list[dict]) -> dict:
         "id": r["id"], "name": r["name"], "personId": r["person_id"], "employeeCode": r["employee_code"], "email": r["email"], "loginType": r["login_type"],
         "status": r["status"], "language": r["language"], "mfaEnabled": r["mfa_enabled"], "mustChangePassword": r["must_change_password"], "lockedUntil": r["locked_until"],
         "failedAttempts": r["failed_attempts"], "expiresAt": r["expires_at"], "lastLoginAt": r["last_login_at"], "roles": roles, "employerId": r.get("employer_id"),
-        "employerName": r.get("employer_name"),
+        "employerName": r.get("employer_name"), "departmentId": r.get("department_id"), "departmentName": r.get("department_name"),
         "devices": [{"id": d["id"], "platform": d["platform"], "appVersion": d["app_version"], "lastSeenAt": d["last_seen_at"], "revokedAt": d["revoked_at"]} for d in devices],
         "createdAt": r["created_at"],
     }

@@ -28,6 +28,12 @@ def action_filters(q: dict, user: AuthUser, params: list, *, table: str = "a") -
         verify_sites = [s for s in scope if user.can_verify(s)]
         params += [verify_sites, user.id]
         where.append(f"{table}.status = 'completed' and {table}.site_id = any(${len(params) - 1}::uuid[]) and {table}.owner_user_id <> ${len(params)} and {table}.completed_by is distinct from ${len(params)}")
+    elif q.get("department") == "1":
+        if not user.department_id:
+            where.append("false")
+        else:
+            params += [user.department_id, scope]
+            where.append(f"{table}.department_id = ${len(params) - 1} and {table}.site_id = any(${len(params)}::uuid[])")
     elif q.get("mine") == "1" or not officer_sites:
         params.append(user.id)
         where.append(f"({table}.owner_user_id = ${len(params)} or {table}.verifier_user_id = ${len(params)} or {table}.completed_by = ${len(params)})")
@@ -44,6 +50,9 @@ def action_filters(q: dict, user: AuthUser, params: list, *, table: str = "a") -
     if q.get("band"):
         params.append(q["band"].split(","))
         where.append(f"{table}.band = any(${len(params)}::text[])")
+    if q.get("departmentId"):
+        params.append(uuid_param(q["departmentId"]))
+        where.append(f"{table}.department_id = ${len(params)}")
     if q.get("ownerId"):
         params.append(uuid_param(q["ownerId"]))
         where.append(f"{table}.owner_user_id = ${len(params)}")

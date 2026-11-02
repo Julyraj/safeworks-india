@@ -43,6 +43,7 @@ class AuthUser:
     must_change_password: bool
     mfa_enabled: bool
     employer_id: str | None
+    department_id: str | None = None
     roles: list[SiteRole] = field(default_factory=list)
     all_site_ids: list[str] = field(default_factory=list)  # every active site of the organisation
     session_id: str = ""

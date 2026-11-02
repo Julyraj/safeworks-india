@@ -22,7 +22,7 @@ from .i18n import from_accept_language, t
 from .jobs import start_jobs
 from .middleware import Guard
 from .migrate import migrate
-from .routes import actions, auth, dashboard, inspections, me, media, observations, public, sync
+from .routes import actions, auth, dashboard, insights, inspections, me, media, observations, public, sync
 from .routes.admin import routers as admin_routers
 from .security import verify_file_sig
 from .storage import MIME_FOR_EXT, storage
@@ -103,7 +103,7 @@ def create_app() -> FastAPI:
         max_age=600,
     )
 
-    for r in (auth.router, me.router, sync.router, media.router, observations.router, actions.router, inspections.router, inspections.link_router, dashboard.router, public.router, *admin_routers):
+    for r in (auth.router, me.router, sync.router, media.router, observations.router, actions.router, inspections.router, inspections.link_router, dashboard.router, insights.router, public.router, *admin_routers):
         app.include_router(r)
 
     # Signed file links: /files/media/2026/10/<uuid>.jpg?e=<expiry>&s=<signature>

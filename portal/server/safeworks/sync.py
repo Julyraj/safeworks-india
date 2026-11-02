@@ -26,7 +26,7 @@ from .rbac import AuthUser
 from .schemas import (ActionCommentPayload, ActionCompletePayload, ActionCreateRequest, ActionIdPayload, ActionRequestPayload, ActionVerifyPayload, ObsIdPayload,
                       ObsRefPayload, ObservationCreate, RunAnswersPayload, RunStartRequest, RunSubmitPayload, SyncCommand, SyncPushRequest, TriagePayload, parse)
 from .settings import org_settings
-from .views import (ACTION_SELECT, OBS_SELECT, RUN_SELECT, action_summary, area, asset, category, contractor, directory_user, due_date_rule, first_thumb, industry,
+from .views import (ACTION_SELECT, OBS_SELECT, RUN_SELECT, action_summary, area, asset, category, contractor, department, directory_user, due_date_rule, first_thumb, industry,
                     ladder, load_template_versions, matrix_version, media_for, notification, run_summary, schedule, site)
 from .workflow import actions as actions_wf
 from .workflow import inspections as insp_wf
@@ -253,17 +253,18 @@ async def pull(user: AuthUser, cursor: str | None, device_id: str | None) -> dic
         assets_rows = await db.q(
             """select a.*, (select token from qr_codes q where q.target_type = 'asset' and q.target_id = a.id and q.active order by created_at desc limit 1) as qr_token
                  from assets a where a.site_id = any($1::uuid[]) and a.deleted_at is null and ($2::timestamptz is null or a.updated_at > $2)""", [scope, delta], c)
+        dept_rows = await db.q("select * from departments where org_id = $1 and deleted_at is null and ($2::timestamptz is null or updated_at > $2) order by sort, code", [org, delta], c)
         cats_rows = await db.q("select * from categories where org_id = $1 and deleted_at is null and ($2::timestamptz is null or updated_at > $2) order by sort", [org, delta], c)
         contr_rows = await db.q(
             """select k.*, coalesce(array_agg(cs.site_id::text) filter (where cs.site_id is not null), '{}') as site_ids from contractors k
                  left join contractor_sites cs on cs.contractor_id = k.id where k.org_id = $1 and k.deleted_at is null and ($2::timestamptz is null or k.updated_at > $2)
                 group by k.id""", [org, delta], c)
         dir_rows = await db.q(
-            """select u.id, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, u.employee_code, u.status, p.employer_id,
+            """select u.id, coalesce(nullif(p.full_name, ''), nullif(u.employee_code, ''), u.email) as name, u.employee_code, u.status, p.employer_id, p.department_id,
                       array_agg(json_build_object('siteId', r.site_id, 'role', r.role::text, 'medicalData', false, 'expiresAt', r.expires_at)::text) as roles
                  from users u left join people p on p.id = u.person_id join user_site_roles r on r.user_id = u.id
                 where u.org_id = $1 and u.status = 'active' and (r.site_id = any($2::uuid[]) or r.site_id is null) and (r.expires_at is null or r.expires_at > now())
-                group by u.id, p.full_name, p.employer_id""", [org, scope], c)
+                group by u.id, p.full_name, p.employer_id, p.department_id""", [org, scope], c)
         matrix_rows = await db.q(
             """select v.*, m.name, m.size from risk_matrix_versions v join risk_matrices m on m.id = v.matrix_id where m.org_id = $1
                 and (v.status = 'active' or v.id in (select risk_matrix_version_id from sites where id = any($2::uuid[]) and risk_matrix_version_id is not null))""", [org, scope], c)
@@ -281,9 +282,10 @@ async def pull(user: AuthUser, cursor: str | None, device_id: str | None) -> dic
         act_rows = await db.q(
             ACTION_SELECT + """ where a.org_id = $1 and (a.owner_user_id = $2 or a.verifier_user_id = $2 or a.completed_by = $2
                    or (a.site_id = any($3::uuid[]) and (a.status not in ('verified','cancelled') or a.updated_at > now() - interval '30 days'))
-                   or (a.status = 'completed' and a.site_id = any($4::uuid[])))
+                   or (a.status = 'completed' and a.site_id = any($4::uuid[]))
+                   or ($6::uuid is not null and a.department_id = $6 and a.site_id = any($7::uuid[]) and (a.status not in ('verified','cancelled') or a.updated_at > now() - interval '30 days')))
                   and ($5::timestamptz is null or a.updated_at > $5) order by a.due_at limit 2000""",
-            [org, user.id, officer_sites, [s for s in scope if user.can_verify(s)], delta], c)
+            [org, user.id, officer_sites, [s for s in scope if user.can_verify(s)], delta, user.department_id, scope], c)
         run_rows = await db.q(
             RUN_SELECT + """ where r.org_id = $1 and (r.inspector_user_id = $2
                    or (r.status = 'scheduled' and r.site_id = any($3::uuid[]) and (r.schedule_id in (select id from inspection_schedules where assignee_user_id = $2)
@@ -307,7 +309,7 @@ async def pull(user: AuthUser, cursor: str | None, device_id: str | None) -> dic
         notice = await db.q("select version, lang, body, effective_from from privacy_notices where org_id = $1 and status = 'active' and version = (select max(version) from privacy_notices where org_id = $1 and status = 'active')", [org], c)
         deleted: list[dict] = []
         if delta:
-            for table, et in (("areas", "area"), ("assets", "asset"), ("categories", "category"), ("contractors", "contractor"), ("sites", "site"), ("inspection_templates", "template")):
+            for table, et in (("departments", "department"), ("areas", "area"), ("assets", "asset"), ("categories", "category"), ("contractors", "contractor"), ("sites", "site"), ("inspection_templates", "template")):
                 rows = await db.q(f"select id from {table} where deleted_at > $1", [delta], c)
                 deleted += [{"entityType": et, "id": r["id"]} for r in rows]
             rows = await db.q("select id from inspection_schedules where not active and updated_at > $1 and site_id = any($2::uuid[])", [delta, scope], c)
@@ -325,7 +327,7 @@ async def pull(user: AuthUser, cursor: str | None, device_id: str | None) -> dic
     translations = {lang: overrides.get(lang, {}) for lang in LANGS}
     return {
         "cursor": server_time.isoformat(), "full": full, "serverTime": server_time, "me": me,
-        "sites": [site(s) for s in sites_rows], "areas": [area(a) for a in areas_rows], "assets": [asset(a) for a in assets_rows], "categories": [category(x) for x in cats_rows],
+        "sites": [site(s) for s in sites_rows], "areas": [area(a) for a in areas_rows], "assets": [asset(a) for a in assets_rows], "categories": [category(x) for x in cats_rows], "departments": [department(x) for x in dept_rows],
         "contractors": [contractor(k) for k in contr_rows], "directory": directory, "matrixVersions": [matrix_version({**m, "status_label": settings["statusLabels"].get("risk_matrix", "design default")}) for m in matrix_rows],
         "dueDateRules": [due_date_rule(d) for d in ddr_rows], "ladders": [ladder(l) for l in ladder_rows], "industries": [industry(i) for i in ind_rows], "templates": templates,
         "schedules": [schedule(s) for s in sched_rows], "observations": observations,

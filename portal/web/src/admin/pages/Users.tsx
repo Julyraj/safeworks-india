@@ -11,6 +11,7 @@ import { IconKey, IconLock, IconPlus, IconShield, IconTrash, IconUsers } from ".
 import { api, dateInputValue, errMessage, localCsv } from "../api";
 import { useScope } from "../scope";
 import type { UserCreated } from "../types";
+import { useDepartments } from "./Departments";
 import { useAuth } from "../auth";
 import { CountLine, CsvImport, Drawer, ExportButton, FilterSelect, KV, PageHead, RegisterSearch, SavedFilters, SecretOnce, langOptions, useRegister, useRowNav, useUrlFilters, AsyncButton } from "../components";
 
@@ -32,7 +33,7 @@ export default function Users() {
   useRowNav(tableRef, !id && !create);
   const canEdit = perms.isAdmin && !perms.readOnly;
   const columns: Column<UserAdmin>[] = [
-    { key: "name", label: t("users.name"), render: (u) => <div><div className="cell-title">{u.name}</div><div className="cell-sub">{u.employeeCode}{u.email ? ` · ${u.email}` : ""}{u.employerName ? ` · ${u.employerName}` : ""}</div></div> },
+    { key: "name", label: t("users.name"), render: (u) => <div><div className="cell-title">{u.name}</div><div className="cell-sub">{u.employeeCode}{u.email ? ` · ${u.email}` : ""}{u.employerName ? ` · ${u.employerName}` : ""}{u.departmentName ? ` · ${u.departmentName}` : ""}</div></div> },
     { key: "roles", label: t("users.roles"), render: (u) => <div className="row" style={{ gap: 4 }}>{u.roles.slice(0, 3).map((r, i) => <Pill key={i} tone={r.role === "admin" ? "hivis" : r.role === "auditor" ? "blue" : undefined} title={r.siteId ? siteName(r.siteId) : t("role.allSites")}>{t(`role.${r.role}`)}{r.siteId ? ` · ${sites.find((s) => s.id === r.siteId)?.code ?? ""}` : ""}</Pill>)}{u.roles.length > 3 ? <span className="small muted">+{u.roles.length - 3}</span> : null}</div> },
     { key: "login", label: t("users.loginType"), render: (u) => <div>{t(`users.loginType.${u.loginType}`)}<div className="cell-sub">{u.mfaEnabled ? t("users.mfaOn") : t("users.mfaOff")}{u.mustChangePassword ? ` · ${t("users.mustChange")}` : ""}</div></div>, width: 160 },
     { key: "status", label: t("common.status"), render: (u) => <span className="row nowrap" style={{ gap: 4 }}><Pill tone={u.status === "active" ? "green" : u.status === "suspended" ? "amber" : "grey"}>{t(`users.status.${u.status}`)}</Pill>{u.lockedUntil && new Date(u.lockedUntil).getTime() > Date.now() ? <Pill tone="red" title={t("users.lockedUntil", { time: fmtDateTime(u.lockedUntil, lang) })}><IconLock size={11} /></Pill> : null}{u.expiresAt ? <Pill tone={new Date(u.expiresAt).getTime() < Date.now() ? "red" : "grey"}>{t("users.expires")} {fmtDate(u.expiresAt, lang)}</Pill> : null}</span>, width: 180 },
@@ -66,7 +67,7 @@ export default function Users() {
             { key: "employee_code", label: t("users.employeeCode"), validate: (v, r) => (!v && !r.email ? t("users.codeOrEmail") : null) },
             { key: "email", label: t("users.email"), validate: (v) => (v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? t("users.emailBad") : null) },
             { key: "language", label: t("common.language"), options: ["en", "hi", "ta", "kn"] },
-            { key: "employer", label: t("common.employer") }, { key: "trade", label: t("common.trade") }, { key: "phone", label: t("users.phone") },
+            { key: "employer", label: t("common.employer") }, { key: "department", label: t("departments.department") }, { key: "trade", label: t("common.trade") }, { key: "phone", label: t("users.phone") },
             { key: "role", label: t("users.role"), required: true, options: ROLES },
             { key: "site_code", label: t("sites.code"), validate: (v, r) => (!v && !ALL_SITES.includes(r.role as Role) ? t("users.siteRequired") : v && !sites.some((s) => s.code === v) ? t("csv.unknownSite") : null) },
           ]} sample={"name,employee_code,email,language,employer,trade,phone,role,site_code\nPriya Rao,E1001,,ta,,,9876501234,reporter,TN1\nKarthik Iyer,E1002,karthik@example.in,en,,,,site_safety_officer,TN1"}
@@ -104,10 +105,11 @@ function RolesEditor({ rows, onChange }: { rows: RoleRow[]; onChange: (r: RoleRo
 function defaultExpiry() { const d = new Date(); d.setDate(d.getDate() + 30); return d.toISOString().slice(0, 10); }
 
 function UserSheet({ user, onClose, onSaved }: { user?: UserAdmin; onClose: () => void; onSaved: (u: UserAdmin) => void }) {
-  const { t } = useI18n();
+  const { t, pick } = useI18n();
   const toast = useToast();
   const { contractors, sites } = useScope();
-  const [f, setF] = useState<UserCreate>(user ? { name: user.name, employeeCode: user.employeeCode, email: user.email, loginType: user.loginType, language: user.language, employerId: user.employerId, roles: user.roles.map((r) => ({ siteId: r.siteId, role: r.role, medicalData: r.medicalData, expiresAt: r.expiresAt ?? null })), expiresAt: user.expiresAt } : { name: "", employeeCode: "", email: "", loginType: "employee_code", language: "en", employerId: null, trade: "", phone: "", roles: [{ siteId: sites[0]?.id ?? null, role: "reporter", medicalData: false, expiresAt: null }] });
+  const departments = useDepartments().data ?? [];
+  const [f, setF] = useState<UserCreate>(user ? { name: user.name, employeeCode: user.employeeCode, email: user.email, loginType: user.loginType, language: user.language, employerId: user.employerId, departmentId: user.departmentId ?? null, roles: user.roles.map((r) => ({ siteId: r.siteId, role: r.role, medicalData: r.medicalData, expiresAt: r.expiresAt ?? null })), expiresAt: user.expiresAt } : { name: "", employeeCode: "", email: "", loginType: "employee_code", language: "en", employerId: null, departmentId: null, trade: "", phone: "", roles: [{ siteId: sites[0]?.id ?? null, role: "reporter", medicalData: false, expiresAt: null }] });
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [secret, setSecret] = useState<{ user: UserAdmin; tempPassword?: string; code?: string; expiresAt?: string } | null>(null);
@@ -161,6 +163,7 @@ function UserSheet({ user, onClose, onSaved }: { user?: UserAdmin; onClose: () =
         <Field label={t("users.email")} required={needsEmail} error={emailBad ? t("users.emailBad") : undefined} hint={staffRoles ? t("users.staffEmailHint") : undefined}><Input type="email" value={f.email ?? ""} onChange={(e) => setF({ ...f, email: e.target.value })} /></Field>
         <Field label={t("common.language")}><Select value={f.language} onChange={(e) => setF({ ...f, language: e.target.value as Lang })}>{langOptions.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}</Select></Field>
         <Field label={t("common.employer")}><Select value={f.employerId ?? ""} onChange={(e) => setF({ ...f, employerId: e.target.value || null })}><option value="">{t("common.ownCompany")}</option>{contractors.data.filter((c) => !c.isOwnCompany).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</Select></Field>
+        <Field label={t("departments.department")} optional hint={t("departments.userHint")}><Select value={f.departmentId ?? ""} onChange={(e) => setF({ ...f, departmentId: e.target.value || null })} data-testid="user-department"><option value="">{t("departments.none")}</option>{departments.filter((d) => d.active || d.id === f.departmentId).map((d) => <option key={d.id} value={d.id}>{pick(d.name)}</option>)}</Select></Field>
         {!user ? <><Field label={t("common.trade")} optional><Input value={f.trade ?? ""} onChange={(e) => setF({ ...f, trade: e.target.value })} maxLength={60} /></Field>
           <Field label={t("users.phone")} optional><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} inputMode="tel" maxLength={20} /></Field></> : null}
       </div>
@@ -208,7 +211,7 @@ function UserDrawer({ id, onClose, onChanged, onRemoved, canEdit }: { id: string
         <div className="stack" style={{ gap: 16 }}>
           <div className="row"><Pill tone={u.status === "active" ? "green" : u.status === "suspended" ? "amber" : "grey"}>{t(`users.status.${u.status}`)}</Pill><Pill>{t(`users.loginType.${u.loginType}`)}</Pill><Pill tone={u.mfaEnabled ? "green" : "grey"}>{u.mfaEnabled ? t("users.mfaOn") : t("users.mfaOff")}</Pill>{u.mustChangePassword ? <Pill tone="amber">{t("users.mustChange")}</Pill> : null}{u.lockedUntil && new Date(u.lockedUntil).getTime() > Date.now() ? <Pill tone="red">{t("users.lockedUntil", { time: fmtDateTime(u.lockedUntil, lang) })}</Pill> : null}</div>
           {secret ? <SecretOnce label={secret.label} value={secret.value} hint={secret.hint} /> : null}
-          <KV rows={[{ k: t("common.language"), v: langOptions.find((l) => l.value === u.language)?.label }, { k: t("common.employer"), v: u.employerName ?? t("common.ownCompany") }, { k: t("users.lastLogin"), v: u.lastLoginAt ? fmtDateTime(u.lastLoginAt, lang) : t("users.neverLoggedIn") }, { k: t("users.failedAttempts"), v: String(u.failedAttempts) }, { k: t("users.created"), v: fmtDate(u.createdAt, lang) }, ...(u.expiresAt ? [{ k: t("users.accountExpires"), v: fmtDate(u.expiresAt, lang) }] : [])]} />
+          <KV rows={[{ k: t("common.language"), v: langOptions.find((l) => l.value === u.language)?.label }, { k: t("common.employer"), v: u.employerName ?? t("common.ownCompany") }, { k: t("departments.department"), v: u.departmentName ?? "—" }, { k: t("users.lastLogin"), v: u.lastLoginAt ? fmtDateTime(u.lastLoginAt, lang) : t("users.neverLoggedIn") }, { k: t("users.failedAttempts"), v: String(u.failedAttempts) }, { k: t("users.created"), v: fmtDate(u.createdAt, lang) }, ...(u.expiresAt ? [{ k: t("users.accountExpires"), v: fmtDate(u.expiresAt, lang) }] : [])]} />
           <div>
             <div className="section-title">{t("users.roles")}</div>
             <div className="list-compact">{u.roles.map((r, i) => <div className="li" key={i}><strong>{t(`role.${r.role}`)}</strong><span className="sp">{r.siteId ? siteName(r.siteId) : t("role.allSites")}</span>{r.medicalData ? <Pill tone="orange">{t("users.medical")}</Pill> : null}{r.expiresAt ? <span className="small muted">{t("users.expires")} {fmtDate(r.expiresAt, lang)}</span> : null}</div>)}</div>

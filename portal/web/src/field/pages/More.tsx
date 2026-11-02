@@ -1,7 +1,7 @@
 /* More: the rest of the app on phones — inspections, scan, notifications, outbox, settings, library, sign out. */
 import { Link } from "react-router-dom";
 import { useI18n } from "../../shared/i18n";
-import { IconClipboard, IconQr, IconBell, IconInbox, IconSettings, IconBook, IconLogout, IconWalk, IconKeyboard } from "../../shared/icons";
+import { IconClipboard, IconQr, IconBell, IconInbox, IconSettings, IconBook, IconLogout, IconWalk, IconKeyboard, IconChart } from "../../shared/icons";
 import { useSession, isOfficer, isVerifier } from "../session";
 import { useSync } from "../offline/sync";
 import { useNotifications, useObservations, useActions } from "../offline/store";
@@ -27,6 +27,7 @@ export default function More({ onLogout }: { onLogout: () => void }) {
       <div className="more-grid">
         {triage ? <Link to="/reports?tab=triage"><IconInbox /> {t("nav.triage")}<span className="cnt">{triage}</span></Link> : null}
         {verify ? <Link to="/actions?tab=verify"><IconWalk /> {t("nav.verify")}<span className="cnt">{verify}</span></Link> : null}
+        <Link to="/insights"><IconChart /> {t("nav.charts")}</Link>
         <Link to="/inspections"><IconClipboard /> {t("nav.inspections")}</Link>
         <Link to="/scan"><IconQr /> {t("nav.scan")}</Link>
         <Link to="/notifications"><IconBell /> {t("nav.notifications")}{unread ? <span className="cnt">{unread}</span> : null}</Link>

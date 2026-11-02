@@ -21,7 +21,7 @@ async def me_payload(user: AuthUser, conn=None) -> dict:
     return {
         "id": user.id, "name": user.name, "employeeCode": user.employee_code, "email": user.email, "language": user.language, "loginType": user.login_type,
         "mfaEnabled": user.mfa_enabled, "mustChangePassword": user.must_change_password, "roles": [r.to_json() for r in user.roles], "sites": [site_view(s) for s in sites],
-        "employerId": user.employer_id, "org": {"id": org["id"], "name": org["name"], "settings": org["settings"]},
+        "employerId": user.employer_id, "departmentId": user.department_id, "org": {"id": org["id"], "name": org["name"], "settings": org["settings"]},
         "privacyNoticeVersion": (notice["v"] if notice and notice["v"] else 0), "privacyAckedVersion": (acked["v"] if acked and acked["v"] else None),
         "preferences": {"digest": prefs.get("digest", "daily"), "quietHours": bool(prefs.get("quietHours", True))},
         "pushPublicKey": config.vapid_public_key or None,  # Web Push (VAPID) application server key; None = push not configured

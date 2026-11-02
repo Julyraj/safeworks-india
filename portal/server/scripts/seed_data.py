@@ -363,6 +363,15 @@ PRIVACY_NOTICE = {
     "kn": "ನಿಮ್ಮ ಉದ್ಯೋಗದಾತರ ಸುರಕ್ಷತಾ ಕಾರ್ಯಕ್ರಮ ನಡೆಸಲು SafeWorks ನಿಮ್ಮ ಹೆಸರು, ಉದ್ಯೋಗಿ ಕೋಡ್, ಫೋನ್ ಮತ್ತು ನೀವು ಸಲ್ಲಿಸುವ ವರದಿಗಳನ್ನು ಸಂಗ್ರಹಿಸುತ್ತದೆ (DPDP ಕಾಯ್ದೆ 2023). ಅನಾಮಧೇಯ ವರದಿಗಳಲ್ಲಿ ಹೆಸರು ಇರುವುದಿಲ್ಲ. ದತ್ತಾಂಶವನ್ನು ಶಾಸನಬದ್ಧ ಅವಧಿ ಮತ್ತು ಕನಿಷ್ಠ ಒಂದು ವರ್ಷ ಇಡಲಾಗುತ್ತದೆ; ನಿಮ್ಮ HSE ವ್ಯವಸ್ಥಾಪಕರ ಮೂಲಕ ಪ್ರವೇಶ, ತಿದ್ದುಪಡಿ ಅಥವಾ ಅಳಿಸುವಿಕೆ ಕೇಳಬಹುದು.",
 }
 
+# Demo departments (code, en, hi, ta, kn). Translations are drafts for site staff to review.
+DEPARTMENTS = [
+    ("CIVIL", "Civil works", "सिविल कार्य", "சிவில் பணிகள்", "ಸಿವಿಲ್ ಕಾಮಗಾರಿ"),
+    ("ELEC", "Electrical", "विद्युत", "மின்சாரம்", "ವಿದ್ಯುತ್"),
+    ("MAINT", "Maintenance", "रखरखाव", "பராமரிப்பு", "ನಿರ್ವಹಣೆ"),
+    ("HSE", "Health, safety and environment", "स्वास्थ्य, सुरक्षा और पर्यावरण", "சுகாதாரம், பாதுகாப்பு மற்றும் சுற்றுச்சூழல்", "ಆರೋಗ್ಯ, ಸುರಕ್ಷತೆ ಮತ್ತು ಪರಿಸರ"),
+    ("STORES", "Stores and logistics", "भंडार और लॉजिस्टिक्स", "சரக்கு மற்றும் போக்குவரத்து", "ಉಗ್ರಾಣ ಮತ್ತು ಸಾಗಣೆ"),
+]
+
 TRADES = ["civil", "steel fixing", "shuttering", "scaffolding", "electrical", "welding", "painting", "plumbing", "rigging", "operators", "housekeeping", "security"]
 
 # ---------------------------------------------------------------- demo observations (4 languages)

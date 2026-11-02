@@ -39,7 +39,7 @@ export default function Inspections() {
 
   return (
     <>
-      <PageHead title={t("nav.inspections")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<ExportButton onExport={() => downloadCsv("/exports/inspections.csv", reg.queryParams, "inspections.csv")} />} />
+      <PageHead title={t("nav.inspections")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<><ExportButton onExport={() => downloadCsv("/exports/inspections.csv", reg.queryParams, "inspections.csv")} label="CSV" /><ExportButton onExport={() => downloadCsv("/exports/inspections.xlsx", reg.queryParams, "inspections.xlsx")} label="Excel" /></>} />
       <div className="filters">
         <RegisterSearch reg={reg} placeholder={t("ins.searchPh")} />
         <FilterSelect label={t("common.status")} value={reg.filters.status ?? ""} onChange={(v) => reg.setFilter("status", v)} options={STATUSES.map((s) => ({ value: s, label: t(`run.status.${s}`) }))} />

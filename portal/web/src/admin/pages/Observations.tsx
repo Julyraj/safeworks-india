@@ -44,7 +44,7 @@ export default function Observations() {
 
   return (
     <>
-      <PageHead title={t("nav.observations")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<ExportButton onExport={() => downloadCsv("/exports/observations.csv", reg.queryParams, "observations.csv")} />} />
+      <PageHead title={t("nav.observations")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<><ExportButton onExport={() => downloadCsv("/exports/observations.csv", reg.queryParams, "observations.csv")} label="CSV" /><ExportButton onExport={() => downloadCsv("/exports/observations.xlsx", reg.queryParams, "observations.xlsx")} label="Excel" /></>} />
       <div className="filters">
         <RegisterSearch reg={reg} placeholder={t("obs.searchPh")} />
         <FilterSelect label={t("common.status")} value={reg.filters.status ?? ""} onChange={(v) => reg.setFilter("status", v)} options={STATUSES.map((s) => ({ value: s, label: t(`obs.status.${s}`) }))} />

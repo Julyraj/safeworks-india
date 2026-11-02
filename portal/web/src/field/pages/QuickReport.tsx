@@ -11,7 +11,8 @@ import { useBeforeUnload, useGeo } from "../../shared/hooks";
 import { fmtDateTime } from "../../shared/format";
 import { isNative } from "../../shared/api";
 import { uuid } from "../../shared/storage";
-import { useSession } from "../session";
+import { useSession, isOfficer } from "../session";
+import { TriageSheet } from "../components/triage";
 import { useDraft, useObservations, useRefData, useActions } from "../offline/store";
 import { getOutbox, getMedia, deleteOutbox } from "../offline/db";
 import { submitObservation } from "../offline/commands";
@@ -358,9 +359,15 @@ export function LocationSheet({ siteId, areaId, assetId, onClose, onPick }: { si
 function Submitted({ clientUuid, title, onAnother }: { clientUuid: string; title: string; onAnother: () => void }) {
   const { t } = useI18n();
   const nav = useNavigate();
+  const { me } = useSession();
   const { data: observations } = useObservations();
   const rec = observations.find((o) => o.clientUuid === clientUuid);
   const caseNo = rec?.caseNo || "";
+  // 2.1 "Report and assign": an officer of the site scores the risk and assigns the owner straight away. It is the normal
+  // triage command, queued behind the report, so it works offline and goes through the same server checks.
+  const [assign, setAssign] = useState(false);
+  const [assigned, setAssigned] = useState(false);
+  const canAssign = !!rec && !assigned && isOfficer(me, rec.siteId) && (rec.status === "submitted" || rec.status === "returned");
   return (
     <div className="page">
       <div className="success-screen" data-testid="submitted">
@@ -374,8 +381,11 @@ function Submitted({ clientUuid, title, onAnother }: { clientUuid: string; title
           <Button variant="primary" size="lg" onClick={onAnother}><IconCheck size={18} /> {t("report.another")}</Button>
           <Button size="lg" onClick={() => nav(`/o/${rec?.id ?? clientUuid}`)}>{t("report.view")}</Button>
         </div>
+        {canAssign ? <Button variant="subtle" size="lg" onClick={() => setAssign(true)} data-testid="report-assign">{t("report.assignNow")}</Button> : null}
+        {assigned ? <p className="small" data-testid="report-assigned">{t("report.assignQueued")}</p> : null}
         <Button variant="ghost" onClick={() => nav("/")}>{t("nav.home")}</Button>
       </div>
+      {assign && rec ? <TriageSheet obs={rec} onClose={() => setAssign(false)} onDone={() => { setAssign(false); setAssigned(true); }} /> : null}
     </div>
   );
 }

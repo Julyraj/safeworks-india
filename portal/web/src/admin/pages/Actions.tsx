@@ -39,7 +39,7 @@ export default function Actions() {
 
   return (
     <>
-      <PageHead title={t("nav.actions")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<ExportButton onExport={() => downloadCsv("/exports/actions.csv", reg.queryParams, "actions.csv")} />} />
+      <PageHead title={t("nav.actions")} sub={siteId ? siteName(siteId) : t("top.allSites")} tools={<><ExportButton onExport={() => downloadCsv("/exports/actions.csv", reg.queryParams, "actions.csv")} label="CSV" /><ExportButton onExport={() => downloadCsv("/exports/actions.xlsx", reg.queryParams, "actions.xlsx")} label="Excel" /></>} />
       <div className="filters">
         <RegisterSearch reg={reg} placeholder={t("act.searchPh")} />
         <FilterSelect label={t("common.status")} value={reg.filters.status ?? ""} onChange={(v) => reg.setFilter("status", v)} options={STATUSES.map((s) => ({ value: s, label: t(`action.status.${s}`) }))} />

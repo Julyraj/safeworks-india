@@ -239,6 +239,7 @@ export async function pull(force = false): Promise<SyncPullResponse | null> {
     ...(full || res.assets?.length ? { assets: mergeById(full ? [] : await refOf("assets"), res.assets, deleted.asset) } : {}),
     ...(full || res.categories?.length ? { categories: mergeById(full ? [] : await refOf("categories"), res.categories, deleted.category) } : {}),
     ...(full || res.contractors?.length ? { contractors: mergeById(full ? [] : await refOf("contractors"), res.contractors, deleted.contractor) } : {}),
+    ...(full || res.departments?.length ? { departments: mergeById(full ? [] : await refOf("departments"), res.departments ?? [], deleted.department) } : {}),
     ...(full || res.directory?.length ? { directory: mergeById(full ? [] : await refOf("directory"), res.directory, deleted.user) } : {}),
     ...(full || res.matrixVersions?.length ? { matrixVersions: mergeById(full ? [] : await refOf("matrixVersions"), res.matrixVersions) } : {}),
     ...(full || res.dueDateRules?.length ? { dueDateRules: full ? res.dueDateRules : mergeById(await refOf("dueDateRules"), res.dueDateRules) } : {}),

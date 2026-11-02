@@ -221,5 +221,9 @@
 
   "privacy.title": "आपका डेटा कैसे उपयोग होता है",
   "privacy.ack": "मैंने गोपनीयता सूचना पढ़ ली है",
-  "privacy.contact": "गोपनीयता संपर्क"
+  "privacy.contact": "गोपनीयता संपर्क",
+
+  "charts.good": "अच्छा अभ्यास",
+  "charts.atRisk": "जोखिम वाली",
+  "charts.total": "कुल"
 }

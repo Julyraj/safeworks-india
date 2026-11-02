@@ -5,7 +5,7 @@ import { Navigate, NavLink, Route, Routes, useLocation, useNavigate } from "reac
 import { useI18n } from "../shared/i18n";
 import { Button, ErrorBoundary, ErrorCard, Sheet, useShortcutsHelp } from "../shared/ui";
 import { useHotkeys, useMediaQuery } from "../shared/hooks";
-import { IconHome, IconList, IconPlus, IconClipboard, IconMore, IconBell, IconInbox, IconSettings, IconQr, IconWalk, IconLogout, IconWifiOff } from "../shared/icons";
+import { IconHome, IconList, IconPlus, IconClipboard, IconMore, IconBell, IconInbox, IconSettings, IconQr, IconWalk, IconLogout, IconWifiOff, IconChart } from "../shared/icons";
 import { isOfficer, isVerifier, useSession } from "./session";
 import { useSync } from "./offline/sync";
 import { useActions, useNotifications, useObservations, useRuns } from "./offline/store";
@@ -27,6 +27,7 @@ const Outbox = lazy(() => import("./pages/Outbox"));
 const Notifications = lazy(() => import("./pages/Notifications"));
 const Settings = lazy(() => import("./pages/Settings"));
 const More = lazy(() => import("./pages/More"));
+const Insights = lazy(() => import("./pages/Insights"));
 
 function RouteShell({ children }: { children: ReactNode }) {
   const loc = useLocation();
@@ -119,6 +120,7 @@ function Shell() {
           {officer ? <NavLink to="/reports?tab=triage"><IconInbox />{t("nav.triage")}{counts.triage ? <span className="cnt">{counts.triage}</span> : null}</NavLink> : null}
           <NavLink to="/actions"><IconClipboard />{t("nav.actions")}{counts.overdue ? <span className="cnt">{counts.overdue}</span> : null}</NavLink>
           {verifier ? <NavLink to="/actions?tab=verify"><IconWalk />{t("nav.verify")}{counts.toVerify ? <span className="cnt">{counts.toVerify}</span> : null}</NavLink> : null}
+          <NavLink to="/insights"><IconChart />{t("nav.charts")}</NavLink>
           <NavLink to="/inspections"><IconClipboard />{t("nav.inspections")}{counts.inspections ? <span className="cnt">{counts.inspections}</span> : null}</NavLink>
           <div className="section">{t("nav.more")}</div>
           <NavLink to="/scan"><IconQr />{t("nav.scan")}</NavLink>
@@ -149,6 +151,7 @@ function Shell() {
           <Route path="/notifications" element={<RouteShell><Notifications /></RouteShell>} />
           <Route path="/settings" element={<RouteShell><Settings onLogout={doLogout} /></RouteShell>} />
           <Route path="/more" element={<RouteShell><More onLogout={doLogout} /></RouteShell>} />
+          <Route path="/insights" element={<RouteShell><Insights /></RouteShell>} />
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/raise" element={<Navigate to="/report" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -209,6 +212,7 @@ function TopBar() {
     if (p.startsWith("/outbox")) return t("nav.outbox");
     if (p.startsWith("/notifications")) return t("nav.notifications");
     if (p.startsWith("/settings")) return t("nav.settings");
+    if (p.startsWith("/insights")) return t("nav.charts");
     return t("nav.more");
   }, [loc.pathname, t]);
   return (

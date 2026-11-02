@@ -549,6 +549,7 @@ class UserCreate(In):
     login_type: Literal["employee_code", "email", "enrolment_code"] = "employee_code"
     language: Lang = "en"
     employer_id: UuidStr | None = None
+    department_id: UuidStr | None = None
     trade: Str200 = ""
     phone: Annotated[str, StringConstraints(max_length=30)] = ""
     roles: list[RoleGrant] = Field(default_factory=list)
@@ -563,13 +564,14 @@ class UserCreate(In):
 
 
 class UserUpdate(Edit):
-    echo_keys = frozenset({"personId", "status", "mfaEnabled", "mustChangePassword", "lockedUntil", "failedAttempts", "lastLoginAt", "roles", "employerName", "devices"})
+    echo_keys = frozenset({"personId", "status", "mfaEnabled", "mustChangePassword", "lockedUntil", "failedAttempts", "lastLoginAt", "roles", "employerName", "departmentName", "devices"})
 
     name: Str200 | None = None
     email: Str200 | None = None
     employee_code: Str200 | None = None
     language: Lang | None = None
     employer_id: UuidStr | None = None
+    department_id: UuidStr | None = None  # sent as null → no department; left out → unchanged
     trade: Str200 | None = None
     phone: Annotated[str, StringConstraints(max_length=30)] | None = None
     expires_at: datetime | None = None
@@ -590,10 +592,21 @@ class PersonIn(Edit):
 
     full_name: Str200
     employer_id: UuidStr | None = None
+    department_id: UuidStr | None = None
     phone: Annotated[str, StringConstraints(max_length=30)] = ""
     preferred_language: Lang = "en"
     trade: Str200 = ""
     worker_type: Literal["employee", "contract", "contractor", "temporary", "visitor"] = "employee"
+    active: bool = True
+    reason: Str2000 = ""
+
+
+class DepartmentIn(Edit):
+    echo_keys = frozenset({"memberCount"})
+
+    code: Annotated[str, StringConstraints(pattern=r"^[A-Za-z0-9_-]{1,20}$")]
+    name: I18nText
+    sort: int = 0
     active: bool = True
     reason: Str2000 = ""
 

@@ -262,7 +262,18 @@ async def seed_demo(c, org_id: str, sites: dict[str, str], demo_pw: str) -> None
         for i in range(8):
             await c.execute("insert into people (org_id, full_name, employer_id, phone_enc, phone_last4, preferred_language, trade, worker_type) values ($1,$2,$3,$4,$5,$6,$7,'contract')",
                             org_id, f"{rnd.choice(worker_names)} {rnd.choice(worker_names)}", rnd.choice(list(contractors.values())), encrypt(f"9{rnd.randint(100000000, 999999999)}"), str(rnd.randint(1000, 9999)), lang, rnd.choice(sd.TRADES))
-    say("demo users, contractors and people ready")
+    # departments (2.1): a fixed mapping, so the demo department charts are the same on every install
+    depts = {}
+    for i, (dcode, en, hi, ta, kn) in enumerate(sd.DEPARTMENTS):
+        depts[dcode] = await c.fetchval(
+            """insert into departments (org_id, code, name_i18n, sort) values ($1, $2, $3, $4)
+               on conflict (org_id, lower(code)) where deleted_at is null do update set name_i18n = excluded.name_i18n returning id""",
+            org_id, dcode, {"en": en, "hi": hi, "ta": ta, "kn": kn}, i)
+    member_of = {"SO": "HSE", "SH": "HSE", "VER": "HSE", "OWN1": "CIVIL", "OWN2": "ELEC", "OWN3": "MAINT", "W1": "CIVIL", "W2": "CIVIL", "W3": "ELEC", "W4": "MAINT", "W5": "STORES"}
+    for u in users.values():
+        for key, uid in u.items():
+            await c.execute("update people set department_id = $2 where id = (select person_id from users where id = $1)", uid, depts[member_of[key]])
+    say("demo users, contractors, people and departments ready")
 
     photos = [p.read_bytes() for p in DEMO_PHOTOS[:6]] or []
 

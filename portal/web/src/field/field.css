@@ -161,3 +161,8 @@
 .hint-box { font-size: 13px; color: var(--muted); padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); }
 .list-item.local { border-style: dashed; }
 .repeat { color: var(--orange); font-weight: 700; font-size: 12px; }
+
+/* Charts page: two KPI tiles per row on phones */
+.page .kpis { grid-template-columns: repeat(auto-fill, minmax(min(46%, 160px), 1fr)); }
+.page .kpis .kpi { cursor: default; min-height: 80px; }
+.page .kpi .v { font-size: 28px; }

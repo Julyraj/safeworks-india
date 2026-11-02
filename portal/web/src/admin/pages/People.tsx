@@ -10,11 +10,12 @@ import { useScope } from "../scope";
 import { useAuth } from "../auth";
 import { CountLine, CsvImport, ExportButton, FilterSelect, PageHead, RegisterSearch, SavedFilters, langOptions, useRegister } from "../components";
 import { ContractorsTab } from "./Contractors";
+import { DepartmentsTab } from "./Departments";
 
 const WORKER_TYPES: ReporterType[] = ["employee", "contractor", "temporary", "visitor"];
 type PersonAdmin = Person & { siteIds?: string[]; phone?: string };
 
-export default function People({ tab: initial = "people" }: { tab?: "people" | "contractors" }) {
+export default function People({ tab: initial = "people" }: { tab?: "people" | "contractors" | "departments" }) {
   const { t } = useI18n();
   const nav = useNavigate();
   const { siteId, siteName } = useScope();
@@ -22,8 +23,8 @@ export default function People({ tab: initial = "people" }: { tab?: "people" | "
   return (
     <>
       <PageHead title={t("nav.people")} sub={siteId ? siteName(siteId) : t("top.allSites")} />
-      <Tabs value={tab} onChange={(v) => nav(v === "people" ? "/people" : "/contractors")} tabs={[{ value: "people", label: t("people.tab") }, { value: "contractors", label: t("contractors.tab") }]} />
-      <div style={{ marginTop: 14 }}>{tab === "people" ? <PeopleTab /> : <ContractorsTab />}</div>
+      <Tabs value={tab} onChange={(v) => nav(`/${v}`)} tabs={[{ value: "people", label: t("people.tab") }, { value: "contractors", label: t("contractors.tab") }, { value: "departments", label: t("departments.tab") }]} />
+      <div style={{ marginTop: 14 }}>{tab === "people" ? <PeopleTab /> : tab === "contractors" ? <ContractorsTab /> : <DepartmentsTab />}</div>
     </>
   );
 }

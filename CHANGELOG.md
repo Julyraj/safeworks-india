@@ -1,5 +1,13 @@
 # Changelog
 
+## Portal 2.1 — departments, charts and Excel reports (draft, not released)
+- **Departments**: one company-wide list in the admin console (People & contractors → Departments), a department on each user (also in the user CSV import as `department`), and a *By department* table on the dashboard. An action records its owner's department when assigned; named reports record the reporter's. Anonymous and QR reports never count towards a department.
+- **Field app → Actions → Department**: everything assigned to your department (read-only unless it is yours). Works from the offline copy and refreshes from the server when online.
+- **Field app → Charts** (More → Charts): Mine / Department / Site, for the last 30, 90 or 365 days: reports, hazards, good practice, open and overdue actions, closed-on-time %, a trend chart, and breakdowns by type, risk, category and status; Site adds the department table. Counts only, never names.
+- **Report and assign**: after an officer submits a report, *Score risk and assign owner now* opens the triage sheet at once (works offline).
+- **Excel**: every register exports as `.xlsx` as well as CSV, and **Full report (Excel)** (dashboard and the phone's Charts page, officers) gives one workbook with a Summary, Reports, Actions and Departments sheet. No new library.
+- Database migration `003_departments.sql` (new table, three columns, two triggers; nothing dropped). Demo seed adds five departments. 6 new server tests (41 in total).
+
 ## Portal 2.0 — rebuilt to the Portal Build Brief
 - **New database schema** (52 tables) for one company with many sites: per-site roles, industries, risk matrices with versions, rule sets with status labels, areas, assets, QR codes, people and contractors, observations with anonymous reporter seals, media with SHA-256 checks, triage decisions, actions with events and requests, versioned inspection templates and runs, notifications, escalations, privacy notices and requests, retention policies and legal holds, hash-chained audit log. Portal 1.x tables are moved to schema `v1_archive`; nothing is dropped.
 - **Field app** (installable web app + Android): one-screen quick report (type → photo → submit) that works offline with an outbox, photos uploaded after the text with a hash check, anonymous option, "Needs you now" home, triage sheet with a tap-to-set 5×5 matrix and a pre-filled action, complete with after-photo, side-by-side verification, inspections with fail follow-up and signature, notifications, Web Push alerts on the installed web app, English/Hindi/Tamil/Kannada.

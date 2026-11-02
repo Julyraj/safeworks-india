@@ -2,11 +2,11 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../../shared/i18n";
-import type { Band, Dashboard as DashboardT, Kpi, ObservationType } from "../../shared/types";
+import type { Band, Dashboard as DashboardT, Insights, Kpi, ObservationType } from "../../shared/types";
 import { Bars, Card, CardHead, EmptyState, ErrorCard, Field, Input, KpiTile, Skeleton, BandPill } from "../../shared/ui";
 import { useLoad, useLocalState } from "../../shared/hooks";
 import { fmtNumber, pct } from "../../shared/format";
-import { api, localCsv } from "../api";
+import { api, downloadCsv, localCsv } from "../api";
 import { useScope } from "../scope";
 import { PageHead, ExportButton } from "../components";
 
@@ -25,6 +25,8 @@ export default function Dashboard() {
   const [range, setRange] = useLocalState("sw.admin.dash.range", defaultRange());
   const state = useLoad(() => api.get<DashboardT>("/dashboard", { siteIds: siteId || undefined, from: range.from, to: range.to }), [siteId, range.from, range.to]);
   const d = state.data;
+  const insights = useLoad(() => api.get<Insights>("/insights", { level: "site", siteIds: siteId || undefined, from: range.from, to: range.to }), [siteId, range.from, range.to]);
+  const depts = insights.data?.byDepartment ?? [];
 
   const kpiTone = (k: Kpi): "red" | "green" | "orange" | undefined => {
     if (k.value === null) return undefined;
@@ -55,6 +57,7 @@ export default function Dashboard() {
           <Field label={t("reg.from")}><Input type="date" value={range.from} onChange={(e) => setRange({ ...range, from: e.target.value })} style={{ minHeight: 38, padding: "4px 8px" }} /></Field>
           <Field label={t("reg.to")}><Input type="date" value={range.to} onChange={(e) => setRange({ ...range, to: e.target.value })} style={{ minHeight: 38, padding: "4px 8px" }} /></Field>
           <ExportButton onExport={exportView} label={t("dash.exportView")} />
+          <ExportButton onExport={() => downloadCsv("/exports/report.xlsx", { siteIds: siteId || undefined, from: range.from, to: range.to }, `safeworks-report-${range.from}-${range.to}.xlsx`)} label={t("dash.exportReport")} />
         </>
       } />
       {state.error && !d ? <ErrorCard error={state.error} onRetry={state.reload} /> : null}
@@ -127,6 +130,19 @@ export default function Dashboard() {
                   </tbody>
                 </table>
               </div>
+            </Card>
+            <Card className="span2">
+              <CardHead title={t("dash.byDepartment")} kicker={t("dash.byDepartmentKicker")} action={<Link to="/departments" className="small">{t("departments.tab")} →</Link>} />
+              {depts.length ? (
+                <div className="table-wrap">
+                  <table className="table" data-testid="dash-departments">
+                    <thead><tr><th>{t("departments.department")}</th><th className="num">{t("dash.deptReports")}</th><th className="num">{t("dash.deptAssigned")}</th><th className="num">{t("dash.deptOpen")}</th><th className="num">{t("dash.deptOverdue")}</th></tr></thead>
+                    <tbody>{depts.map((r) => (
+                      <tr key={r.departmentId}><td>{pick(r.name)}</td><td className="num">{r.reports}</td><td className="num">{r.assigned}</td><td className="num">{r.open}</td><td className="num" style={r.overdue ? { color: "var(--red)", fontWeight: 700 } : undefined}>{r.overdue}</td></tr>
+                    ))}</tbody>
+                  </table>
+                </div>
+              ) : <EmptyState title={t("dash.noDepartments")} body={t("dash.noDepartmentsHint")} action={<Link to="/departments" className="small">{t("departments.add")} →</Link>} />}
             </Card>
             <Card className="span2">
               <CardHead title={t("dash.repeat")} kicker={t("dash.repeatKicker")} action={<Link to="/inspections" className="small">{t("nav.inspections")} →</Link>} />
