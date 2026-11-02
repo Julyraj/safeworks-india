@@ -193,7 +193,8 @@ export async function uploadMedia(): Promise<void> {
       }
       await patchMedia(next.clientUuid, { status: "uploading" });
       try {
-        await api.putBytes(full.uploadUrl!, full.blob, full.ref.mime);
+        // a request that was cut off mid-way can hang in the WebView; give it 90 s and move on (the next pass retries)
+        await Promise.race([api.putBytes(full.uploadUrl!, full.blob, full.ref.mime), new Promise((_, rej) => setTimeout(() => rej(new ApiError(0, "Upload timed out", "network")), 90_000))]);
         await patchMedia(next.clientUuid, { status: "uploaded", lastError: null, nextAttemptAt: null, dropBlob: true });
         logit("info", `media ${next.ref.kind} ${Math.round(next.ref.bytes / 1024)} KB uploaded`);
         set({ online: true });
@@ -203,7 +204,8 @@ export async function uploadMedia(): Promise<void> {
           await patchMedia(next.clientUuid, { status: "queued", attempts: next.attempts + 1, nextAttemptAt: Date.now() + nextDelay(next.attempts), lastError: msg });
           if (e instanceof ApiError && e.isNetwork) set({ online: false });
           logit("warn", `media upload deferred: ${msg}`);
-          break; // the network is down or the server is unwell; do not hammer it
+          if (!navigator.onLine || !(e instanceof ApiError && e.isNetwork)) break; // the network is down or the server is unwell; do not hammer it
+          continue; // one request failed while we look online (e.g. cut off mid-flight): try the next file
         }
         await patchMedia(next.clientUuid, { status: "failed", attempts: next.attempts + 1, nextAttemptAt: null, lastError: msg });
         logit("error", `media upload rejected: ${msg}`);
