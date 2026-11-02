@@ -20,7 +20,7 @@ const CONTROLS: ControlLevel[] = ["elimination", "substitution", "engineering", 
 export interface DraftRow extends ActionDraft { ownerName: string }
 
 export function newDraft(band: Band | undefined, dueAt: string | undefined, title = ""): DraftRow {
-  return { clientUuid: uuid(), title, problem: "", actionType: "corrective", controlLevel: "engineering", ownerUserId: "", ownerName: "", responsibleEmployerId: null, band, dueAt, interimControl: "", interimReviewAt: "" };
+  return { clientUuid: uuid(), title, problem: "", actionType: "corrective", controlLevel: "engineering", ownerUserId: "", ownerName: "", responsibleEmployerId: null, band, dueAt, interimControl: "", interimReviewAt: new Date(Date.now() + 24 * 3_600_000).toISOString() };
 }
 
 /** One action draft (used by triage and by the inspection builder's action defaults preview). */
@@ -135,6 +135,7 @@ export function TriageSheet({ obs, onClose, onDone }: { obs: ObservationDetail; 
         if (!d.dueAt) fe[`d${i}.dueAt`] = t("csv.required");
         const r = ruleFor(rules, d.band ?? band ?? "moderate", obs.siteId);
         if (r.interimControlRequired && !(d.interimControl ?? "").trim()) fe[`d${i}.interimControl`] = t("triage.err.interim");
+        if (r.interimControlRequired && !d.interimReviewAt) fe[`d${i}.interimReviewAt`] = t("csv.required");
       });
       if (extreme && !interim.trim()) fe.interim = t("triage.err.interimExtreme");
     }
@@ -225,7 +226,7 @@ export function TriageSheet({ obs, onClose, onDone }: { obs: ObservationDetail; 
             {fieldErr.drafts ? <div className="field invalid"><div className="error">{fieldErr.drafts}</div></div> : null}
             {drafts.map((d, i) => (
               <ActionDraftEditor key={d.clientUuid} draft={d} siteId={obs.siteId} defaultBand={band} employerId={employer || null}
-                errors={{ title: fieldErr[`d${i}.title`], ownerUserId: fieldErr[`d${i}.ownerUserId`], dueAt: fieldErr[`d${i}.dueAt`], interimControl: fieldErr[`d${i}.interimControl`] }}
+                errors={{ title: fieldErr[`d${i}.title`], ownerUserId: fieldErr[`d${i}.ownerUserId`], dueAt: fieldErr[`d${i}.dueAt`], interimControl: fieldErr[`d${i}.interimControl`], interimReviewAt: fieldErr[`d${i}.interimReviewAt`] }}
                 onChange={(nd) => setDrafts((ds) => ds.map((x) => (x.clientUuid === nd.clientUuid ? nd : x)))} onRemove={drafts.length > 1 ? () => setDrafts((ds) => ds.filter((x) => x.clientUuid !== d.clientUuid)) : undefined} />
             ))}
             {extreme ? (
