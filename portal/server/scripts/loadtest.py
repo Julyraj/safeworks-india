@@ -3,6 +3,8 @@
 
     BASE_URL=https://safeworks.example.in ADMIN_PASSWORD=… USERS=300 DURATION=120 REPORT=loadtest-report.json python scripts/loadtest.py
 
+Virtual users share the demo logins, so start the server with a high USER_RATE_LIMIT (e.g. 100000) for a capacity
+run; otherwise the per-user limit (600 requests a minute) answers 429, which is the limit working, not a capacity failure.
 Environment (same names as 1.x): BASE_URL, ADMIN_ID, ADMIN_PASSWORD, USERS, DURATION, REPORT, plus DEMO_PASSWORD (falls back to
 ADMIN_PASSWORD, exactly like the seed) and RAMP (seconds to spread the start). The run signs in as the demo site safety officer
 SO-TN1, the owners OWN-TN1-1..3 and the workers WORKER-TN1-1..5 (`python scripts/seed.py --demo`); ADMIN01 needs MFA and is not used.

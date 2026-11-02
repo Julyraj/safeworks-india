@@ -75,6 +75,9 @@ jobs:
           RUN_JOBS: "false"
           SEED_ADMIN_PASSWORD: CiAdmin2026
           WEB_CONCURRENCY: "2"
+          # 100 virtual users share the ~10 demo logins, so each login carries ~10 people's traffic.
+          # This run measures capacity, not the per-user abuse limit (600/min), so lift that limit here only.
+          USER_RATE_LIMIT: "100000"
         run: |
           psql postgres://safeworks:safeworks@localhost:5432/safeworks_test -c "drop schema public cascade; create schema public;"
           python scripts/seed.py --demo
