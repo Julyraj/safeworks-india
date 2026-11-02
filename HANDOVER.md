@@ -1,4 +1,6 @@
-# SafeWorks — complete handover (27 October 2026)
+# SafeWorks — complete handover (updated 2 November 2026)
+
+> **Status: Library 4.0 and Portal 2.0 are merged into `main` and live.** CI is green (server tests, Docker, one-command Arm install, Android APK); Render serves 2.0 at https://safeworks-portal.onrender.com; releases `portal-v2.0.10` (Portal APK) and the library APK (`v4.0.N` from the next build). The feature branch `feature/safeworks-2.0` is merged and can be deleted.
 
 This file is the single source of truth for continuing SafeWorks in a **new Claude session** (claude.ai/code cloud session or any other). It covers everything done since the project started, the exact state of every part, every decision, every login, the hosting, the open items, and step-by-step instructions to finish the work. A new Claude session should read this file first, then `portal/docs/API.md`, `portal/docs/DECISIONS.md`, `VERIFY.md` and `CONTENT-REVIEW.md`.
 
@@ -123,23 +125,16 @@ QR form for a site area: `https://<server>/q/<token>` (tokens are printed on the
 ### Step 2 — Paste this first message (copy everything inside the box)
 
 ```
-You are continuing the SafeWorks project in the repo Julyraj/safeworks-india.
-Portal 2.0 and Library 4.0 are finished and tested on branch feature/safeworks-2.0; only merge and release are left.
-1. git fetch origin && git checkout feature/safeworks-2.0 && git pull
-2. Read HANDOVER.md (sections 2.3, 5, 7, 8, 10, 11), then portal/README.md and portal/docs/API.md.
-3. Set up the environment as HANDOVER.md section 7 says, then verify (all must be green; fix anything that is not):
-   a) cd portal/server: pyflakes safeworks tests scripts; pytest twice (disk storage, then STORAGE_DRIVER=db);
-   b) cd portal/web: npm run typecheck && npm run build;
-   c) the smoke test in HANDOVER.md section 8 (seed --demo, health, a report through to Closed, a poster through
-      POST /admin/qr-codes/{id}/poster-link);
-   d) the real end-to-end browser test: node portal/e2e/e2e-real.cjs (see portal/e2e/README.md; 84 checks; it wipes
-      the local database it is pointed at).
-4. Merge feature/safeworks-2.0 into main and push; watch CI (gh run watch) and fix until every job passes
-   (SafeWorks Portal, Build Android app, Check document links).
-5. Confirm Render redeployed: https://safeworks-portal.onrender.com/api/v1/health shows version 2.0.0, and the
-   newest GitHub release is portal-v2.0.N with SafeWorks-Portal.apk.
-6. Commit and push after every finished step (stop hook requires it). Never put passwords in chat or in the repo.
-7. Explain results to me briefly, mentor-style, in plain words. Ask me only for decisions listed in HANDOVER.md section 5.
+You are continuing the SafeWorks project in the repo Julyraj/safeworks-india (branch main).
+Library 4.0 and Portal 2.0 are merged, live on Render and green in CI.
+1. Read HANDOVER.md fully, then portal/README.md, portal/docs/API.md, portal/docs/DECISIONS.md, VERIFY.md.
+2. Set up the environment as HANDOVER.md section 7 says and confirm everything is still green:
+   pyflakes + pytest (disk and STORAGE_DRIVER=db) in portal/server; npm run typecheck && npm run build in portal/web;
+   python3 build.py; node portal/e2e/e2e-real.cjs (wipes the local database it points at).
+3. Then do the next item I ask for (examples: apply my answers to HANDOVER.md section 5; Phase 2 incidents with
+   statutory timers; equipment registers; production hosting). Work on a feature branch, keep CI green, merge to main.
+4. Commit and push after every finished step (stop hook requires it). Never put passwords in chat or in the repo.
+5. Explain results to me briefly, mentor-style, in plain words. Ask me only for decisions listed in HANDOVER.md section 5.
 ```
 
 ### Step 3 — While it works
