@@ -80,7 +80,16 @@ jobs:
           python scripts/seed.py --demo
           python -m safeworks > server.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:8080/api/v1/health && break; sleep 1; done
-          BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json python scripts/loadtest.py
+          BASE_URL=http://localhost:8080 ADMIN_ID=ADMIN01 ADMIN_PASSWORD=CiAdmin2026 USERS=100 DURATION=60 REPORT=loadtest-report.json python scripts/loadtest.py 2>&1 | tee loadtest.log; test "${PIPESTATUS[0]}" -eq 0
+      - name: Show the server log when the load test fails
+        if: failure()
+        working-directory: portal/server
+        run: |
+          # Annotations are readable without downloading logs; %0A keeps line breaks.
+          for f in server.log loadtest.log; do
+            [ -f "$f" ] && echo "::error title=$f (last 60 lines)::$(tail -60 "$f" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
+          done
+          true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -112,6 +121,7 @@ jobs:
           docker run -d --name sw --network host \
             -e DATABASE_URL=postgres://safeworks:safeworks@localhost:5432/safeworks \
             -e FILE_SIGNING_SECRET=ci-only-secret-0123456789abcdef0123456789abcdef \
+            -e FIELD_ENCRYPTION_KEY=Y2ktb25seS1maWVsZC1rZXktMDEyMzQ1Njc4OWFiY2Q= \
             -e STORAGE_DRIVER=db -e SEED_ON_START=true -e SEED_DEMO=true \
             -e SEED_ADMIN_PASSWORD=CiAdmin2026 -e WEB_CONCURRENCY=1 safeworks-portal
           for i in $(seq 1 90); do curl -sf http://localhost:8080/api/v1/health && break; sleep 2; done
@@ -124,6 +134,9 @@ jobs:
           docker inspect --format '{{.State.Health.Status}}' sw
       - if: always()
         run: docker logs sw 2>&1 | tail -50
+      - name: Show the container log as an annotation when it fails
+        if: failure()
+        run: echo "::error title=container log (last 60 lines)::$(docker logs sw 2>&1 | tail -60 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
 
   install-arm:
     name: One-command install on an Arm server (like Oracle Cloud Always Free)
