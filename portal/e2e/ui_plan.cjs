@@ -867,6 +867,39 @@ tc(["EHS-DSH-026"], async () => {
 });
 
 /* ---------------------------------------------------------------- run */
+// ---- language: English by default, chosen in Settings (phone) or the account panel (console)
+tc(["EHS-AUTH-068"], async () => {
+  check(sql1("select language from users where employee_code = 'WORKER-TN3-1'") === "en", "demo worker saved in English");
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: "ta-IN", timezoneId: "Asia/Kolkata" });
+  const p = (CUR = await ctx.newPage());
+  p.setDefaultTimeout(12000);
+  await p.goto(`${BASE}/`);
+  await p.locator('input[autocomplete="username"]').fill("WORKER-TN3-1");
+  await p.locator('input[type="password"]').fill(PW);
+  // The language buttons themselves show each language's own script, so check the selection and the rest of the page.
+  check(await p.getByRole("button", { name: "English", exact: true }).getAttribute("aria-pressed") === "true", "English selected on the sign-in page although the browser is Tamil");
+  check((await p.locator('button[type="submit"]').innerText()).trim() === "Sign in", "sign-in button in English");
+  await p.locator('button[type="submit"]').click();
+  await p.locator('[data-testid="home-report"]').waitFor({ timeout: 30000 });
+  check(!/[\u0B80-\u0BFF]/.test(await p.locator("main, .page").first().innerText()), "home in English");
+  await p.goto(`${BASE}/settings`);
+  for (const name of ["English", "हिन्दी · Hindi", "தமிழ் · Tamil", "ಕನ್ನಡ · Kannada"]) await p.getByRole("button", { name, exact: true }).waitFor();
+  check(await p.getByRole("button", { name: "English", exact: true }).getAttribute("aria-pressed") === "true", "English selected");
+  await ctx.close();
+});
+tc(["EHS-AUTH-069"], async () => {
+  const p = await consoleAs("SO-TN1");
+  await p.locator("header .who").click();
+  const sel = p.locator('[data-testid="account-language"]');
+  await sel.selectOption("ta");
+  await until(async () => (await api(tokenOf("c", "SO-TN1"), "GET", "/me")).data.language === "ta", "Tamil saved on the account");
+  check(/[\u0B80-\u0BFF]/.test(await p.locator("nav").first().innerText()), "console menu now in Tamil");
+  await sel.selectOption("en");
+  await until(async () => (await api(tokenOf("c", "SO-TN1"), "GET", "/me")).data.language === "en", "English saved again");
+  check(/Dashboard/.test(await p.locator("nav").first().innerText()), "console back in English");
+  await p.keyboard.press("Escape");
+});
+
 (async () => {
   let proc;
   try {

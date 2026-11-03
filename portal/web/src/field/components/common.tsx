@@ -3,7 +3,7 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import type { ActionStatus, ObservationStatus, RunStatus, Lang } from "../../shared/types";
-import { useI18n, LANGS, LANG_NAMES } from "../../shared/i18n";
+import { useI18n, LANGS, LANG_LABELS } from "../../shared/i18n";
 import { Banner, Button, Pill, BandPill, Select, Skeleton, ListSkeleton } from "../../shared/ui";
 import { IconAlert, IconCheckCircle, IconRefresh, IconSearch, IconWifiOff, IconClock, IconFlag } from "../../shared/icons";
 import { fmtTime, relative, dueText } from "../../shared/format";
@@ -240,7 +240,7 @@ export function UserSelect({ users, value, onChange, allowEmpty, meId }: { users
 export function LangGrid({ value, onChange }: { value: Lang; onChange: (l: Lang) => void }) {
   return (
     <div className="lang-grid" role="group" aria-label="Language">
-      {LANGS.map((l) => <button key={l} type="button" lang={l} aria-pressed={value === l} onClick={() => onChange(l)}>{LANG_NAMES[l]}</button>)}
+      {LANGS.map((l) => <button key={l} type="button" lang={l} aria-pressed={value === l} onClick={() => onChange(l)}>{LANG_LABELS[l]}</button>)}
     </div>
   );
 }

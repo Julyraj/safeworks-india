@@ -1,6 +1,6 @@
 /* Sign-in for the console: employee code or email + password → TOTP (with first-time enrolment) → must-change-password. */
 import { useEffect, useMemo, useState } from "react";
-import { useI18n, LANGS, LANG_NAMES } from "../../shared/i18n";
+import { useI18n, LANGS, LANG_LABELS } from "../../shared/i18n";
 import type { Lang } from "../../shared/types";
 import { Button, Field, Form, Input, Select, useToast } from "../../shared/ui";
 import { IconKey, IconLock, IconShield } from "../../shared/icons";
@@ -55,7 +55,7 @@ export default function Login() {
             </Field>
             <Button type="submit" variant="primary" block loading={busy || stage === "booting"} disabled={!id.trim() || !pw}>{t("login.signIn")}</Button>
             <Field label={t("common.language")}>
-              <Select value={lang} onChange={(e) => setLang(e.target.value as Lang)}>{LANGS.map((l) => <option key={l} value={l}>{LANG_NAMES[l]}</option>)}</Select>
+              <Select value={lang} onChange={(e) => setLang(e.target.value as Lang)}>{LANGS.map((l) => <option key={l} value={l}>{LANG_LABELS[l]}</option>)}</Select>
             </Field>
             <p className="small muted" style={{ margin: 0 }}>{t("login.staffOnly")}</p>
           </Form>

@@ -245,7 +245,7 @@ async def seed_demo(c, org_id: str, sites: dict[str, str], demo_pw: str) -> None
     names = ["Arun Kumar", "Priya Lakshmi", "Suresh Babu", "Deepa Nair", "Manoj Gowda", "Kavitha Raj", "Rahul Verma", "Lakshmi Devi", "Vikram Shetty", "Anitha Mohan", "Ramesh Yadav", "Sangeetha Pillai"]
     worker_names = ["Murugan", "Selvam", "Basavaraj", "Ravi", "Kumar", "Shankar", "Mahesh", "Raju", "Velu", "Nagaraj", "Prakash", "Mani"]
     for code, sid in sites.items():
-        lang = "ta" if code.startswith("TN") else "kn"
+        lang = "en"  # everyone starts in English; each person can pick Hindi, Tamil or Kannada in Settings
         u = users[code] = {}
         u["SO"] = await ensure_user(c, org_id, f"SO-{code}", f"{rnd.choice(names)} (SO {code})", pw, [("site_safety_officer", sid)], lang=lang, email=f"so-{code.lower()}@safeworks.local", login_type="email")
         u["SH"] = await ensure_user(c, org_id, f"SH-{code}", f"{rnd.choice(names)} (Site head {code})", pw, [("site_head", sid)], lang="en", email=f"sh-{code.lower()}@safeworks.local", login_type="email")

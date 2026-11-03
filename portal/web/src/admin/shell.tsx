@@ -1,7 +1,7 @@
 /* Console layout: left rail, top bar with the site filter, search, language and account; keyboard shortcuts; auditor banner. */
 import { Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useI18n, LANGS, LANG_NAMES } from "../shared/i18n";
+import { useI18n, LANGS, LANG_LABELS } from "../shared/i18n";
 import type { Lang } from "../shared/types";
 import { Banner, Button, ErrorBoundary, Field, Form, Input, Select, Sheet, Skeleton, useShortcutsHelp, useToast } from "../shared/ui";
 import { useHotkeys } from "../shared/hooks";
@@ -13,12 +13,31 @@ import {
 import { useAuth, APP_VERSION } from "./auth";
 import { useScope } from "./scope";
 import { useAttention } from "./attention";
-import { errMessage } from "./api";
+import { api, errMessage } from "./api";
+
+/** The person's language: shown at once, and saved to their account (phone app, emails and notifications use it too). */
+function useMyLanguage() {
+  const { lang, setLang } = useI18n();
+  const { me, refreshMe } = useAuth();
+  const toast = useToast();
+  const applied = useRef(false);
+  // After sign-in, show the language saved on the account (English unless the person chose another).
+  useEffect(() => { if (me && !applied.current) { applied.current = true; if (me.language && me.language !== lang) setLang(me.language); } }, [me, lang, setLang]);
+  return async (l: Lang) => {
+    setLang(l);
+    if (!me || me.language === l) return;
+    try {
+      await api.put("/me/preferences", { language: l, digest: me.preferences?.digest ?? "weekly", quietHours: me.preferences?.quietHours ?? true });
+      await refreshMe();
+    } catch (e) { toast.error(errMessage(e)); }
+  };
+}
 
 interface NavItem { to: string; key: string; icon: ReactNode; show: boolean; badge?: number; badgeTone?: "red" | "amber" }
 
 export function Shell() {
-  const { t, lang, setLang } = useI18n();
+  const { t, lang } = useI18n();
+  const setLang = useMyLanguage();
   const { me, perms, logout } = useAuth();
   const { siteId, setSiteId, sites } = useScope();
   const attention = useAttention();
@@ -139,8 +158,8 @@ export function Shell() {
               <option value="">{t("top.allSites")}</option>
               {sites.map((s) => <option key={s.id} value={s.id}>{s.code} · {s.name.en}</option>)}
             </Select>
-            <Select value={lang} onChange={(e) => setLang(e.target.value as Lang)} aria-label={t("common.language")}>
-              {LANGS.map((l) => <option key={l} value={l}>{LANG_NAMES[l]}</option>)}
+            <Select value={lang} onChange={(e) => void setLang(e.target.value as Lang)} aria-label={t("common.language")}>
+              {LANGS.map((l) => <option key={l} value={l}>{LANG_LABELS[l]}</option>)}
             </Select>
             <button type="button" className="who btn ghost" onClick={() => setAccount(true)} aria-label={t("top.account")}>
               <span className="avatar">{initials(me?.name ?? "")}</span>
@@ -162,12 +181,12 @@ export function Shell() {
         </main>
       </div>
       {help}
-      {account ? <AccountSheet onClose={() => setAccount(false)} onSignOut={async () => { setAccount(false); await logout(); }} /> : null}
+      {account ? <AccountSheet onLang={setLang} onClose={() => setAccount(false)} onSignOut={async () => { setAccount(false); await logout(); }} /> : null}
     </div>
   );
 }
 
-function AccountSheet({ onClose, onSignOut }: { onClose: () => void; onSignOut: () => Promise<void> }) {
+function AccountSheet({ onClose, onSignOut, onLang }: { onClose: () => void; onSignOut: () => Promise<void>; onLang: (l: Lang) => Promise<void> }) {
   const { t, lang } = useI18n();
   const { me, perms, changePassword } = useAuth();
   const { siteName } = useScope();
@@ -188,6 +207,12 @@ function AccountSheet({ onClose, onSignOut }: { onClose: () => void; onSignOut: 
         <dt>{t("users.roles")}</dt><dd>{me?.roles.map((r, i) => <div key={i}>{t(`role.${r.role}`)} · {r.siteId ? siteName(r.siteId) : t("role.allSites")}{r.expiresAt ? ` · ${t("users.expires")} ${fmtDate(r.expiresAt, lang)}` : ""}</div>)}</dd>
         <dt>{t("users.mfa")}</dt><dd>{me?.mfaEnabled ? t("common.yes") : t("common.no")}</dd>
       </dl>
+      <h3 style={{ marginTop: 18 }}><IconGlobe size={16} style={{ display: "inline", verticalAlign: "-2px" }} /> {t("common.language")}</h3>
+      <Field label={t("account.language")} hint={t("account.languageHint")}>
+        <Select value={lang} onChange={(e) => void onLang(e.target.value as Lang)} data-testid="account-language">
+          {LANGS.map((l) => <option key={l} value={l}>{LANG_LABELS[l]}</option>)}
+        </Select>
+      </Field>
       <h3 style={{ marginTop: 18 }}><IconKey size={16} style={{ display: "inline", verticalAlign: "-2px" }} /> {t("login.changePassword")}</h3>
       <Form onSubmit={async () => {
         if (problem || !cur || !next) { setErr(problem || t("error.validation")); return; }

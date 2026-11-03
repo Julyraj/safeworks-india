@@ -1197,7 +1197,6 @@
   "ret.noPoliciesHint": "The seed creates the default policies; run the seed again or ask the administrator.",
   "ret.recordIdBad": "A record id looks like 8-4-4-4-12 letters and digits (copy it from the audit log).",
   "act.disputeApproveHint": "Approving a dispute gives the action to someone else: choose the new owner.",
-
   "departments.tab": "Departments",
   "departments.department": "Department",
   "departments.name": "Name",
@@ -1222,5 +1221,7 @@
   "dash.deptOpen": "Open",
   "dash.deptOverdue": "Overdue",
   "dash.noDepartments": "No departments set up",
-  "dash.noDepartmentsHint": "Add departments and give each user one to see this table."
+  "dash.noDepartmentsHint": "Add departments and give each user one to see this table.",
+  "account.language": "Show the console in",
+  "account.languageHint": "Saved to your account: the phone app, emails and notifications use it too. English is the default."
 }

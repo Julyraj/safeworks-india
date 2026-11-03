@@ -17,6 +17,8 @@ export type Packs = Record<Lang, Pack>;
 
 export const LANGS: Lang[] = ["en", "hi", "ta", "kn"];
 export const LANG_NAMES: Record<Lang, string> = { en: "English", hi: "हिन्दी", ta: "தமிழ்", kn: "ಕನ್ನಡ" };
+/** Picker labels: the language's own name plus its English name, so anyone can find it. */
+export const LANG_LABELS: Record<Lang, string> = { en: "English", hi: "हिन्दी · Hindi", ta: "தமிழ் · Tamil", kn: "ಕನ್ನಡ · Kannada" };
 export const LANG_KEY = "sw.lang";
 
 const SHARED: Packs = { en: sharedEn, hi: sharedHi, ta: sharedTa, kn: sharedKn };
@@ -81,8 +83,8 @@ export function readSavedLang(fallback: Lang = "en"): Lang {
     const v = localStorage.getItem(LANG_KEY) as Lang | null;
     if (v && LANGS.includes(v)) return v;
   } catch { /* storage unavailable */ }
-  const nav = (navigator.language || "en").slice(0, 2) as Lang;
-  return LANGS.includes(nav) ? nav : fallback;
+  // English until the person picks another language (Settings, or their account's saved language after sign-in).
+  return fallback;
 }
 
 export function saveLang(lang: Lang) {

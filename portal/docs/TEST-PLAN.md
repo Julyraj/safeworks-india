@@ -218,6 +218,8 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | EHS-AUTH-065 | Any role | Android app → Server address | Server address field | Enter `https://safeworks-portal.onrender.com`. | Positive | Server checked; sign-in screen opens. |
 | EHS-AUTH-066 | Guest (QR) | QR form `/q/<token>` | No sign-in | Open a valid area QR link in a private window. | Positive | Report form opens without sign-in; no access to any other page or API. |
 | EHS-AUTH-067 | Guest (QR) | API | Calls without sign-in | Call `GET /api/v1/insights` and `GET /api/v1/observations` with no token. | Security | 401 for both. |
+| EHS-AUTH-068 | Field Employee (REP) | Sign-in and first screens | Default language | Open the phone app in a fresh browser whose own language is Tamil; sign in as a demo worker. | Positive | Everything is in English (the browser's language is not used); Settings → Language offers English, हिन्दी · Hindi, தமிழ் · Tamil and ಕನ್ನಡ · Kannada. Every demo user's saved language is English. |
+| EHS-AUTH-069 | Safety Officer (SSO) | Console → Account → Language | Pick a language | Open the account panel (name, top right), choose தமிழ் · Tamil, then English again. | Positive | Console switches at once; the choice is saved on the account (`/me` language `ta`), so the phone app and emails use it too; back to English likewise. |
 
 ### 1B. Dashboards (console dashboard + field app Charts)
 
@@ -1163,7 +1165,7 @@ Not testable in 2.1: these are Phase 2 (gap 1.4). The only incident step today i
 
 | Batch | Module | Test cases |
 |---|---|---|
-| 1A | Authentication and profile | 67 |
+| 1A | Authentication and profile | 69 |
 | 1B | Dashboards and Charts | 59 |
 | 2 | Safety observations | 206 |
 | 3 | Corrective and preventive actions | 116 |
@@ -1171,7 +1173,7 @@ Not testable in 2.1: these are Phase 2 (gap 1.4). The only incident step today i
 | 5 | Reports, exports, notifications | 41 |
 | 6 | Admin and master settings | 142 |
 | 7 | Cross-role workflows and isolation | 64 |
-| **Total** | | **767** |
+| **Total** | | **769** |
 
 ## How to run this plan
 
