@@ -3167,6 +3167,12 @@ NOT_RUN = {
     "EHS-RPT-043": "Needs a real push service (browser push to a phone)",
     "EHS-RPT-050": "Checks that a feature is absent (gap 1.4); not automated",
     "EHS-RPT-051": "Checks that a feature is absent (gap 1.4); not automated",
+    "EHS-OBS-006": "Manual check: equipment picker in Change location",
+    "EHS-OBS-073": "Manual check: drawing a blur box and looking at the saved photo",
+    "EHS-OBS-082": "Manual check: cutting the network in the middle of a photo upload is too timing-dependent to script reliably",
+    "EHS-OBS-086": "Manual check: needs a refused item that is then fixed on the phone",
+    "EHS-OBS-193": "Manual check: needs a user who is officer at one site and reporter at another",
+    "EHS-INS-079": "Manual check: a whole inspection run in airplane mode (parts covered by EHS-OBS-084 and EHS-ACT-034/053)",
 }
 
 

@@ -289,7 +289,7 @@ export default function QuickReport() {
       {/* 8. anonymous */}
       <Toggle label={<span className="row" style={{ gap: 6 }}><IconEyeOff size={18} /> {t("report.anonymous")}</span>} hint={t("report.anonymousHint")} checked={d.anonymous} onChange={(v) => set((p) => ({ ...p, anonymous: v }))} />
 
-      <button type="button" className="btn ghost sm" onClick={() => setMoreOpen((m) => !m)} aria-expanded={moreOpen} style={{ marginTop: 6 }}>{moreOpen ? t("common.less") : t("report.moreDetails")}</button>
+      <button type="button" className="btn ghost sm" onClick={() => setMoreOpen((m) => !m)} aria-expanded={moreOpen} data-testid="more-details" style={{ marginTop: 6 }}>{moreOpen ? t("common.less") : t("report.moreDetails")}</button>
       {moreOpen ? (
         <div style={{ marginTop: 8 }}>
           <Field label={t("report.employerInvolved")} optional>

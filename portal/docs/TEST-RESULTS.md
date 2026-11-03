@@ -1,15 +1,15 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-03 03:37 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-03 03:53 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
 | Cases in the plan | 767 |
-| Run automatically (API, timed jobs and browser) | 723 |
-| Passed | 723 |
-| Failed | 0 |
+| Run automatically (API, timed jobs and browser) | 753 |
+| Passed | 751 |
+| Failed | 2 |
 | Runner error | 0 |
-| Not automated (UI, timing or manual; see the browser run and the list below) | 44 |
+| Not automated (UI, timing or manual; see the browser run and the list below) | 14 |
 
 ## Defects found and fixed
 
@@ -36,6 +36,11 @@ Run on 2026-11-03 03:37 UTC against a fresh demo database with `portal/e2e/run_t
 | F19 | A contractor could be saved with an email such as `abc@` | Same email rule as users | EHS-ADM-069, `test_f19_*` |
 | F20 | "Request new date" accepted a date in the past (also when approving) | The new date must be in the future | EHS-ACT-082, `test_f20_*` |
 | F21 | A checklist number question accepted text ("abc"), and a choice question an option it does not have | Answers must fit the question; the phone form already only offers valid values | EHS-INS-068, `test_f21_*` |
+| F22 | "Danger now" could be switched on for a good-practice report, raising a danger alert for good news | The switch is hidden for good practice and the server ignores it | EHS-OBS-027, `test_f22_*` |
+| F23 | Charts opened offline showed a generic error; charts already on screen gave no sign they were out of date | Clear "Charts need a connection" message; a notice when the shown figures could not be refreshed | EHS-DSH-047/048 (browser) |
+| F24 | Phone numbers were not checked (letters, 2 digits) on users, people, contractors and the QR form; CSV imports took them too | Phone must be 7–16 digits, may start with +; bad CSV rows are skipped with a reason | EHS-ADM-061, `test_f24_*` |
+| F25 | Typing a case number in the console search did nothing when already on that register, and leftover saved filters could hide the case | The jump re-reads the address and clears other filters | EHS-OBS-232 (browser) |
+| F26 | Work saved offline stayed Pending after the app was closed and reopened with signal ("No connection · next retry") | On start with a connection, waiting items are sent at once | EHS-OBS-084, EHS-ACT-034/053 (browser) |
 
 Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only admin and HSE manager may reopen a submitted inspection, because its report is locked); EHS-ACT-050 (an owner who disputed an action cannot complete it until the dispute is decided); EHS-INS-083 and EHS-WF3-09 (a report link is a 5-minute ticket bound to one record and to the requester's scope, by design, because a page opened in a new tab cannot carry a sign-in).
 
@@ -106,8 +111,8 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-AUTH-061 | Notifications — Mark all read button | PASS |  |
 | EHS-AUTH-062 | Notifications → critical alert — Acknowledge button | PASS |  |
 | EHS-AUTH-063 | Field app → any list — No role switching | PASS |  |
-| EHS-AUTH-064 | Android app → Server address — Server address field | Not automated |  |
-| EHS-AUTH-065 | Android app → Server address — Server address field | Not automated |  |
+| EHS-AUTH-064 | Android app → Server address — Server address field | Not automated | Android app only (needs a phone or emulator) |
+| EHS-AUTH-065 | Android app → Server address — Server address field | Not automated | Android app only (needs a phone or emulator) |
 | EHS-AUTH-066 | QR form `/q/<token>` — No sign-in | PASS |  |
 | EHS-AUTH-067 | API — Calls without sign-in | PASS |  |
 | EHS-DSH-001 | Console → Dashboard — Site dropdown "All sites" | PASS |  |
@@ -126,8 +131,8 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-DSH-014 | Console → Dashboard — KPI "On-time closure %" | PASS |  |
 | EHS-DSH-015 | Console → Dashboard — KPI "Percent safe" | PASS |  |
 | EHS-DSH-016 | Console → Dashboard — KPI "Participation %" | PASS |  |
-| EHS-DSH-017 | Console → Dashboard — KPI "Critical acknowledgement median" | Not automated |  |
-| EHS-DSH-018 | Console → Dashboard — KPI "Inspection completion %" | Not automated |  |
+| EHS-DSH-017 | Console → Dashboard — KPI "Critical acknowledgement median" | PASS |  |
+| EHS-DSH-018 | Console → Dashboard — KPI "Inspection completion %" | PASS |  |
 | EHS-DSH-019 | Console → Dashboard — Weekly chart bars | PASS | browser |
 | EHS-DSH-020 | Console → Dashboard — "By category" row link | PASS | browser |
 | EHS-DSH-021 | Console → Dashboard — By type / By area / By employer bars | PASS |  |
@@ -135,7 +140,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-DSH-023 | Console → Dashboard — Days to close by band table | PASS |  |
 | EHS-DSH-024 | Console → Dashboard — Repeat findings table | PASS |  |
 | EHS-DSH-025 | Console → Dashboard — By department table (2.1) | PASS |  |
-| EHS-DSH-026 | Console → Dashboard — By department, empty state | Not automated |  |
+| EHS-DSH-026 | Console → Dashboard — By department, empty state | PASS | browser |
 | EHS-DSH-027 | Console → Dashboard — Departments → link | PASS | browser |
 | EHS-DSH-028 | Console → Dashboard — Export view (CSV) button | PASS | browser |
 | EHS-DSH-029 | Console → Dashboard — Full report (Excel) button (2.1) | PASS |  |
@@ -171,7 +176,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-DSH-059 | API — Charts without sign-in | PASS |  |
 | EHS-OBS-001 | Field app → Report — Report button (home, + button) | PASS | browser |
 | EHS-OBS-002 | Report — Location chip (GPS) | PASS | browser |
-| EHS-OBS-003 | Report — Location chip (no GPS) | Not automated |  |
+| EHS-OBS-003 | Report — Location chip (no GPS) | PASS | browser |
 | EHS-OBS-004 | Report → Change location — Site dropdown | PASS | browser |
 | EHS-OBS-005 | Report → Change location — Area dropdown | PASS | browser |
 | EHS-OBS-006 | Report → Change location — Equipment dropdown | Not automated |  |
@@ -193,7 +198,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-022 | API — Bad date | PASS |  |
 | EHS-OBS-023 | Report — Description with Tamil text | PASS |  |
 | EHS-OBS-024 | Report — Description with emoji and `<script>` | PASS |  |
-| EHS-OBS-025 | Report — Voice-to-text (mic in description) | Not automated |  |
+| EHS-OBS-025 | Report — Voice-to-text (mic in description) | Not automated | Needs a microphone and the phone's speech service |
 | EHS-OBS-026 | Report — "Danger now" toggle | PASS |  |
 | EHS-OBS-027 | Report — "Danger now" with good practice | PASS | browser |
 | EHS-OBS-028 | Report — "Fixed on the spot" toggle | PASS | browser |
@@ -203,8 +208,8 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-032 | API — What you did (2,001 characters) | PASS |  |
 | EHS-OBS-033 | Report — "Anonymous" toggle | PASS |  |
 | EHS-OBS-034 | Report — Employer (automatic) | PASS |  |
-| EHS-OBS-035 | Report — Employer involved dropdown | Not automated |  |
-| EHS-OBS-036 | Report — Trade dropdown | Not automated |  |
+| EHS-OBS-035 | Report — Employer involved dropdown | FAIL | browser: locator.click: Timeout 12000ms exceeded. Call log: [2m - waiting for getByRole('button', { name: /More details/ })[22m  |
+| EHS-OBS-036 | Report — Trade dropdown | FAIL | browser: locator.click: Timeout 12000ms exceeded. Call log: [2m - waiting for getByRole('button', { name: /More details/ })[22m  |
 | EHS-OBS-037 | Report — Category extra field (required) | PASS |  |
 | EHS-OBS-038 | Report — Category extra field (filled) | PASS |  |
 | EHS-OBS-039 | Report — Submit button | PASS | browser |
@@ -212,7 +217,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-041 | Report → Saved — View | PASS | browser |
 | EHS-OBS-042 | Report — Draft autosave | PASS | browser |
 | EHS-OBS-043 | Report — Discard draft | PASS | browser |
-| EHS-OBS-044 | Report — Leave page with unsaved draft | Not automated |  |
+| EHS-OBS-044 | Report — Leave page with unsaved draft | PASS | browser |
 | EHS-OBS-045 | API — Site outside scope | PASS |  |
 | EHS-OBS-046 | API — Area from another site | PASS |  |
 | EHS-OBS-047 | API — Equipment from another site | PASS |  |
@@ -225,13 +230,13 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-054 | Report — Create | PASS |  |
 | EHS-OBS-055 | API — Create ⚠ F10 | PASS |  |
 | EHS-OBS-056 | Report — Case number format | PASS |  |
-| EHS-OBS-057 | Report — Report on behalf of a worker without a phone | Not automated |  |
+| EHS-OBS-057 | Report — Report on behalf of a worker without a phone | PASS |  |
 | EHS-OBS-060 | Report — Camera strip (1 photo) | PASS |  |
 | EHS-OBS-061 | Report — Camera strip (3 photos) | PASS | browser |
 | EHS-OBS-062 | Report — Camera strip (4th photo) | PASS | browser |
 | EHS-OBS-063 | API — Photo count above the server limit | PASS |  |
-| EHS-OBS-064 | Report — Photo from gallery | Not automated |  |
-| EHS-OBS-065 | Report — PNG and WebP photos | Not automated |  |
+| EHS-OBS-064 | Report — Photo from gallery | PASS | browser |
+| EHS-OBS-065 | Report — PNG and WebP photos | PASS |  |
 | EHS-OBS-066 | API — PDF sent as a photo | PASS |  |
 | EHS-OBS-067 | API — Renamed file | PASS |  |
 | EHS-OBS-068 | API — File over 10 MB | PASS |  |
@@ -240,17 +245,17 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-071 | API — Upload to someone else's photo slot | PASS |  |
 | EHS-OBS-072 | API — Same upload twice | PASS |  |
 | EHS-OBS-073 | Report — Blur boxes | Not automated |  |
-| EHS-OBS-074 | Report — Voice note (30 seconds) | Not automated |  |
+| EHS-OBS-074 | Report — Voice note (30 seconds) | Not automated | Needs a microphone to record |
 | EHS-OBS-075 | API — Voice note over 60 seconds | PASS |  |
-| EHS-OBS-076 | Report — Video | Not automated |  |
-| EHS-OBS-077 | Report detail — Photo link | Not automated |  |
+| EHS-OBS-076 | Report — Video | Not automated | Checks that a feature is absent (gap 1.4, video not in 2.1); not automated |
+| EHS-OBS-077 | Report detail — Photo link | PASS |  |
 | EHS-OBS-078 | Report detail — Lightbox | PASS | browser |
 | EHS-OBS-080 | Report (offline) — Submit | PASS | browser |
 | EHS-OBS-081 | Outbox — Automatic sync | PASS | browser |
 | EHS-OBS-082 | Outbox — Network lost during the photo upload | Not automated |  |
 | EHS-OBS-083 | Outbox — 5 reports offline | PASS |  |
-| EHS-OBS-084 | Outbox — App closed while offline | Not automated |  |
-| EHS-OBS-085 | Outbox — Server refuses a report | Not automated |  |
+| EHS-OBS-084 | Outbox — App closed while offline | PASS | browser |
+| EHS-OBS-085 | Outbox — Server refuses a report | PASS |  |
 | EHS-OBS-086 | Outbox — Retry button | Not automated |  |
 | EHS-OBS-087 | Outbox — Diagnostics | PASS | browser |
 | EHS-OBS-088 | Reports (offline) — Lists | PASS | browser |
@@ -269,11 +274,11 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-104 | Triage — Return question to an anonymous reporter | PASS |  |
 | EHS-OBS-105 | Charts / export — Department of an anonymous report | PASS |  |
 | EHS-OBS-110 | `/q/<token>` — Page load | PASS |  |
-| EHS-OBS-111 | `/q/<token>` — Language buttons | Not automated |  |
+| EHS-OBS-111 | `/q/<token>` — Language buttons | PASS | browser |
 | EHS-OBS-112 | `/q/<token>` — Type, photo, description | PASS |  |
 | EHS-OBS-113 | `/q/<token>` — Name and phone (optional) | PASS |  |
 | EHS-OBS-114 | `/q/<token>` — Anonymous | PASS |  |
-| EHS-OBS-115 | `/q/<token>` — Employer name | Not automated |  |
+| EHS-OBS-115 | `/q/<token>` — Employer name | PASS |  |
 | EHS-OBS-116 | `/q/<token>` — Status link | PASS |  |
 | EHS-OBS-117 | `/q/<token>` — Altered status link | PASS |  |
 | EHS-OBS-118 | `/q/<token>` — Rotated or disabled QR | PASS |  |
@@ -291,12 +296,12 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-133 | API — Report behind my action | PASS |  |
 | EHS-OBS-134 | API — Unrelated report at the same site | PASS |  |
 | EHS-OBS-135 | Reports — Tabs | PASS | browser |
-| EHS-OBS-136 | Reports → Triage — Order | Not automated |  |
+| EHS-OBS-136 | Reports → Triage — Order | PASS | browser |
 | EHS-OBS-137 | Reports → Site — Status chips | PASS | browser |
 | EHS-OBS-138 | Reports → Site — Type chips | PASS | browser |
 | EHS-OBS-139 | Reports → Site — Band chips | PASS | browser |
-| EHS-OBS-140 | Reports → Site — Area dropdown | Not automated |  |
-| EHS-OBS-141 | Reports → Site — Category dropdown | Not automated |  |
+| EHS-OBS-140 | Reports → Site — Area dropdown | PASS | browser |
+| EHS-OBS-141 | Reports → Site — Category dropdown | PASS | browser |
 | EHS-OBS-142 | Reports — Search | PASS | browser |
 | EHS-OBS-143 | Reports — Save filter | PASS | browser |
 | EHS-OBS-144 | API — Other plant's report | PASS |  |
@@ -342,12 +347,12 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-184 | Reports → Triage — Triage deadline | PASS |  |
 | EHS-OBS-190 | Report → Saved — "Score risk and assign owner now" | PASS | browser |
 | EHS-OBS-191 | Report → Saved — Button hidden | PASS | browser |
-| EHS-OBS-192 | Report → Saved — Button hidden | Not automated |  |
+| EHS-OBS-192 | Report → Saved — Button hidden | PASS | browser |
 | EHS-OBS-193 | Report → Saved — Button at another site | Not automated |  |
 | EHS-OBS-194 | Report → Saved → Triage sheet — Assign online | PASS | browser |
 | EHS-OBS-195 | Report → Saved → Triage sheet — Assign offline | PASS |  |
 | EHS-OBS-196 | Triage sheet — Cancel | PASS | browser |
-| EHS-OBS-197 | Triage sheet — Other decisions | Not automated |  |
+| EHS-OBS-197 | Triage sheet — Other decisions | PASS | browser |
 | EHS-OBS-200 | Report detail → Comment — Comment box | PASS |  |
 | EHS-OBS-201 | Report detail → Comment — Comment box | PASS |  |
 | EHS-OBS-202 | API — Comment on someone else's report | PASS |  |
@@ -399,7 +404,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ACT-031 | Action detail — Start on a reopened action | PASS |  |
 | EHS-ACT-032 | API — Start an in-progress action | PASS |  |
 | EHS-ACT-033 | API — Start someone else's action | PASS |  |
-| EHS-ACT-034 | Action detail (offline) — Start while offline | Not automated |  |
+| EHS-ACT-034 | Action detail (offline) — Start while offline | PASS | browser |
 | EHS-ACT-040 | Action detail → Complete — Complete sheet | PASS | browser |
 | EHS-ACT-041 | Complete — No after-photo | PASS |  |
 | EHS-ACT-042 | Complete — Note too short | PASS | browser |
@@ -413,7 +418,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ACT-050 | Complete — Complete a disputed action | PASS |  |
 | EHS-ACT-051 | API — Complete a verified action | PASS |  |
 | EHS-ACT-052 | API — Complete someone else's action | PASS |  |
-| EHS-ACT-053 | Complete (offline) — Complete offline with photo | Not automated |  |
+| EHS-ACT-053 | Complete (offline) — Complete offline with photo | PASS | browser |
 | EHS-ACT-054 | Complete — Same completion sent twice | PASS |  |
 | EHS-ACT-060 | Actions → To verify → detail — Verify sheet | PASS | browser |
 | EHS-ACT-061 | Verify — Effective | PASS |  |
@@ -421,7 +426,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ACT-063 | Verify — Report stays open with other actions | PASS |  |
 | EHS-ACT-064 | Verify — Not effective without reason | PASS |  |
 | EHS-ACT-065 | Verify — Not effective with reason | PASS |  |
-| EHS-ACT-066 | Verify — Evidence photo | Not automated |  |
+| EHS-ACT-066 | Verify — Evidence photo | PASS |  |
 | EHS-ACT-067 | API — Owner verifies own action | PASS |  |
 | EHS-ACT-068 | API — Completer verifies | PASS |  |
 | EHS-ACT-069 | API — Worker verifies | PASS |  |
@@ -440,7 +445,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ACT-084 | Action detail → Requests — Approve date change | PASS |  |
 | EHS-ACT-085 | Action detail → Requests — Reject date change | PASS |  |
 | EHS-ACT-086 | Requests — Third date change goes to the site head | PASS |  |
-| EHS-ACT-087 | Requests — Owner is a safety officer | Not automated |  |
+| EHS-ACT-087 | Requests — Owner is a safety officer | PASS |  |
 | EHS-ACT-088 | API — Decide own action's request | PASS |  |
 | EHS-ACT-089 | API — Decide twice | PASS |  |
 | EHS-ACT-090 | Action detail → Dispute — Reason | PASS |  |
@@ -530,7 +535,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-INS-047 | Inspection scheduler — Missed run | PASS |  |
 | EHS-INS-048 | Inspection scheduler — No duplicates | PASS |  |
 | EHS-INS-060 | Inspections — Due list | PASS |  |
-| EHS-INS-061 | Inspections → Start spot inspection — Template list | Not automated |  |
+| EHS-INS-061 | Inspections → Start spot inspection — Template list | PASS | browser |
 | EHS-INS-062 | API — Start on a retired version | PASS |  |
 | EHS-INS-063 | Scan — QR on equipment | PASS |  |
 | EHS-INS-064 | Run — Pass answer | PASS |  |
@@ -539,7 +544,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-INS-067 | Run — Number below range | PASS |  |
 | EHS-INS-068 | Run — Number not a number ⚠ F21 | PASS |  |
 | EHS-INS-069 | Run — Repeatable section | PASS |  |
-| EHS-INS-070 | Run — Signature | Not automated |  |
+| EHS-INS-070 | Run — Signature | PASS | browser |
 | EHS-INS-071 | Run — Submit with a required question unanswered | PASS |  |
 | EHS-INS-072 | Run — Submit with a failed item without action | PASS |  |
 | EHS-INS-073 | Run — Submit valid | PASS |  |
@@ -552,7 +557,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-INS-080 | Run — Late answers | PASS |  |
 | EHS-INS-081 | Run detail — Report link | PASS |  |
 | EHS-INS-082 | Report link — Expired report link | PASS |  |
-| EHS-INS-083 | Report link — Report link passed to another person | Not automated |  |
+| EHS-INS-083 | Report link — Report link passed to another person | PASS |  |
 | EHS-INS-084 | Run detail — Reopen a completed run | PASS |  |
 | EHS-INS-085 | Run detail — Reopen without reason | PASS |  |
 | EHS-INS-086 | Run detail — Cancel a scheduled run | PASS |  |
@@ -583,7 +588,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-RPT-018 | Excel file — Header row | PASS |  |
 | EHS-RPT-019 | Excel file — Dates | PASS |  |
 | EHS-RPT-020 | Excel file — Yes/No values | PASS |  |
-| EHS-RPT-021 | Excel file — Very long text | Not automated |  |
+| EHS-RPT-021 | Excel file — Very long text | PASS |  |
 | EHS-RPT-022 | Excel file — Hidden control characters | PASS |  |
 | EHS-RPT-023 | Excel file — Text that looks like a formula | PASS |  |
 | EHS-RPT-024 | CSV file — Text that looks like a formula ⚠ F9 | PASS |  |
@@ -595,15 +600,15 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-RPT-040 | Notifications — New report alert | PASS |  |
 | EHS-RPT-041 | Notifications — Assigned alert | PASS |  |
 | EHS-RPT-042 | Notifications — Notification language | PASS |  |
-| EHS-RPT-043 | Settings → Push — Enable push | Not automated |  |
+| EHS-RPT-043 | Settings → Push — Enable push | Not automated | Needs a real push service (browser push to a phone) |
 | EHS-RPT-044 | Daily digest — Daily email | PASS |  |
 | EHS-RPT-045 | Weekly digest — Weekly email | PASS |  |
 | EHS-RPT-046 | Console → Notifications log — Log | PASS |  |
 | EHS-RPT-047 | Console → Notifications log — Log | PASS |  |
 | EHS-RPT-048 | Notifications log — Failed push without keys | PASS |  |
 | EHS-RPT-049 | Notifications log — Filter by status | PASS |  |
-| EHS-RPT-050 | Scheduled custom reports by email — — | Not automated |  |
-| EHS-RPT-051 | Custom report builder — — | Not automated |  |
+| EHS-RPT-050 | Scheduled custom reports by email — — | Not automated | Checks that a feature is absent (gap 1.4); not automated |
+| EHS-RPT-051 | Custom report builder — — | Not automated | Checks that a feature is absent (gap 1.4); not automated |
 | EHS-ADM-001 | Console → Sites → New site — Code, Name, State, District, Type | PASS |  |
 | EHS-ADM-002 | New site — Code in lowercase | PASS |  |
 | EHS-ADM-003 | New site — Code 1 character | PASS |  |
@@ -640,7 +645,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ADM-046 | Equipment — Next examination due | PASS |  |
 | EHS-ADM-047 | Console → QR codes — New QR for equipment | PASS |  |
 | EHS-ADM-048 | QR codes — Poster | PASS |  |
-| EHS-ADM-049 | QR codes — Poster link reused later | Not automated |  |
+| EHS-ADM-049 | QR codes — Poster link reused later | PASS |  |
 | EHS-ADM-050 | QR codes — Rotate | PASS |  |
 | EHS-ADM-051 | QR codes — Disable | PASS |  |
 | EHS-ADM-052 | API — QR at another plant | PASS |  |
@@ -680,7 +685,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ADM-103 | Users → Edit — Change department (2.1) | PASS |  |
 | EHS-ADM-104 | Users → Suspend — Suspend with reason | PASS |  |
 | EHS-ADM-105 | Users → Reactivate — Reactivate | PASS |  |
-| EHS-ADM-106 | Users → Deactivate — Deactivate with Undo | Not automated |  |
+| EHS-ADM-106 | Users → Deactivate — Deactivate with Undo | PASS | browser |
 | EHS-ADM-107 | Users — Search and filters | PASS |  |
 | EHS-ADM-108 | Users → detail — Devices | PASS |  |
 | EHS-ADM-109 | Users → Import CSV — Valid file | PASS |  |

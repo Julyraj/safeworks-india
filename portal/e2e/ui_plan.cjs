@@ -706,7 +706,7 @@ tc(["EHS-OBS-035", "EHS-OBS-036"], async () => {
   await openReport(p);
   await p.locator('[data-testid="type-unsafe_act"]').click();
   await ensureCats(p);
-  await p.getByRole("button", { name: /More details/ }).click();
+  await p.locator('[data-testid="more-details"]').click();
   const selects = p.locator(".page select");
   const emp = selects.nth(0);
   const opts = await emp.locator("option").evaluateAll((os) => os.map((o) => [o.value, o.textContent]));
