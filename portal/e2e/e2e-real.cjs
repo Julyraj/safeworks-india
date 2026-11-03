@@ -571,8 +571,9 @@ const label = (page, text) => page.getByLabel(new RegExp("^" + text.replace(/[.*
     await P.goto(`${BASE}/admin/sites/${tn7.id}`);
     await label(P, "District").fill("Krishnagiri (Hosur)");
     await P.locator(".sticky-foot").getByRole("button", { name: "Save" }).click();
-    await P.locator(".toast.success").last().waitFor();
-    check("7. site details saved (the loaded record is PUT back)", sql("select district from sites where id = $1::uuid", [tn7.id])[0].district === "Krishnagiri (Hosur)");
+    // An earlier "Saved" toast may still be on screen, so wait for the value in the database, not the toast.
+    await until(async () => sql("select district from sites where id = $1::uuid", [tn7.id])[0].district === "Krishnagiri (Hosur)", "site district saved");
+    check("7. site details saved (the loaded record is PUT back)", true);
     await P.goto(`${BASE}/admin/sites/${tn7.id}/equipment`);
     await P.getByRole("button", { name: "Import CSV" }).first().click();
     await label(P, "Or paste CSV").fill("tag_no,asset_class,make_model,serial_no,swl_kg,area_code,next_exam_due\nCR-01,lifting_appliance,ACE 14XW,SN1234,14000,STORE,2027-03-31\nFE-07,extinguisher,ABC 6 kg,FE7781,,COLD,2027-01-15");

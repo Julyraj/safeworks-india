@@ -1,12 +1,12 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-03 03:58 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-03 05:01 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
-| Cases in the plan | 767 |
-| Run automatically (API, timed jobs and browser) | 753 |
-| Passed | 753 |
+| Cases in the plan | 769 |
+| Run automatically (API, timed jobs and browser) | 755 |
+| Passed | 755 |
 | Failed | 0 |
 | Runner error | 0 |
 | Not automated (UI, timing or manual; see the browser run and the list below) | 14 |
@@ -115,6 +115,8 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-AUTH-065 | Android app → Server address — Server address field | Not automated | Android app only (needs a phone or emulator) |
 | EHS-AUTH-066 | QR form `/q/<token>` — No sign-in | PASS |  |
 | EHS-AUTH-067 | API — Calls without sign-in | PASS |  |
+| EHS-AUTH-068 | Sign-in and first screens — Default language | PASS | browser |
+| EHS-AUTH-069 | Console → Account → Language — Pick a language | PASS | browser |
 | EHS-DSH-001 | Console → Dashboard — Site dropdown "All sites" | PASS |  |
 | EHS-DSH-002 | Console → Dashboard — Site dropdown | PASS |  |
 | EHS-DSH-003 | Console → Dashboard — Site dropdown | PASS |  |
