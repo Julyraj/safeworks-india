@@ -1,13 +1,13 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-03 03:53 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-03 03:58 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
 | Cases in the plan | 767 |
 | Run automatically (API, timed jobs and browser) | 753 |
-| Passed | 751 |
-| Failed | 2 |
+| Passed | 753 |
+| Failed | 0 |
 | Runner error | 0 |
 | Not automated (UI, timing or manual; see the browser run and the list below) | 14 |
 
@@ -179,7 +179,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-003 | Report — Location chip (no GPS) | PASS | browser |
 | EHS-OBS-004 | Report → Change location — Site dropdown | PASS | browser |
 | EHS-OBS-005 | Report → Change location — Area dropdown | PASS | browser |
-| EHS-OBS-006 | Report → Change location — Equipment dropdown | Not automated |  |
+| EHS-OBS-006 | Report → Change location — Equipment dropdown | Not automated | Manual check: equipment picker in Change location |
 | EHS-OBS-007 | Report — Type tile "Good practice" | PASS | browser |
 | EHS-OBS-008 | Report — Type tile "Unsafe act" | PASS | browser |
 | EHS-OBS-009 | Report — Type tile "Unsafe condition" | PASS | browser |
@@ -208,8 +208,8 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-032 | API — What you did (2,001 characters) | PASS |  |
 | EHS-OBS-033 | Report — "Anonymous" toggle | PASS |  |
 | EHS-OBS-034 | Report — Employer (automatic) | PASS |  |
-| EHS-OBS-035 | Report — Employer involved dropdown | FAIL | browser: locator.click: Timeout 12000ms exceeded. Call log: [2m - waiting for getByRole('button', { name: /More details/ })[22m  |
-| EHS-OBS-036 | Report — Trade dropdown | FAIL | browser: locator.click: Timeout 12000ms exceeded. Call log: [2m - waiting for getByRole('button', { name: /More details/ })[22m  |
+| EHS-OBS-035 | Report — Employer involved dropdown | PASS | browser |
+| EHS-OBS-036 | Report — Trade dropdown | PASS | browser |
 | EHS-OBS-037 | Report — Category extra field (required) | PASS |  |
 | EHS-OBS-038 | Report — Category extra field (filled) | PASS |  |
 | EHS-OBS-039 | Report — Submit button | PASS | browser |
@@ -244,7 +244,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-070 | API — Photo changed after capture | PASS |  |
 | EHS-OBS-071 | API — Upload to someone else's photo slot | PASS |  |
 | EHS-OBS-072 | API — Same upload twice | PASS |  |
-| EHS-OBS-073 | Report — Blur boxes | Not automated |  |
+| EHS-OBS-073 | Report — Blur boxes | Not automated | Manual check: drawing a blur box and looking at the saved photo |
 | EHS-OBS-074 | Report — Voice note (30 seconds) | Not automated | Needs a microphone to record |
 | EHS-OBS-075 | API — Voice note over 60 seconds | PASS |  |
 | EHS-OBS-076 | Report — Video | Not automated | Checks that a feature is absent (gap 1.4, video not in 2.1); not automated |
@@ -252,11 +252,11 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-078 | Report detail — Lightbox | PASS | browser |
 | EHS-OBS-080 | Report (offline) — Submit | PASS | browser |
 | EHS-OBS-081 | Outbox — Automatic sync | PASS | browser |
-| EHS-OBS-082 | Outbox — Network lost during the photo upload | Not automated |  |
+| EHS-OBS-082 | Outbox — Network lost during the photo upload | Not automated | Manual check: cutting the network in the middle of a photo upload is too timing-dependent to script reliably |
 | EHS-OBS-083 | Outbox — 5 reports offline | PASS |  |
 | EHS-OBS-084 | Outbox — App closed while offline | PASS | browser |
 | EHS-OBS-085 | Outbox — Server refuses a report | PASS |  |
-| EHS-OBS-086 | Outbox — Retry button | Not automated |  |
+| EHS-OBS-086 | Outbox — Retry button | Not automated | Manual check: needs a refused item that is then fixed on the phone |
 | EHS-OBS-087 | Outbox — Diagnostics | PASS | browser |
 | EHS-OBS-088 | Reports (offline) — Lists | PASS | browser |
 | EHS-OBS-089 | Sync — Clock wrong on the phone | PASS |  |
@@ -348,7 +348,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-190 | Report → Saved — "Score risk and assign owner now" | PASS | browser |
 | EHS-OBS-191 | Report → Saved — Button hidden | PASS | browser |
 | EHS-OBS-192 | Report → Saved — Button hidden | PASS | browser |
-| EHS-OBS-193 | Report → Saved — Button at another site | Not automated |  |
+| EHS-OBS-193 | Report → Saved — Button at another site | Not automated | Manual check: needs a user who is officer at one site and reporter at another |
 | EHS-OBS-194 | Report → Saved → Triage sheet — Assign online | PASS | browser |
 | EHS-OBS-195 | Report → Saved → Triage sheet — Assign offline | PASS |  |
 | EHS-OBS-196 | Triage sheet — Cancel | PASS | browser |
@@ -553,7 +553,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-INS-076 | Run — Repeat finding | PASS |  |
 | EHS-INS-077 | API — Answer someone else's run | PASS |  |
 | EHS-INS-078 | API — Unknown question | PASS |  |
-| EHS-INS-079 | Run (offline) — Whole run offline | Not automated |  |
+| EHS-INS-079 | Run (offline) — Whole run offline | Not automated | Manual check: a whole inspection run in airplane mode (parts covered by EHS-OBS-084 and EHS-ACT-034/053) |
 | EHS-INS-080 | Run — Late answers | PASS |  |
 | EHS-INS-081 | Run detail — Report link | PASS |  |
 | EHS-INS-082 | Report link — Expired report link | PASS |  |
