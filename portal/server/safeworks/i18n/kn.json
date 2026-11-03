@@ -154,6 +154,8 @@
   "ntf.inspection_submitted.body": "{site} ನಲ್ಲಿ {template}: ಅಂಕ {score}%, {failed} ವಿಫಲ, {actions} ಕ್ರಮಗಳು.",
   "ntf.digest_daily.title": "{date} ರ ದೈನಂದಿನ ಸುರಕ್ಷತಾ ಸಾರಾಂಶ",
   "ntf.digest_weekly.title": "ವಾರದ ಸುರಕ್ಷತಾ ಸಾರಾಂಶ, {date} ರ ವಾರ",
+  "ntf.digest_daily.body": "ಈ ಸಾರಾಂಶ ನಿಮಗೆ ಪ್ರತಿದಿನ ಬರುತ್ತದೆ. ಬದಲಿಸಲು ಅಥವಾ ನಿಲ್ಲಿಸಲು: SafeWorks → ಸೆಟ್ಟಿಂಗ್‌ಗಳು → ಇಮೇಲ್ ಸಾರಾಂಶ.",
+  "ntf.digest_weekly.body": "ಈ ಸಾರಾಂಶ ನಿಮಗೆ ಪ್ರತಿ ವಾರ ಬರುತ್ತದೆ. ಬದಲಿಸಲು ಅಥವಾ ನಿಲ್ಲಿಸಲು: SafeWorks → ಸೆಟ್ಟಿಂಗ್‌ಗಳು → ಇಮೇಲ್ ಸಾರಾಂಶ.",
   "ntf.mfa_reset.title": "ನಿಮ್ಮ ಅಥೆಂಟಿಕೇಟರ್ ಮರುಹೊಂದಿಸಲಾಗಿದೆ",
   "ntf.mfa_reset.body": "ನಿರ್ವಾಹಕರು ನಿಮ್ಮ ಅಥೆಂಟಿಕೇಟರ್ ಮರುಹೊಂದಿಸಿದ್ದಾರೆ. ಮುಂದಿನ ಸೈನ್ ಇನ್‌ನಲ್ಲಿ ಮತ್ತೆ ಹೊಂದಿಸಿ.",
   "digest.triage_backlog": "ಟ್ರಯಾಜ್‌ಗೆ ಕಾಯುತ್ತಿರುವ ವರದಿಗಳು: {count}",

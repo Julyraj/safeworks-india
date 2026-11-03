@@ -200,8 +200,9 @@ async def ladder_job(c) -> None:
                     kind = "action_overdue"
                 email = step.get("channel") in ("email", "both")
                 params = {"caseNo": a["case_no"], "title": a["title"], "site": a["site_code"], "due": fmt_dt(a["due_at"]), "owner": a["owner_name"], "band": a["band"]}
+                # Extreme-band reminders and escalations are urgent: never held by quiet hours or the daily push cap
                 await notify(c, org_id=org["id"], recipients=recipients, event_type=kind, record_type="action", record_id=a["id"], key=kind, params=params,
-                             link=link_for("action", a["id"]), email=email)
+                             link=link_for("action", a["id"]), email=email, critical=a["band"] == "extreme")
                 await c.execute(
                     "insert into action_events (action_id, event_type, body, payload) values ($1, $2, $3, $4)",
                     a["id"], "escalated" if offset > 0 and step["recipient"] != "owner" else "reminder_sent", f"{step['recipient']} {offset:+d} min", {"step": step},
@@ -226,12 +227,12 @@ async def ladder_job(c) -> None:
                 officers = await users_with_roles(c, s["id"], ["site_safety_officer"], org["id"])
                 oldest = late_sla[0]
                 await notify(c, org_id=org["id"], recipients=officers, event_type="triage_sla", record_type="observation", record_id=oldest["id"], key="triage_sla",
-                             params={"count": len(late_sla), "site": s["code"], "caseNo": oldest["case_no"], "received": fmt_dt(oldest["received_at"])}, link="/inbox")
+                             params={"count": len(late_sla), "site": s["code"], "caseNo": oldest["case_no"], "received": fmt_dt(oldest["received_at"])}, link="/reports?tab=triage")
             if late_esc and await _once(c, f"triage_escalate:{s['id']}:{today}"):
                 heads = await users_with_roles(c, s["id"], ["site_head"], org["id"])
                 oldest = late_esc[0]
                 await notify(c, org_id=org["id"], recipients=heads, event_type="triage_sla", record_type="observation", record_id=oldest["id"], key="triage_escalate",
-                             params={"count": len(late_esc), "site": s["code"], "caseNo": oldest["case_no"], "days": esc}, link="/inbox", email=True)
+                             params={"count": len(late_esc), "site": s["code"], "caseNo": oldest["case_no"], "days": esc}, link="/reports?tab=triage", email=True)
                 for o in late_esc:
                     await c.execute("insert into escalations (org_id, record_type, record_id, level, reason, target_user_ids) values ($1,'observation',$2,1,'triage_sla',$3) on conflict do nothing",
                                     org["id"], o["id"], heads)

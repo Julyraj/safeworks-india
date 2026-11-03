@@ -119,3 +119,47 @@ def test_f12_email_must_look_like_an_email(ctx):  # EHS-ADM-097
         r = ctx.post("ADMIN", "/api/v1/admin/users", {"name": "x", "email": bad, "loginType": "email", "language": "en", "roles": [{"siteId": ctx.ids["siteA"], "role": "reporter"}]})
         assert r.status_code == 400, bad
     assert ctx.put("ADMIN", f"/api/v1/admin/users/{ctx.ids['w2']}", {"email": "abc@"}).status_code == 400
+
+
+def _timed_action(ctx, band: str) -> str:
+    body = {"clientUuid": str(uuid.uuid4()), "siteId": ctx.ids["siteA"], "title": f"Timed {band}", "problem": "p", "actionType": "corrective", "controlLevel": "engineering",
+            "ownerUserId": ctx.ids["own2"], "band": band, "interimControl": "Barricaded", "sourceType": "manual", "capturedAt": datetime.now(timezone.utc).isoformat()}
+    r = ctx.post("SO1", "/api/v1/actions", body)
+    assert r.status_code in (200, 201), r.text
+    aid = r.json()["id"]
+    run(lambda c: c.execute("update actions set created_at = now() - interval '10 days', due_at = now() + interval '1 day' - interval '2 minutes' where id = $1", uuid.UUID(aid)))
+    return aid
+
+
+def test_f14_extreme_reminders_are_urgent(ctx):  # EHS-ACT-138
+    from safeworks.jobs import ladder_job
+    from conftest import run_job
+    aid = _timed_action(ctx, "extreme")
+    run_job(ctx, ladder_job)
+    rows = run(lambda c: c.fetch("select critical, send_after from notifications where record_id = $1 and channel = 'push' and event_type = 'action_due_soon'", aid))
+    assert rows and all(r["critical"] and r["send_after"] is None for r in rows)
+
+
+def test_f15_every_notification_text_exists_in_every_language():
+    import json, re
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1] / "safeworks"
+    keys = set()
+    for f in root.rglob("*.py"):
+        keys |= set(re.findall(r'key=["\']([a-z_]+)["\']', f.read_text()))
+    keys |= {"action_overdue", "action_due_today", "action_due_soon", "digest_daily", "digest_weekly", "critical", "critical_repeat"}
+    for lang in ("en", "hi", "ta", "kn"):
+        pack = json.loads((root / "i18n" / f"{lang}.json").read_text())
+        missing = [f"ntf.{k}.{p}" for k in keys for p in ("title", "body") if f"ntf.{k}.{p}" not in pack and f"ntf.{k}.title" in pack]
+        assert not missing, f"{lang}: {missing}"
+
+
+def test_f16_triage_reminder_opens_the_triage_list(ctx):  # EHS-OBS-184
+    from safeworks.jobs import ladder_job
+    from conftest import run_job
+    o = ctx.create_obs("W1")
+    run(lambda c: c.execute("update observations set received_at = now() - interval '6 days' where id = $1", uuid.UUID(o["id"])))
+    run(lambda c: c.execute("delete from job_marks where key like 'triage_%'"))
+    run_job(ctx, ladder_job)
+    links = run(lambda c: c.fetch("select distinct link from notifications where event_type = 'triage_sla' and channel = 'inapp'"))
+    assert {r["link"] for r in links} == {"/reports?tab=triage"}

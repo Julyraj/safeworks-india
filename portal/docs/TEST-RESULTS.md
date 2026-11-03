@@ -1,15 +1,15 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-02 22:59 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API cases) and `portal/e2e/e2e-real.cjs` (browser). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-03 02:59 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API cases) and `portal/e2e/e2e-real.cjs` (browser). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
 | Cases in the plan | 767 |
-| Run automatically (API) | 488 |
-| Passed | 488 |
+| Run automatically (API) | 533 |
+| Passed | 533 |
 | Failed | 0 |
 | Runner error | 0 |
-| Not automated (UI, timing or manual; see the browser run and the list below) | 279 |
+| Not automated (UI, timing or manual; see the browser run and the list below) | 234 |
 
 ## Defects found and fixed
 
@@ -215,7 +215,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-052 | Report — Create | PASS |  |
 | EHS-OBS-053 | Report — Create | PASS |  |
 | EHS-OBS-054 | Report — Create | PASS |  |
-| EHS-OBS-055 | API — Create | PASS |  |
+| EHS-OBS-055 | API — Create ⚠ F10 | PASS |  |
 | EHS-OBS-056 | Report — Case number format | PASS |  |
 | EHS-OBS-057 | Report — Report on behalf of a worker without a phone | Not automated |  |
 | EHS-OBS-060 | Report — Camera strip (1 photo) | PASS |  |
@@ -257,7 +257,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-100 | Console → Observations — Named reporter | PASS |  |
 | EHS-OBS-101 | Console → Observations — Named reporter | PASS |  |
 | EHS-OBS-102 | Field app → report linked to my action — Named reporter | PASS |  |
-| EHS-OBS-103 | Report → Anonymous — Closure notice | Not automated |  |
+| EHS-OBS-103 | Report → Anonymous — Closure notice | PASS |  |
 | EHS-OBS-104 | Triage — Return question to an anonymous reporter | PASS |  |
 | EHS-OBS-105 | Charts / export — Department of an anonymous report | PASS |  |
 | EHS-OBS-110 | `/q/<token>` — Page load | PASS |  |
@@ -331,7 +331,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-181 | API — Unknown decision | PASS |  |
 | EHS-OBS-182 | API — Triage twice by mistake | PASS |  |
 | EHS-OBS-183 | API — Second triage by someone else | PASS |  |
-| EHS-OBS-184 | Reports → Triage — Triage deadline | Not automated |  |
+| EHS-OBS-184 | Reports → Triage — Triage deadline | PASS |  |
 | EHS-OBS-190 | Report → Saved — "Score risk and assign owner now" | Not automated |  |
 | EHS-OBS-191 | Report → Saved — Button hidden | Not automated |  |
 | EHS-OBS-192 | Report → Saved — Button hidden | Not automated |  |
@@ -349,7 +349,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-206 | API — Reopen | PASS |  |
 | EHS-OBS-207 | API — Reopen an open report | PASS |  |
 | EHS-OBS-208 | Notifications → danger alert — Acknowledge | PASS |  |
-| EHS-OBS-209 | Danger alert — Not acknowledged | Not automated |  |
+| EHS-OBS-209 | Danger alert — Not acknowledged | PASS |  |
 | EHS-OBS-210 | API — Acknowledge a danger alert ⚠ F8 | PASS |  |
 | EHS-OBS-211 | Report detail → Closure summary — Edit summary on a closed report | PASS |  |
 | EHS-OBS-212 | API — Closure summary on an open report | PASS |  |
@@ -424,7 +424,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-074 | API — Verify another plant's action | PASS |  |
 | EHS-ACT-075 | API — Verify twice | PASS |  |
 | EHS-ACT-076 | API — Admin verifies | PASS |  |
-| EHS-ACT-077 | Verify — Verify within the band's time | Not automated |  |
+| EHS-ACT-077 | Verify — Verify within the band's time | PASS |  |
 | EHS-ACT-080 | Action detail → Request new date — Date picker, Reason | PASS |  |
 | EHS-ACT-081 | API — Date change without a date | PASS |  |
 | EHS-ACT-082 | Request new date — Date in the past | Not automated |  |
@@ -462,19 +462,19 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-117 | Action detail → Comment — Text comment | PASS |  |
 | EHS-ACT-118 | Comment — Photo-only comment | PASS |  |
 | EHS-ACT-119 | Comment — Empty comment | PASS |  |
-| EHS-ACT-130 | Reminder job — 7 days before due | Not automated |  |
-| EHS-ACT-131 | Reminder job — 3 days before due | Not automated |  |
-| EHS-ACT-132 | Reminder job — Due day | Not automated |  |
-| EHS-ACT-133 | Escalation job — 1 day overdue | Not automated |  |
-| EHS-ACT-134 | Escalation job — 3 days overdue | Not automated |  |
-| EHS-ACT-135 | Escalation job — Extreme ladder | Not automated |  |
-| EHS-ACT-136 | Escalation job — Completed before due | Not automated |  |
-| EHS-ACT-137 | Escalation job — Paused by a dispute | Not automated |  |
-| EHS-ACT-138 | Escalation job — Quiet hours | Not automated |  |
-| EHS-ACT-139 | Escalation job — Daily push limit | Not automated |  |
-| EHS-ACT-140 | Console → Due dates → Ladder — Edit a ladder step | Not automated |  |
-| EHS-ACT-141 | Email outbox — No email server | Not automated |  |
-| EHS-ACT-142 | Escalation job — Two server processes | Not automated |  |
+| EHS-ACT-130 | Reminder job — 7 days before due | PASS |  |
+| EHS-ACT-131 | Reminder job — 3 days before due | PASS |  |
+| EHS-ACT-132 | Reminder job — Due day | PASS |  |
+| EHS-ACT-133 | Escalation job — 1 day overdue | PASS |  |
+| EHS-ACT-134 | Escalation job — 3 days overdue | PASS |  |
+| EHS-ACT-135 | Escalation job — Extreme ladder | PASS |  |
+| EHS-ACT-136 | Escalation job — Completed before due | PASS |  |
+| EHS-ACT-137 | Escalation job — Paused by a dispute | PASS |  |
+| EHS-ACT-138 | Escalation job — Quiet hours | PASS |  |
+| EHS-ACT-139 | Escalation job — Daily push limit | PASS |  |
+| EHS-ACT-140 | Console → Due dates → Ladder — Edit a ladder step | PASS |  |
+| EHS-ACT-141 | Email outbox — No email server | PASS |  |
+| EHS-ACT-142 | Escalation job — Two server processes | PASS |  |
 | EHS-ACT-150 | Console → Actions — Table | Not automated |  |
 | EHS-ACT-151 | Console → Actions — Sort | Not automated |  |
 | EHS-ACT-152 | Console → Actions — Filter: status, band, owner, overdue, from/to | Not automated |  |
@@ -519,8 +519,8 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-INS-044 | Schedules — Assign to a person | Not automated |  |
 | EHS-INS-045 | Schedules — Assign to a role | Not automated |  |
 | EHS-INS-046 | Schedules — Pause | Not automated |  |
-| EHS-INS-047 | Inspection scheduler — Missed run | Not automated |  |
-| EHS-INS-048 | Inspection scheduler — No duplicates | Not automated |  |
+| EHS-INS-047 | Inspection scheduler — Missed run | PASS |  |
+| EHS-INS-048 | Inspection scheduler — No duplicates | PASS |  |
 | EHS-INS-060 | Inspections — Due list | Not automated |  |
 | EHS-INS-061 | Inspections → Start spot inspection — Template list | Not automated |  |
 | EHS-INS-062 | API — Start on a retired version | PASS |  |
@@ -588,11 +588,11 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-RPT-041 | Notifications — Assigned alert | PASS |  |
 | EHS-RPT-042 | Notifications — Notification language | PASS |  |
 | EHS-RPT-043 | Settings → Push — Enable push | Not automated |  |
-| EHS-RPT-044 | Daily digest — Daily email | Not automated |  |
-| EHS-RPT-045 | Weekly digest — Weekly email | Not automated |  |
+| EHS-RPT-044 | Daily digest — Daily email | PASS |  |
+| EHS-RPT-045 | Weekly digest — Weekly email | PASS |  |
 | EHS-RPT-046 | Console → Notifications log — Log | PASS |  |
 | EHS-RPT-047 | Console → Notifications log — Log | PASS |  |
-| EHS-RPT-048 | Notifications log — Failed push without keys | Not automated |  |
+| EHS-RPT-048 | Notifications log — Failed push without keys | PASS |  |
 | EHS-RPT-049 | Notifications log — Filter by status | PASS |  |
 | EHS-RPT-050 | Scheduled custom reports by email — — | Not automated |  |
 | EHS-RPT-051 | Custom report builder — — | Not automated |  |
@@ -695,10 +695,10 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-138 | Risk matrix — Edit active version | PASS |  |
 | EHS-ADM-139 | Risk matrix — Author activates own version | PASS |  |
 | EHS-ADM-140 | Risk matrix — Activate | PASS |  |
-| EHS-ADM-141 | Due dates — Change a rule | Not automated |  |
-| EHS-ADM-142 | Due dates — Site-specific rule | Not automated |  |
-| EHS-ADM-143 | Due dates — Invalid value | Not automated |  |
-| EHS-ADM-144 | Ladders — Edit a step | Not automated |  |
+| EHS-ADM-141 | Due dates — Change a rule | PASS |  |
+| EHS-ADM-142 | Due dates — Site-specific rule | PASS |  |
+| EHS-ADM-143 | Due dates — Invalid value | PASS |  |
+| EHS-ADM-144 | Ladders — Edit a step | PASS |  |
 | EHS-ADM-145 | Rule sets — Enable a draft pack without reviewer | PASS |  |
 | EHS-ADM-146 | Rule sets — Enable a pack with an unreviewed timer | Not automated |  |
 | EHS-ADM-147 | Rule sets — Status labels | Not automated |  |
@@ -710,19 +710,19 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-204 | API — Change a text | PASS |  |
 | EHS-ADM-210 | Settings — Company name | PASS |  |
 | EHS-ADM-211 | Settings — Empty company name | PASS |  |
-| EHS-ADM-212 | Settings — Two-step code roles | Not automated |  |
-| EHS-ADM-213 | Settings — Triage time limit, danger acknowledgement minutes, percent-safe minimum, max photos, dispute pause days, date changes before site head | Not automated |  |
+| EHS-ADM-212 | Settings — Two-step code roles | PASS |  |
+| EHS-ADM-213 | Settings — Triage time limit, danger acknowledgement minutes, percent-safe minimum, max photos, dispute pause days, date changes before site head | PASS |  |
 | EHS-ADM-214 | Settings — Safety fields | PASS |  |
 | EHS-ADM-215 | Settings — Company fields | PASS |  |
 | EHS-ADM-216 | API — Settings | PASS |  |
 | EHS-ADM-220 | Privacy → Notices — Publish a new version | PASS |  |
 | EHS-ADM-221 | Privacy → Notices — No English text | PASS |  |
-| EHS-ADM-222 | Privacy → Requests — Record a request | Not automated |  |
+| EHS-ADM-222 | Privacy → Requests — Record a request | PASS |  |
 | EHS-ADM-223 | API — Privacy requests | PASS |  |
-| EHS-ADM-230 | Retention — Policies | Not automated |  |
+| EHS-ADM-230 | Retention — Policies | PASS |  |
 | EHS-ADM-231 | Retention — Dry run | PASS |  |
-| EHS-ADM-232 | Retention → Legal hold — Place a hold | Not automated |  |
-| EHS-ADM-233 | Retention → Legal hold — Release | Not automated |  |
+| EHS-ADM-232 | Retention → Legal hold — Place a hold | PASS |  |
+| EHS-ADM-233 | Retention → Legal hold — Release | PASS |  |
 | EHS-ADM-234 | API — Retention | PASS |  |
 | EHS-ADM-240 | Health — Page | PASS |  |
 | EHS-ADM-250 | Audit log — List | Not automated |  |
@@ -752,16 +752,16 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-WF1-12 | Charts → Mine / Department / Site — Figures (2.1) | PASS |  |
 | EHS-WF1-13 | Audit log — Trail | PASS |  |
 | EHS-WF1-14 | Verify → Not effective (variant) — Repeat the flow; at step 9 choose Not effective with reason. | PASS |  |
-| EHS-WF2-01 | Action set-up — Moderate action | Not automated |  |
-| EHS-WF2-02 | Ladder job — 7 days, 3 days, due day | Not automated |  |
-| EHS-WF2-03 | Ladder job — 1 day overdue | Not automated |  |
-| EHS-WF2-04 | Ladder job — 3 days overdue | Not automated |  |
-| EHS-WF2-05 | Email — Email content | Not automated |  |
-| EHS-WF2-06 | Ladder job — Each step once | Not automated |  |
-| EHS-WF2-07 | Attention / Dashboard — Overdue figures | Not automated |  |
-| EHS-WF2-08 | Complete late — Complete after the due date | Not automated |  |
-| EHS-WF2-09 | Extreme ladder (variant) — Extreme action | Not automated |  |
-| EHS-WF2-10 | No email server (variant) — SMTP not set | Not automated |  |
+| EHS-WF2-01 | Action set-up — Moderate action | PASS |  |
+| EHS-WF2-02 | Ladder job — 7 days, 3 days, due day | PASS |  |
+| EHS-WF2-03 | Ladder job — 1 day overdue | PASS |  |
+| EHS-WF2-04 | Ladder job — 3 days overdue | PASS |  |
+| EHS-WF2-05 | Email — Email content | PASS |  |
+| EHS-WF2-06 | Ladder job — Each step once | PASS |  |
+| EHS-WF2-07 | Attention / Dashboard — Overdue figures | PASS |  |
+| EHS-WF2-08 | Complete late — Complete after the due date | PASS |  |
+| EHS-WF2-09 | Extreme ladder (variant) — Extreme action | PASS |  |
+| EHS-WF2-10 | No email server (variant) — SMTP not set | PASS |  |
 | EHS-WF3-01 | API — Report detail | PASS |  |
 | EHS-WF3-02 | API — Report triage | PASS |  |
 | EHS-WF3-03 | API — Report comment | PASS |  |
@@ -782,11 +782,11 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-WF3-18 | API — Department action at another plant | PASS |  |
 | EHS-WF3-19 | API — Guessing case numbers | PASS |  |
 | EHS-WF3-20 | API — All sites | PASS |  |
-| EHS-WF4-01 | Report — Danger now | Not automated |  |
-| EHS-WF4-02 | Alert — No acknowledgement | Not automated |  |
+| EHS-WF4-01 | Report — Danger now | PASS |  |
+| EHS-WF4-02 | Alert — No acknowledgement | PASS |  |
 | EHS-WF4-03 | Alert — Acknowledge | PASS |  |
 | EHS-WF4-04 | Triage — Interim control required | PASS |  |
-| EHS-WF4-05 | Dashboard — Critical acknowledgement median | Not automated |  |
+| EHS-WF4-05 | Dashboard — Critical acknowledgement median | PASS |  |
 | EHS-WF5-01 | Action → Dispute — Reason "Electrical job" | PASS |  |
 | EHS-WF5-02 | Requests → Approve — New owner `OWN-TN1-2` (Electrical) | PASS |  |
 | EHS-WF5-03 | Actions → Department — List | PASS |  |

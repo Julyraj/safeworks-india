@@ -154,6 +154,8 @@
   "ntf.inspection_submitted.body": "{template} at {site}: score {score}%, {failed} failed, {actions} actions raised.",
   "ntf.digest_daily.title": "Daily safety digest for {date}",
   "ntf.digest_weekly.title": "Weekly safety digest, week of {date}",
+  "ntf.digest_daily.body": "You get this digest every day. To change it or turn it off: SafeWorks → Settings → Email digest.",
+  "ntf.digest_weekly.body": "You get this digest every week. To change it or turn it off: SafeWorks → Settings → Email digest.",
   "ntf.mfa_reset.title": "Your authenticator was reset",
   "ntf.mfa_reset.body": "An administrator reset your authenticator. Set it up again at next sign-in.",
   "digest.triage_backlog": "Reports waiting for triage: {count}",

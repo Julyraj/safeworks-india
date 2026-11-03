@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import email
+import email.policy
 import hashlib
 import hmac
 import io
@@ -18,9 +20,11 @@ import json
 import os
 import re
 import socket
+import socketserver
 import struct
 import subprocess
 import sys
+import threading
 import time
 import traceback
 import uuid
@@ -2077,6 +2081,398 @@ def _():
     check(sql1("select count(*) from audit_log where actor_user_id = $1::uuid or record_id = $2", u["id"], u["id"]) >= 1)
 
 
+# ================================================================ timed jobs (run once each, with times moved instead of waiting)
+MAILS: list = []
+SMTP_URL = ""
+
+
+class _SmtpSink(socketserver.StreamRequestHandler):
+    """A minimal SMTP server that keeps every message (no TLS, no auth): enough for smtplib."""
+
+    def handle(self):
+        def w(s: str):
+            self.wfile.write((s + "\r\n").encode())
+        w("220 plan-sink")
+        data, buf = False, []
+        while True:
+            line = self.rfile.readline()
+            if not line:
+                return
+            text = line.decode("utf-8", "replace").rstrip("\r\n")
+            if data:
+                if text == ".":
+                    MAILS.append(email.message_from_string("\n".join(buf), policy=email.policy.default))
+                    buf, data = [], False
+                    w("250 ok")
+                else:
+                    buf.append(text[1:] if text.startswith("..") else text)
+                continue
+            cmd = text[:4].upper()
+            if cmd == "EHLO":
+                w("250-plan-sink")
+                w("250 OK")
+            elif cmd == "DATA":
+                w("354 go")
+                data = True
+            elif cmd == "QUIT":
+                w("221 bye")
+                return
+            else:
+                w("250 ok")
+
+
+def start_smtp_sink() -> str:
+    srv = socketserver.ThreadingTCPServer(("127.0.0.1", 0), _SmtpSink)
+    srv.daemon_threads = True
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return f"smtp://127.0.0.1:{srv.server_address[1]}"
+
+
+def run_job(name: str, arg: str = "", smtp: bool = True) -> None:
+    env = {**os.environ, "DATABASE_URL": DB, "SMTP_URL": SMTP_URL if smtp else "", "SEED_ADMIN_PASSWORD": ADMIN_PW}
+    r = subprocess.run([PY, str(ROOT / "portal" / "e2e" / "run_job.py"), name, arg], cwd=SERVER, env=env, capture_output=True, text=True, timeout=300)
+    if r.returncode != 0:
+        raise Fail(f"job {name}: {r.stderr[-400:]}")
+
+
+def ntf(record_id: str, code: str, channel: str = "inapp", event: str | None = None) -> int:
+    return sql1("select count(*) from notifications where record_id = $1 and recipient_user_id = $2::uuid and channel = $3 and ($4::text is null or event_type = $4)",
+                record_id, uid(code), channel, event)
+
+
+def outbox_to(record_id: str, code: str) -> int:
+    return sql1("""select count(*) from email_outbox e join notifications n on n.id = e.notification_id
+                   where n.record_id = $1 and n.recipient_user_id = $2::uuid""", record_id, uid(code))
+
+
+TOWN = "OWN-TN1-3"  # used only by the timed cases, so its push count and reminders are its own
+
+
+def timed_action(band="moderate", owner=TOWN, **over) -> str:
+    extra = {"interimControl": "Barricaded"} if band in ("extreme", "high") else {}
+    d = st(A.post("SO-TN1", "/actions", manual_action(band=band, ownerUserId=uid(owner), title=f"Plan timed {band} {U()[:6]}", **extra, **over)), 200, 201).json()
+    sql("update actions set created_at = now() - interval '60 days' where id = $1::uuid", d["id"])
+    return d["id"]
+
+
+def due_in(aid: str, delta: timedelta, original: bool = False) -> None:
+    sql("update actions set due_at = now() + $2::interval" + (", original_due_at = now() + $2::interval" if original else "") + " where id = $1::uuid", aid, delta)
+
+
+@case("EHS-ACT-130", "EHS-ACT-131", "EHS-ACT-132", "EHS-ACT-133", "EHS-ACT-134", "EHS-WF2-01", "EHS-WF2-02", "EHS-WF2-03", "EHS-WF2-04", "EHS-WF2-06", "EHS-WF2-07")
+def _():
+    aid = timed_action()
+    IDS["timed"] = aid
+    m = timedelta(minutes=2)
+    due_in(aid, timedelta(days=7) - m)
+    run_job("ladder_job")
+    check(ntf(aid, TOWN, event="action_due_soon") == 1, "7 days before: owner reminded once")
+    check(ntf(aid, TOWN, "push", "action_due_soon") == 1, "push queued")
+    run_job("ladder_job")
+    check(ntf(aid, TOWN, event="action_due_soon") == 1, "WF2-06: same step not sent twice")
+    due_in(aid, timedelta(days=3) - m)
+    run_job("ladder_job")
+    check(ntf(aid, TOWN, event="action_due_soon") == 2, "3 days before")
+    due_in(aid, -m)
+    run_job("ladder_job")
+    check(ntf(aid, TOWN, event="action_due_today") == 1, "due day")
+    check(ntf(aid, "SO-TN1", event="action_overdue") == 0 and ntf(aid, "SH-TN1", event="action_overdue") == 0, "no escalation yet")
+    due_in(aid, -timedelta(days=1) - m, original=True)
+    run_job("ladder_job")
+    check(ntf(aid, "SO-TN1", event="action_overdue") == 1 and ntf(aid, "SH-TN1", event="action_overdue") == 1, "1 day overdue: officer and site head")
+    check(outbox_to(aid, "SH-TN1") == 0, "no email to the site head yet")
+    due_in(aid, -timedelta(days=3) - m, original=True)
+    run_job("ladder_job")
+    check(ntf(aid, "HSE01", event="action_overdue") == 1 and outbox_to(aid, "HSE01") == 1, "3 days overdue: HSE push + email")
+    check(outbox_to(aid, "SH-TN1") == 1, "3 days overdue: site head email")
+    check(sql1("select escalation_level from actions where id = $1::uuid", aid) == 2)
+    check(aid in [x["id"] for x in A.get("SO-TN1", "/actions", params={"overdue": "1", "pageSize": 500}).json()["items"]], "WF2-07: in the overdue list")
+
+
+@case("EHS-ACT-141", "EHS-WF2-10", "EHS-WF2-05", "EHS-RPT-048")
+def _():
+    aid = IDS["timed"]
+    run_job("send_emails", smtp=False)
+    check(sql1("""select count(*) from email_outbox e join notifications n on n.id = e.notification_id where n.record_id = $1 and e.sent_at is null""", aid) >= 2,
+          "without an email server the emails stay queued")
+    MAILS.clear()
+    for _ in range(40):  # the sender takes 50 queued emails per run; earlier cases left a backlog
+        run_job("send_emails")
+        if not sql1("select count(*) from email_outbox where sent_at is null and attempts < 8"):
+            break
+    sh_mail = sql1("select email from users where employee_code = 'SH-TN1'")
+    case_no = sql1("select case_no from actions where id = $1::uuid", aid)
+    got = [m for m in MAILS if sh_mail in str(m["To"]) and case_no in str(m["Subject"])]
+    check(got, f"site head email about {case_no} delivered ({len(MAILS)} mails caught)")
+    body = got[0].get_content()
+    check(case_no in str(got[0]["Subject"]) + body, "case number in the email")
+    check(f"/a/{aid}" in body, "link to the action in the email")
+    check(sql1("select count(*) from email_outbox e join notifications n on n.id = e.notification_id where n.record_id = $1 and e.sent_at is null", aid) == 0, "all sent")
+    check(sql1("select count(*) from notifications where record_id = $1 and channel = 'email' and status = 'sent'", aid) >= 2, "log shows sent")
+
+
+@case("EHS-ACT-136", "EHS-WF2-08")
+def _():
+    aid = IDS["timed"]
+    st(complete(aid, who=TOWN), 200)
+    st(verify(aid), 200)
+    reminders = lambda: sql1("select count(*) from notifications where record_id = $1 and event_type in ('action_due_soon','action_due_today','action_overdue')", aid)  # noqa: E731
+    before = reminders()
+    sql("delete from job_marks where key like $1", f"ladder:{aid}:%")  # even with the marks gone, a closed action is not chased
+    run_job("ladder_job")
+    check(reminders() == before, "no reminders after completion")
+    check(sql1("select completed_at > original_due_at from actions where id = $1::uuid", aid) is True, "completed late: not counted on time")
+
+
+@case("EHS-ACT-135", "EHS-WF2-09")
+def _():
+    aid = timed_action("extreme")
+    m = timedelta(minutes=2)
+    for delta, who, ev in ((timedelta(days=1) - m, "OWN-TN1-1", "action_due_soon"), (timedelta(hours=4) - m, "OWN-TN1-1", "action_due_soon"), (-m, "OWN-TN1-1", "action_due_today")):
+        due_in(aid, delta)
+        run_job("ladder_job")
+    check(ntf(aid, TOWN, event="action_due_soon") == 2 and ntf(aid, TOWN, event="action_due_today") == 1, "owner steps")
+    due_in(aid, -timedelta(hours=2) - m)
+    run_job("ladder_job")
+    for code in ("SO-TN1", "SH-TN1"):
+        check(ntf(aid, code, event="action_overdue") == 1 and outbox_to(aid, code) == 1, f"{code}: push + email 2 hours after due")
+    check(ntf(aid, "HSE01", event="action_overdue") == 0, "HSE not yet")
+    due_in(aid, -timedelta(days=1) - m)
+    run_job("ladder_job")
+    check(ntf(aid, "HSE01", event="action_overdue") == 1 and outbox_to(aid, "HSE01") == 1, "HSE 1 day after")
+    IDS["timed_extreme"] = aid
+
+
+@case("EHS-ACT-138")
+def _():
+    s = A.get("ADMIN01", "/admin/settings").json()
+    now_l = datetime.now(timezone(timedelta(hours=5, minutes=30)))
+    window = {"start": (now_l - timedelta(hours=1)).strftime("%H:%M"), "end": (now_l + timedelta(hours=1)).strftime("%H:%M")}
+    st(A.put("ADMIN01", "/admin/settings", {**s, "quietHours": window}), 200)
+    try:
+        mod = timed_action()
+        ext = timed_action("extreme")
+        due_in(mod, timedelta(days=7) - timedelta(minutes=2))
+        due_in(ext, timedelta(days=1) - timedelta(minutes=2))
+        run_job("ladder_job")
+        held = sql1("select send_after is not null from notifications where record_id = $1 and channel = 'push' order by id desc limit 1", mod)
+        ext_row = sql("select send_after, critical from notifications where record_id = $1 and channel = 'push' and event_type = 'action_due_soon' order by id desc limit 1", ext)
+        check(held is True, "moderate reminder held until quiet hours end")
+        check(ext_row and ext_row[0]["send_after"] is None and ext_row[0]["critical"] is True, f"extreme reminder not held (F14): {ext_row}")
+    finally:
+        st(A.put("ADMIN01", "/admin/settings", s), 200)
+
+
+@case("EHS-ACT-139")
+def _():
+    owner = "OWN-TN3-1"
+    sql("update users set preferences = '{\"quietHours\": false}'::jsonb where employee_code = $1", owner)
+    sql("insert into user_site_roles (user_id, site_id, role) values ($1::uuid, $2::uuid, 'action_owner') on conflict do nothing", uid(owner), site("TN1"))
+    ids = [timed_action(owner=owner) for _ in range(7)]
+    for aid in ids:
+        due_in(aid, timedelta(days=7) - timedelta(minutes=2))
+    run_job("ladder_job")
+    pushes = sql1("""select count(*) from notifications where recipient_user_id = $1::uuid and channel = 'push' and created_at > now() - interval '24 hours'
+                     and event_type in ('action_due_soon','action_due_today','action_overdue')""", uid(owner))
+    inapp = sum(ntf(a, owner, event="action_due_soon") for a in ids)
+    check(pushes == 5 and inapp == 7, f"push capped at 5 a day ({pushes}); all 7 in the app ({inapp})")
+
+
+@case("EHS-ACT-137")
+def _():
+    aid = timed_action()
+    st(A.post(TOWN, f"/actions/{aid}/requests", req_body("dispute", reason="Not my area")), 200, 201)
+    due_in(aid, -timedelta(days=3) - timedelta(minutes=2))
+    run_job("ladder_job")
+    check(sql1("select count(*) from notifications where record_id = $1 and event_type in ('action_due_soon','action_due_today','action_overdue')", aid) == 0, "no reminders while disputed")
+
+
+@case("EHS-ACT-140", "EHS-ADM-144")
+def _():
+    lads = A.get("HSE01", "/admin/ladders").json()
+    orig = json.loads(json.dumps(lads))
+    mod = next(l for l in lads if l["band"] == "moderate")
+    for stp in mod["steps"]:
+        if stp["recipient"] == "site_safety_officer" and stp["offsetMinutes"] == 1440:
+            stp["offsetMinutes"] = 2880
+    st(A.put("HSE01", "/admin/ladders", {"items": [mod]}), 200)
+    try:
+        aid = timed_action()
+        due_in(aid, -timedelta(days=1) - timedelta(minutes=2))
+        run_job("ladder_job")
+        check(ntf(aid, "SO-TN1", event="action_overdue") == 0, "officer step moved to 2 days")
+        due_in(aid, -timedelta(days=2) - timedelta(minutes=2))
+        run_job("ladder_job")
+        check(ntf(aid, "SO-TN1", event="action_overdue") == 1, "officer told at 2 days")
+        check(sql1("select count(*) from audit_log where record_type = 'reminder_ladders' and action = 'config_change'") >= 1, "audit row")
+    finally:
+        st(A.put("HSE01", "/admin/ladders", {"items": [next(l for l in orig if l["band"] == "moderate")]}), 200)
+
+
+@case("EHS-ACT-142")
+def _():
+    aid = timed_action()
+    due_in(aid, timedelta(days=7) - timedelta(minutes=2))
+    env = {**os.environ, "DATABASE_URL": DB, "SMTP_URL": ""}
+    procs = [subprocess.Popen([PY, str(ROOT / "portal" / "e2e" / "run_job.py"), "ladder_job"], cwd=SERVER, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE) for _ in range(2)]
+    for p in procs:
+        p.wait(timeout=300)
+    check(ntf(aid, TOWN, event="action_due_soon") == 1, "two processes at once: the step is sent once")
+
+
+@case("EHS-ACT-077")
+def _():
+    aid = timed_action("high")
+    st(complete(aid, who=TOWN), 200)
+    sql("update actions set completed_at = now() - interval '73 hours' where id = $1::uuid", aid)
+    run_job("ladder_job")
+    check(ntf(aid, "VER-TN1", event="verification_sla") == 1, "verifier told: waiting longer than 72 hours")
+
+
+@case("EHS-ADM-141", "EHS-ADM-142", "EHS-ADM-143")
+def _():
+    rules = A.get("HSE01", "/admin/due-date-rules").json()
+    orig = [r for r in rules if r.get("siteId") is None]
+    high = dict(next(r for r in orig if r["band"] == "high"))
+    try:
+        st(A.put("HSE01", "/admin/due-date-rules", {"items": [{**high, "dueAmount": 5, "dueUnit": "days"}]}), 200)
+        d = st(A.post("SO-TN2-f", "/actions", manual_action(siteId=site("TN2"), band="high", interimControl="x", ownerUserId=uid("OWN-TN2-1"))), 200, 201).json()
+        days = (datetime.fromisoformat(d["dueAt"].replace("Z", "+00:00")) - datetime.now(timezone.utc)).total_seconds() / 86400
+        check(4.9 < days < 5.1, f"high now 5 days ({days:.1f})")
+        st(A.put("HSE01", "/admin/due-date-rules", {"items": [{**high, "id": None, "siteId": site("TN1"), "dueAmount": 3, "dueUnit": "days"}]}), 200)
+        d1 = st(A.post("SO-TN1", "/actions", manual_action(band="high", interimControl="x")), 200, 201).json()
+        days1 = (datetime.fromisoformat(d1["dueAt"].replace("Z", "+00:00")) - datetime.now(timezone.utc)).total_seconds() / 86400
+        check(2.9 < days1 < 3.1, f"TN1 site rule 3 days ({days1:.1f})")
+        st(A.put("HSE01", "/admin/due-date-rules", {"items": [{**high, "dueAmount": -1}]}), 400)
+    finally:
+        sql("delete from due_date_rules where site_id is not null and band = 'high'")
+        A.put("HSE01", "/admin/due-date-rules", {"items": [high]})
+
+
+@case("EHS-INS-047", "EHS-INS-048")
+def _():
+    run_job("inspection_scheduler")
+    run_job("inspection_scheduler")
+    dup = sql1("select count(*) from (select schedule_id, due_at from inspection_runs where schedule_id is not null group by 1, 2 having count(*) > 1) x")
+    check(dup == 0, f"{dup} schedules with two runs for one due time")
+    tv = next(t for t in A.get("VER-TN1", "/inspections/templates").json() if t["status"] == "active")
+    st(A.post("SO-TN1-admin", "/admin/inspections/schedules", sched_body(templateId=tv["templateId"], frequency={"every": 1, "unit": "day", "time": "08:00"})), 200, 201)
+    run_job("inspection_scheduler")
+    rid = sql1("""select r.id::text from inspection_runs r join sites s on s.id = r.site_id where r.status = 'scheduled' and s.code = 'TN1' and r.schedule_id is not null limit 1""")
+    check(rid, "a scheduled TN1 run exists")
+    sql("update inspection_runs set due_at = now() - interval '3 days' where id = $1::uuid", rid)
+    run_job("inspection_scheduler")
+    check(sql1("select status from inspection_runs where id = $1::uuid", rid) == "missed", "marked missed")
+    check(ntf(rid, "SO-TN1", event="inspection_missed") == 1, "officer told")
+
+
+@case("EHS-RPT-044", "EHS-RPT-045")
+def _():
+    A.put("SO-TN2-f", "/me/preferences", {"language": "en", "digest": "off", "quietHours": True})
+    before = {c: sql1("select count(*) from notifications where recipient_user_id = $1::uuid and event_type = 'digest_daily' and channel = 'inapp'", uid(c)) for c in ("SO-TN1", "SO-TN2")}
+    run_job("digests", "daily")
+    check(sql1("select count(*) from notifications where recipient_user_id = $1::uuid and event_type = 'digest_daily' and channel = 'inapp'", uid("SO-TN1")) == before["SO-TN1"] + 1, "officer gets the daily digest")
+    check(sql1("select count(*) from notifications where recipient_user_id = $1::uuid and event_type = 'digest_daily' and channel = 'inapp'", uid("SO-TN2")) == before["SO-TN2"], "digest Off: none")
+    body = sql1("select body from notifications where recipient_user_id = $1::uuid and event_type = 'digest_daily' and channel = 'inapp' order by id desc limit 1", uid("SO-TN1"))
+    check(body and len(body.splitlines()) >= 3, "digest lists the counts")
+    mail_body = sql1("select body from email_outbox where to_addr = (select email from users where employee_code = 'SO-TN1') order by id desc limit 1")
+    check("ntf." not in mail_body, f"no raw text codes in the digest email (F15): {mail_body[-160:]!r}")
+    so_mail = sql1("select email from users where employee_code = 'SO-TN1'")
+    check(sql1("select count(*) from email_outbox where to_addr = $1 and created_at > now() - interval '5 minutes'", so_mail) >= 1, "digest email queued")
+    run_job("digests", "weekly")
+    check(sql1("select count(*) from notifications where recipient_user_id = $1::uuid and event_type = 'digest_weekly'", uid("SH-TN1")) >= 1, "site head weekly digest")
+
+
+@case("EHS-OBS-209", "EHS-WF4-01", "EHS-WF4-02", "EHS-WF4-05")
+def _():
+    o = create_obs(imminentDanger=True, description="Plan: live cable in water (timed)")
+    check(ntf(o["id"], "SO-TN1") >= 1 and ntf(o["id"], "SH-TN1") >= 1, "WF4-01: officer and site head alerted at once")
+    sql("update observations set received_at = now() - interval '31 minutes' where id = $1::uuid", o["id"])
+    run_job("critical_ack_watcher")
+    check(sql1("select count(*) from escalations where record_id = $1::uuid and reason = 'critical_unacknowledged'", o["id"]) == 1, "escalated after 30 minutes")
+    run_job("critical_ack_watcher")
+    check(sql1("select count(*) from escalations where record_id = $1::uuid and reason = 'critical_unacknowledged'", o["id"]) == 1, "not twice for the same level")
+    n0 = {x["key"]: x for x in A.get("SO-TN1", "/dashboard").json()["kpis"]}["critical_ack_median"]["n"] or 0
+    st(A.post("SO-TN1", f"/observations/{o['id']}/ack-critical"), 200)
+    sql("update observations set received_at = now() - interval '95 minutes' where id = $1::uuid", o["id"])
+    run_job("critical_ack_watcher")
+    check(sql1("select count(*) from escalations where record_id = $1::uuid", o["id"]) == 1, "no escalation after acknowledgement")
+    n1 = {x["key"]: x for x in A.get("SO-TN1", "/dashboard").json()["kpis"]}["critical_ack_median"]["n"] or 0
+    check(n1 == n0 + 1, f"WF4-05: median includes the case ({n0} → {n1})")
+
+
+@case("EHS-OBS-184")
+def _():
+    o = create_obs(description="Plan: waiting for triage")
+    sql("update observations set received_at = now() - interval '6 days' where id = $1::uuid", o["id"])
+    sql("delete from job_marks where key like 'triage_%'")
+    run_job("ladder_job")
+    tn1 = site("TN1")
+    check(sql1("select count(*) from notifications where event_type = 'triage_sla' and recipient_user_id = $1::uuid and created_at > now() - interval '2 minutes'", uid("SO-TN1")) >= 1, "officer reminded")
+    check(sql1("select count(*) from notifications where template_code = 'triage_escalate' and recipient_user_id = $1::uuid and created_at > now() - interval '2 minutes'", uid("SH-TN1")) >= 1, "site head told")
+    check(sql1("select count(*) from escalations where record_id = $1::uuid and reason = 'triage_sla'", o["id"]) == 1, "escalation row")
+    links = {r[0] for r in sql("select distinct link from notifications where event_type = 'triage_sla' and channel = 'inapp' and created_at > now() - interval '2 minutes'")}
+    check(links == {"/reports?tab=triage"}, f"reminder opens Reports → Triage (F16): {links}")
+    _ = tn1
+
+
+@case("EHS-OBS-213", "EHS-OBS-103")
+def _():
+    o, aid = new_action()
+    oa = create_obs(anonymous=True, description="Plan anonymous closure")
+    d = assign(oa["id"])
+    for a in (aid, d["actions"][0]["id"]):
+        complete(a)
+        verify(a)
+    sql("update observations set closed_at = now() - interval '31 minutes' where id = any($1::uuid[])", [o["id"], oa["id"]])
+    run_job("closure_notices")
+    check(ntf(o["id"], "WORKER-TN1-1", event="observation_closed") >= 1, "named reporter told")
+    check(ntf(oa["id"], "WORKER-TN1-1", event="observation_closed") >= 1, "anonymous reporter told through the seal")
+
+
+@case("EHS-ADM-212")
+def _():
+    s = A.get("ADMIN01", "/admin/settings").json()
+    roles = s.get("mfaRequiredRoles", ["admin", "hse_manager", "site_head"])
+    st(A.put("ADMIN01", "/admin/settings", {**s, "mfaRequiredRoles": roles + ["site_safety_officer"]}), 200)
+    try:
+        r = st(A.raw_login("SO-TN3", "NewStaffPass2026", "admin"), 200).json()
+        check(r.get("mfaRequired") is True, "officer now asked for a code")
+    finally:
+        st(A.put("ADMIN01", "/admin/settings", s), 200)
+
+
+@case("EHS-ADM-213")
+def _():
+    s = A.get("ADMIN01", "/admin/settings").json()
+    st(A.put("ADMIN01", "/admin/settings", {**s, "maxPhotosPerRecord": 4}), 200)
+    try:
+        st(A.post("WORKER-TN1-1", "/observations", obs_body(media=[media_ref() for _ in range(5)])), 400)
+        st(A.post("WORKER-TN1-1", "/observations", obs_body(media=[media_ref() for _ in range(4)])), 200, 201)
+    finally:
+        st(A.put("ADMIN01", "/admin/settings", s), 200)
+
+
+@case("EHS-ADM-222")
+def _():
+    r = st(A.post("ADMIN01", "/admin/privacy/requests", {"personName": "Plan Worker", "identifier": "PLAN-PRIV-1", "type": "access", "details": "Copy of my data"}), 200, 201).json()
+    rid = next(x["id"] for x in r if x["identifier"] == "PLAN-PRIV-1")
+    st(A.put("ADMIN01", f"/admin/privacy/requests/{rid}", {"status": "answered", "response": "Sent"}), 200)
+    check(sql1("select count(*) from audit_log where record_id = $1", rid) >= 1, "audit row")
+
+
+@case("EHS-ADM-230", "EHS-ADM-232", "EHS-ADM-233")
+def _():
+    pols = A.get("ADMIN01", "/admin/retention-policies").json()
+    obs = next(p for p in pols if p["recordType"] == "observation")
+    st(A.put("ADMIN01", "/admin/retention-policies", {"items": [{**obs, "retentionYears": 5}]}), 200)
+    st(A.put("ADMIN01", "/admin/retention-policies", {"items": [{**obs, "retentionYears": 0}]}), 400)
+    r = st(A.post("ADMIN01", "/admin/legal-holds", {"scopeType": "site", "scopeId": site("TN1"), "reason": "Plan inspection by the Inspector of Factories"}), 200, 201).json()
+    h = next(x for x in (r if isinstance(r, list) else [r]) if x["reason"].startswith("Plan inspection"))
+    st(A.post("ADMIN01", f"/admin/legal-holds/{h['id']}/release"), 200)
+    check(sql1("select released_at is not null from legal_holds where id = $1::uuid", h["id"]) is True, "released with time")
+
+
 # ---------------------------------------------------------------- run
 def plan_ids() -> list[tuple[str, str]]:
     out = []
@@ -2090,7 +2486,9 @@ def plan_ids() -> list[tuple[str, str]]:
 def main() -> None:
     global A
     OUT.mkdir(parents=True, exist_ok=True)
+    global SMTP_URL
     proc, base = start_server()
+    SMTP_URL = start_smtp_sink()
     A = Api(base)
     try:
         for r in sql("select employee_code, id::text from users where employee_code <> ''"):
@@ -2099,7 +2497,7 @@ def main() -> None:
             IDS["s:" + r[0]] = r[1]
         IDS["own_company"] = sql1("select id::text from contractors where is_own_company")
         IDS["qr:TN1"] = sql1("select q.token from qr_codes q join areas a on a.id = q.target_id join sites s on s.id = a.site_id where s.code = 'TN1' and q.target_type = 'area' and q.active limit 1")
-        for code in ("WORKER-TN1-1", "WORKER-TN1-2", "OWN-TN1-1", "OWN-TN1-2", "VER-TN1", "SO-TN1", "OWN-TN2-1", "WORKER-TN2-1", "WORKER-KA1-1", "OWN-KA1-1"):
+        for code in ("WORKER-TN1-1", "WORKER-TN1-2", "OWN-TN1-1", "OWN-TN1-2", "OWN-TN1-3", "VER-TN1", "SO-TN1", "OWN-TN2-1", "WORKER-TN2-1", "WORKER-KA1-1", "OWN-KA1-1"):
             A.login(code)
         A.login("SO-TN2", name="SO-TN2-f")
         A.login("SO-KA1", name="SO-KA1-f")
@@ -2145,6 +2543,9 @@ DEFECTS = [
     "| F11 | A site could be created with an empty name | English name required | EHS-ADM-006, `test_f11_*` |",
     "| F12 | The server accepted malformed emails such as `abc@` | Same email rule as the console form, on create and edit | EHS-ADM-097, `test_f12_*` |",
     "| F13 | Phone-app pages never opened while online could not open offline | After sign-in with a connection, every page is fetched in the background so the offline cache holds all of them | Browser run step 1 (outbox offline) |",
+    "| F14 | Reminders and escalations for Extreme-risk actions were held by quiet hours (e.g. 2 am → 7 am) and counted against the daily push limit | Extreme-band reminders are sent as urgent: never held, never capped | EHS-ACT-138, `test_f14_*` |",
+    "| F15 | Daily and weekly digest emails showed a raw code `ntf.digest_daily.body` | Digest closing text added in English, Hindi, Tamil and Kannada; a test now checks every notification text exists in all four | EHS-RPT-044, `test_f15_*` |",
+    "| F16 | The \"triage overdue\" reminder (app and email to the site head) linked to `/inbox`, a page the phone app does not have | Links to Reports → Triage | EHS-OBS-184, `test_f16_*` |",
     "",
     "Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted inspection; the system (by design) allows only admin and HSE manager, because a submitted report is locked. The plan was corrected.",
 ]

@@ -154,6 +154,8 @@
   "ntf.inspection_submitted.body": "{site} पर {template}: स्कोर {score}%, {failed} असफल, {actions} कार्रवाइयाँ उठाई गईं।",
   "ntf.digest_daily.title": "{date} का दैनिक सुरक्षा सार",
   "ntf.digest_weekly.title": "साप्ताहिक सुरक्षा सार, {date} का सप्ताह",
+  "ntf.digest_daily.body": "यह सार आपको हर दिन मिलता है। बदलने या बंद करने के लिए: SafeWorks → सेटिंग्स → ईमेल सार।",
+  "ntf.digest_weekly.body": "यह सार आपको हर सप्ताह मिलता है। बदलने या बंद करने के लिए: SafeWorks → सेटिंग्स → ईमेल सार।",
   "ntf.mfa_reset.title": "आपका ऑथेंटिकेटर रीसेट किया गया",
   "ntf.mfa_reset.body": "एक प्रशासक ने आपका ऑथेंटिकेटर रीसेट किया। अगले साइन-इन पर इसे फिर से सेट करें।",
   "digest.triage_backlog": "ट्राइएज की प्रतीक्षा में रिपोर्टें: {count}",
