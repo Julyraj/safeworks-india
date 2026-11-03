@@ -133,7 +133,7 @@ export default function QuickReport() {
 
   const chooseType = (type: ObservationType) => {
     set((p) => {
-      const next = { ...p, type };
+      const next = { ...p, type, imminentDanger: type === "good_practice" ? false : p.imminentDanger };  // good practice is never a stop-work alarm
       const allowed = categoriesFor(ref, site, type);
       next.categoryCodes = p.categoryCodes.filter((c) => allowed.some((a) => a.code === c));
       if (!p.touchedCategory && next.categoryCodes.length === 0) {
@@ -280,9 +280,11 @@ export default function QuickReport() {
       ) : null}
 
       {/* 7. danger now */}
-      <div className={d.imminentDanger ? "danger-toggle" : undefined} style={{ marginTop: 4 }}>
+{d.type !== "good_practice" ? (
+            <div className={d.imminentDanger ? "danger-toggle" : undefined} style={{ marginTop: 4 }}>
         <Toggle danger label={<span className="row" style={{ gap: 6 }}><IconStop size={18} /> {t("report.dangerNow")}</span>} hint={t("report.dangerHint")} checked={d.imminentDanger} onChange={(v) => set((p) => ({ ...p, imminentDanger: v }))} />
       </div>
+      ) : null}
 
       {/* 8. anonymous */}
       <Toggle label={<span className="row" style={{ gap: 6 }}><IconEyeOff size={18} /> {t("report.anonymous")}</span>} hint={t("report.anonymousHint")} checked={d.anonymous} onChange={(v) => set((p) => ({ ...p, anonymous: v }))} />

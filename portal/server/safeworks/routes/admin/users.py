@@ -11,7 +11,7 @@ from ...errors import HttpError, bad_request, forbidden, not_found
 from ...http import JSON, json_body, page_params, sort_sql, uuid_param
 from ...notify import notify
 from ...rbac import ALL_SITES_ROLES, ROLES, AuthUser
-from ...schemas import ContractorIn, DepartmentIn, PersonIn, RoleGrant, RolesBody, StatusBody, UserCreate, UserUpdate, parse
+from ...schemas import PHONE_RE, ContractorIn, DepartmentIn, PersonIn, RoleGrant, RolesBody, StatusBody, UserCreate, UserUpdate, parse
 from ...security import hash_password, random_code, sha256, temp_password
 from ...views import contractor as contractor_view, department as department_view, paged, person as person_view, user_admin
 from ._common import console_user, need_admin, need_write, read_csv
@@ -323,6 +323,10 @@ async def import_users(request: Request, user: AuthUser = Depends(console_user))
             dept_id = department["id"] if department else None
             lang = r.get("language") if r.get("language") in ("en", "hi", "ta", "kn") else "en"
             phone = r.get("phone", "")
+            if phone and not PHONE_RE.match(phone):
+                errors.append({"row": i, "message": f"invalid phone {phone}"})
+                skipped += 1
+                continue
             existing = await db.one("select id, person_id from users where org_id = $1 and lower(employee_code) = lower($2)", [user.org_id, code], c)
             if existing:
                 await c.execute("update people set full_name = $2, employer_id = coalesce($3, employer_id), trade = $4, department_id = coalesce($5, department_id), updated_at = now() where id = $1",
@@ -438,6 +442,10 @@ async def import_people(request: Request, user: AuthUser = Depends(console_user)
                 continue
             employer = await db.one("select id from contractors where org_id = $1 and lower(name) = lower($2) and deleted_at is null", [user.org_id, r.get("employer", "")], c) if r.get("employer") else None
             phone = r.get("phone", "")
+            if phone and not PHONE_RE.match(phone):
+                errors.append({"row": i, "message": f"invalid phone {phone}"})
+                skipped += 1
+                continue
             lang = r.get("language") if r.get("language") in ("en", "hi", "ta", "kn") else "en"
             wt = _worker_type(r.get("worker_type", "employee")) if r.get("worker_type") in ("employee", "contract", "contractor", "temporary", "visitor") else "employee"
             existing = await db.one("select id from people where org_id = $1 and lower(full_name) = lower($2) and phone_last4 = $3 and deleted_at is null", [user.org_id, name, phone[-4:] if phone else ""], c)

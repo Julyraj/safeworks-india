@@ -60,7 +60,8 @@ function ContractorSheet({ c, onClose, onSaved }: { c: Partial<Contractor>; onCl
   const [err, setErr] = useState("");
   useEffect(() => setF(c), [c]);
   const emailBad = !!f.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email);
-  const valid = !!f.name?.trim() && !emailBad;
+  const phoneBad = !!f.phone && !/^[+\d][\d\s-]{6,15}$/.test(f.phone);
+  const valid = !!f.name?.trim() && !emailBad && !phoneBad;
   return (
     <Sheet title={c.id ? `${t("common.edit")} · ${c.name}` : t("contractors.add")} onClose={onClose} footer={<><Button onClick={onClose}>{t("common.cancel")}</Button><Button variant="primary" disabled={!valid} loading={busy} onClick={async () => {
       setBusy(true); setErr("");
@@ -70,7 +71,7 @@ function ContractorSheet({ c, onClose, onSaved }: { c: Partial<Contractor>; onCl
         <Field label={t("contractors.name")} required><Input value={f.name ?? ""} onChange={(e) => setF({ ...f, name: e.target.value })} maxLength={120} autoFocus /></Field>
         <Field label={t("contractors.registration")} optional><Input value={f.registrationNo ?? ""} onChange={(e) => setF({ ...f, registrationNo: e.target.value })} maxLength={60} /></Field>
         <Field label={t("contractors.contact")}><Input value={f.contactName ?? ""} onChange={(e) => setF({ ...f, contactName: e.target.value })} maxLength={80} /></Field>
-        <Field label={t("users.phone")}><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} inputMode="tel" maxLength={20} /></Field>
+        <Field label={t("users.phone")} error={phoneBad ? t("users.phoneBad") : undefined}><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} inputMode="tel" maxLength={20} /></Field>
         <Field label={t("users.email")} error={emailBad ? t("users.emailBad") : undefined}><Input type="email" value={f.email ?? ""} onChange={(e) => setF({ ...f, email: e.target.value })} /></Field>
         <Field label={t("contractors.parent")} hint={t("contractors.parentHint")}><select className="select" value={f.parentId ?? ""} onChange={(e) => setF({ ...f, parentId: e.target.value || null })}><option value="">—</option>{contractors.data.filter((x) => x.id !== c.id && !x.isOwnCompany).map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select></Field>
       </div>

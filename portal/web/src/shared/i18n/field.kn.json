@@ -636,5 +636,7 @@
   "charts.actionStatus": "ಕ್ರಮದ ಸ್ಥಿತಿ",
   "charts.noActions": "ಈ ಅವಧಿಯಲ್ಲಿ ಕ್ರಮಗಳಿಲ್ಲ",
   "charts.byDepartment": "ವಿಭಾಗವಾರು",
-  "charts.byDepartmentKicker": "ಸದಸ್ಯರ ವರದಿಗಳು · ನಿಯೋಜಿಸಿದ ಕ್ರಮಗಳು"
+  "charts.byDepartmentKicker": "ಸದಸ್ಯರ ವರದಿಗಳು · ನಿಯೋಜಿಸಿದ ಕ್ರಮಗಳು",
+
+  "charts.staleBody": "ಇವು ಕೊನೆಯದಾಗಿ ಲೋಡ್ ಆದ ಚಾರ್ಟ್‌ಗಳು; ಸಿಗ್ನಲ್ ಸಿಕ್ಕಾಗ ಹೊಸದಾಗುತ್ತವೆ."
 }

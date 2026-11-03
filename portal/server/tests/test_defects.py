@@ -228,3 +228,22 @@ def test_f21_checklist_answers_must_fit_the_question(ctx):  # EHS-INS-068
     for q, bad in ((num, "abc"), (num, True), (pf, "purple"), (pf, ["pass", "fail"]), (multi, ["a", "c"])):
         with pytest.raises(HttpError):
             _check_value(q, bad)
+
+
+def test_f22_good_practice_never_raises_danger(ctx):  # EHS-OBS-027
+    o = ctx.create_obs("W1", type="good_practice", imminentDanger=True)
+    row = run(lambda c: c.fetchrow("select imminent_danger from observations where id = $1", uuid.UUID(o["id"])))
+    assert row["imminent_danger"] is False
+    assert run(lambda c: c.fetchval("select count(*) from notifications where record_id = $1 and critical", o["id"])) == 0
+
+
+def test_f24_phone_numbers_are_checked(ctx):  # EHS-ADM-061
+    _admin(ctx)
+    assert ctx.post("ADMIN", "/api/v1/admin/people", {"fullName": "Bad Phone", "phone": "abc"}).status_code == 400
+    assert ctx.post("ADMIN", "/api/v1/admin/people", {"fullName": "Good Phone", "phone": "+91 98765 43210"}).status_code == 201
+    assert ctx.post("ADMIN", "/api/v1/admin/contractors", {"name": "Bad Phone Ltd", "phone": "12"}).status_code == 400
+    assert ctx.put("ADMIN", f"/api/v1/admin/users/{ctx.ids['w2']}", {"phone": "call me"}).status_code == 400
+    r = ctx.post("ADMIN", "/api/v1/admin/users/import", {"csv": "name,employee_code,role,site_code,phone\nBad P,EXT-P1,reporter,TN1,abc\n"}).json()
+    assert r["created"] == 0 and r["skipped"] == 1
+    r = ctx.post("ADMIN", "/api/v1/admin/people/import", {"csv": "name,phone\nBad Q,xyz\n"}).json()
+    assert r["created"] == 0 and r["skipped"] == 1

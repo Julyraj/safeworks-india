@@ -316,8 +316,10 @@ const label = (page, text) => page.getByLabel(new RegExp("^" + text.replace(/[.*
     await fieldLogin(O.page, "OWN-TN1-1");
     await O.page.goto(`${BASE}/a/${act1.id}`);
     await O.page.locator('[data-testid="complete-open"]').click();
+    await until(async () => (await O.page.locator(".sheet textarea").count()) === 2, "both text boxes of the Complete sheet");  // typing before the sheet settles could land both texts in one box
     await O.page.locator(".sheet textarea").nth(0).fill("Guard rail, mid-rail and toe board fitted along the 14 m edge");
     await O.page.locator(".sheet textarea").nth(1).fill("No edge protection step in the slab pour sequence; added to the method statement");
+    await until(async () => (await O.page.locator(".sheet textarea").nth(1).inputValue()).startsWith("No edge protection"), "cause addressed filled");
     await O.page.locator('[data-testid="complete-submit"]').click();
     await O.page.locator('[data-testid="after-photo-error"]').waitFor();
     check("3. complete without an after-photo is refused", true);

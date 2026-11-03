@@ -337,6 +337,9 @@ export async function startSync(): Promise<void> {
   window.addEventListener("offline", onOffline);
   document.addEventListener("visibilitychange", onVisible);
   timer = window.setInterval(() => { if (navigator.onLine) void syncNow(); }, 120_000);
+  // F26: the app can be closed while offline and reopened online without an "online" event. Items that failed only
+  // because there was no connection must not wait out their old backoff, so clear it on start when we are online.
+  if (navigator.onLine) await clearBackoff();
   kick(50);
 }
 export function stopSync() {

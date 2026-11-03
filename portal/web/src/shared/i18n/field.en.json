@@ -636,5 +636,7 @@
   "charts.actionStatus": "Action status",
   "charts.noActions": "No actions in this period",
   "charts.byDepartment": "By department",
-  "charts.byDepartmentKicker": "reports by named members · actions assigned"
+  "charts.byDepartmentKicker": "reports by named members · actions assigned",
+
+  "charts.staleBody": "These are the last charts loaded; they refresh when you have signal."
 }

@@ -116,6 +116,7 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
         extra["employerName"] = qr_contact["employerName"]
     # A capture time in the future (a phone with a wrong clock) is not trusted: the report keeps the time it reached the
     # server, and the claimed time is kept with the report's details for the record.
+    imminent_danger = bool(payload.imminent_danger) and payload.type != "good_practice"  # good practice never raises a stop-work alert
     captured_at = payload.captured_at
     if captured_at.tzinfo is None:  # no offset sent: India time, as everywhere else in the API
         captured_at = captured_at.replace(tzinfo=db.TZ)
@@ -130,7 +131,7 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
            values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28) returning id""",
         [payload.client_uuid.lower(), org_id, site["id"], area_id, asset_id, case_no, payload.lat, payload.lng, payload.accuracy_m, captured_at, received, device_id,
          channel, payload.reporter_type, reporter_user_id, anonymous, contact_enc, payload.type, payload.category_codes, getattr(payload, "task_observed", "") or "",
-         payload.description, payload.description_lang, payload.fixed_on_spot, payload.immediate_action or "", payload.imminent_danger, employer,
+         payload.description, payload.description_lang, payload.fixed_on_spot, payload.immediate_action or "", imminent_danger, employer,
          getattr(payload, "trade", "") or "", status_secret], conn,
     )
     obs_id = row["id"]
@@ -145,7 +146,7 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
     await audit(conn, org_id=org_id, actor=actor, actor_role="public" if not actor else "", action="create", record_type="observation", record_id=obs_id, site_id=site["id"],
                 device_id=device_id,
                 changes={"caseNo": case_no, "type": payload.type, "categoryCodes": payload.category_codes, "channel": channel, "anonymous": anonymous,
-                         "imminentDanger": payload.imminent_danger, "fixedOnSpot": payload.fixed_on_spot, "areaId": area_id, "media": len(payload.media)})
+                         "imminentDanger": imminent_danger, "fixedOnSpot": payload.fixed_on_spot, "areaId": area_id, "media": len(payload.media)})
     o = await load(conn, obs_id)
     lang = settings.get("defaultLanguage", "en")
     params = {"caseNo": case_no, "type": t(TYPE_LABEL[payload.type], lang, org_id), "site": site_label(site, lang), "area": area_suffix(o.get("area_name"), lang),
@@ -153,7 +154,7 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
     officers = await users_with_roles(conn, site["id"], ["site_safety_officer"], org_id)
     await notify(conn, org_id=org_id, recipients=officers, event_type="new_report", record_type="observation", record_id=obs_id, key="new_report", params=params,
                  link=link_for("observation", obs_id), exclude=[actor.id if actor else None])
-    if payload.imminent_danger:
+    if imminent_danger:
         await send_critical_alert(conn, o, params, exclude=[actor.id if actor else None])
     return o, uploads
 

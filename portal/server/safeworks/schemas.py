@@ -443,6 +443,13 @@ class QrObservationCreate(In):
 
 
 # ---------- admin ----------
+
+    @field_validator("phone")
+    @classmethod
+    def _phone(cls, v):
+        return _phone_ok(v)
+
+
 class I18nText(Loose):
     en: Str500 = ""
     hi: Str500 | None = None
@@ -545,6 +552,13 @@ class RoleGrant(In):
 
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")  # same rule as the console form
+PHONE_RE = re.compile(r"^[+\d][\d\s-]{6,15}$")  # same rule as the console and QR forms
+
+
+def _phone_ok(v):
+    if v and not PHONE_RE.match(v):
+        raise ValueError("Enter a valid phone number.")
+    return v
 
 
 class UserCreate(In):
@@ -566,6 +580,11 @@ class UserCreate(In):
         if v and not EMAIL_RE.match(v):
             raise ValueError("Enter a valid email address.")
         return v.lower()
+
+    @field_validator("phone")
+    @classmethod
+    def _phone(cls, v):
+        return _phone_ok(v)
 
 
 class UserUpdate(Edit):
@@ -589,6 +608,11 @@ class UserUpdate(Edit):
             raise ValueError("Enter a valid email address.")
         return v
 
+    @field_validator("phone")
+    @classmethod
+    def _phone(cls, v):
+        return _phone_ok(v)
+
 
 class RolesBody(In):
     roles: list[RoleGrant]
@@ -611,6 +635,11 @@ class PersonIn(Edit):
     worker_type: Literal["employee", "contract", "contractor", "temporary", "visitor"] = "employee"
     active: bool = True
     reason: Str2000 = ""
+
+    @field_validator("phone")
+    @classmethod
+    def _phone(cls, v):
+        return _phone_ok(v)
 
 
 class DepartmentIn(Edit):
@@ -642,6 +671,11 @@ class ContractorIn(Edit):
     site_ids: list[UuidStr] = Field(default_factory=list)
     active: bool = True
     reason: Str2000 = ""
+
+    @field_validator("phone")
+    @classmethod
+    def _phone(cls, v):
+        return _phone_ok(v)
 
 
 class ExtraFieldIn(In):

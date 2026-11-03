@@ -121,6 +121,8 @@ function UserSheet({ user, onClose, onSaved }: { user?: UserAdmin; onClose: () =
   if (needsEmail && !f.email) problems.push("email");
   if (needsCode && !f.employeeCode) problems.push("code");
   if (emailBad) problems.push("emailBad");
+  const phoneBad = !!f.phone && !/^[+\d][\d\s-]{6,15}$/.test(f.phone);
+  if (phoneBad) problems.push("phoneBad");
   if (f.roles.length === 0) problems.push("roles");
   if (f.roles.some((r) => !ALL_SITES.includes(r.role) && !r.siteId)) problems.push("roleSite");
   const auditor = f.roles.some((r) => r.role === "auditor");
@@ -165,7 +167,7 @@ function UserSheet({ user, onClose, onSaved }: { user?: UserAdmin; onClose: () =
         <Field label={t("common.employer")}><Select value={f.employerId ?? ""} onChange={(e) => setF({ ...f, employerId: e.target.value || null })}><option value="">{t("common.ownCompany")}</option>{contractors.data.filter((c) => !c.isOwnCompany).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</Select></Field>
         <Field label={t("departments.department")} optional hint={t("departments.userHint")}><Select value={f.departmentId ?? ""} onChange={(e) => setF({ ...f, departmentId: e.target.value || null })} data-testid="user-department"><option value="">{t("departments.none")}</option>{departments.filter((d) => d.active || d.id === f.departmentId).map((d) => <option key={d.id} value={d.id}>{pick(d.name)}</option>)}</Select></Field>
         {!user ? <><Field label={t("common.trade")} optional><Input value={f.trade ?? ""} onChange={(e) => setF({ ...f, trade: e.target.value })} maxLength={60} /></Field>
-          <Field label={t("users.phone")} optional><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} inputMode="tel" maxLength={20} /></Field></> : null}
+          <Field label={t("users.phone")} error={phoneBad ? t("users.phoneBad") : undefined} optional><Input value={f.phone ?? ""} onChange={(e) => setF({ ...f, phone: e.target.value })} inputMode="tel" maxLength={20} /></Field></> : null}
       </div>
       <Field label={t("users.roles")} required hint={t("users.rolesHint")} error={problems.includes("roleSite") ? t("users.siteRequired") : undefined}>
         <RolesEditor rows={f.roles as RoleRow[]} onChange={(rows) => setF({ ...f, roles: rows })} />

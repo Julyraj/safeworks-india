@@ -140,12 +140,15 @@ export function useUrlFilters<T>(reg: RegisterState<T>, keys: string[]) {
   useEffect(() => {
     if ([...params.keys()].length === 0) return;
     let touched = false;
+    // a bare ?q= is the top-bar case-number jump: it must find the case whatever filters were left on (they are remembered)
+    if (params.get("q") !== null && !keys.some((k) => params.get(k) !== null)) reg.clearFilters();
     for (const k of keys) { const v = params.get(k); if (v !== null) { reg.setFilter(k, v); touched = true; } }
     const q = params.get("q"); if (q !== null) { reg.setQ(q); touched = true; }
     const s = params.get("siteId"); if (s !== null) { setSiteId(s); touched = true; }
     if (touched) setParams({}, { replace: true });
+    // re-run when the address changes: the top-bar "jump to a case number" can land here while this register is open
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params]);
 }
 
 export function SavedFilters<T>({ reg }: { reg: RegisterState<T> }) {

@@ -10,7 +10,7 @@ Written as an EHS QA team (test architect, role-access specialist, functional/UI
 
 ## Defects found while writing and running this plan
 
-All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F9 came from reading the code, F10–F13 from running the plan. The ⚠ tests below now describe the fixed behaviour.
+All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F9 came from reading the code, F10–F26 from running the plan. The ⚠ tests below now describe the fixed behaviour.
 
 | # | Where | What the code does | What it should do | Test |
 |---|---|---|---|---|
@@ -27,6 +27,19 @@ All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F
 | F11 | Site create | A site could be saved with an empty name | English name required | EHS-ADM-006 |
 | F12 | User create / edit | The server accepted `abc@` as an email | Same rule as the console form | EHS-ADM-097 |
 | F13 | Field app offline | A page never opened while online could not open offline (each page is downloaded on first use) | Fetch every page in the background after sign-in | Browser run step 1 |
+| F14 | Action reminders (job) | Extreme-risk reminders and escalations were held by quiet hours and counted in the daily push limit | Send them as urgent | EHS-ACT-138 |
+| F15 | Digest emails | Showed the raw code `ntf.digest_daily.body` | Real text in all four languages | EHS-RPT-044 |
+| F16 | Triage-overdue reminder | Linked to `/inbox`, which the phone app does not have | Link to Reports → Triage | EHS-OBS-184 |
+| F17 | User create / CSV import | External auditors could have no expiry date | Expiry required (CSV: 30 days) | EHS-ADM-101 |
+| F18 | Report create (server) | Required category details checked only by the phone | Refuse with 400 | EHS-ADM-133 |
+| F19 | Contractor create (server) | Accepted `abc@` as an email | Same rule as users | EHS-ADM-069 |
+| F20 | Request new date | Accepted a date in the past | New date must be in the future | EHS-ACT-082 |
+| F21 | Inspection answers (server) | Number question took text; choice question took an unknown option | Refuse with 400 | EHS-INS-068 |
+| F22 | Quick report | "Danger now" offered on good-practice reports | Hide it; server ignores it | EHS-OBS-027 |
+| F23 | Field Charts offline | Generic error; stale charts with no notice | Offline message and stale notice | EHS-DSH-047/048 |
+| F24 | Phone numbers | Not checked anywhere | 7–16 digits, optional + | EHS-ADM-061 |
+| F25 | Console case-number jump | Did nothing when already on the register; old filters hid the case | Re-read the address, clear other filters | EHS-OBS-232 |
+| F26 | Field outbox | Items that failed offline stayed Pending after reopening the app online | Send at once on start when online | EHS-OBS-084 |
 
 ---
 
@@ -528,7 +541,7 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | EHS-OBS-229 | Safety Officer (SSO) | Console → Observations | Excel button (2.1) | Export with a filter set. | Positive | `.xlsx` with one sheet "Reports", bold frozen header with filters, India-time dates; audit row with format `xlsx`. |
 | EHS-OBS-230 | External Auditor (AUD) | Console → Observations | Read-only | Open a report as `AUD01`. | Security | No Triage, Reopen or Comment buttons; export allowed. |
 | EHS-OBS-231 | Plant Head (SH) | Console → Observations | Site scope | `SH-TN1` opens the register. | Security | TN1 reports only; site dropdown has TN1 only. |
-| EHS-OBS-232 | Any console role | Console → top bar | Jump to case number | Type a case number in the top search. | Positive | Opens that report (if in scope); otherwise "not found". |
+| EHS-OBS-232 | Any console role | Console → top bar | Jump to case number | Type a case number in the top search and press Enter. | Positive | The matching register (reports, actions or inspections, from the number) opens filtered to that case: one row; click it to open. Out of scope: no row. |
 
 ---
 

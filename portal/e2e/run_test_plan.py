@@ -2376,7 +2376,7 @@ def _():
     check(all(x["code"] != "PLAN-DEL" for x in A.get("HSE01", "/admin/inspections/templates").json()))
 
 
-@case("EHS-INS-082", "EHS-WF3-09")
+@case("EHS-INS-082", "EHS-WF3-09", "EHS-INS-083")
 def _():
     active = next(t for t in A.get("VER-TN1", "/inspections/templates").json() if t["code"] == "PLAN-ALL" and t["status"] == "active")
     r = start_run(vid=active["id"])
@@ -2833,8 +2833,9 @@ def _():
         A.put("HSE01", "/admin/due-date-rules", {"items": [high]})
 
 
-@case("EHS-INS-047", "EHS-INS-048")
+@case("EHS-INS-047", "EHS-INS-048", "EHS-DSH-018")
 def _():
+    insp0 = {x["key"]: x for x in A.get("SO-TN1", "/dashboard").json()["kpis"]}["inspection_completion"]
     run_job("inspection_scheduler")
     run_job("inspection_scheduler")
     dup = sql1("select count(*) from (select schedule_id, due_at from inspection_runs where schedule_id is not null group by 1, 2 having count(*) > 1) x")
@@ -2848,6 +2849,8 @@ def _():
     run_job("inspection_scheduler")
     check(sql1("select status from inspection_runs where id = $1::uuid", rid) == "missed", "marked missed")
     check(ntf(rid, "SO-TN1", event="inspection_missed") == 1, "officer told")
+    insp1 = {x["key"]: x for x in A.get("SO-TN1", "/dashboard").json()["kpis"]}["inspection_completion"]
+    check((insp1["n"] or 0) == (insp0["n"] or 0) + 1, f"DSH-018: the missed run counts as not completed ({insp0['n']} → {insp1['n']}, {insp0['value']} → {insp1['value']} %)")
 
 
 @case("EHS-RPT-044", "EHS-RPT-045")
@@ -2867,7 +2870,7 @@ def _():
     check(sql1("select count(*) from notifications where recipient_user_id = $1::uuid and event_type = 'digest_weekly'", uid("SH-TN1")) >= 1, "site head weekly digest")
 
 
-@case("EHS-OBS-209", "EHS-WF4-01", "EHS-WF4-02", "EHS-WF4-05")
+@case("EHS-OBS-209", "EHS-WF4-01", "EHS-WF4-02", "EHS-WF4-05", "EHS-DSH-017")
 def _():
     o = create_obs(imminentDanger=True, description="Plan: live cable in water (timed)")
     check(ntf(o["id"], "SO-TN1") >= 1 and ntf(o["id"], "SH-TN1") >= 1, "WF4-01: officer and site head alerted at once")
@@ -2955,6 +2958,103 @@ def _():
     h = next(x for x in (r if isinstance(r, list) else [r]) if x["reason"].startswith("Plan inspection"))
     st(A.post("ADMIN01", f"/admin/legal-holds/{h['id']}/release"), 200)
     check(sql1("select released_at is not null from legal_holds where id = $1::uuid", h["id"]) is True, "released with time")
+
+
+@case("EHS-ACT-066")
+def _():
+    o, aid = new_action()
+    complete(aid)
+    ref = media_ref(PHOTO2, "evidence")
+    r = st(A.post("VER-TN1", f"/actions/{aid}/verify", {"clientUuid": U(), "result": "effective", "method": "re_inspection", "media": [ref], "capturedAt": now_iso()}), 200).json()
+    for u in r.get("uploads", []):
+        st(put_upload("VER-TN1", u, PHOTO2), 200)
+    check(sql1("select count(*) from media where client_uuid = $1::uuid and upload_status in ('verified','uploaded')", ref["clientUuid"]) == 1, "evidence photo stored with the verification")
+
+
+@case("EHS-ACT-087")
+def _():
+    sql("insert into user_site_roles (user_id, site_id, role) values ($1::uuid, $2::uuid, 'site_safety_officer') on conflict do nothing", uid("SO-TN2"), site("TN1"))
+    try:
+        A.login("SO-TN2", name="so2tn1")
+        o, aid = new_action(owner="SO-TN1")
+        st(A.post("SO-TN1", f"/actions/{aid}/requests", req_body()), 200, 201)
+        rid = A.get("SO-TN1", f"/actions/{aid}").json()["requests"][-1]["id"]
+        st(A.post("so2tn1", f"/actions/{aid}/requests/{rid}/decide", {"decision": "approved"}), 403)
+        st(A.post("SH-TN1-field", f"/actions/{aid}/requests/{rid}/decide", {"decision": "approved"}), 200)
+    finally:
+        sql("delete from user_site_roles where user_id = $1::uuid and site_id = $2::uuid", uid("SO-TN2"), site("TN1"))
+
+
+@case("EHS-OBS-057")
+def _():
+    o = create_obs("SO-TN1", channel="on_behalf", onBehalfOf={"name": "Murugan S (no phone)", "employerId": IDS["own_company"]})
+    check(sql1("select channel from observations where id = $1::uuid", o["id"]) == "on_behalf")
+    check("Murugan S" in (sql1("select body from comments where owner_id = $1::uuid and body like 'extra:%'", o["id"]) or ""), "name kept with the report")
+
+
+def _png() -> bytes:
+    import zlib
+    raw = b"".join(b"\x00" + bytes([200, 160, 90]) * 8 for _ in range(8))
+    chunk = lambda t, d: struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xFFFFFFFF)  # noqa: E731
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", 8, 8, 8, 2, 0, 0, 0)) + chunk(b"IDAT", zlib.compress(raw)) + chunk(b"IEND", b"")
+
+
+@case("EHS-OBS-065")
+def _():
+    png = _png()
+    ref = {**media_ref(png), "mime": "image/png"}
+    o = create_obs(media=[ref], upload=False)
+    st(A.req("WORKER-TN1-1", "PUT", o["uploads"][0]["url"].split("/api/v1", 1)[-1], content=png, headers={"content-type": "image/png"}), 200)
+    check(sql1("select mime from media where client_uuid = $1::uuid", ref["clientUuid"]) == "image/png")
+
+
+@case("EHS-OBS-077")
+def _():
+    o = create_obs(media=[media_ref()])
+    d = A.get("WORKER-TN1-1", f"/observations/{o['id']}").json()
+    url = d["media"][0]["url"]
+    root = A.base
+    check(httpx.get(root + url).status_code == 200, "signed photo link opens")
+    m = re.search(r"e=(\d+)", url)
+    longer = url.replace(f"e={m.group(1)}", f"e={int(m.group(1)) + 86400}")
+    check(httpx.get(root + longer).status_code in (401, 403, 404), "a link cannot be stretched past its expiry")
+    check(httpx.get(root + url.split("?")[0]).status_code in (401, 403, 404), "no photo without a signature")
+
+
+@case("EHS-ADM-049")
+def _():
+    q = sql1("select id::text from qr_codes where target_type = 'area' and active limit 1")
+    link = st(A.post("SO-TN1-admin", f"/admin/qr-codes/{q}/poster-link"), 200, 201).json()["url"]
+    path = link.split("/api/v1", 1)[-1]
+    st(A.c.get(path), 200)
+    m = re.search(r"\.(\d{9,})\.", path)
+    check(m, path)
+    st(A.c.get(path.replace(f".{m.group(1)}.", f".{int(m.group(1)) + 86400}.")), 403)
+
+
+@case("EHS-OBS-085")
+def _():
+    a = st(A.post("SO-TN1-admin", f"/admin/sites/{site('TN1')}/areas", {"code": "PGONE", "name": {"en": "Plan area to delete"}, "areaType": "other"}), 200, 201).json()
+    b = obs_body(areaId=a["id"])
+    st(A.delete("SO-TN1-admin", f"/admin/areas/{a['id']}", {"reason": "Plan"}), 200)
+    res = sync_push("WORKER-TN1-1", [{"commandId": U(), "entityType": "observation", "op": "create", "entityClientUuid": b["clientUuid"], "payload": b}])
+    check(res[0]["status"] == "rejected" and res[0]["error"]["error"], f"rejected with a reason: {res[0]}")
+
+
+@case("EHS-OBS-115")
+def _():
+    r = st(qr_post(IDS["qr:TN1"], qr_body(employerName="Sri Ganesh Constructions")), 200, 201).json()
+    oid = sql1("select id from observations where case_no = $1", r["caseNo"])
+    check("Sri Ganesh Constructions" in (sql1("select body from comments where owner_id = $1 and body like 'extra:%'", oid) or ""))
+
+
+@case("EHS-RPT-021")
+def _():
+    sys.path.insert(0, str(SERVER))
+    from safeworks.xlsx import Sheet, workbook
+    data = workbook([Sheet("Long", [["Text"], ["x" * 40000]])])
+    cell = re.search(r'<t xml:space="preserve">(x+)</t>', zipfile.ZipFile(io.BytesIO(data)).read("xl/worksheets/sheet1.xml").decode())
+    check(cell and len(cell.group(1)) == 32767, "cut at Excel's 32,767-character limit")
 
 
 @case("EHS-RPT-025")
@@ -3047,12 +3147,44 @@ DEFECTS = [
     "| F19 | A contractor could be saved with an email such as `abc@` | Same email rule as users | EHS-ADM-069, `test_f19_*` |",
     "| F20 | \"Request new date\" accepted a date in the past (also when approving) | The new date must be in the future | EHS-ACT-082, `test_f20_*` |",
     "| F21 | A checklist number question accepted text (\"abc\"), and a choice question an option it does not have | Answers must fit the question; the phone form already only offers valid values | EHS-INS-068, `test_f21_*` |",
+    "| F22 | \"Danger now\" could be switched on for a good-practice report, raising a danger alert for good news | The switch is hidden for good practice and the server ignores it | EHS-OBS-027, `test_f22_*` |",
+    "| F23 | Charts opened offline showed a generic error; charts already on screen gave no sign they were out of date | Clear \"Charts need a connection\" message; a notice when the shown figures could not be refreshed | EHS-DSH-047/048 (browser) |",
+    "| F24 | Phone numbers were not checked (letters, 2 digits) on users, people, contractors and the QR form; CSV imports took them too | Phone must be 7–16 digits, may start with +; bad CSV rows are skipped with a reason | EHS-ADM-061, `test_f24_*` |",
+    "| F25 | Typing a case number in the console search did nothing when already on that register, and leftover saved filters could hide the case | The jump re-reads the address and clears other filters | EHS-OBS-232 (browser) |",
+    "| F26 | Work saved offline stayed Pending after the app was closed and reopened with signal (\"No connection · next retry\") | On start with a connection, waiting items are sent at once | EHS-OBS-084, EHS-ACT-034/053 (browser) |",
     "",
     "Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only admin and HSE manager may reopen a submitted inspection, because its report is locked); EHS-ACT-050 (an owner who disputed an action cannot complete it until the dispute is decided); EHS-INS-083 and EHS-WF3-09 (a report link is a 5-minute ticket bound to one record and to the requester's scope, by design, because a page opened in a new tab cannot carry a sign-in).",
 ]
 
 
+# Cases that cannot run in this test setup, with the reason shown in TEST-RESULTS.md.
+NOT_RUN = {
+    "EHS-AUTH-064": "Android app only (needs a phone or emulator)",
+    "EHS-AUTH-065": "Android app only (needs a phone or emulator)",
+    "EHS-OBS-025": "Needs a microphone and the phone's speech service",
+    "EHS-OBS-074": "Needs a microphone to record",
+    "EHS-OBS-076": "Checks that a feature is absent (gap 1.4, video not in 2.1); not automated",
+    "EHS-RPT-043": "Needs a real push service (browser push to a phone)",
+    "EHS-RPT-050": "Checks that a feature is absent (gap 1.4); not automated",
+    "EHS-RPT-051": "Checks that a feature is absent (gap 1.4); not automated",
+}
+
+
+def merge_ui_results() -> None:
+    """Screen cases from ui_plan.cjs (browser). An ID checked by both keeps the API result and notes the browser run."""
+    ui = Path(os.environ.get("UI_RESULTS", OUT / "ui-plan-results.json"))
+    if not ui.exists():
+        return
+    for i, r in json.loads(ui.read_text()).items():
+        res = "PASS" if r["result"] == "PASS" else "FAIL"
+        if i not in RESULTS:
+            RESULTS[i] = (res, r.get("note", "browser"))
+        elif RESULTS[i][0] == "PASS" and res != "PASS":
+            RESULTS[i] = ("FAIL", f"API passed; {r.get('note', '')}")
+
+
 def write_results() -> None:
+    merge_ui_results()
     plan = plan_ids()
     known = {i for i, _ in plan}
     extra = sorted(set(RESULTS) - known)
@@ -3065,12 +3197,12 @@ def write_results() -> None:
         "# SafeWorks Portal 2.1: test results",
         "",
         f"Run on {datetime.now(timezone.utc).astimezone().strftime('%Y-%m-%d %H:%M %Z')} against a fresh demo database with `portal/e2e/run_test_plan.py` "
-        "(API cases) and `portal/e2e/e2e-real.cjs` (browser). Test cases are those of `portal/docs/TEST-PLAN.md`.",
+        "(API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.",
         "",
         "| | Count |",
         "|---|---|",
         f"| Cases in the plan | {total} |",
-        f"| Run automatically (API) | {run_n} |",
+        f"| Run automatically (API, timed jobs and browser) | {run_n} |",
         f"| Passed | {counts['PASS']} |",
         f"| Failed | {counts['FAIL']} |",
         f"| Runner error | {counts['ERROR']} |",
@@ -3083,7 +3215,7 @@ def write_results() -> None:
     ]
     for i, what in plan:
         r = RESULTS.get(i)
-        res, note = r if r else ("Not automated", "")
+        res, note = r if r else ("Not automated", NOT_RUN.get(i, ""))
         lines.append(f"| {i} | {what.replace('|', '/')} | {res} | {note.replace('|', '/')[:200]} |")
     if extra:
         lines += ["", "Runner IDs not found in the plan: " + ", ".join(extra)]

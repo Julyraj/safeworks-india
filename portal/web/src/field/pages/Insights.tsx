@@ -7,6 +7,7 @@ import type { InsightLevel, Insights as InsightsT } from "../../shared/types";
 import { useI18n } from "../../shared/i18n";
 import { Bars, Button, Card, CardHead, Chip, ChipBar, EmptyState, ErrorCard, KpiTile, Select, Skeleton, Tabs, useToast } from "../../shared/ui";
 import { useLoad, useLocalState } from "../../shared/hooks";
+import { ApiError } from "../../shared/api";
 import { fmtNumber, pct } from "../../shared/format";
 import { IconDownload, IconWifiOff } from "../../shared/icons";
 import { TrendChart } from "../../shared/charts";
@@ -86,8 +87,9 @@ export default function Insights() {
         ) : null}
       </div>
       {!hasDept && level === "department" ? <p className="small muted">{t("charts.noDepartment")}</p> : null}
-      {state.error && !d ? (!sync.online ? <EmptyState icon={<IconWifiOff />} title={t("charts.offline")} body={t("charts.offlineBody")} /> : <ErrorCard error={state.error} onRetry={state.reload} />) : null}
+      {state.error && !d ? (!sync.online || (typeof navigator !== "undefined" && !navigator.onLine) || (state.error instanceof ApiError && state.error.isNetwork) ? <EmptyState icon={<IconWifiOff />} title={t("charts.offline")} body={t("charts.offlineBody")} /> : <ErrorCard error={state.error} onRetry={state.reload} />) : null}
       {!d && !state.error ? <><div className="kpis">{Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} block className="kpi" />)}</div><Skeleton block /></> : null}
+      {state.error && d ? <p className="hint-box" role="status" data-testid="charts-stale"><IconWifiOff size={16} /> {t("charts.offline")}. {t("charts.staleBody")}</p> : null}
       {d ? (
         <>
           <div className="kpis" data-testid="insights-kpis">

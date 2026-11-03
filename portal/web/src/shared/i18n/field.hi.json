@@ -636,5 +636,7 @@
   "charts.actionStatus": "कार्रवाई की स्थिति",
   "charts.noActions": "इस अवधि में कोई कार्रवाई नहीं",
   "charts.byDepartment": "विभाग अनुसार",
-  "charts.byDepartmentKicker": "सदस्यों की नामित रिपोर्ट · सौंपी गई कार्रवाइयाँ"
+  "charts.byDepartmentKicker": "सदस्यों की नामित रिपोर्ट · सौंपी गई कार्रवाइयाँ",
+
+  "charts.staleBody": "ये पिछली बार लोड हुए चार्ट हैं; सिग्नल मिलने पर ये ताज़ा होंगे।"
 }
