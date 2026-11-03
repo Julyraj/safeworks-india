@@ -291,5 +291,9 @@
   "xlsx.department": "துறை",
   "xlsx.departments": "துறைகள்",
   "xlsx.code": "குறியீடு",
-  "err.immediate_action_required": "பாதுகாப்பாக்க நீங்கள் என்ன செய்தீர்கள் என்று சொல்லுங்கள்."
+  "err.immediate_action_required": "பாதுகாப்பாக்க நீங்கள் என்ன செய்தீர்கள் என்று சொல்லுங்கள்.",
+  "err.auditor_expiry_required": "தணிக்கையாளர் கணக்கிற்கு காலாவதி தேதி தேவை.",
+  "err.extra_required": "இந்த வகைக்குத் தேவையான விவரங்களை நிரப்புங்கள்.",
+  "err.answer_invalid": "கேள்வி {question} க்கு இந்தப் பதில் செல்லாது.",
+  "err.date_in_future": "எதிர்காலத் தேதியைத் தேர்ந்தெடுக்கவும்."
 }

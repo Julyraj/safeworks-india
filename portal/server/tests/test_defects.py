@@ -163,3 +163,68 @@ def test_f16_triage_reminder_opens_the_triage_list(ctx):  # EHS-OBS-184
     run_job(ctx, ladder_job)
     links = run(lambda c: c.fetch("select distinct link from notifications where event_type = 'triage_sla' and channel = 'inapp'"))
     assert {r["link"] for r in links} == {"/reports?tab=triage"}
+
+
+def _admin(ctx):
+    if "ADMIN" not in ctx.tokens:
+        from test_auth_scope import test_mfa_flow
+        test_mfa_flow(ctx)
+
+
+def test_f17_auditor_needs_an_expiry(ctx):  # EHS-ADM-101
+    _admin(ctx)
+    base = {"name": "Ext Auditor", "loginType": "employee_code", "language": "en", "roles": [{"siteId": None, "role": "auditor"}]}
+    assert ctx.post("ADMIN", "/api/v1/admin/users", {**base, "employeeCode": "EXT-A1"}).status_code == 400
+    exp = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
+    assert ctx.post("ADMIN", "/api/v1/admin/users", {**base, "employeeCode": "EXT-A2", "expiresAt": exp}).status_code == 201
+    # making an existing permanent user an auditor needs an expiry first
+    assert ctx.post("ADMIN", f"/api/v1/admin/users/{ctx.ids['w2']}/roles", {"roles": [{"siteId": None, "role": "auditor"}]}).status_code == 400
+    # an auditor imported by CSV gets 30 days
+    r = ctx.post("ADMIN", "/api/v1/admin/users/import", {"csv": "name,employee_code,role,site_code\nCsv Auditor,EXT-A3,auditor,\n"})
+    assert r.status_code == 200 and r.json()["created"] == 1, r.text
+    days = run(lambda c: c.fetchval("select extract(day from expires_at - now()) from users where employee_code = 'EXT-A3'"))
+    assert 29 <= days <= 30
+
+
+def test_f18_required_category_details(ctx):  # EHS-OBS-037/038
+    run(lambda c: c.execute("""update categories set extra_fields = '[{"key": "heightM", "label": {"en": "Height (m)"}, "type": "number", "required": true}]'::jsonb
+                               where code = 'HEIGHT'"""))
+    try:
+        assert ctx.post("W1", "/api/v1/observations", ctx.obs_payload()).status_code == 400
+        assert ctx.post("W1", "/api/v1/observations", ctx.obs_payload(extra={"heightM": 6})).status_code in (200, 201)
+    finally:
+        run(lambda c: c.execute("update categories set extra_fields = '[]'::jsonb where code = 'HEIGHT'"))
+
+
+def test_f19_contractor_email(ctx):  # EHS-ADM-069
+    _admin(ctx)
+    assert ctx.post("ADMIN", "/api/v1/admin/contractors", {"name": "Bad Mail Ltd", "email": "abc@"}).status_code == 400
+    assert ctx.post("ADMIN", "/api/v1/admin/contractors", {"name": "Good Mail Ltd", "email": "site@goodmail.in"}).status_code == 201
+
+
+def test_f20_new_due_date_must_be_in_the_future(ctx):  # EHS-ACT-082
+    o = ctx.create_obs("W1")
+    d = ctx.triage_assign(o["id"])
+    aid = d["actions"][0]["id"]
+    past = (datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
+    r = ctx.post("OWN1", f"/api/v1/actions/{aid}/requests", {"clientUuid": str(uuid.uuid4()), "type": "date_change", "proposedDueAt": past, "reason": "x",
+                                                            "capturedAt": datetime.now(timezone.utc).isoformat()})
+    assert r.status_code == 400
+    naive = (datetime.now() + timedelta(days=5)).strftime("%Y-%m-%dT%H:%M:%S")
+    r = ctx.post("OWN1", f"/api/v1/actions/{aid}/requests", {"clientUuid": str(uuid.uuid4()), "type": "date_change", "proposedDueAt": naive, "reason": "x",
+                                                            "capturedAt": datetime.now(timezone.utc).isoformat()})
+    assert r.status_code in (200, 201), r.text
+
+
+def test_f21_checklist_answers_must_fit_the_question(ctx):  # EHS-INS-068
+    from safeworks.workflow.inspections import _check_value
+    from safeworks.errors import HttpError
+    import pytest
+    num = {"answer_type": "number", "code": "N", "id": "x", "response_set": []}
+    pf = {"answer_type": "pass_fail_na", "code": "P", "id": "y", "response_set": [{"value": "pass"}, {"value": "fail", "flag": True}]}
+    multi = {"answer_type": "multi_choice", "code": "M", "id": "z", "response_set": [{"value": "a"}, {"value": "b"}]}
+    for q, ok in ((num, 12), (num, "12.5"), (pf, "pass"), (pf, "N/A"), (multi, ["a", "b"]), (num, None)):
+        _check_value(q, ok)
+    for q, bad in ((num, "abc"), (num, True), (pf, "purple"), (pf, ["pass", "fail"]), (multi, ["a", "c"])):
+        with pytest.raises(HttpError):
+            _check_value(q, bad)

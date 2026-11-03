@@ -91,6 +91,12 @@ async def create(conn, actor: AuthUser | None, payload: ObservationCreate | QrOb
         valid = await db.q("select code from categories where org_id = $1 and code = any($2::text[]) and deleted_at is null", [org_id, payload.category_codes], conn)
         if len(valid) != len(set(payload.category_codes)):
             raise bad_request("Choose at least one category.", key="err.category_required")
+        if hasattr(payload, "extra"):  # signed-in reports carry the category's extra fields (the QR form does not ask them)
+            given = getattr(payload, "extra", {}) or {}
+            fields = await db.q("select extra_fields from categories where org_id = $1 and code = any($2::text[]) and deleted_at is null", [org_id, payload.category_codes], conn)
+            for f in (x for r in fields for x in (r["extra_fields"] or [])):
+                if f.get("required") and given.get(f.get("key")) in (None, "", []):
+                    raise bad_request("Fill in the required details for this category.", key="err.extra_required")
     settings = await org_settings(org_id, conn)
     received = now()
     case_no = await next_case_no(conn, site["code"], "observation", received)

@@ -291,5 +291,9 @@
   "xlsx.department": "Department",
   "xlsx.departments": "Departments",
   "xlsx.code": "Code",
-  "err.immediate_action_required": "Say what you did to make it safe."
+  "err.immediate_action_required": "Say what you did to make it safe.",
+  "err.auditor_expiry_required": "An auditor account needs an expiry date.",
+  "err.extra_required": "Fill in the required details for this category.",
+  "err.answer_invalid": "This answer is not valid for question {question}.",
+  "err.date_in_future": "Choose a date in the future."
 }

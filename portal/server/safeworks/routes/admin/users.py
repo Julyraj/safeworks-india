@@ -64,8 +64,13 @@ def _validate_roles(roles: list[RoleGrant]) -> None:
             raise bad_request(f"Role {r.role} cannot be granted for all sites.", key="err.invalid_role_scope", role=r.role)
 
 
+AUDITOR_NO_EXPIRY = "An auditor account needs an expiry date."
+
+
 async def _set_roles(conn, actor: AuthUser, user_id: str, roles: list[RoleGrant]) -> None:
     _validate_roles(roles)
+    if any(r.role == "auditor" for r in roles) and not await conn.fetchval("select expires_at from users where id = $1", user_id):
+        raise bad_request(AUDITOR_NO_EXPIRY, key="err.auditor_expiry_required")  # external access must end on its own
     for r in roles:
         if r.site_id and not await db.one("select 1 from sites where id = $1 and org_id = $2", [r.site_id, actor.org_id], conn):
             raise not_found()
@@ -125,6 +130,8 @@ async def create_user(request: Request, user: AuthUser = Depends(console_user)):
     if inp.email and await db.one("select 1 from users where lower(email) = lower($1)", [inp.email]):
         raise HttpError(409, "This email is already in use.", "conflict", key="err.duplicate_code")
     _validate_roles(inp.roles)
+    if any(r.role == "auditor" for r in inp.roles) and not inp.expires_at:
+        raise bad_request(AUDITOR_NO_EXPIRY, key="err.auditor_expiry_required")
     await _check_department(None, user.org_id, inp.department_id)
     temp = temp_password()
     pw_hash = await hash_password(temp)
@@ -323,6 +330,8 @@ async def import_users(request: Request, user: AuthUser = Depends(console_user))
                 await c.execute("update users set email = coalesce(nullif($2, ''), email), language = $3, updated_at = now() where id = $1", existing["id"], r.get("email", "").lower(), lang)
                 await c.execute("insert into user_site_roles (user_id, site_id, role, granted_by) values ($1, $2, $3::role_t, $4) on conflict do nothing",
                                 existing["id"], site["id"] if site else None, role, user.id)
+                if role == "auditor":
+                    await c.execute("update users set expires_at = now() + interval '30 days' where id = $1 and expires_at is null", existing["id"])
                 forget_user_in_cache(existing["id"])
                 updated += 1
             else:
@@ -337,6 +346,8 @@ async def import_users(request: Request, user: AuthUser = Depends(console_user))
                     [user.org_id, person["id"], login_type, code, r.get("email", "").lower(), await hash_password(temp), lang, user.id], c,
                 )
                 await c.execute("insert into user_site_roles (user_id, site_id, role, granted_by) values ($1, $2, $3::role_t, $4)", u["id"], site["id"] if site else None, role, user.id)
+                if role == "auditor":  # an imported auditor gets 30 days, like the console form
+                    await c.execute("update users set expires_at = now() + interval '30 days' where id = $1 and expires_at is null", u["id"])
                 temp_passwords[code] = temp
                 created += 1
         await audit(c, org_id=user.org_id, actor=user, action="create", record_type="user", record_id="import", changes={"created": created, "updated": updated, "skipped": skipped})

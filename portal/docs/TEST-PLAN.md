@@ -585,7 +585,7 @@ In SafeWorks, a CAPA is an **action**. It has these statuses: open → in progre
 | EHS-ACT-047 | Supervisor (OWN) | API | 11 after-photos | Complete with 11 photo references. | Negative | 400 "At most 10 photos per record." |
 | EHS-ACT-048 | Supervisor (OWN) | API | Note 2,001 characters | Complete with a 2,001-character note. | Negative | 400. |
 | EHS-ACT-049 | Supervisor (OWN) | Complete | Complete directly from Open | Without Start, complete an Open action. | Positive | Allowed; status "Completed". |
-| EHS-ACT-050 | Supervisor (OWN) | Complete | Complete a disputed action | Complete while the action is "Disputed". | Positive | Allowed (disputed counts as open); pending dispute stays for the officer. |
+| EHS-ACT-050 | Supervisor (OWN) | Complete | Complete a disputed action | Complete while the action is "Disputed". | Negative | 409: the owner who disputed cannot complete until the officer decides the dispute (approve → new owner, or reject → back to open). |
 | EHS-ACT-051 | Supervisor (OWN) | API | Complete a verified action | Complete an action already verified. | Negative | 409 (wrong status). |
 | EHS-ACT-052 | Field Employee (REP) | API | Complete someone else's action | Worker completes `OWN-TN1-1`'s action. | Security | 403 "Only the action owner can do this." (or 404 if out of scope). |
 | EHS-ACT-053 | Supervisor (OWN) | Complete (offline) | Complete offline with photo | Complete in airplane mode, then reconnect. | Positive | Pending on the phone; text then photo synced; status Completed. |
@@ -620,7 +620,7 @@ In SafeWorks, a CAPA is an **action**. It has these statuses: open → in progre
 |---|---|---|---|---|---|---|
 | EHS-ACT-080 | Supervisor (OWN) | Action detail → Request new date | Date picker, Reason | Choose a date 10 days later, reason "Material delayed", Send. | Positive | Request pending; officer notified; the reminder ladder pauses up to 3 days. |
 | EHS-ACT-081 | Supervisor (OWN) | API | Date change without a date | Send a date-change request with no proposed date. | Negative | 400 "Choose the proposed date." |
-| EHS-ACT-082 | Supervisor (OWN) | Request new date | Date in the past | Choose yesterday. | Negative | Refused by the date picker, or refused by the server; no request created. |
+| EHS-ACT-082 | Supervisor (OWN) | Request new date | Date in the past ⚠ F20 | Choose yesterday. | Negative | 400 "Choose a date in the future."; no request created. |
 | EHS-ACT-083 | Supervisor (OWN) | API | Second request while one is pending | Send another request while the first is pending. | Negative | 409 "A request is already pending on this action." |
 | EHS-ACT-084 | Safety Officer (SSO) | Action detail → Requests | Approve date change | Approve the request. | Positive | Due date changes to the new date; the original due date stays unchanged (on-time % still uses it); owner notified. |
 | EHS-ACT-085 | Safety Officer (SSO) | Action detail → Requests | Reject date change | Reject with a note. | Positive | Due date unchanged; owner notified with the note. |
@@ -760,7 +760,7 @@ Answer types in SafeWorks: pass/fail/N.A., number (with pass range), text, photo
 | EHS-INS-065 | Inspector | Run | Fail answer | Answer Fail. | Positive | Photo and note fields open (photo on fail, note on fail); "Add action" draft offered. |
 | EHS-INS-066 | Inspector | Run | N.A. answer | Answer N.A. | Positive | Excluded from the score. |
 | EHS-INS-067 | Inspector | Run | Number below range | Enter 900 for the 950–1100 question. | Positive | Marked fail; action needed. |
-| EHS-INS-068 | Inspector | Run | Number not a number | Type "abc" in a number question. | Negative | Refused by the field. |
+| EHS-INS-068 | Inspector | Run | Number not a number ⚠ F21 | Type "abc" in a number question (and an unknown option in a choice question). | Negative | Refused by the field; the API answers 400 "This answer is not valid for question …". |
 | EHS-INS-069 | Inspector | Run | Repeatable section | Add Bay 1 and Bay 2; answer both. | Positive | Answers kept separately per bay. |
 | EHS-INS-070 | Inspector | Run | Signature | Sign on the pad. | Positive | Signature saved as an image with the run. |
 | EHS-INS-071 | Inspector | Run | Submit with a required question unanswered | Leave 2 required questions empty and tap Submit. | Negative | 400 "Answer every required question first (2 unanswered)." |
@@ -775,7 +775,7 @@ Answer types in SafeWorks: pass/fail/N.A., number (with pass range), text, photo
 | EHS-INS-080 | Inspector | Run | Late answers | After submit (offline), another answer arrives for the same run. | Edge | Stored and marked "late answers received after submit". |
 | EHS-INS-081 | Inspector | Run detail | Report link | Tap Report. | Positive | Locked report opens in a new tab through a 5-minute signed link; it prints to PDF with photos, signature, times and GPS. |
 | EHS-INS-082 | Any | Report link | Expired report link | Open the report link after 6 minutes. | Security | Refused "This link has expired. Refresh the page." |
-| EHS-INS-083 | Any | Report link | Report link used by another user | Send the link to another person; they open it in time. | Security | Refused (the link is tied to the user who asked for it). |
+| EHS-INS-083 | Any | Report link | Report link passed to another person | Send the link to another person; they open it within 5 minutes, then after. | Security | By design the link is a 5-minute ticket bound to one report and to the scope of the person who asked for it (pages in a new tab cannot carry a sign-in): within 5 minutes it opens that report only; another report's address with the same ticket is refused; after 5 minutes it is refused. |
 | EHS-INS-084 | EHS Manager (HSE) | Run detail | Reopen a completed run | `HSE01` reopens with reason "Wrong area". A safety officer tries the same first. | Positive | Officer: 403 (a submitted report is locked; only admin or HSE manager may reopen it). HSE: status "Reopened"; old report marked superseded; audit row. |
 | EHS-INS-085 | EHS Manager (HSE) | Run detail | Reopen without reason | Empty reason. | Negative | 400 "A reason code and text are required." |
 | EHS-INS-086 | Safety Officer (SSO) | Run detail | Cancel a scheduled run | Cancel with reason "Area closed". | Positive | Status "Cancelled". |
@@ -1082,7 +1082,7 @@ Setup: `SO-TN1` (TN1 only), `SH-TN1` (TN1 only), and the TN2 officer `SO-TN2` wi
 | EHS-WF3-06 | SSO TN1 | API | Action reassign / cancel / decide | Each call on a TN2 action. | Security | 404 each; action unchanged. |
 | EHS-WF3-07 | SSO TN1 | API | Inspection run | `GET /inspections/runs/<TN2 run>` and its report link. | Security | 404. |
 | EHS-WF3-08 | SSO TN1 | API | Media | `GET /media/<TN2 photo>`. | Security | 404. |
-| EHS-WF3-09 | SSO TN1 | Signed link | TN2 photo link copied from a TN2 user | Open a valid signed TN2 photo link copied from the TN2 officer. | Security | Signed links are tied to the record and user; refused for the wrong user, or expires within 1 hour. Note the result. |
+| EHS-WF3-09 | SSO TN1 | Signed link | A TN2 link used for another record | Change the record ID in a valid signed link. | Security | Refused (the ticket is bound to its record); an untouched link opens only its own record and expires in 5 minutes. |
 | EHS-WF3-10 | SSO TN1 | API | List filters | `GET /observations?siteId=<TN2>`, `/actions?siteId=<TN2>`, `/inspections/runs?siteId=<TN2>`. | Security | 404 each. |
 | EHS-WF3-11 | SSO TN1 | API | Dashboard, charts, exports | `/dashboard?siteIds=<TN2>`, `/insights?siteId=<TN2>`, `/exports/observations.csv?siteId=<TN2>`. | Security | 404 each. |
 | EHS-WF3-12 | SSO TN1 | API | Sync pull | `GET /sync/pull`. | Security | No TN2 sites, areas, reports, actions or runs in the answer. |

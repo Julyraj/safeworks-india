@@ -291,5 +291,9 @@
   "xlsx.department": "विभाग",
   "xlsx.departments": "विभाग सूची",
   "xlsx.code": "कोड",
-  "err.immediate_action_required": "बताएँ कि सुरक्षित करने के लिए आपने क्या किया।"
+  "err.immediate_action_required": "बताएँ कि सुरक्षित करने के लिए आपने क्या किया।",
+  "err.auditor_expiry_required": "ऑडिटर खाते के लिए समाप्ति तिथि आवश्यक है।",
+  "err.extra_required": "इस श्रेणी के लिए आवश्यक विवरण भरें।",
+  "err.answer_invalid": "प्रश्न {question} के लिए यह उत्तर मान्य नहीं है।",
+  "err.date_in_future": "भविष्य की कोई तारीख चुनें।"
 }

@@ -631,6 +631,13 @@ class ContractorIn(Edit):
     contact_name: Str200 = ""
     phone: Annotated[str, StringConstraints(max_length=30)] = ""
     email: Str200 = ""
+
+    @field_validator("email")
+    @classmethod
+    def _email(cls, v: str) -> str:
+        if v and not EMAIL_RE.match(v):
+            raise ValueError("Enter a valid email address.")
+        return v
     trades: list[Str200] = Field(default_factory=list)
     site_ids: list[UuidStr] = Field(default_factory=list)
     active: bool = True

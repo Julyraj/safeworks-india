@@ -21,6 +21,11 @@ FINAL = ("verified", "cancelled")
 OPEN = ("open", "in_progress", "reopened")
 
 
+def _aware(d):
+    """A date sent without an offset is India time (as everywhere in the API)."""
+    return d.replace(tzinfo=db.TZ) if d.tzinfo is None else d
+
+
 async def load(conn, action_id: str) -> dict:
     a = await db.one(ACTION_SELECT + " where a.id = $1", [action_id], conn)
     if not a:
@@ -240,6 +245,8 @@ async def request(conn, actor: AuthUser, action_id: str, payload: ActionRequestC
         raise conflict("A request is already pending on this action.", key="err.request_pending")
     if payload.type == "date_change" and not payload.proposed_due_at:
         raise bad_request("Choose the proposed date.", key="err.date_required")
+    if payload.type == "date_change" and _aware(payload.proposed_due_at) <= now():
+        raise bad_request("Choose a date in the future.", key="err.date_in_future")
     settings = await org_settings(a["org_id"], conn)
     earlier = await db._db(conn).fetchval("select count(*) from action_requests where action_id = $1 and type = 'date_change'", a["id"]) if payload.type == "date_change" else 0
     needs_head = payload.type == "date_change" and (earlier or 0) + 1 >= int(settings.get("dateChangeRequestsBeforeSiteHead", 3))
@@ -301,6 +308,8 @@ async def decide(conn, actor: AuthUser, action_id: str, request_id: str, payload
     if req["type"] == "date_change":
         if decision == "approved":
             new_due = payload.new_due_at or req["proposed_due_at"]
+            if decision == "approved" and new_due and _aware(new_due) <= now():
+                raise bad_request("Choose a date in the future.", key="err.date_in_future")
             await db.execute("update actions set due_at = $2, ladder_paused_until = null where id = $1", [a["id"], new_due], conn)
             changes["dueAt"] = [a["due_at"], new_due]
         else:

@@ -1,15 +1,15 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-03 02:59 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API cases) and `portal/e2e/e2e-real.cjs` (browser). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-03 03:11 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API cases) and `portal/e2e/e2e-real.cjs` (browser). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
 | Cases in the plan | 767 |
-| Run automatically (API) | 533 |
-| Passed | 533 |
+| Run automatically (API) | 628 |
+| Passed | 628 |
 | Failed | 0 |
 | Runner error | 0 |
-| Not automated (UI, timing or manual; see the browser run and the list below) | 234 |
+| Not automated (UI, timing or manual; see the browser run and the list below) | 139 |
 
 ## Defects found and fixed
 
@@ -28,6 +28,9 @@ Run on 2026-11-03 02:59 UTC against a fresh demo database with `portal/e2e/run_t
 | F11 | A site could be created with an empty name | English name required | EHS-ADM-006, `test_f11_*` |
 | F12 | The server accepted malformed emails such as `abc@` | Same email rule as the console form, on create and edit | EHS-ADM-097, `test_f12_*` |
 | F13 | Phone-app pages never opened while online could not open offline | After sign-in with a connection, every page is fetched in the background so the offline cache holds all of them | Browser run step 1 (outbox offline) |
+| F14 | Reminders and escalations for Extreme-risk actions were held by quiet hours (e.g. 2 am → 7 am) and counted against the daily push limit | Extreme-band reminders are sent as urgent: never held, never capped | EHS-ACT-138, `test_f14_*` |
+| F15 | Daily and weekly digest emails showed a raw code `ntf.digest_daily.body` | Digest closing text added in English, Hindi, Tamil and Kannada; a test now checks every notification text exists in all four | EHS-RPT-044, `test_f15_*` |
+| F16 | The "triage overdue" reminder (app and email to the site head) linked to `/inbox`, a page the phone app does not have | Links to Reports → Triage | EHS-OBS-184, `test_f16_*` |
 
 Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted inspection; the system (by design) allows only admin and HSE manager, because a submitted report is locked. The plan was corrected.
 
@@ -44,10 +47,10 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-AUTH-007 | Field app → Sign in — Password field (length) | PASS |  |
 | EHS-AUTH-008 | Field app → Sign in — Login field (length) | PASS |  |
 | EHS-AUTH-009 | Field app → Sign in — Account lock | PASS |  |
-| EHS-AUTH-010 | Field app → Sign in — Lock expiry | Not automated |  |
+| EHS-AUTH-010 | Field app → Sign in — Lock expiry | PASS |  |
 | EHS-AUTH-011 | Field app → Sign in — Failed-attempt counter reset | PASS |  |
 | EHS-AUTH-012 | Console → Users → Unlock — Unlock button | PASS |  |
-| EHS-AUTH-013 | Field app → Sign in — Rate limit by IP + login | Not automated |  |
+| EHS-AUTH-013 | Field app → Sign in — Rate limit by IP + login | PASS |  |
 | EHS-AUTH-014 | Field app → Sign in — Account status | PASS |  |
 | EHS-AUTH-015 | Field app → Sign in — Account status | PASS |  |
 | EHS-AUTH-016 | Field app → any page — Session after suspension | PASS |  |
@@ -62,7 +65,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-AUTH-025 | Console → Two-step code — Code field (wrong) | PASS |  |
 | EHS-AUTH-026 | Console → Two-step code — Code field (second login) | PASS |  |
 | EHS-AUTH-027 | API — Pre-login token | PASS |  |
-| EHS-AUTH-028 | Console → Two-step code — Pre-login time limit | Not automated |  |
+| EHS-AUTH-028 | Console → Two-step code — Pre-login time limit | PASS |  |
 | EHS-AUTH-029 | Field app → Sign in — Two-step code on the phone | PASS |  |
 | EHS-AUTH-030 | Console → Users → Reset two-step code — Reset button | PASS |  |
 | EHS-AUTH-031 | Field app → Change password — Forced change | PASS |  |
@@ -85,7 +88,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-AUTH-048 | Field app → Sign-in screen — No "Forgot password" link | Not automated |  |
 | EHS-AUTH-049 | Field app → More → Sign out — Sign out button | PASS |  |
 | EHS-AUTH-050 | Field app → More → Sign out — Sign out with unsent reports | Not automated |  |
-| EHS-AUTH-051 | Console — Console session limit | Not automated |  |
+| EHS-AUTH-051 | Console — Console session limit | PASS |  |
 | EHS-AUTH-052 | Field app — Phone session limit | PASS |  |
 | EHS-AUTH-053 | API — Token in the address bar | PASS |  |
 | EHS-AUTH-054 | Console → Users → Revoke device — Revoke device button | PASS |  |
@@ -96,7 +99,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-AUTH-059 | Settings → Email digest — Digest dropdown | PASS |  |
 | EHS-AUTH-060 | Settings → Quiet hours — Toggle | Not automated |  |
 | EHS-AUTH-061 | Notifications — Mark all read button | PASS |  |
-| EHS-AUTH-062 | Notifications → critical alert — Acknowledge button | Not automated |  |
+| EHS-AUTH-062 | Notifications → critical alert — Acknowledge button | PASS |  |
 | EHS-AUTH-063 | Field app → any list — No role switching | PASS |  |
 | EHS-AUTH-064 | Android app → Server address — Server address field | Not automated |  |
 | EHS-AUTH-065 | Android app → Server address — Server address field | Not automated |  |
@@ -116,16 +119,16 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-DSH-012 | Console → Dashboard — KPI "Overdue actions" | PASS |  |
 | EHS-DSH-013 | Console → Dashboard — KPI "Triage backlog" | PASS |  |
 | EHS-DSH-014 | Console → Dashboard — KPI "On-time closure %" | PASS |  |
-| EHS-DSH-015 | Console → Dashboard — KPI "Percent safe" | Not automated |  |
+| EHS-DSH-015 | Console → Dashboard — KPI "Percent safe" | PASS |  |
 | EHS-DSH-016 | Console → Dashboard — KPI "Participation %" | PASS |  |
 | EHS-DSH-017 | Console → Dashboard — KPI "Critical acknowledgement median" | Not automated |  |
 | EHS-DSH-018 | Console → Dashboard — KPI "Inspection completion %" | Not automated |  |
 | EHS-DSH-019 | Console → Dashboard — Weekly chart bars | Not automated |  |
 | EHS-DSH-020 | Console → Dashboard — "By category" row link | Not automated |  |
-| EHS-DSH-021 | Console → Dashboard — By type / By area / By employer bars | Not automated |  |
-| EHS-DSH-022 | Console → Dashboard — Ageing buckets | Not automated |  |
-| EHS-DSH-023 | Console → Dashboard — Days to close by band table | Not automated |  |
-| EHS-DSH-024 | Console → Dashboard — Repeat findings table | Not automated |  |
+| EHS-DSH-021 | Console → Dashboard — By type / By area / By employer bars | PASS |  |
+| EHS-DSH-022 | Console → Dashboard — Ageing buckets | PASS |  |
+| EHS-DSH-023 | Console → Dashboard — Days to close by band table | PASS |  |
+| EHS-DSH-024 | Console → Dashboard — Repeat findings table | PASS |  |
 | EHS-DSH-025 | Console → Dashboard — By department table (2.1) | PASS |  |
 | EHS-DSH-026 | Console → Dashboard — By department, empty state | Not automated |  |
 | EHS-DSH-027 | Console → Dashboard — Departments → link | Not automated |  |
@@ -136,7 +139,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-DSH-032 | Console → Dashboard — Full report (Excel) | PASS |  |
 | EHS-DSH-033 | API — Export ⚠ F4 | PASS |  |
 | EHS-DSH-034 | API — Export | PASS |  |
-| EHS-DSH-035 | Console → Dashboard — Figures after a change | Not automated |  |
+| EHS-DSH-035 | Console → Dashboard — Figures after a change | PASS |  |
 | EHS-DSH-036 | Console → Attention — Attention menu red badge | Not automated |  |
 | EHS-DSH-037 | Field app → More → Charts — Mine tab | PASS |  |
 | EHS-DSH-038 | Field app → Charts → Mine — Own anonymous reports | PASS |  |
@@ -197,8 +200,8 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-034 | Report — Employer (automatic) | PASS |  |
 | EHS-OBS-035 | Report — Employer involved dropdown | Not automated |  |
 | EHS-OBS-036 | Report — Trade dropdown | Not automated |  |
-| EHS-OBS-037 | Report — Category extra field (required) | Not automated |  |
-| EHS-OBS-038 | Report — Category extra field (filled) | Not automated |  |
+| EHS-OBS-037 | Report — Category extra field (required) | PASS |  |
+| EHS-OBS-038 | Report — Category extra field (filled) | PASS |  |
 | EHS-OBS-039 | Report — Submit button | Not automated |  |
 | EHS-OBS-040 | Report → Saved — Report another | Not automated |  |
 | EHS-OBS-041 | Report → Saved — View | Not automated |  |
@@ -246,7 +249,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-086 | Outbox — Retry button | Not automated |  |
 | EHS-OBS-087 | Outbox — Diagnostics | Not automated |  |
 | EHS-OBS-088 | Reports (offline) — Lists | Not automated |  |
-| EHS-OBS-089 | Sync — Clock wrong on the phone | Not automated |  |
+| EHS-OBS-089 | Sync — Clock wrong on the phone | PASS |  |
 | EHS-OBS-090 | Sync — Triage queued behind an unsent report | PASS |  |
 | EHS-OBS-091 | Sync — Two offline triage decisions on one report | PASS |  |
 | EHS-OBS-095 | Reports → Mine — Own anonymous report | PASS |  |
@@ -272,11 +275,11 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-119 | `/q/<token>` — Made-up token | PASS |  |
 | EHS-OBS-120 | `/q/<token>` — Hidden trap field | PASS |  |
 | EHS-OBS-121 | `/q/<token>` — Many reports from one IP | PASS |  |
-| EHS-OBS-122 | `/q/<token>` — Many reports on one QR | Not automated |  |
-| EHS-OBS-123 | `/q/<token>` — Upload over 15 MB | Not automated |  |
+| EHS-OBS-122 | `/q/<token>` — Many reports on one QR | PASS |  |
+| EHS-OBS-123 | `/q/<token>` — Upload over 15 MB | PASS |  |
 | EHS-OBS-124 | `/q/<token>` — 11 photos | PASS |  |
 | EHS-OBS-125 | `/q/<token>` — No text and no photo | PASS |  |
-| EHS-OBS-126 | Reports → Triage — QR report arrives | Not automated |  |
+| EHS-OBS-126 | Reports → Triage — QR report arrives | PASS |  |
 | EHS-OBS-130 | Reports — Tabs | PASS |  |
 | EHS-OBS-131 | API — Site list | PASS |  |
 | EHS-OBS-132 | API — Someone else's report | PASS |  |
@@ -295,7 +298,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-OBS-145 | API — Other plant in the filter | PASS |  |
 | EHS-OBS-146 | Reports → Site — Site dropdown | PASS |  |
 | EHS-OBS-147 | API — Site list | PASS |  |
-| EHS-OBS-148 | Report detail — Timeline | Not automated |  |
+| EHS-OBS-148 | Report detail — Timeline | PASS |  |
 | EHS-OBS-149 | Report detail — Possible duplicates | PASS |  |
 | EHS-OBS-150 | Report detail → Triage — Triage button | Not automated |  |
 | EHS-OBS-151 | API — Triage | PASS |  |
@@ -388,7 +391,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-019 | API — Other plant in the filter | PASS |  |
 | EHS-ACT-020 | API — `departmentId` filter | PASS |  |
 | EHS-ACT-030 | Action detail — Start button | PASS |  |
-| EHS-ACT-031 | Action detail — Start on a reopened action | Not automated |  |
+| EHS-ACT-031 | Action detail — Start on a reopened action | PASS |  |
 | EHS-ACT-032 | API — Start an in-progress action | PASS |  |
 | EHS-ACT-033 | API — Start someone else's action | PASS |  |
 | EHS-ACT-034 | Action detail (offline) — Start while offline | Not automated |  |
@@ -402,7 +405,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-047 | API — 11 after-photos | PASS |  |
 | EHS-ACT-048 | API — Note 2,001 characters | PASS |  |
 | EHS-ACT-049 | Complete — Complete directly from Open | PASS |  |
-| EHS-ACT-050 | Complete — Complete a disputed action | Not automated |  |
+| EHS-ACT-050 | Complete — Complete a disputed action | PASS |  |
 | EHS-ACT-051 | API — Complete a verified action | PASS |  |
 | EHS-ACT-052 | API — Complete someone else's action | PASS |  |
 | EHS-ACT-053 | Complete (offline) — Complete offline with photo | Not automated |  |
@@ -427,7 +430,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-077 | Verify — Verify within the band's time | PASS |  |
 | EHS-ACT-080 | Action detail → Request new date — Date picker, Reason | PASS |  |
 | EHS-ACT-081 | API — Date change without a date | PASS |  |
-| EHS-ACT-082 | Request new date — Date in the past | Not automated |  |
+| EHS-ACT-082 | Request new date — Date in the past ⚠ F20 | PASS |  |
 | EHS-ACT-083 | API — Second request while one is pending | PASS |  |
 | EHS-ACT-084 | Action detail → Requests — Approve date change | PASS |  |
 | EHS-ACT-085 | Action detail → Requests — Reject date change | PASS |  |
@@ -446,13 +449,13 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ACT-101 | Reassign — Same owner | PASS |  |
 | EHS-ACT-102 | Reassign — Owner from another site | PASS |  |
 | EHS-ACT-103 | Reassign — Verified action | PASS |  |
-| EHS-ACT-104 | Reassign — Disputed action | Not automated |  |
+| EHS-ACT-104 | Reassign — Disputed action | PASS |  |
 | EHS-ACT-105 | API — Owner reassigns | PASS |  |
 | EHS-ACT-106 | Action detail → Cancel — Approver dropdown, Reason | PASS |  |
 | EHS-ACT-107 | Cancel — Approver is not a site head | PASS |  |
 | EHS-ACT-108 | Cancel — Approver from another site | PASS |  |
 | EHS-ACT-109 | Cancel — Cancel a verified action | PASS |  |
-| EHS-ACT-110 | Cancel — Cancelled action in charts | Not automated |  |
+| EHS-ACT-110 | Cancel — Cancelled action in charts | PASS |  |
 | EHS-ACT-111 | Console → Actions → New action — Manual action | PASS |  |
 | EHS-ACT-112 | New action — No band | PASS |  |
 | EHS-ACT-113 | New action — Extreme without interim control | PASS |  |
@@ -487,64 +490,64 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-INS-002 | Templates — Code with a space | PASS |  |
 | EHS-INS-003 | Templates — Code 41 characters | PASS |  |
 | EHS-INS-004 | Templates — Duplicate code | PASS |  |
-| EHS-INS-005 | Templates → Builder — Add section | Not automated |  |
-| EHS-INS-006 | Builder — Repeatable section | Not automated |  |
-| EHS-INS-007 | Builder — Question type pass/fail/N.A. | Not automated |  |
-| EHS-INS-008 | Builder — Question type number | Not automated |  |
-| EHS-INS-009 | Builder — Question type text | Not automated |  |
-| EHS-INS-010 | Builder — Question type photo | Not automated |  |
-| EHS-INS-011 | Builder — Question type signature | Not automated |  |
-| EHS-INS-012 | Builder — Question type date | Not automated |  |
-| EHS-INS-013 | Builder — Single choice with options | Not automated |  |
-| EHS-INS-014 | Builder — Multiple choice | Not automated |  |
-| EHS-INS-015 | Builder — Show-if rule | Not automated |  |
-| EHS-INS-016 | Builder — Not required | Not automated |  |
-| EHS-INS-017 | Builder — Action on fail off | Not automated |  |
-| EHS-INS-018 | Builder — Reference text and status label | Not automated |  |
-| EHS-INS-019 | Builder — Scoring | Not automated |  |
+| EHS-INS-005 | Templates → Builder — Add section | PASS |  |
+| EHS-INS-006 | Builder — Repeatable section | PASS |  |
+| EHS-INS-007 | Builder — Question type pass/fail/N.A. | PASS |  |
+| EHS-INS-008 | Builder — Question type number | PASS |  |
+| EHS-INS-009 | Builder — Question type text | PASS |  |
+| EHS-INS-010 | Builder — Question type photo | PASS |  |
+| EHS-INS-011 | Builder — Question type signature | PASS |  |
+| EHS-INS-012 | Builder — Question type date | PASS |  |
+| EHS-INS-013 | Builder — Single choice with options | PASS |  |
+| EHS-INS-014 | Builder — Multiple choice | PASS |  |
+| EHS-INS-015 | Builder — Show-if rule | PASS |  |
+| EHS-INS-016 | Builder — Not required | PASS |  |
+| EHS-INS-017 | Builder — Action on fail off | PASS |  |
+| EHS-INS-018 | Builder — Reference text and status label | PASS |  |
+| EHS-INS-019 | Builder — Scoring | PASS |  |
 | EHS-INS-020 | Templates → Version — Submit for review | PASS |  |
 | EHS-INS-021 | Templates → Version — Author approves own version | PASS |  |
 | EHS-INS-022 | Templates → Version — Approve | PASS |  |
 | EHS-INS-023 | Templates → Version — Edit an active version | PASS |  |
-| EHS-INS-024 | Templates → Version — New version | Not automated |  |
+| EHS-INS-024 | Templates → Version — New version | PASS |  |
 | EHS-INS-025 | Templates → Version — Retire | PASS |  |
 | EHS-INS-026 | Templates — Copy for my site | PASS |  |
 | EHS-INS-027 | API — Create a company template | PASS |  |
 | EHS-INS-028 | Templates — Read-only | PASS |  |
-| EHS-INS-029 | Templates — Delete a template | Not automated |  |
+| EHS-INS-029 | Templates — Delete a template | PASS |  |
 | EHS-INS-040 | Console → Schedules — New schedule | PASS |  |
 | EHS-INS-041 | Schedules — Frequency incomplete | PASS |  |
 | EHS-INS-042 | Schedules — Negative lead days | PASS |  |
 | EHS-INS-043 | API — Schedule at another plant | PASS |  |
-| EHS-INS-044 | Schedules — Assign to a person | Not automated |  |
-| EHS-INS-045 | Schedules — Assign to a role | Not automated |  |
-| EHS-INS-046 | Schedules — Pause | Not automated |  |
+| EHS-INS-044 | Schedules — Assign to a person | PASS |  |
+| EHS-INS-045 | Schedules — Assign to a role | PASS |  |
+| EHS-INS-046 | Schedules — Pause | PASS |  |
 | EHS-INS-047 | Inspection scheduler — Missed run | PASS |  |
 | EHS-INS-048 | Inspection scheduler — No duplicates | PASS |  |
-| EHS-INS-060 | Inspections — Due list | Not automated |  |
+| EHS-INS-060 | Inspections — Due list | PASS |  |
 | EHS-INS-061 | Inspections → Start spot inspection — Template list | Not automated |  |
 | EHS-INS-062 | API — Start on a retired version | PASS |  |
-| EHS-INS-063 | Scan — QR on equipment | Not automated |  |
-| EHS-INS-064 | Run — Pass answer | Not automated |  |
-| EHS-INS-065 | Run — Fail answer | Not automated |  |
-| EHS-INS-066 | Run — N.A. answer | Not automated |  |
-| EHS-INS-067 | Run — Number below range | Not automated |  |
-| EHS-INS-068 | Run — Number not a number | Not automated |  |
-| EHS-INS-069 | Run — Repeatable section | Not automated |  |
+| EHS-INS-063 | Scan — QR on equipment | PASS |  |
+| EHS-INS-064 | Run — Pass answer | PASS |  |
+| EHS-INS-065 | Run — Fail answer | PASS |  |
+| EHS-INS-066 | Run — N.A. answer | PASS |  |
+| EHS-INS-067 | Run — Number below range | PASS |  |
+| EHS-INS-068 | Run — Number not a number ⚠ F21 | PASS |  |
+| EHS-INS-069 | Run — Repeatable section | PASS |  |
 | EHS-INS-070 | Run — Signature | Not automated |  |
 | EHS-INS-071 | Run — Submit with a required question unanswered | PASS |  |
 | EHS-INS-072 | Run — Submit with a failed item without action | PASS |  |
 | EHS-INS-073 | Run — Submit valid | PASS |  |
-| EHS-INS-074 | Run — Equipment tag "Do not use" | Not automated |  |
-| EHS-INS-075 | Run — Equipment tag "In service" | Not automated |  |
-| EHS-INS-076 | Run — Repeat finding | Not automated |  |
+| EHS-INS-074 | Run — Equipment tag "Do not use" | PASS |  |
+| EHS-INS-075 | Run — Equipment tag "In service" | PASS |  |
+| EHS-INS-076 | Run — Repeat finding | PASS |  |
 | EHS-INS-077 | API — Answer someone else's run | PASS |  |
 | EHS-INS-078 | API — Unknown question | PASS |  |
 | EHS-INS-079 | Run (offline) — Whole run offline | Not automated |  |
-| EHS-INS-080 | Run — Late answers | Not automated |  |
+| EHS-INS-080 | Run — Late answers | PASS |  |
 | EHS-INS-081 | Run detail — Report link | PASS |  |
-| EHS-INS-082 | Report link — Expired report link | Not automated |  |
-| EHS-INS-083 | Report link — Report link used by another user | Not automated |  |
+| EHS-INS-082 | Report link — Expired report link | PASS |  |
+| EHS-INS-083 | Report link — Report link passed to another person | Not automated |  |
 | EHS-INS-084 | Run detail — Reopen a completed run | PASS |  |
 | EHS-INS-085 | Run detail — Reopen without reason | PASS |  |
 | EHS-INS-086 | Run detail — Cancel a scheduled run | PASS |  |
@@ -569,18 +572,18 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-RPT-012 | API — Any export ⚠ F4 | PASS |  |
 | EHS-RPT-013 | API — Any export | PASS |  |
 | EHS-RPT-014 | API — Export another plant | PASS |  |
-| EHS-RPT-015 | Exports — Filters respected | Not automated |  |
+| EHS-RPT-015 | Exports — Filters respected | PASS |  |
 | EHS-RPT-016 | Exports — Hourly limit | PASS |  |
 | EHS-RPT-017 | Exports — Audit trail | PASS |  |
-| EHS-RPT-018 | Excel file — Header row | Not automated |  |
+| EHS-RPT-018 | Excel file — Header row | PASS |  |
 | EHS-RPT-019 | Excel file — Dates | PASS |  |
 | EHS-RPT-020 | Excel file — Yes/No values | PASS |  |
 | EHS-RPT-021 | Excel file — Very long text | Not automated |  |
 | EHS-RPT-022 | Excel file — Hidden control characters | PASS |  |
 | EHS-RPT-023 | Excel file — Text that looks like a formula | PASS |  |
 | EHS-RPT-024 | CSV file — Text that looks like a formula ⚠ F9 | PASS |  |
-| EHS-RPT-025 | Exports — 50,000-row cap | Not automated |  |
-| EHS-RPT-026 | Exports — Excel in LibreOffice and Google Sheets | Not automated |  |
+| EHS-RPT-025 | Exports — 50,000-row cap | PASS |  |
+| EHS-RPT-026 | Exports — Excel in LibreOffice and Google Sheets | PASS |  |
 | EHS-RPT-027 | Console → Dashboard — Export view (CSV) | Not automated |  |
 | EHS-RPT-028 | Field app → Charts — Excel button | Not automated |  |
 | EHS-RPT-029 | Console → config tables — Export CSV (contractors, people, departments) | Not automated |  |
@@ -605,19 +608,19 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-007 | Sites → KA9 → Set up — Industry dropdown (step 2) | PASS |  |
 | EHS-ADM-008 | Set up — Run set-up twice | PASS |  |
 | EHS-ADM-009 | API — Unknown industry | PASS |  |
-| EHS-ADM-010 | Sites → Edit — Worker count, working calendar | Not automated |  |
-| EHS-ADM-011 | Sites → Edit — Site head | Not automated |  |
+| EHS-ADM-010 | Sites → Edit — Worker count, working calendar | PASS |  |
+| EHS-ADM-011 | Sites → Edit — Site head | PASS |  |
 | EHS-ADM-012 | Sites → Delete — Delete without reason | PASS |  |
 | EHS-ADM-013 | Sites → Delete — Delete with reason | PASS |  |
 | EHS-ADM-014 | API — Create a site | PASS |  |
-| EHS-ADM-015 | Sites → Risk matrix — Assign matrix version to a site | Not automated |  |
+| EHS-ADM-015 | Sites → Risk matrix — Assign matrix version to a site | PASS |  |
 | EHS-ADM-016 | Sites → Rule set — Assign a draft rule pack | PASS |  |
-| EHS-ADM-017 | Sites → Rule set — Assign a disabled rule set | Not automated |  |
+| EHS-ADM-017 | Sites → Rule set — Assign a disabled rule set | PASS |  |
 | EHS-ADM-018 | Sites — Site list | PASS |  |
 | EHS-ADM-019 | Sites → TN1 → Areas — Add area | PASS |  |
 | EHS-ADM-020 | API — Add area at another plant | PASS |  |
-| EHS-ADM-021 | Areas — Edit area owner | Not automated |  |
-| EHS-ADM-022 | Areas — Parent area | Not automated |  |
+| EHS-ADM-021 | Areas — Edit area owner | PASS |  |
+| EHS-ADM-022 | Areas — Parent area | PASS |  |
 | EHS-ADM-023 | Areas → Delete — Delete with reason | PASS |  |
 | EHS-ADM-024 | Areas → Import CSV — Valid file | PASS |  |
 | EHS-ADM-025 | Areas → Import CSV — Wrong header | PASS |  |
@@ -627,33 +630,33 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-041 | Add equipment — No site | PASS |  |
 | EHS-ADM-042 | Add equipment — Duplicate tag | PASS |  |
 | EHS-ADM-043 | API — Equipment at another plant | PASS |  |
-| EHS-ADM-044 | Equipment → Import CSV — Valid file | Not automated |  |
-| EHS-ADM-045 | Equipment → Import CSV — Unknown site code | Not automated |  |
-| EHS-ADM-046 | Equipment — Next examination due | Not automated |  |
+| EHS-ADM-044 | Equipment → Import CSV — Valid file | PASS |  |
+| EHS-ADM-045 | Equipment → Import CSV — Unknown site code | PASS |  |
+| EHS-ADM-046 | Equipment — Next examination due | PASS |  |
 | EHS-ADM-047 | Console → QR codes — New QR for equipment | PASS |  |
 | EHS-ADM-048 | QR codes — Poster | PASS |  |
 | EHS-ADM-049 | QR codes — Poster link reused later | Not automated |  |
 | EHS-ADM-050 | QR codes — Rotate | PASS |  |
-| EHS-ADM-051 | QR codes — Disable | Not automated |  |
+| EHS-ADM-051 | QR codes — Disable | PASS |  |
 | EHS-ADM-052 | API — QR at another plant | PASS |  |
 | EHS-ADM-060 | People → Add — Name, Phone, Employer, Trade, Worker type, Language, Department (2.1) | PASS |  |
 | EHS-ADM-061 | People → Add — Bad phone | Not automated |  |
 | EHS-ADM-062 | People → Add — Unknown department | PASS |  |
-| EHS-ADM-063 | People → Import CSV — Valid file | Not automated |  |
-| EHS-ADM-064 | People → Import CSV — Unknown employer | Not automated |  |
+| EHS-ADM-063 | People → Import CSV — Valid file | PASS |  |
+| EHS-ADM-064 | People → Import CSV — Unknown employer | PASS |  |
 | EHS-ADM-065 | People → Delete — Delete with reason | PASS |  |
 | EHS-ADM-066 | API — Change a person | PASS |  |
 | EHS-ADM-067 | Contractors → Add — Name, Registration, Contact, Phone, Email, Trades, Sites | PASS |  |
 | EHS-ADM-068 | Contractors → Add — Duplicate name | PASS |  |
-| EHS-ADM-069 | Contractors → Add — Bad email | Not automated |  |
-| EHS-ADM-070 | Contractors — Sub-contractor | Not automated |  |
+| EHS-ADM-069 | Contractors → Add — Bad email | PASS |  |
+| EHS-ADM-070 | Contractors — Sub-contractor | PASS |  |
 | EHS-ADM-071 | Contractors — Own company row | Not automated |  |
-| EHS-ADM-072 | Contractors → Remove — Remove with Undo | Not automated |  |
+| EHS-ADM-072 | Contractors → Remove — Remove with Undo | PASS |  |
 | EHS-ADM-073 | Departments (2.1) → Add — Code, Names (4 languages), Order | PASS |  |
 | EHS-ADM-074 | Departments → Add — Duplicate code | PASS |  |
 | EHS-ADM-075 | Departments → Add — Code with a space | PASS |  |
 | EHS-ADM-076 | Departments → Add — English name empty | PASS |  |
-| EHS-ADM-077 | Departments → Edit — Inactive | Not automated |  |
+| EHS-ADM-077 | Departments → Edit — Inactive | PASS |  |
 | EHS-ADM-078 | Departments → Remove — Remove | PASS |  |
 | EHS-ADM-079 | Departments — Read-only for officers | PASS |  |
 | EHS-ADM-090 | Users → New user — Employee-code login | PASS |  |
@@ -667,14 +670,14 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-098 | New user — No role | Not automated |  |
 | EHS-ADM-099 | API — Site role for all sites | PASS |  |
 | EHS-ADM-100 | API — Unknown role | PASS |  |
-| EHS-ADM-101 | New user — Auditor | Not automated |  |
-| EHS-ADM-102 | Users → Edit — Change roles | Not automated |  |
+| EHS-ADM-101 | New user — Auditor | PASS |  |
+| EHS-ADM-102 | Users → Edit — Change roles | PASS |  |
 | EHS-ADM-103 | Users → Edit — Change department (2.1) | PASS |  |
 | EHS-ADM-104 | Users → Suspend — Suspend with reason | PASS |  |
 | EHS-ADM-105 | Users → Reactivate — Reactivate | PASS |  |
 | EHS-ADM-106 | Users → Deactivate — Deactivate with Undo | Not automated |  |
 | EHS-ADM-107 | Users — Search and filters | PASS |  |
-| EHS-ADM-108 | Users → detail — Devices | Not automated |  |
+| EHS-ADM-108 | Users → detail — Devices | PASS |  |
 | EHS-ADM-109 | Users → Import CSV — Valid file | PASS |  |
 | EHS-ADM-110 | Users → Import CSV — Missing role | PASS |  |
 | EHS-ADM-111 | Users → Import CSV — Unknown site | PASS |  |
@@ -687,9 +690,9 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-130 | Categories → Add — Code, Names, Icon, Critical capable, Default IS 3786 | PASS |  |
 | EHS-ADM-131 | Categories → Add — Empty code | PASS |  |
 | EHS-ADM-132 | Categories → Add — Duplicate code | PASS |  |
-| EHS-ADM-133 | Categories — Extra field | Not automated |  |
-| EHS-ADM-134 | Categories — Reorder | Not automated |  |
-| EHS-ADM-135 | Categories — Delete | Not automated |  |
+| EHS-ADM-133 | Categories — Extra field | PASS |  |
+| EHS-ADM-134 | Categories — Reorder | PASS |  |
+| EHS-ADM-135 | Categories — Delete | PASS |  |
 | EHS-ADM-136 | API — Change categories | PASS |  |
 | EHS-ADM-137 | Risk matrix → New version — 5×5 labels | PASS |  |
 | EHS-ADM-138 | Risk matrix — Edit active version | PASS |  |
@@ -700,12 +703,12 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-143 | Due dates — Invalid value | PASS |  |
 | EHS-ADM-144 | Ladders — Edit a step | PASS |  |
 | EHS-ADM-145 | Rule sets — Enable a draft pack without reviewer | PASS |  |
-| EHS-ADM-146 | Rule sets — Enable a pack with an unreviewed timer | Not automated |  |
-| EHS-ADM-147 | Rule sets — Status labels | Not automated |  |
-| EHS-ADM-148 | Rule sets — Disable | Not automated |  |
-| EHS-ADM-200 | Languages — Search a text | Not automated |  |
+| EHS-ADM-146 | Rule sets — Enable a pack with an unreviewed timer | PASS |  |
+| EHS-ADM-147 | Rule sets — Status labels | PASS |  |
+| EHS-ADM-148 | Rule sets — Disable | PASS |  |
+| EHS-ADM-200 | Languages — Search a text | PASS |  |
 | EHS-ADM-201 | Languages — Override a text | PASS |  |
-| EHS-ADM-202 | Languages → Import — Valid file | Not automated |  |
+| EHS-ADM-202 | Languages → Import — Valid file | PASS |  |
 | EHS-ADM-203 | Languages → Import — Bad shape | PASS |  |
 | EHS-ADM-204 | API — Change a text | PASS |  |
 | EHS-ADM-210 | Settings — Company name | PASS |  |
@@ -725,22 +728,22 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-ADM-233 | Retention → Legal hold — Release | PASS |  |
 | EHS-ADM-234 | API — Retention | PASS |  |
 | EHS-ADM-240 | Health — Page | PASS |  |
-| EHS-ADM-250 | Audit log — List | Not automated |  |
-| EHS-ADM-251 | Audit log — Filters | Not automated |  |
+| EHS-ADM-250 | Audit log — List | PASS |  |
+| EHS-ADM-251 | Audit log — Filters | PASS |  |
 | EHS-ADM-252 | Audit log — Site scope | PASS |  |
 | EHS-ADM-253 | Audit log — Read | PASS |  |
 | EHS-ADM-254 | Audit log — Verify chain | PASS |  |
 | EHS-ADM-255 | Audit log — Tampering | PASS |  |
 | EHS-ADM-256 | API — Edit or delete an audit row | PASS |  |
-| EHS-ADM-257 | Audit log — Sensitive data | Not automated |  |
-| EHS-ADM-258 | Audit log — Every write is logged | Not automated |  |
+| EHS-ADM-257 | Audit log — Sensitive data | PASS |  |
+| EHS-ADM-258 | Audit log — Every write is logged | PASS |  |
 | EHS-ADM-260 | Notifications log — Open | PASS |  |
 | EHS-ADM-261 | Notifications log — Open | PASS |  |
 | EHS-ADM-262 | Console menu → Notifications log ⚠ F5 — Menu item | PASS |  |
 | EHS-ADM-290 | Console menu → Health ⚠ F6 — Menu item | PASS |  |
 | EHS-WF1-01 | Field app → Report — Unsafe condition + 1 photo | PASS |  |
 | EHS-WF1-02 | Notifications — New report alert | PASS |  |
-| EHS-WF1-03 | Console → Dashboard — Triage backlog | Not automated |  |
+| EHS-WF1-03 | Console → Dashboard — Triage backlog | PASS |  |
 | EHS-WF1-04 | Triage → Accept & assign — Matrix L3 × S4, owner `OWN-TN1-1`, interim control | PASS |  |
 | EHS-WF1-05 | Actions → Mine — New action | PASS |  |
 | EHS-WF1-06 | Actions → Department — Department tab (2.1) | PASS |  |
@@ -770,7 +773,7 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-WF3-06 | API — Action reassign / cancel / decide | PASS |  |
 | EHS-WF3-07 | API — Inspection run | PASS |  |
 | EHS-WF3-08 | API — Media | PASS |  |
-| EHS-WF3-09 | Signed link — TN2 photo link copied from a TN2 user | Not automated |  |
+| EHS-WF3-09 | Signed link — A TN2 link used for another record | PASS |  |
 | EHS-WF3-10 | API — List filters | PASS |  |
 | EHS-WF3-11 | API — Dashboard, charts, exports | PASS |  |
 | EHS-WF3-12 | API — Sync pull | PASS |  |
@@ -790,11 +793,11 @@ Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted in
 | EHS-WF5-01 | Action → Dispute — Reason "Electrical job" | PASS |  |
 | EHS-WF5-02 | Requests → Approve — New owner `OWN-TN1-2` (Electrical) | PASS |  |
 | EHS-WF5-03 | Actions → Department — List | PASS |  |
-| EHS-WF5-04 | Charts → Site → By department — Table | Not automated |  |
+| EHS-WF5-04 | Charts → Site → By department — Table | PASS |  |
 | EHS-WF6-01 | Templates — New version | PASS |  |
 | EHS-WF6-02 | Templates — Self-approve | PASS |  |
 | EHS-WF6-03 | Templates — Approve | PASS |  |
-| EHS-WF6-04 | Field app — Next run | Not automated |  |
+| EHS-WF6-04 | Field app — Next run | PASS |  |
 | EHS-WF7-01 | QR form — Report | PASS |  |
 | EHS-WF7-02 | Triage — Assign | PASS |  |
 | EHS-WF7-03 | Status link — Status | PASS |  |

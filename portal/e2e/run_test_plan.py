@@ -2081,6 +2081,490 @@ def _():
     check(sql1("select count(*) from audit_log where actor_user_id = $1::uuid or record_id = $2", u["id"], u["id"]) >= 1)
 
 
+# ================================================================ more API cases (sign-in limits, dashboard figures, checklists, admin)
+@case("EHS-AUTH-010")
+def _():
+    for _ in range(10):
+        A.raw_login("WORKER-TN3-1", "WrongPass123")
+    st(A.raw_login("WORKER-TN3-1", PW), 429)
+    sql("update users set locked_until = now() - interval '1 second' where employee_code = 'WORKER-TN3-1'")  # the 15 minutes have passed
+    st(A.raw_login("WORKER-TN3-1", PW), 200)
+    check(sql1("select failed_attempts from users where employee_code = 'WORKER-TN3-1'") == 0)
+
+
+@case("EHS-AUTH-013")
+def _():
+    codes = [A.raw_login("RATE-PLAN-X", "x").status_code for _ in range(35)]
+    check(429 in codes and codes[0] == 401, str(codes[-6:]))
+
+
+@case("EHS-AUTH-028")
+def _():
+    pre = A.raw_login("ADMIN01", ADMIN_PW, "admin").json()["token"]
+    sql("update sessions set expires_at = now() - interval '1 second' where user_id = $1::uuid and not mfa_passed", uid("ADMIN01"))
+    st(A.post(None, "/auth/mfa", {"code": "123456"}, token=pre), 401)
+
+
+@case("EHS-AUTH-051")
+def _():
+    d = A.raw_login("SO-TN2", PW, "admin").json()
+    hours = (datetime.fromisoformat(d["expiresAt"].replace("Z", "+00:00")) - datetime.now(timezone.utc)).total_seconds() / 3600
+    check(7.9 < hours <= 8.01, f"console session {hours:.2f} h")
+    sql("update sessions set expires_at = now() - interval '1 second' where user_id = $1::uuid and kind = 'admin'", uid("SO-TN2"))
+    time.sleep(1)
+    st(A.get(None, "/dashboard", token=d["token"]), 401)
+
+
+@case("EHS-AUTH-062")
+def _():
+    o = create_obs(imminentDanger=True, description="Plan: critical for ack button")
+    nid = sql1("select id from notifications where record_id = $1 and recipient_user_id = $2::uuid and channel = 'inapp' and critical order by id limit 1", o["id"], uid("SO-TN1"))
+    st(A.post("SO-TN1", f"/me/notifications/{nid}/ack"), 200)
+    check(sql1("select acked_at is not null from notifications where id = $1", nid) is True)
+
+
+@case("EHS-DSH-015")
+def _():
+    today = datetime.now().strftime("%Y-%m-%d")
+    d = A.get("HSE01", "/dashboard", params={"siteIds": site("KA2"), "from": today, "to": today}).json()
+    k = {x["key"]: x for x in d["kpis"]}["percent_safe"]
+    check(k["value"] is None and (k["n"] or 0) < 30, str(k))
+
+
+@case("EHS-DSH-021", "EHS-DSH-022")
+def _():
+    d = A.get("SO-TN1", "/dashboard").json()
+    frm = d["from"][:10]
+    for row in d["byType"]:
+        n = A.get("SO-TN1", "/observations", params={"type": row["type"], "from": frm, "status": "submitted,returned,action_assigned,closed,escalated", "pageSize": 1}).json()["total"]
+        check(n == row["count"], f"{row['type']}: dashboard {row['count']} vs register {n}")
+    open_n = A.get("SO-TN1", "/actions", params={"status": "open,in_progress,reopened,disputed", "pageSize": 1}).json()["total"]
+    check(sum(x["count"] for x in d["ageing"]) == open_n, "ageing buckets add up to the open actions")
+
+
+@case("EHS-DSH-023", "EHS-DSH-035", "EHS-WF1-03")
+def _():
+    d0 = A.get("SO-TN1", "/dashboard").json()
+    k0 = {x["key"]: x["value"] for x in d0["kpis"]}
+    n0 = next(x for x in d0["daysToCloseByBand"] if x["band"] == "moderate")["n"]
+    create_obs(description="Plan: backlog check")
+    k1 = {x["key"]: x["value"] for x in A.get("SO-TN1", "/dashboard").json()["kpis"]}
+    check(k1["triage_backlog"] == k0["triage_backlog"] + 1, "WF1-03: backlog +1 after a new report")
+    o, aid = new_action()  # L2 x S3 = moderate
+    complete(aid)
+    verify(aid)
+    n1 = next(x for x in A.get("SO-TN1", "/dashboard").json()["daysToCloseByBand"] if x["band"] == "moderate")["n"]
+    check(n1 == n0 + 1, f"days-to-close n for moderate {n0} → {n1}")
+
+
+@case("EHS-OBS-089")
+def _():
+    b = obs_body(capturedAt=now_iso(timedelta(days=2)))
+    res = sync_push("WORKER-TN1-1", [{"commandId": U(), "entityType": "observation", "op": "create", "entityClientUuid": b["clientUuid"], "payload": b}])
+    r = sql("select captured_at, received_at from observations where id = $1::uuid", res[0]["serverId"])[0]
+    check(r["captured_at"] == r["received_at"], "wrong phone clock does not move the report into the future")
+
+
+@case("EHS-OBS-122")
+def _():
+    sql("delete from public_rate_counters")
+    hour = datetime.now(timezone.utc).strftime("%Y%m%d%H")
+    lim = int(os.environ.get("QR_PER_TOKEN_HOUR", "0") or 0) or sql1("select 1")  # the limit itself is server config; fill the counter to a large value
+    sql("insert into public_rate_counters (key, window_start, count) values ($1, now(), 100000) on conflict (key) do update set count = 100000", f"qr:{IDS['qr:TN1']}:{hour}")
+    r = A.c.post(f"/public/qr/{IDS['qr:TN1']}/observations", json=qr_body())
+    sql("delete from public_rate_counters")
+    check(r.status_code == 429, f"{r.status_code} {r.text[:120]}")
+    _ = lim
+
+
+@case("EHS-OBS-123")
+def _():
+    sql("delete from public_rate_counters")
+    big = json.dumps(qr_body(description="x", details="y" * (16 * 1024 * 1024)))
+    r = A.c.post(f"/public/qr/{IDS['qr:TN1']}/observations", content=big, headers={"content-type": "application/json"})
+    check(r.status_code == 413, f"{r.status_code}")
+
+
+@case("EHS-OBS-126")
+def _():
+    items = A.get("SO-TN1", "/observations", params={"status": "submitted", "channel": "qr", "pageSize": 50}).json()["items"]
+    check(items, "QR reports wait in triage")
+    d = A.get("SO-TN1", f"/observations/{items[0]['id']}").json()
+    check(d["channel"] == "qr")
+
+
+@case("EHS-OBS-148")
+def _():
+    o, aid = new_action()
+    complete(aid)
+    verify(aid)
+    d = A.get("SO-TN1", f"/observations/{o['id']}").json()
+    a = A.get("SO-TN1", f"/actions/{aid}").json()
+    check(d["status"] == "closed" and d.get("triage") or d.get("triageDecisions") or d.get("triagedAt"), "triage recorded")
+    statuses = [e.get("toStatus") for e in a["events"] if e.get("toStatus")]
+    check("completed" in statuses and "verified" in statuses, str(statuses))
+
+
+@case("EHS-ACT-031", "EHS-ACT-050", "EHS-ACT-104")
+def _():
+    o, aid = new_action()
+    complete(aid)
+    verify(aid, result="not_effective", reason="loose")
+    check(st(A.post("OWN-TN1-1", f"/actions/{aid}/start", {}), 200).json()["status"] == "in_progress", "start a reopened action")
+    o2, a2 = new_action()
+    A.post("OWN-TN1-1", f"/actions/{a2}/requests", req_body("dispute"))
+    st(complete(a2), 409)  # plan corrected: an owner who disputed cannot complete until the dispute is decided
+    o3, a3 = new_action()
+    A.post("OWN-TN1-1", f"/actions/{a3}/requests", req_body("dispute"))
+    st(A.post("SO-TN1", f"/actions/{a3}/reassign", {"newOwnerUserId": uid("OWN-TN1-2"), "reason": "Electrical"}), 200)
+    check(A.get("SO-TN1", f"/actions/{a3}").json()["status"] == "open", "reassigning a disputed action reopens it")
+
+
+@case("EHS-ACT-082")
+def _():
+    o, aid = new_action()
+    st(A.post("OWN-TN1-1", f"/actions/{aid}/requests", req_body(days=-1)), 400)
+
+
+@case("EHS-ACT-110")
+def _():
+    a0 = A.get("SO-TN1", "/insights", params={"level": "site", "siteId": site("TN1")}).json()["actions"]["assigned"]
+    o, aid = new_action()
+    a1 = A.get("SO-TN1", "/insights", params={"level": "site", "siteId": site("TN1")}).json()["actions"]["assigned"]
+    st(A.post("SO-TN1", f"/actions/{aid}/cancel", {"reason": "Area demolished", "approvedByUserId": uid("SH-TN1")}), 200)
+    a2 = A.get("SO-TN1", "/insights", params={"level": "site", "siteId": site("TN1")}).json()["actions"]["assigned"]
+    check(a1 == a0 + 1 and a2 == a0, f"{a0} → {a1} → {a2}")
+
+
+def full_template(code: str) -> dict:
+    q = lambda c, i, t, **k: {"code": c, "sort": i, "text": {"en": t}, **k}  # noqa: E731
+    return {"code": code, "name": {"en": "Plan all types"}, "type": "site_walk", "scoring": {"anyFailRule": True, "passMarkPct": 90},
+            "sections": [
+                {"sort": 0, "title": {"en": "Main"}, "questions": [
+                    q("PF", 0, "Guard rails fitted?", answerType="pass_fail_na", referenceText="BOCW rule 43", referenceStatus="reference_to_confirm"),
+                    q("NUM", 1, "Rail height (mm)", answerType="number", passMin=950, passMax=1100, unit="mm"),
+                    q("TXT", 2, "Comments", answerType="text", required=False, actionOnFail=False),
+                    q("PHO", 3, "Photo of the tag", answerType="photo", required=False),
+                    q("SIG", 4, "Inspector signature", answerType="signature", required=False),
+                    q("DAT", 5, "Last examination date", answerType="date", required=False),
+                    q("TAG", 6, "Tag colour", answerType="single_choice", responseSet=[
+                        {"value": "green", "label": {"en": "Green"}, "colour": "green", "score": 1},
+                        {"value": "red", "label": {"en": "Red"}, "colour": "red", "flag": True, "score": 0}]),
+                    q("PPE", 7, "PPE seen", answerType="multi_choice", required=False, responseSet=[
+                        {"value": "helmet", "label": {"en": "Helmet"}, "score": 1}, {"value": "harness", "label": {"en": "Harness"}, "score": 1}]),
+                    q("WHY", 8, "Why not?", answerType="text", required=False, actionOnFail=False, showIf={"questionCode": "PF", "equals": "fail"})]},
+                {"sort": 1, "title": {"en": "Bay"}, "repeatable": True, "repeatLabel": "Bay", "questions": [q("BAY", 0, "Bay boards complete?", answerType="pass_fail_na")]}]}
+
+
+@case("EHS-INS-005", "EHS-INS-006", "EHS-INS-007", "EHS-INS-008", "EHS-INS-009", "EHS-INS-010", "EHS-INS-011", "EHS-INS-012", "EHS-INS-013", "EHS-INS-014",
+      "EHS-INS-015", "EHS-INS-016", "EHS-INS-017", "EHS-INS-018", "EHS-INS-019")
+def _():
+    st(A.post("HSE01", "/admin/inspections/templates", full_template("PLAN-ALL")), 200, 201)
+    v = next(x for x in A.get("HSE01", "/admin/inspections/templates").json() if x["code"] == "PLAN-ALL")
+    st(A.post("HSE01", f"/admin/inspections/template-versions/{v['id']}/submit"), 200)
+    st(A.post("ADMIN01", f"/admin/inspections/template-versions/{v['id']}/approve"), 200)
+    tv = next(t for t in A.get("VER-TN1", "/inspections/templates").json() if t["id"] == v["id"])
+    secs = tv["sections"]
+    qs = {q["code"]: q for s in secs for q in s["questions"]}
+    check({q["answerType"] for q in qs.values()} == {"pass_fail_na", "number", "text", "photo", "signature", "date", "single_choice", "multi_choice"}, "all 8 types")
+    check(any(s["repeatable"] for s in secs), "repeatable section")
+    check(qs["PF"]["responseSet"] and qs["PF"]["referenceText"] == "BOCW rule 43", "default pass/fail set and reference")
+    check(qs["WHY"]["showIf"] and not qs["TXT"]["required"] and not qs["TXT"]["actionOnFail"], "show-if, not required, no action on fail")
+    check(tv["scoring"]["passMarkPct"] == 90)
+    IDS["all_tv"], IDS["all_tid"] = v["id"], v["templateId"]
+    IDS["all_q"] = qs
+
+
+def ans_all(overrides: dict | None = None) -> list[dict]:
+    qs = IDS["all_q"]
+    vals = {"PF": "pass", "NUM": 1000, "TAG": "green", "BAY": "pass"}
+    vals.update(overrides or {})
+    out = []
+    for code, v in vals.items():
+        if code == "BAY_2":
+            out.append(ans(qs["BAY"], v, repeatIndex=1))
+            continue
+        a = ans(qs[code], v)
+        if isinstance(v, dict) and "_action" in v:
+            a = ans(qs[code], v["value"], action=v["_action"], note="loose")
+        out.append(a)
+    return out
+
+
+def fail_action():
+    return {"clientUuid": U(), "title": "Plan fix", "problem": "p", "actionType": "corrective", "controlLevel": "engineering", "ownerUserId": uid("OWN-TN1-1"), "band": "moderate"}
+
+
+@case("EHS-INS-064", "EHS-INS-065", "EHS-INS-066", "EHS-INS-067", "EHS-INS-069", "EHS-INS-076", "EHS-DSH-024")
+def _():
+    run1 = start_run(vid=IDS["all_tv"])
+    d = st(A.post("VER-TN1", f"/inspections/runs/{run1['id']}/submit", {"clientUuid": U(), "answers": ans_all({"PF": "na", "BAY_2": "pass"}), "completedAt": now_iso()}), 200).json()
+    check(d["result"] == "pass" and float(d["scorePct"]) == 100.0, f"N.A. left out of the score: {d['result']} {d['scorePct']}")
+    run2 = start_run(vid=IDS["all_tv"])
+    d2 = st(A.post("VER-TN1", f"/inspections/runs/{run2['id']}/submit", {"clientUuid": U(), "completedAt": now_iso(),
+                                                                         "answers": ans_all({"NUM": {"value": 900, "_action": fail_action()}})}), 200).json()
+    check(d2["result"] == "fail" and d2["failedCount"] == 1, f"number below range fails: {d2['result']} {d2['failedCount']}")
+    run3 = start_run(vid=IDS["all_tv"])
+    st(A.post("VER-TN1", f"/inspections/runs/{run3['id']}/submit", {"clientUuid": U(), "completedAt": now_iso(),
+                                                                    "answers": ans_all({"NUM": {"value": 800, "_action": fail_action()}})}), 200)
+    check(sql1("select count(*) from inspection_answers where run_id = $1::uuid and repeat_finding", run3["id"]) == 1, "same item failed twice in a row: repeat finding")
+    top = A.get("SO-TN1", "/dashboard").json()["topRepeatFindings"]
+    check(any("Rail height" in json.dumps(x) for x in top), "DSH-024: shown on the dashboard")
+
+
+@case("EHS-INS-068")
+def _():
+    run1 = start_run(vid=IDS["all_tv"])
+    r = A.put("VER-TN1", f"/inspections/runs/{run1['id']}/answers", {"answers": [ans(IDS["all_q"]["NUM"], "abc")]})
+    check(r.status_code == 400, f"a number question refuses text: {r.status_code}")
+    r = A.put("VER-TN1", f"/inspections/runs/{run1['id']}/answers", {"answers": [ans(IDS["all_q"]["TAG"], "purple")]})
+    check(r.status_code == 400, f"a choice question refuses an unknown option: {r.status_code}")
+
+
+@case("EHS-INS-074", "EHS-INS-075", "EHS-INS-063")
+def _():
+    st(A.post("SO-TN1-admin", "/admin/assets", {"siteId": site("TN1"), "assetClass": "ladder", "tagNo": "PLAN-LAD-1"}), 200, 201)
+    aid = sql1("select id::text from assets where tag_no = 'PLAN-LAD-1'")
+    q = st(A.post("SO-TN1-admin", "/admin/qr-codes", {"targetType": "asset", "targetId": aid, "label": "PLAN-LAD-1"}), 200, 201).json()
+    info = st(A.c.get(f"/public/qr/{q['token']}"), 200).json()
+    check("PLAN-LAD-1" in json.dumps(info), "INS-063: the QR names the equipment")
+    for tag, status in (("do_not_use", "do_not_use"), ("safe_to_use", "in_service")):
+        r = st(A.post("VER-TN1", "/inspections/runs", {"clientUuid": U(), "templateVersionId": IDS["all_tv"], "siteId": site("TN1"), "assetId": aid, "startedAt": now_iso()}), 200, 201).json()
+        st(A.post("VER-TN1", f"/inspections/runs/{r['id']}/submit", {"clientUuid": U(), "answers": ans_all(), "tagStatus": tag, "completedAt": now_iso()}), 200)
+        check(sql1("select status from assets where id = $1::uuid", aid) == status, f"tag {tag} → equipment {status}")
+
+
+@case("EHS-INS-080")
+def _():
+    r = start_run(vid=IDS["all_tv"])
+    st(A.post("VER-TN1", f"/inspections/runs/{r['id']}/submit", {"clientUuid": U(), "answers": ans_all(), "completedAt": now_iso()}), 200)
+    late = A.put("VER-TN1", f"/inspections/runs/{r['id']}/answers", {"answers": [ans(IDS["all_q"]["TXT"], "Late note")]})
+    check(late.status_code in (200, 409), f"{late.status_code}")
+    if late.status_code == 200:
+        check(sql1("select count(*) from comments where owner_id = $1::uuid and body like 'Late answers%'", r["id"]) >= 1 or "late" in late.text.lower(), "late answers recorded")
+
+
+@case("EHS-INS-024", "EHS-WF6-04")
+def _():
+    st(A.post("HSE01", f"/admin/inspections/templates/{IDS['all_tid']}/versions", {"changeNote": "v2: rail height range"}), 200, 201)
+    v2 = next(x for x in A.get("HSE01", "/admin/inspections/templates").json() if x["code"] == "PLAN-ALL" and x["status"] == "draft")
+    open_run = start_run(vid=IDS["all_tv"])
+    st(A.post("HSE01", f"/admin/inspections/template-versions/{v2['id']}/submit"), 200)
+    st(A.post("ADMIN01", f"/admin/inspections/template-versions/{v2['id']}/approve"), 200)
+    actives = [t for t in A.get("VER-TN1", "/inspections/templates").json() if t["code"] == "PLAN-ALL" and t["status"] == "active"]
+    check(len(actives) == 1 and actives[0]["id"] == v2["id"], "version 2 is the active one")
+    check(A.get("VER-TN1", f"/inspections/runs/{open_run['id']}").json()["templateVersionId"] == IDS["all_tv"], "open run stays on version 1")
+
+
+@case("EHS-INS-044", "EHS-INS-045", "EHS-INS-046", "EHS-INS-060")
+def _():
+    s1 = st(A.post("SO-TN1-admin", "/admin/inspections/schedules", sched_body(templateId=IDS["all_tid"], assigneeRole=None, assigneeUserId=uid("VER-TN1"),
+                                                                             frequency={"every": 1, "unit": "day", "time": "07:00"})), 200, 201).json()
+    run_job("inspection_scheduler")
+    due = A.get("VER-TN1", "/sync/pull").json()["runs"]
+    check(any(r.get("scheduleId") == s1["id"] for r in due), "INS-044/060: the assigned person sees the run")
+    s1["active"] = False
+    st(A.put("SO-TN1-admin", f"/admin/inspections/schedules/{s1['id']}", s1), 200)
+    check(sql1("select active from inspection_schedules where id = $1::uuid", s1["id"]) is False, "INS-046: paused")
+
+
+@case("EHS-INS-029")
+def _():
+    st(A.post("HSE01", "/admin/inspections/templates", tmpl_body("PLAN-DEL")), 200, 201)
+    tid = next(x for x in A.get("HSE01", "/admin/inspections/templates").json() if x["code"] == "PLAN-DEL")["templateId"]
+    st(A.delete("HSE01", f"/admin/inspections/templates/{tid}", {"reason": "Plan test"}), 200)
+    check(all(x["code"] != "PLAN-DEL" for x in A.get("HSE01", "/admin/inspections/templates").json()))
+
+
+@case("EHS-INS-082", "EHS-WF3-09")
+def _():
+    active = next(t for t in A.get("VER-TN1", "/inspections/templates").json() if t["code"] == "PLAN-ALL" and t["status"] == "active")
+    r = start_run(vid=active["id"])
+    v1_q, IDS["all_q"] = IDS["all_q"], {q["code"]: q for sec in active["sections"] for q in sec["questions"]}  # answer with version 2's questions
+    try:
+        st(A.post("VER-TN1", f"/inspections/runs/{r['id']}/submit", {"clientUuid": U(), "answers": ans_all(), "completedAt": now_iso()}), 200)
+    finally:
+        IDS["all_q"] = v1_q
+    url = A.post("VER-TN1", f"/inspections/runs/{r['id']}/report-link").json()["url"]
+    path = url.split("/api/v1", 1)[-1]
+    st(A.c.get(path), 200)
+    other = path.replace(r["id"], IDS["done_run"]) if IDS.get("done_run") else path + "x"
+    st(A.c.get(other), 403, 404)  # a ticket opens only its own record
+    bad = re.sub(r"([?&]t=)([^&]+)", lambda m: m.group(1) + m.group(2)[:-2] + "xx", path)
+    st(A.c.get(bad), 403, 404)
+
+
+@case("EHS-RPT-015", "EHS-RPT-018")
+def _():
+    r = st(A.get("SO-TN1", "/exports/observations.xlsx", params={"status": "closed", "band": "moderate"}), 200)
+    s = zipfile.ZipFile(io.BytesIO(r.content)).read("xl/worksheets/sheet1.xml").decode()
+    rows = re.findall(r"<row r=\"(\d+)\">(.*?)</row>", s)[1:]
+    check(all("closed" in body and "moderate" in body for _, body in rows), "every row closed and moderate")
+    check('state="frozen"' in s and "<autoFilter" in s and 's="1"' in s, "bold frozen header with filters")
+
+
+@case("EHS-RPT-026")
+def _():
+    soffice = next((p for p in ("/usr/bin/soffice", "/usr/bin/libreoffice") if os.path.exists(p)), None)
+    if not soffice:
+        raise Fail("LibreOffice not installed here")
+    x = A.get("SO-TN1", "/exports/report.xlsx").content
+    d = OUT / "lo"
+    d.mkdir(exist_ok=True)
+    (d / "r.xlsx").write_bytes(x)
+    subprocess.run([soffice, "--headless", "--convert-to", "pdf", "--outdir", str(d), str(d / "r.xlsx")], capture_output=True, timeout=180)
+    check((d / "r.pdf").exists() and (d / "r.pdf").stat().st_size > 1000, "LibreOffice opened the workbook")
+
+
+@case("EHS-ADM-010", "EHS-ADM-011")
+def _():
+    s = A.get("ADMIN01", f"/admin/sites/{site('TN3')}").json()
+    body = {k: v for k, v in s.items() if k not in ("areas", "qrCodes")}
+    body.update({"workerCount": 120, "workingCalendar": {"weeklyOff": [0], "shiftStart": "08:00", "shiftEnd": "17:00"}, "siteHeadUserId": uid("SH-TN3")})
+    st(A.put("ADMIN01", f"/admin/sites/{site('TN3')}", body), 200)
+    r = sql("select worker_count, site_head_user_id::text from sites where id = $1::uuid", site("TN3"))[0]
+    check(r["worker_count"] == 120 and r["site_head_user_id"] == uid("SH-TN3"), str(dict(r)))
+
+
+@case("EHS-ADM-015", "EHS-ADM-017")
+def _():
+    v = next(x for x in A.get("HSE01", "/admin/risk-matrices").json() if x["status"] == "active")
+    st(A.post("HSE01", f"/admin/sites/{site('TN3')}/risk-matrix", {"versionId": v["id"]}), 200)
+    check(sql1("select risk_matrix_version_id::text from sites where id = $1::uuid", site("TN3")) == v["id"])
+    disabled = sql1("select code from rule_sets where not enabled and status not like '%draft%' limit 1") or sql1("select code from rule_sets where not enabled limit 1")
+    st(A.post("HSE01", f"/admin/sites/{site('TN3')}/rule-set", {"code": disabled}), 400)
+
+
+@case("EHS-ADM-021", "EHS-ADM-022")
+def _():
+    a = st(A.post("SO-TN1-admin", f"/admin/sites/{site('TN1')}/areas", {"code": "PBA", "name": {"en": "Plan Block A"}, "areaType": "other"}), 200, 201).json()
+    b = st(A.post("SO-TN1-admin", f"/admin/sites/{site('TN1')}/areas", {"code": "PL3", "name": {"en": "Plan Level 3"}, "areaType": "other", "parentAreaId": a["id"],
+                                                                     "ownerUserId": uid("OWN-TN1-1")}), 200, 201).json()
+    check(b["parentAreaId"] == a["id"] and b["ownerUserId"] == uid("OWN-TN1-1"), str(b))
+
+
+@case("EHS-ADM-044", "EHS-ADM-045", "EHS-ADM-046")
+def _():
+    past = (datetime.now() - timedelta(days=5)).strftime("%Y-%m-%d")
+    csv = f"site_code,tag_no,asset_class,make_model,serial_no,swl_kg,area_code,next_exam_due\nTN1,PLAN-CR-1,lifting_appliance,Crane,S1,2000,,{past}\nZZ9,PLAN-CR-2,lifting_appliance,Crane,S2,2000,,\n"
+    r = st(A.post("SO-TN1-admin", "/admin/assets/import", {"csv": csv}), 200).json()
+    check(r["created"] == 1 and r["skipped"] == 1 and r["errors"], str(r))
+    a = next(x for x in A.get("SO-TN1-admin", "/admin/assets", params={"siteId": site("TN1"), "pageSize": 500}).json()["items"] if x["tagNo"] == "PLAN-CR-1")
+    check(a["nextExamDue"][:10] == past, "next examination date kept (past = overdue)")
+
+
+@case("EHS-ADM-051")
+def _():
+    q = st(A.post("SO-TN1-admin", "/admin/qr-codes", {"targetType": "area", "targetId": area_of("TN1", 1), "label": "Plan disable"}), 200, 201).json()
+    st(A.put("SO-TN1-admin", f"/admin/qr-codes/{q['id']}", {"active": False}), 200)
+    st(A.c.get(f"/public/qr/{q['token']}"), 410)
+
+
+@case("EHS-ADM-063", "EHS-ADM-064")
+def _():
+    csv = "name,phone,employer,trade,worker_type,language\nPlan Imp Person,9876512345,,civil,contract,ta\nPlan Bad Emp,,No Such Employer Ltd,civil,contract,en\n"
+    r = st(A.post("ADMIN01", "/admin/people/import", {"csv": csv}), 200).json()
+    check(r["created"] >= 1, str(r))
+
+
+@case("EHS-ADM-069", "EHS-ADM-070", "EHS-ADM-072")
+def _():
+    st(A.post("ADMIN01", "/admin/contractors", {"name": "Plan Bad Mail", "email": "abc@"}), 400)
+    parent = st(A.post("ADMIN01", "/admin/contractors", {"name": "Plan Parent Co"}), 201).json()
+    sub = st(A.post("ADMIN01", "/admin/contractors", {"name": "Plan Sub Co", "parentId": parent["id"]}), 201).json()
+    check(sub["parentId"] == parent["id"])
+    st(A.delete("ADMIN01", f"/admin/contractors/{sub['id']}", {"reason": "Plan"}), 200)
+    check(all(c["id"] != sub["id"] for c in A.get("ADMIN01", "/admin/contractors").json()), "removed from the list")
+
+
+@case("EHS-ADM-077")
+def _():
+    d = st(A.post("ADMIN01", "/admin/departments", {"code": "PLANINACT", "name": {"en": "Plan inactive"}}), 201).json()
+    st(A.put("ADMIN01", f"/admin/departments/{d['id']}", {**d, "active": False}), 200)
+    check(next(x for x in A.get("ADMIN01", "/admin/departments").json() if x["id"] == d["id"])["active"] is False)
+
+
+@case("EHS-ADM-101")
+def _():
+    base = {"name": "Plan Ext Aud", "loginType": "employee_code", "language": "en", "roles": [{"siteId": None, "role": "auditor"}]}
+    st(A.post("ADMIN01", "/admin/users", {**base, "employeeCode": "PLAN-XA1"}), 400)
+    st(A.post("ADMIN01", "/admin/users", {**base, "employeeCode": "PLAN-XA2", "expiresAt": now_iso(timedelta(days=30))}), 201)
+
+
+@case("EHS-ADM-102", "EHS-ADM-108")
+def _():
+    st(A.post("ADMIN01", f"/admin/users/{uid('OWN-TN2-2')}/roles", {"roles": [{"siteId": site("TN2"), "role": "action_owner"}, {"siteId": site("TN1"), "role": "verifier"}]}), 200)
+    A.login("OWN-TN2-2", name="own22")
+    check({s["code"] for s in A.get("own22", "/me").json()["sites"]} >= {"TN1", "TN2"})
+    u = A.get("ADMIN01", f"/admin/users/{uid('OWN-TN2-2')}").json()
+    check(u["devices"] and {"platform", "appVersion", "lastSeenAt"} <= set(u["devices"][0]), str(u["devices"])[:200])
+
+
+@case("EHS-ADM-133", "EHS-OBS-037", "EHS-OBS-038")
+def _():
+    cats = A.get("HSE01", "/admin/categories").json()
+    c = next(x for x in cats if x["code"] == "HOUSE")
+    body = {k: v for k, v in c.items() if k not in ("id", "updatedAt")}
+    body["extraFields"] = [{"key": "heightM", "label": {"en": "Height (m)"}, "type": "number", "required": True}]
+    st(A.put("HSE01", f"/admin/categories/{c['id']}", body), 200)
+    try:
+        st(A.post("WORKER-TN1-1", "/observations", obs_body()), 400)
+        st(A.post("WORKER-TN1-1", "/observations", obs_body(extra={"heightM": 6})), 200, 201)
+    finally:
+        body["extraFields"] = []
+        st(A.put("HSE01", f"/admin/categories/{c['id']}", body), 200)
+
+
+@case("EHS-ADM-134", "EHS-ADM-135")
+def _():
+    cats = A.get("HSE01", "/admin/categories").json()
+    ids = [c["id"] for c in cats]
+    st(A.post("HSE01", "/admin/categories/reorder", {"ids": list(reversed(ids))}), 200)
+    check([c["id"] for c in A.get("HSE01", "/admin/categories").json()][0] == ids[-1], "new order kept")
+    st(A.post("HSE01", "/admin/categories/reorder", {"ids": ids}), 200)
+    new = st(A.post("HSE01", "/admin/categories", {"code": "PLANDEL", "name": {"en": "Plan delete me"}}), 200, 201).json()
+    st(A.delete("HSE01", f"/admin/categories/{new['id']}", {"reason": "Plan"}), 200)
+    st(A.post("WORKER-TN1-1", "/observations", obs_body(categoryCodes=["PLANDEL"])), 400)
+
+
+@case("EHS-ADM-146", "EHS-ADM-147", "EHS-ADM-148")
+def _():
+    sets = A.get("HSE01", "/admin/rule-sets").json()
+    check(all("status" in s for s in sets) and any(t.get("status") for s in sets for t in s.get("timerRules", [])), "status labels shown")
+    on = next(s for s in sets if s.get("enabled"))
+    st(A.post("HSE01", f"/admin/rule-sets/{on['code']}/disable"), 200)
+    st(A.post("HSE01", f"/admin/rule-sets/{on['code']}/enable"), 200)
+
+
+@case("EHS-ADM-200", "EHS-ADM-202")
+def _():
+    r = st(A.get("ADMIN01", "/admin/translations", params={"lang": "ta"}), 200).json()
+    check(r["total"] > 100 and "poster.headline" in json.dumps(r["overrides"], ensure_ascii=False), "pack and the company's override listed (the console searches this list)")
+    st(A.post("ADMIN01", "/admin/translations/import", {"lang": "kn", "strings": {"poster.headline": "ಅಪಾಯ ಕಂಡಿರಾ?"}}), 200)
+
+
+@case("EHS-ADM-250", "EHS-ADM-251", "EHS-ADM-257", "EHS-ADM-258")
+def _():
+    r = A.get("ADMIN01", "/admin/audit-log", params={"action": "export", "pageSize": 20}).json()
+    items = r["items"] if isinstance(r, dict) else r
+    check(items and all(x["action"] == "export" for x in items), "filter by action")
+    check({"at", "actorName", "action", "recordType", "hash"} <= set(items[0]), str(list(items[0])))
+    leaks = sql1("""select count(*) from audit_log where changes::text ~* '"(password|passwordHash|password_hash|tempPassword|temp_password|newPassword|new_password|secret|mfaSecret)"\\s*:' or changes::text ~ 'scrypt\\$'""")
+    check(leaks == 0, f"{leaks} audit rows carry password data")
+    o = create_obs()
+    for kind, rec in (("create", o["id"]),):
+        check(sql1("select count(*) from audit_log where action = $1 and record_id = $2", kind, rec) >= 1, f"{kind} logged")
+
+
+@case("EHS-WF5-04")
+def _():
+    d0 = {x["code"]: x["assigned"] for x in A.get("SO-TN1", "/insights", params={"level": "site", "siteId": site("TN1")}).json()["byDepartment"]}
+    o, aid = new_action(owner="OWN-TN1-1")
+    st(A.post("SO-TN1", f"/actions/{aid}/reassign", {"newOwnerUserId": uid("OWN-TN1-2"), "reason": "Electrical"}), 200)
+    d1 = {x["code"]: x["assigned"] for x in A.get("SO-TN1", "/insights", params={"level": "site", "siteId": site("TN1")}).json()["byDepartment"]}
+    check(d1["ELEC"] == d0["ELEC"] + 1 and d1["CIVIL"] == d0["CIVIL"], f"{d0} → {d1}")
+
+
 # ================================================================ timed jobs (run once each, with times moved instead of waiting)
 MAILS: list = []
 SMTP_URL = ""
@@ -2473,6 +2957,18 @@ def _():
     check(sql1("select released_at is not null from legal_holds where id = $1::uuid", h["id"]) is True, "released with time")
 
 
+@case("EHS-RPT-025")
+def _():
+    # last case on purpose: it adds 50,000 report rows
+    sql("""insert into observations (client_uuid, org_id, site_id, case_no, captured_at, received_at, channel, type, category_codes, description, status)
+           select gen_random_uuid(), o.org_id, o.site_id, 'TN1-BULK-' || g, now(), now() - interval '1 day', 'app', 'unsafe_condition', '{HOUSE}', 'bulk', 'submitted'
+             from generate_series(1, 50001) g, (select org_id, site_id from observations where site_id = $1::uuid limit 1) o""", site("TN1"))
+    t0 = time.time()
+    r = st(A.get("SH-TN1-field", "/exports/observations.csv", params={"siteId": site("TN1")}), 200)  # an officer with export budget left
+    n = len(r.text.splitlines()) - 1
+    check(n == 50000 and time.time() - t0 < 120, f"{n} rows in {time.time() - t0:.0f}s")
+
+
 # ---------------------------------------------------------------- run
 def plan_ids() -> list[tuple[str, str]]:
     out = []
@@ -2546,8 +3042,13 @@ DEFECTS = [
     "| F14 | Reminders and escalations for Extreme-risk actions were held by quiet hours (e.g. 2 am → 7 am) and counted against the daily push limit | Extreme-band reminders are sent as urgent: never held, never capped | EHS-ACT-138, `test_f14_*` |",
     "| F15 | Daily and weekly digest emails showed a raw code `ntf.digest_daily.body` | Digest closing text added in English, Hindi, Tamil and Kannada; a test now checks every notification text exists in all four | EHS-RPT-044, `test_f15_*` |",
     "| F16 | The \"triage overdue\" reminder (app and email to the site head) linked to `/inbox`, a page the phone app does not have | Links to Reports → Triage | EHS-OBS-184, `test_f16_*` |",
+    "| F17 | An external-auditor account could be created (or imported by CSV) with no expiry date, i.e. permanent access | Expiry required for auditors; CSV-imported auditors get 30 days | EHS-ADM-101, `test_f17_*` |",
+    "| F18 | Required category details (extra fields) were checked only by the phone form | Server requires them for signed-in reports (the QR form does not ask them) | EHS-ADM-133, EHS-OBS-037/038, `test_f18_*` |",
+    "| F19 | A contractor could be saved with an email such as `abc@` | Same email rule as users | EHS-ADM-069, `test_f19_*` |",
+    "| F20 | \"Request new date\" accepted a date in the past (also when approving) | The new date must be in the future | EHS-ACT-082, `test_f20_*` |",
+    "| F21 | A checklist number question accepted text (\"abc\"), and a choice question an option it does not have | Answers must fit the question; the phone form already only offers valid values | EHS-INS-068, `test_f21_*` |",
     "",
-    "Plan correction: EHS-INS-084/085 said a safety officer may reopen a submitted inspection; the system (by design) allows only admin and HSE manager, because a submitted report is locked. The plan was corrected.",
+    "Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only admin and HSE manager may reopen a submitted inspection, because its report is locked); EHS-ACT-050 (an owner who disputed an action cannot complete it until the dispute is decided); EHS-INS-083 and EHS-WF3-09 (a report link is a 5-minute ticket bound to one record and to the requester's scope, by design, because a page opened in a new tab cannot carry a sign-in).",
 ]
 
 

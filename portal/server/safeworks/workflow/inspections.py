@@ -135,7 +135,28 @@ async def start(conn, actor: AuthUser, payload: RunStartRequest) -> dict:
 
 # ---------- answers ----------
 
+def _check_value(q: dict, value: Any) -> None:
+    """A number question takes a number; a choice question takes one of its own options (or N.A.). The phone's form
+    only offers valid values; this keeps scripts, old apps and edited sync payloads honest."""
+    if value is None or value == "" or value == []:
+        return
+    at = q["answer_type"]
+    bad = False
+    if at == "number":
+        try:
+            bad = isinstance(value, bool) or float(value) != float(value)  # NaN
+        except (TypeError, ValueError):
+            bad = True
+    elif at in ("pass_fail_na", "single_choice", "multi_choice") and q["response_set"]:
+        allowed = {str(o.get("value")).lower() for o in q["response_set"]} | NA_VALUES
+        values = value if isinstance(value, list) else [value]
+        bad = (at != "multi_choice" and isinstance(value, list) and len(value) > 1) or any(str(v).lower() not in allowed for v in values)
+    if bad:
+        raise bad_request(f"Answer not valid for question {q['code'] or q['id']}.", key="err.answer_invalid", question=q["code"] or "")
+
+
 async def _upsert_answer(conn, run: dict, actor: AuthUser, q: dict, a: Answer, settings: dict) -> dict | None:
+    _check_value(q, a.value)
     flag, score, _ = _evaluate(q, a.value)
     existing = await db.one("select * from inspection_answers where run_id = $1 and question_id = $2 and repeat_index = $3", [run["id"], q["id"], a.repeat_index], conn)
     if existing and existing["answered_at"] and a.answered_at and existing["answered_at"] > a.answered_at:
