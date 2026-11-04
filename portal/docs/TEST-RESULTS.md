@@ -1,13 +1,13 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-04 19:03 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-04 19:17 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
 | Cases in the plan | 771 |
 | Run automatically (API, timed jobs and browser) | 758 |
-| Passed | 757 |
-| Failed | 1 |
+| Passed | 758 |
+| Failed | 0 |
 | Runner error | 0 |
 | Not automated (UI, timing or manual; see the browser run and the list below) | 13 |
 
@@ -756,7 +756,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ADM-261 | Notifications log — Open | PASS |  |
 | EHS-ADM-262 | Console menu → Notifications log ⚠ F5 — Menu item | PASS |  |
 | EHS-ADM-290 | Console menu → Health ⚠ F6 — Menu item | PASS |  |
-| EHS-ADM-291 | Console → any page — Command menu (UI v2) | FAIL | browser: locator.waitFor: Timeout 12000ms exceeded. Call log: [2m - waiting for locator('[data-testid="command-menu"]') to be visible[22m  |
+| EHS-ADM-291 | Console → any page — Command menu (UI v2) | PASS | browser |
 | EHS-WF1-01 | Field app → Report — Unsafe condition + 1 photo | PASS |  |
 | EHS-WF1-02 | Notifications — New report alert | PASS |  |
 | EHS-WF1-03 | Console → Dashboard — Triage backlog | PASS |  |
