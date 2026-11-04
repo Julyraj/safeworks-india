@@ -3023,7 +3023,10 @@ def _():
 
 @case("EHS-ADM-049")
 def _():
-    q = sql1("select id::text from qr_codes where target_type = 'area' and active limit 1")
+    # a QR code at TN1 (the officer's site); an unordered "limit 1" could pick another site, which is rightly 404
+    q = sql1("select q.id::text from qr_codes q join areas a on a.id = q.target_id where q.target_type = 'area' and q.active and a.site_id = $1::uuid order by q.created_at limit 1", site("TN1"))
+    other = sql1("select q.id::text from qr_codes q join areas a on a.id = q.target_id where q.target_type = 'area' and q.active and a.site_id <> $1::uuid limit 1", site("TN1"))
+    st(A.post("SO-TN1-admin", f"/admin/qr-codes/{other}/poster-link"), 404)
     link = st(A.post("SO-TN1-admin", f"/admin/qr-codes/{q}/poster-link"), 200, 201).json()["url"]
     path = link.split("/api/v1", 1)[-1]
     st(A.c.get(path), 200)

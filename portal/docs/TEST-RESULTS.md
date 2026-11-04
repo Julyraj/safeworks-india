@@ -1,6 +1,6 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-03 05:01 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-04 17:59 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
@@ -41,6 +41,7 @@ Run on 2026-11-03 05:01 UTC against a fresh demo database with `portal/e2e/run_t
 | F24 | Phone numbers were not checked (letters, 2 digits) on users, people, contractors and the QR form; CSV imports took them too | Phone must be 7–16 digits, may start with +; bad CSV rows are skipped with a reason | EHS-ADM-061, `test_f24_*` |
 | F25 | Typing a case number in the console search did nothing when already on that register, and leftover saved filters could hide the case | The jump re-reads the address and clears other filters | EHS-OBS-232 (browser) |
 | F26 | Work saved offline stayed Pending after the app was closed and reopened with signal ("No connection · next retry") | On start with a connection, waiting items are sent at once | EHS-OBS-084, EHS-ACT-034/053 (browser) |
+| S1–S4, C1–C4 | Detailed review (4 Nov): MFA could be re-enrolled with the password only; officers could issue enrolment codes for site heads; lists showed sites where the user only reports; viewers could overwrite photos; export checked a different site parameter than it exported; reversed dates in Charts and the Excel report; "At risk" label | See `QA-DETAILED.md` | `tests/test_security.py` |
 
 Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only admin and HSE manager may reopen a submitted inspection, because its report is locked); EHS-ACT-050 (an owner who disputed an action cannot complete it until the dispute is decided); EHS-INS-083 and EHS-WF3-09 (a report link is a 5-minute ticket bound to one record and to the requester's scope, by design, because a page opened in a new tab cannot carry a sign-in).
 
