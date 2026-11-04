@@ -1,5 +1,10 @@
 # Changelog
 
+## UI version 2 (branch `v2-ui-redesign`; version 1 stays on `main-d2jizp`)
+- New look for the phone app, console and website library, after shadcn/ui and shadcn-admin: neutral surfaces, Inter font, thin borders, soft focus ring; hi-vis yellow kept for the main action on the phone. All colours WCAG AA in both themes. See `portal/docs/UI-V2.md` for sources and before/after screenshots.
+- Console: light grouped sidebar and a Ctrl+K / ⌘K command menu (open any page, or paste a case number). New plan case EHS-ADM-291.
+- Phone: light top bar, Material-style active pill in the bottom bar, cleaner home screen.
+
 ## Portal 2.1 — departments, charts and Excel reports (draft, not released)
 - **Departments**: one company-wide list in the admin console (People & contractors → Departments), a department on each user (also in the user CSV import as `department`), and a *By department* table on the dashboard. An action records its owner's department when assigned; named reports record the reporter's. Anonymous and QR reports never count towards a department.
 - **Field app → Actions → Department**: everything assigned to your department (read-only unless it is yours). Works from the offline copy and refreshes from the server when online.

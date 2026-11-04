@@ -262,6 +262,7 @@ small, .small { font-size: 13px; }
 .bottom-nav a svg { position: relative; z-index: 1; }
 .bottom-nav a[aria-current="page"] { color: var(--ink); font-weight: 650; }
 .bottom-nav a[aria-current="page"]::before { content: ""; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 56px; height: 30px; border-radius: 15px; background: var(--hivis-tint); }
+.bottom-nav a.fab::before { display: none; } /* the report button is its own highlight; no active pill behind it */
 .bottom-nav .fab { background: var(--hivis); color: var(--hivis-ink); border-radius: 18px; width: 58px; height: 58px; margin: -20px auto 0; box-shadow: 0 0 0 4px var(--paper), var(--shadow-2); display: grid; place-items: center; }
 .bottom-nav .fab svg { width: 30px; height: 30px; }
 .topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 10px; min-height: calc(56px + var(--safe-top)); padding: var(--safe-top) var(--gutter) 0; color: var(--ink); border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 88%, transparent); -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px); }
