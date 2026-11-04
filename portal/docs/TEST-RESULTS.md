@@ -1,15 +1,15 @@
 # SafeWorks Portal 2.1: test results
 
-Run on 2026-11-04 17:59 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
+Run on 2026-11-04 19:03 UTC against a fresh demo database with `portal/e2e/run_test_plan.py` (API and timed-job cases), `portal/e2e/ui_plan.cjs` (screen cases) and `portal/e2e/e2e-real.cjs` (end-to-end browser run). Test cases are those of `portal/docs/TEST-PLAN.md`.
 
 | | Count |
 |---|---|
-| Cases in the plan | 769 |
-| Run automatically (API, timed jobs and browser) | 755 |
-| Passed | 755 |
-| Failed | 0 |
+| Cases in the plan | 771 |
+| Run automatically (API, timed jobs and browser) | 758 |
+| Passed | 757 |
+| Failed | 1 |
 | Runner error | 0 |
-| Not automated (UI, timing or manual; see the browser run and the list below) | 14 |
+| Not automated (UI, timing or manual; see the browser run and the list below) | 13 |
 
 ## Defects found and fixed
 
@@ -41,6 +41,7 @@ Run on 2026-11-04 17:59 UTC against a fresh demo database with `portal/e2e/run_t
 | F24 | Phone numbers were not checked (letters, 2 digits) on users, people, contractors and the QR form; CSV imports took them too | Phone must be 7–16 digits, may start with +; bad CSV rows are skipped with a reason | EHS-ADM-061, `test_f24_*` |
 | F25 | Typing a case number in the console search did nothing when already on that register, and leftover saved filters could hide the case | The jump re-reads the address and clears other filters | EHS-OBS-232 (browser) |
 | F26 | Work saved offline stayed Pending after the app was closed and reopened with signal ("No connection · next retry") | On start with a connection, waiting items are sent at once | EHS-OBS-084, EHS-ACT-034/053 (browser) |
+| F27 | After a failed send, the retry waited for the 2-minute background timer instead of its back-off (seen first in Firefox) | The retry is scheduled after each sync run ends | EHS-OBS-233, EHS-OBS-082 (browser) |
 | S1–S4, C1–C4 | Detailed review (4 Nov): MFA could be re-enrolled with the password only; officers could issue enrolment codes for site heads; lists showed sites where the user only reports; viewers could overwrite photos; export checked a different site parameter than it exported; reversed dates in Charts and the Excel report; "At risk" label | See `QA-DETAILED.md` | `tests/test_security.py` |
 
 Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only admin and HSE manager may reopen a submitted inspection, because its report is locked); EHS-ACT-050 (an owner who disputed an action cannot complete it until the dispute is decided); EHS-INS-083 and EHS-WF3-09 (a report link is a 5-minute ticket bound to one record and to the requester's scope, by design, because a page opened in a new tab cannot carry a sign-in).
@@ -255,7 +256,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-078 | Report detail — Lightbox | PASS | browser |
 | EHS-OBS-080 | Report (offline) — Submit | PASS | browser |
 | EHS-OBS-081 | Outbox — Automatic sync | PASS | browser |
-| EHS-OBS-082 | Outbox — Network lost during the photo upload | Not automated | Manual check: cutting the network in the middle of a photo upload is too timing-dependent to script reliably |
+| EHS-OBS-082 | Outbox — Network lost during the photo upload | PASS | browser |
 | EHS-OBS-083 | Outbox — 5 reports offline | PASS |  |
 | EHS-OBS-084 | Outbox — App closed while offline | PASS | browser |
 | EHS-OBS-085 | Outbox — Server refuses a report | PASS |  |
@@ -383,6 +384,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-OBS-230 | Console → Observations — Read-only | PASS | browser |
 | EHS-OBS-231 | Console → Observations — Site scope | PASS | browser |
 | EHS-OBS-232 | Console → top bar — Jump to case number | PASS | browser |
+| EHS-OBS-233 | Outbox — Automatic retry after a failed send | PASS | browser |
 | EHS-ACT-001 | Actions — Tabs | PASS | browser |
 | EHS-ACT-002 | Actions — Department tab (2.1) | PASS | browser |
 | EHS-ACT-003 | Actions → Mine — List order | PASS | browser |
@@ -754,6 +756,7 @@ Plan corrections (the system was right, the plan was not): EHS-INS-084/085 (only
 | EHS-ADM-261 | Notifications log — Open | PASS |  |
 | EHS-ADM-262 | Console menu → Notifications log ⚠ F5 — Menu item | PASS |  |
 | EHS-ADM-290 | Console menu → Health ⚠ F6 — Menu item | PASS |  |
+| EHS-ADM-291 | Console → any page — Command menu (UI v2) | FAIL | browser: locator.waitFor: Timeout 12000ms exceeded. Call log: [2m - waiting for locator('[data-testid="command-menu"]') to be visible[22m  |
 | EHS-WF1-01 | Field app → Report — Unsafe condition + 1 photo | PASS |  |
 | EHS-WF1-02 | Notifications — New report alert | PASS |  |
 | EHS-WF1-03 | Console → Dashboard — Triage backlog | PASS |  |

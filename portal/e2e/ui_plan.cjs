@@ -928,9 +928,9 @@ tc(["EHS-OBS-233", "EHS-OBS-082"], async () => {
 // ---- console: command menu (UI v2)
 tc(["EHS-ADM-291"], async () => {
   const p = await consoleAs("SO-TN1");
-  await p.keyboard.press("Control+k");
+  await p.locator('[data-testid="command-open"]').waitFor();  // the console must be loaded before the shortcut is pressed
   const menu = p.locator('[data-testid="command-menu"]');
-  await menu.waitFor();
+  await until(async () => { if (!(await menu.count())) await p.keyboard.press("Control+k"); return (await menu.count()) > 0; }, "Ctrl+K opens the command menu", 10000, 600);
   const opts = await menu.locator('[role="option"]').allInnerTexts();
   check(opts.includes("Actions") && !opts.includes("Settings"), `pages for the role only: ${opts.join(", ")}`);
   await menu.locator("input").fill("act");
