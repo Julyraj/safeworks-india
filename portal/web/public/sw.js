@@ -58,7 +58,7 @@ self.addEventListener("fetch", (e) => {
           if (res.ok) caches.open(VERSION).then((c) => c.put("/", res.clone()));
           return res;
         })
-        .catch(() => caches.match("/")),
+        .catch(() => caches.match("/").then((hit) => hit || Response.error())),
     );
     return;
   }
@@ -68,7 +68,7 @@ self.addEventListener("fetch", (e) => {
       caches.match(req).then((hit) => hit || fetch(req).then((res) => {
         if (res.ok) caches.open(VERSION).then((c) => c.put(req, res.clone()));
         return res;
-      })),
+      })).catch(() => Response.error()),  // a cancelled or offline fetch is a plain network error, not a rejected respondWith (Firefox reports that as a page error)
     );
   }
 });

@@ -121,7 +121,7 @@ async function apiLogin(login, password, kind = "field") {
 const trackers = [];
 function newTracker(label) {
   // a fetch cancelled because the test navigates away (net::ERR_ABORTED) is not a failure of the app
-  const t = { label, errors: [], allowList: [/requestfailed .* net::ERR_ABORTED$/] };
+  const t = { label, errors: [], allowList: [/requestfailed .* (net::ERR_ABORTED|NS_BINDING_ABORTED)$/]  /* a request cancelled by navigating away (Chrome, Firefox) */ };
   t.allow = (re) => { t.allowList.push(re); return () => { t.allowList = t.allowList.filter((x) => x !== re); }; };
   t.allowed = (s) => t.allowList.some((re) => re.test(s));
   trackers.push(t);
@@ -235,7 +235,7 @@ const label = (page, text) => page.getByLabel(new RegExp("^" + text.replace(/[.*
     const media1 = await until(async () => { const d = (await api(tok["WORKER-TN1-1"], "GET", `/observations/${obs1.id}`)).data; return d.media.length && d.media.every((m) => m.uploadStatus !== "pending") && d.media; }, "photo uploaded");
     check("1. photo uploaded with SHA-256 match", media1.length === 1 && media1[0].hashMatch === true && media1[0].uploadStatus !== "failed", JSON.stringify(media1.map((m) => [m.uploadStatus, m.hashMatch])));
     // offline: second report, anonymous
-    const unallowOffline = W.t.allow(/ERR_INTERNET_DISCONNECTED|net::ERR_|Failed to load resource|Failed to fetch/);
+    const unallowOffline = W.t.allow(/ERR_INTERNET_DISCONNECTED|net::ERR_|NS_ERROR_OFFLINE|NetworkError when attempting to fetch|Failed to load resource|Failed to fetch/);  // Chrome and Firefox wording
     await W.ctx.setOffline(true);
     await W.page.getByRole("button", { name: "Report another" }).click();
     await W.page.locator('[data-testid="type-near_miss"]').waitFor();
