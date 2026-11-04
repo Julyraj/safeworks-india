@@ -2,7 +2,7 @@
    Run: DATABASE_URL=... PYTHON=/srv/swvenv/bin/python node portal/e2e/ui_plan.cjs   (WIPES that database)
    Writes <E2E_OUT>/ui-plan-results.json ({id: {result, note}}), which run_test_plan.py merges into TEST-RESULTS.md.
    Field users: 390×844 phone; console: 1280×800. A case that fails is recorded and the run goes on. */
-const { chromium } = require("playwright");
+const { launchBrowser, BROWSER } = require("./browsers.cjs");
 const { spawn, spawnSync } = require("child_process");
 const crypto = require("crypto");
 const fs = require("fs");
@@ -902,12 +902,35 @@ tc(["EHS-AUTH-069"], async () => {
   await p.keyboard.press("Escape");
 });
 
+// ---- outbox: automatic retry after a failed send, without reconnecting or tapping anything (F27)
+tc(["EHS-OBS-233", "EHS-OBS-082"], async () => {
+  const p = await field("WORKER-TN1-3");
+  let pushFails = 1, mediaFails = 1;
+  await p.route("**/api/v1/sync/push", (r) => (pushFails-- > 0 ? r.abort("internetdisconnected") : r.continue()));
+  await p.route("**/api/v1/media/**", (r) => (r.request().method() === "PUT" && mediaFails-- > 0 ? r.abort("internetdisconnected") : r.continue()));
+  await openReport(p);
+  await p.locator('[data-testid="type-unsafe_condition"]').click();
+  await ensureCats(p);
+  await addPhoto(p, "RETRY");
+  await p.locator('[data-testid="description"]').fill("UI automatic retry report");
+  await p.locator('[data-testid="submit"]').click();
+  await p.locator('[data-testid="submitted"]').waitFor();
+  const t0 = Date.now();
+  // first send fails (the server is unreachable once); the back-off is about 5 s, the background timer 2 minutes
+  await until(async () => sql1("select count(*)::int from observations where description = 'UI automatic retry report'") === 1, "report retried by itself", 25000);
+  const tReport = Math.round((Date.now() - t0) / 1000);
+  await until(async () => sql1("select count(*)::int from media m join observations o on o.id = m.owner_id where o.description = 'UI automatic retry report' and m.upload_status in ('uploaded', 'verified')") === 1, "photo retried by itself (EHS-OBS-082)", 30000);
+  check(pushFails < 0 && mediaFails < 0, "both the send and the photo upload failed once first");
+  check(sql1("select count(*)::int from observations where description = 'UI automatic retry report'") === 1, `no duplicate report (report arrived ${tReport} s after submit)`);
+  await p.unroute("**/api/v1/sync/push"); await p.unroute("**/api/v1/media/**");
+});
+
 (async () => {
   let proc;
   try {
     proc = await startServer();
     console.log(`server ${BASE}`);
-    browser = await chromium.launch();
+    browser = await launchBrowser();
     const only = (process.env.UI_ONLY || "").split(",").filter(Boolean);
     for (const [idList, fn] of CASES) {
       if (only.length && !idList.some((i) => only.includes(i))) continue;

@@ -2,7 +2,7 @@
    Run: node portal/e2e/e2e-real.cjs  (see portal/e2e/README.md; WIPES the database in DATABASE_URL)
    Each user has their own browser context (390×844 for field users, 1280×800 for the console). Every context fails the
    run on a console error or a failed request, except the refusals the test provokes on purpose (declared with allow()). */
-const { chromium } = require("playwright");
+const { launchBrowser, BROWSER } = require("./browsers.cjs");
 const { spawn, spawnSync } = require("child_process");
 const crypto = require("crypto");
 const fs = require("fs");
@@ -176,8 +176,14 @@ async function toastSuccess(page, label) {
 }
 async function fieldLogin(page, login, password = DEMO_PW) {
   await page.goto(`${BASE}/`);
-  await page.locator('input[autocomplete="username"]').fill(login);
-  await page.locator('input[type="password"]').fill(password);
+  await page.waitForLoadState("networkidle");  // the sign-in form must have finished starting before typing
+  const user = page.locator('input[autocomplete="username"]');
+  const pass = page.locator('input[type="password"]');
+  await until(async () => {
+    if ((await user.inputValue()) !== login) await user.fill(login);
+    if ((await pass.inputValue()) !== password) await pass.fill(password);
+    return (await user.inputValue()) === login && (await pass.inputValue()) === password;
+  }, "sign-in fields hold the typed text");
   await page.locator('button[type="submit"]').click();
   await page.locator('[data-testid="home-report"]').waitFor({ timeout: 30000 });
 }
@@ -196,7 +202,7 @@ const label = (page, text) => page.getByLabel(new RegExp("^" + text.replace(/[.*
   try {
     server = await startServer();
     console.log(`server ${BASE} (fresh database, demo seed)`);
-    browser = await chromium.launch();
+    browser = await launchBrowser();
 
     // reference ids
     const ids = Object.fromEntries(sql("select employee_code as code, id::text from users where employee_code <> ''").map((r) => [r.code, r.id]));

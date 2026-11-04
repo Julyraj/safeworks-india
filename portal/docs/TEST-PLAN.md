@@ -40,6 +40,7 @@ All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F
 | F24 | Phone numbers | Not checked anywhere | 7–16 digits, optional + | EHS-ADM-061 |
 | F25 | Console case-number jump | Did nothing when already on the register; old filters hid the case | Re-read the address, clear other filters | EHS-OBS-232 |
 | F26 | Field outbox | Items that failed offline stayed Pending after reopening the app online | Send at once on start when online | EHS-OBS-084 |
+| F27 | Field outbox | After a failed send the retry was scheduled only by the 2-minute background timer, not by its back-off (found by the Firefox run) | Retry when the back-off ends | EHS-OBS-233 |
 | S1–S4, C1–C4, A1–A3, H1 | Detailed QA pass (4 Nov) | Security, correctness, accessibility and header findings beyond this plan | See `QA-DETAILED.md` | `tests/test_security.py`, `e2e/qa_extra.cjs` |
 
 ---
@@ -545,6 +546,7 @@ Key: **C** create, **R** read, **U** update/act, **D** delete/cancel, **A** appr
 | EHS-OBS-230 | External Auditor (AUD) | Console → Observations | Read-only | Open a report as `AUD01`. | Security | No Triage, Reopen or Comment buttons; export allowed. |
 | EHS-OBS-231 | Plant Head (SH) | Console → Observations | Site scope | `SH-TN1` opens the register. | Security | TN1 reports only; site dropdown has TN1 only. |
 | EHS-OBS-232 | Any console role | Console → top bar | Jump to case number | Type a case number in the top search and press Enter. | Positive | The matching register (reports, actions or inspections, from the number) opens filtered to that case: one row; click it to open. Out of scope: no row. |
+| EHS-OBS-233 | Field Employee (REP) | Outbox | Automatic retry after a failed send | With the phone online, the server is unreachable for one send (and for one photo upload). Do not tap anything. | Edge | The report is sent again by itself after its back-off (about 5 s, not the 2-minute background timer), then the photo; one report on the server, no duplicate. (⚠ F27) |
 
 ---
 
@@ -1168,13 +1170,13 @@ Not testable in 2.1: these are Phase 2 (gap 1.4). The only incident step today i
 |---|---|---|
 | 1A | Authentication and profile | 69 |
 | 1B | Dashboards and Charts | 59 |
-| 2 | Safety observations | 206 |
+| 2 | Safety observations | 207 |
 | 3 | Corrective and preventive actions | 116 |
 | 4 | Inspections, audits, checklists | 72 |
 | 5 | Reports, exports, notifications | 41 |
 | 6 | Admin and master settings | 142 |
 | 7 | Cross-role workflows and isolation | 64 |
-| **Total** | | **769** |
+| **Total** | | **770** |
 
 ## How to run this plan
 

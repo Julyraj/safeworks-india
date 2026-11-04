@@ -309,9 +309,11 @@ export async function syncNow(): Promise<void> {
       logit("error", `sync crashed: ${errorText(e)}`);
       set({ lastError: errorText(e) });
     } finally {
-      await recount();
       set({ syncing: false });
       running = null;
+      // F27: recount() also schedules the next retry, but skips that while a run is in progress, so it must run after
+      // `running` is cleared; before, a failed attempt was retried only by the 2-minute timer instead of its back-off.
+      await recount();
       if (again) { again = false; void syncNow(); }
     }
   })();
