@@ -225,12 +225,21 @@ async def reset_password(user_id: str, user: AuthUser = Depends(console_user)):
     return JSON({"tempPassword": temp})
 
 
+ENROL_RANK = {"reporter": 1, "action_owner": 1, "verifier": 1, "site_safety_officer": 2, "site_head": 3}
+
+
 @router.post("/users/{user_id}/enrolment-code")
 async def enrolment_code(user_id: str, user: AuthUser = Depends(console_user)):
     need_write(user)
     row = await _load(uuid_param(user_id), user)
     if not (user.is_admin or user.is_hse or any(user.is_officer_plus(s) for s in user.sites_in_scope())):
         raise forbidden()
+    if not (user.is_admin or user.is_hse):
+        # S2: an officer or site head may only issue codes for people below them, at sites where they are officer or above
+        for r in await db.q("select role::text as role, site_id::text as site_id from user_site_roles where user_id = $1", [row["id"]]):
+            mine = max((ENROL_RANK.get(x, 0) for x in user.roles_at(r["site_id"])), default=0) if r["site_id"] else 0
+            if r["site_id"] is None or r["role"] not in ENROL_RANK or mine < 2 or mine <= ENROL_RANK[r["role"]]:
+                raise forbidden("You can only issue codes for people below you at your sites.", key="err.enrol_code_not_allowed")
     code = random_code(8)
     async with db.tx() as c:
         exp = await c.fetchval("insert into enrolment_codes (org_id, user_id, code_hash, issued_by, expires_at) values ($1, $2, $3, $4, now() + interval '24 hours') returning expires_at",

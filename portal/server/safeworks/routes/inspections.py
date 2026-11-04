@@ -78,6 +78,8 @@ async def list_runs(request: Request, user: AuthUser = Depends(require_user())):
             params.append(site_ids)
             where.append(f"r.site_id = any(${len(params)}::uuid[])")
     else:
+        if any(s not in officer_sites for s in site_ids):  # S3: only sites where every record may be seen
+            raise not_found()
         params.append(site_ids or officer_sites)
         where.append(f"r.site_id = any(${len(params)}::uuid[])")
     if q.get("status"):

@@ -97,7 +97,7 @@
 .attention .card .lbl { font-weight: 600; }
 .attention .card .det { color: var(--muted); font-size: 13px; }
 .attention .card .go { margin-top: auto; font-size: 13px; color: var(--blue); font-weight: 600; }
-.attention .card.ok { opacity: .75; }
+.attention .card.ok { background: var(--surface-2); } /* no opacity: the small text must keep its contrast */
 .attention .card.ok .big { color: var(--green); }
 
 /* ---------- wizard, tiles ---------- */
@@ -204,7 +204,7 @@
 .phone .pq .seg span { padding: 8px 4px; border-radius: 8px; text-align: center; font-weight: 700; font-size: 12px; border: 1px solid var(--line-strong); }
 .phone .pq .seg span.green { background: var(--green-tint); color: var(--green); border-color: var(--green); }
 .phone .pq .seg span.red { background: var(--red-tint); color: var(--red); border-color: var(--red); }
-.phone .pq .seg span.amber { background: var(--amber-tint); color: var(--amber); }
+.phone .pq .seg span.amber { background: var(--amber-tint); color: var(--amber-ink); }
 .phone .pq .seg span.blue { background: var(--blue-tint); color: var(--blue); }
 .phone .pq .fake { height: 34px; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--surface); }
 .phone .pq .req { color: var(--red); }

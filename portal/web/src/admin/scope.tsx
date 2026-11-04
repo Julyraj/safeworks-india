@@ -33,11 +33,22 @@ interface ScopeCtx {
 
 const Ctx = createContext<ScopeCtx | null>(null);
 
+/** Sites the console can show as a whole: all for company-wide roles, else those where the person is verifier, officer or
+    site head (a site where they only report or own actions is not viewable as a whole; the server answers 404). */
+const VIEW_ROLES = new Set(["verifier", "site_safety_officer", "site_head", "hse_manager", "admin", "auditor"]);
+function viewableSites(me: ReturnType<typeof useAuth>["me"]): Site[] {
+  const all = me?.sites ?? [];
+  if (!me) return all;
+  if (me.roles.some((r) => !r.siteId && VIEW_ROLES.has(r.role))) return all;
+  const ok = new Set(me.roles.filter((r) => r.siteId && VIEW_ROLES.has(r.role)).map((r) => r.siteId));
+  return all.filter((s) => ok.has(s.id));
+}
+
 export function ScopeProvider({ children }: { children: ReactNode }) {
   const { me, setMe } = useAuth();
   const [siteId, setSiteIdRaw] = useLocalState<string>("sw.admin.site", "");
-  const [sites, setSites] = useState<Site[]>(me?.sites ?? []);
-  useEffect(() => { setSites(me?.sites ?? []); }, [me]);
+  const [sites, setSites] = useState<Site[]>(() => viewableSites(me));
+  useEffect(() => { setSites(viewableSites(me)); }, [me]);
   // if the saved site is no longer in scope, fall back to all
   useEffect(() => { if (siteId && sites.length && !sites.some((s) => s.id === siteId)) setSiteIdRaw(""); }, [siteId, sites, setSiteIdRaw]);
 

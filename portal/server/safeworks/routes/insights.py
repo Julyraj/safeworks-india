@@ -33,8 +33,9 @@ BANDS = ("extreme", "high", "moderate", "low")
 def period(q) -> tuple[datetime, datetime]:
     to = parse_dt(q.get("to"), end_of_day=True) or datetime.now(timezone.utc)
     frm = parse_dt(q.get("from")) or (to - timedelta(days=90))
-    if frm > to:
-        frm, to = to, frm
+    if frm > to:  # C2: dates the wrong way round: swap the dates, then take the whole first and last day again
+        frm = parse_dt(q.get("to")) if q.get("to") else to
+        to = parse_dt(q.get("from"), end_of_day=True)
     return frm, to
 
 

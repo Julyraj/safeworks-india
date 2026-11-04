@@ -32,7 +32,7 @@ def _sites(request: Request, user: AuthUser) -> list[str]:
     if not allowed:
         raise forbidden()
     if ids:
-        if any(s not in scope for s in ids):
+        if any(s not in allowed for s in ids):  # S3: a site where the caller only reports is not viewable as a whole
             raise not_found()
         return ids
     return allowed
@@ -169,12 +169,15 @@ def _check_export(user: AuthUser, q: dict | None = None) -> None:
     if not allowed:
         raise forbidden()
     if q is not None:
-        asked = [uuid_param(x) for x in (q.get("siteIds") or q.get("siteId") or "").split(",") if x]
+        # C1: check every site named in either parameter, then export exactly those (the list filters read siteId first)
+        asked: list[str] = []
+        for x in f"{q.get('siteIds') or ''},{q.get('siteId') or ''}".split(","):
+            if x and uuid_param(x) not in asked:
+                asked.append(uuid_param(x))
         if any(x not in allowed for x in asked):
             raise not_found()
-        if not asked:  # no site chosen: only the sites this user may export, not every site they can see
-            q.pop("siteId", None)
-            q["siteIds"] = ",".join(allowed)
+        q.pop("siteId", None)
+        q["siteIds"] = ",".join(asked or allowed)  # no site chosen: only the sites this user may export
     try:
         export_limiter.check(f"export:{user.id}", config.exports_per_hour)
     except Exception:
@@ -291,8 +294,7 @@ async def export_report(request: Request, user: AuthUser = Depends(require_user(
     q = dict(request.query_params)
     _check_export(user, q)
     frm, to = period(request.query_params)
-    q.setdefault("from", frm.isoformat())
-    q.setdefault("to", to.isoformat())
+    q["from"], q["to"] = frm.isoformat(), to.isoformat()  # C3: the sheets use the same (swapped, if reversed) period as the summary
     sites = q["siteIds"].split(",") if q.get("siteIds") else [uuid_param(q["siteId"])]
     lang = user.language
     data = await insights_data(user, "site", sites, frm, to)
@@ -305,7 +307,7 @@ async def export_report(request: Request, user: AuthUser = Depends(require_user(
         [tl("near_miss"), r["nearMiss"]], [tl("open"), r["open"]], [tl("closed"), r["closed"]], [tl("danger_now"), r["dangerNow"]], [],
         [tl("actions")], [tl("assigned"), a["assigned"]], [tl("open"), a["open"]], [tl("overdue"), a["overdue"]], [tl("awaiting_verification"), a["awaitingVerification"]],
         [tl("verified"), a["verified"]], [tl("on_time_pct"), a["onTimePct"] if a["onTimePct"] is not None else "—"], [],
-        [tl("trend"), tl("reports"), tl("at_risk"), tl("good_practice"), tl("actions_closed")],
+        [tl("trend"), tl("reports"), tl("at_risk_near_miss"), tl("good_practice"), tl("actions_closed")],  # C4: the trend counts near misses too
         *[[x["period"], x["reports"], x["atRisk"], x["good"], x["actionsClosed"]] for x in data["trend"]],
     ]
     bold = [0, 6, 15, 23]

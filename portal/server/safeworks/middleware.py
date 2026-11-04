@@ -35,6 +35,8 @@ SECURITY_HEADERS = {
     "x-content-type-options": "nosniff",
     "x-frame-options": "SAMEORIGIN",
     "referrer-policy": "no-referrer",
+    # camera (photos, QR scan), microphone (voice notes) and location (report position) for this site only; nothing else
+    "permissions-policy": "camera=(self), microphone=(self), geolocation=(self), payment=(), usb=(), serial=(), bluetooth=(), interest-cohort=()",
     "strict-transport-security": "max-age=15552000; includeSubDomains",
     "cross-origin-opener-policy": "same-origin",
     "cross-origin-resource-policy": "same-site",

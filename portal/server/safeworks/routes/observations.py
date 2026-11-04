@@ -38,6 +38,8 @@ def observation_filters(q: dict, user: AuthUser, params: list, *, table: str = "
             params.append(site_ids)
             where.append(f"{table}.site_id = any(${len(params)}::uuid[])")
     else:
+        if any(s not in officer_sites for s in site_ids):  # S3: only sites where every record may be seen
+            raise not_found()
         params.append(site_ids or officer_sites)
         where.append(f"{table}.site_id = any(${len(params)}::uuid[])")
     for key, col in (("status", "status"), ("band", "risk_band"), ("type", "type"), ("channel", "channel")):

@@ -94,8 +94,16 @@ async def login(request: Request):
         return JSON(await _login_response(c, user, session, must_change=user.must_change_password))
 
 
+def _no_reenrol_without_code(user: AuthUser) -> None:
+    """S1: once an authenticator is set up, a session that has only passed the password may not replace it (that would
+    make MFA worthless). A lost phone is handled by an administrator's MFA reset."""
+    if user.mfa_enabled and not user.mfa_passed:
+        raise HttpError(403, "Your authenticator is already set up. Enter its code, or ask an administrator to reset it.", "mfa_required", key="err.mfa_already_enrolled")
+
+
 @router.post("/mfa/enrol")
 async def mfa_enrol(request: Request, user: AuthUser = Depends(require_user(allow_preauth=True, allow_must_change=True))):
+    _no_reenrol_without_code(user)
     org = await db.one("select name from organisations where id = $1", [user.org_id])
     async with db.tx() as c:
         out = await mfa.begin_enrol(c, user.id, user.email or user.employee_code, f"SafeWorks {org['name']}" if org else "SafeWorks")
@@ -120,6 +128,7 @@ async def _finish_mfa(request: Request, user: AuthUser, action: str) -> dict:
 
 @router.post("/mfa/confirm")
 async def mfa_confirm(request: Request, user: AuthUser = Depends(require_user(allow_preauth=True, allow_must_change=True))):
+    _no_reenrol_without_code(user)
     inp = parse(MfaCode, await json_body(request))
     row = await db.one("select mfa_secret_enc, mfa_enabled from users where id = $1", [user.id])
     if not row or not row["mfa_secret_enc"]:
@@ -167,10 +176,14 @@ async def enrol(request: Request):
         urow = await db.one(USER_SQL + " where u.id = $1", [row["user_id"]], c)
         device_id = await _register_device(c, row["user_id"], inp.device_uuid, inp.platform, inp.app_version)
         user = await build_user({**urow, "kind": "field"}, c)
-        session = await create_session(user.id, "field", ip, request.headers.get("user-agent", ""), device_id=device_id, conn=c)
+        # S2: an enrolment code proves who issued it, not who the person is, so roles that need MFA still have to pass it
+        need_mfa = mfa.roles_need_mfa(user.role_set(), await org_settings(user.org_id, c))
+        session = await create_session(user.id, "field", ip, request.headers.get("user-agent", ""), mfa_passed=not need_mfa, device_id=device_id, conn=c)
         user.session_id = session["sessionId"]
-        await audit(c, org_id=user.org_id, actor=user, action="login", record_type="user", record_id=user.id, changes={"kind": "field", "via": "enrolment_code"}, ip=ip)
+        await audit(c, org_id=user.org_id, actor=user, action="login", record_type="user", record_id=user.id, changes={"kind": "field", "via": "enrolment_code", **({"stage": "preauth"} if need_mfa else {})}, ip=ip)
         await audit(c, org_id=user.org_id, actor=user, action="password_reset", record_type="user", record_id=user.id, changes={"via": "enrolment_code"}, ip=ip)
+        if need_mfa:
+            return JSON({"token": session["token"], "expiresAt": session["expiresAt"], "mfaRequired": True, "mfaEnrolled": user.mfa_enabled, "mustChangePassword": False})
         return JSON(await _login_response(c, user, session, must_change=False))
 
 

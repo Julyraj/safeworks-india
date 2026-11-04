@@ -12,7 +12,7 @@ from typing import Any
 from . import db
 from .config import config
 from .crypto import hmac_id
-from .errors import bad_request, not_found
+from .errors import bad_request, conflict, not_found
 from .rbac import AuthUser
 from .schemas import MediaRef
 from .security import sign_ticket, verify_ticket
@@ -82,6 +82,9 @@ async def store_upload(conn, row: dict, up: UploadedFile) -> dict:
         raise bad_request("The file type does not match the media record.", key="err.media_type")
     if row["upload_status"] in ("uploaded", "verified") and row["sha256_server"] == up.sha256:
         return media_view(row)
+    if row["upload_status"] == "verified":
+        # S4: evidence whose bytes matched the fingerprint taken at capture is locked; different bytes are refused
+        raise conflict("This photo is already stored and checked; it cannot be replaced.", key="err.media_locked")
     key = row["storage_key"]
     if not key.endswith("." + up.ext):
         key = key.rsplit(".", 1)[0] + "." + up.ext

@@ -74,16 +74,18 @@ function totp(secret, step) {
   return String((((h[o] & 0x7f) << 24) | (h[o + 1] << 16) | (h[o + 2] << 8) | h[o + 3]) % 1_000_000).padStart(6, "0");
 }
 const usedStep = {};
+const mfaSecrets = {};
 async function apiLogin(login, password = PW, kind = "field") {
   const r = await api(null, "POST", "/auth/login", { login, password, kind, deviceUuid: `ui-${login}-${kind}`, platform: "ui", appVersion: "2.0.0" });
   if (r.status !== 200) throw new Error(`login ${login}: ${r.status} ${JSON.stringify(r.data)}`);
   if (!r.data.mfaRequired) return r.data.token;
   const pre = r.data.token;
-  const en = await api(pre, "POST", "/auth/mfa/enrol");
+  // Once an authenticator is set up it cannot be replaced from a password-only session (S1), so remember each secret.
+  if (!mfaSecrets[login]) mfaSecrets[login] = (await api(pre, "POST", "/auth/mfa/enrol")).data.secret;
   let step = Math.floor(Date.now() / 30000);
   if (usedStep[login] !== undefined && step <= usedStep[login]) { await sleep((usedStep[login] + 1) * 30000 - Date.now() + 300); step = Math.floor(Date.now() / 30000); }
   usedStep[login] = step;
-  const c = await api(pre, "POST", "/auth/mfa/confirm", { code: totp(en.data.secret, step) });
+  const c = await api(pre, "POST", r.data.mfaEnrolled ? "/auth/mfa" : "/auth/mfa/confirm", { code: totp(mfaSecrets[login], step) });
   if (c.status !== 200) throw new Error(`mfa ${login}: ${c.status}`);
   return c.data.token;
 }

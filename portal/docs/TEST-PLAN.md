@@ -40,6 +40,7 @@ All were fixed and re-tested on 3 Nov 2026; results in `TEST-RESULTS.md`. F1–F
 | F24 | Phone numbers | Not checked anywhere | 7–16 digits, optional + | EHS-ADM-061 |
 | F25 | Console case-number jump | Did nothing when already on the register; old filters hid the case | Re-read the address, clear other filters | EHS-OBS-232 |
 | F26 | Field outbox | Items that failed offline stayed Pending after reopening the app online | Send at once on start when online | EHS-OBS-084 |
+| S1–S4, C1–C4, A1–A3, H1 | Detailed QA pass (4 Nov) | Security, correctness, accessibility and header findings beyond this plan | See `QA-DETAILED.md` | `tests/test_security.py`, `e2e/qa_extra.cjs` |
 
 ---
 

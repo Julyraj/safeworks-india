@@ -108,8 +108,8 @@ small, .small { font-size: 13px; }
 .chipbar.wrap { flex-wrap: wrap; overflow: visible; }
 .pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: var(--r-pill); font-size: 12.5px; font-weight: 600; line-height: 1.5; background: var(--surface-3); color: var(--ink-2); white-space: nowrap; }
 .pill.green { background: var(--green-tint); color: var(--green); }
-.pill.amber { background: var(--amber-tint); color: var(--amber); }
-.pill.orange { background: var(--orange-tint); color: var(--orange); }
+.pill.amber { background: var(--amber-tint); color: var(--amber-ink); }
+.pill.orange { background: var(--orange-tint); color: var(--orange-ink); }
 .pill.red { background: var(--red-tint); color: var(--red); }
 .pill.blue { background: var(--blue-tint); color: var(--blue); }
 .pill.hivis { background: var(--hivis-tint); color: var(--ink); }
@@ -117,7 +117,8 @@ small, .small { font-size: 13px; }
 .badge { position: absolute; top: 2px; right: 2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
 .band-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
 .band-low { --band: var(--green); } .band-moderate { --band: var(--amber); } .band-high { --band: var(--orange); } .band-extreme { --band: var(--red); }
-.band-chip { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--band, var(--ink)); }
+.band-chip { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--band-ink, var(--band, var(--ink))); }
+.band-moderate { --band-ink: var(--amber-ink); } .band-high { --band-ink: var(--orange-ink); } /* text needs the darker shade; swatches keep --band */
 
 /* ---------- forms ---------- */
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
@@ -300,7 +301,7 @@ table.table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .kpi .v { font-family: var(--font-cond); font-size: 32px; font-weight: 700; line-height: 1; }
 .kpi .l { font-size: 13px; color: var(--muted); font-weight: 600; }
 .kpi .n { font-size: 12px; color: var(--muted); }
-.kpi.red .v { color: var(--red); } .kpi.green .v { color: var(--green); } .kpi.orange .v { color: var(--orange); }
+.kpi.red .v { color: var(--red); } .kpi.green .v { color: var(--green); } .kpi.orange .v { color: var(--orange-ink); }
 .bars { display: grid; gap: 6px; }
 .bars .b { display: grid; grid-template-columns: minmax(80px, 160px) 1fr auto; gap: 8px; align-items: center; font-size: 14px; }
 .bars .b .track { height: 10px; background: var(--surface-3); border-radius: 5px; overflow: hidden; }

@@ -38,6 +38,8 @@ def action_filters(q: dict, user: AuthUser, params: list, *, table: str = "a") -
         params.append(user.id)
         where.append(f"({table}.owner_user_id = ${len(params)} or {table}.verifier_user_id = ${len(params)} or {table}.completed_by = ${len(params)})")
     else:
+        if any(s not in officer_sites for s in site_ids):  # S3: only sites where every record may be seen
+            raise not_found()
         params.append(site_ids or officer_sites)
         where.append(f"{table}.site_id = any(${len(params)}::uuid[])")
         site_ids = []

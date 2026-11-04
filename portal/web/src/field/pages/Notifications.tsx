@@ -50,8 +50,9 @@ export default function Notifications() {
       {loading ? <ListSkeleton rows={4} /> : data.length === 0 ? <EmptyState icon={<IconBell />} title={t("notif.empty")} body={t("notif.emptyBody")} /> : (
         <div className="stack" style={{ gap: 8 }}>
           {data.map((n) => (
-            <div key={n.id} className={`notif${!n.readAt ? " unread" : ""}${n.critical ? " critical" : ""}`} role="button" tabIndex={0} onClick={() => void open(n)} onKeyDown={(e) => { if (e.key === "Enter") void open(n); }} data-row>
-              <div>
+            <div key={n.id} className={`notif${!n.readAt ? " unread" : ""}${n.critical ? " critical" : ""}`} onClick={() => void open(n)} data-row>
+              {/* only the text is the "open" button, so the Acknowledge button is not nested inside another control */}
+              <div role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); void open(n); } }}>
                 <div style={{ fontWeight: 600 }}>{n.critical ? <IconAlert size={14} style={{ color: "var(--red)", verticalAlign: "-2px" }} /> : null} {n.title}</div>
                 <div className="small">{n.body}</div>
                 <div className="small muted">{relative(n.createdAt, t, lang)} · {t(`notif.event.${n.eventType}`) === `notif.event.${n.eventType}` ? n.eventType.replace(/_/g, " ") : t(`notif.event.${n.eventType}`)}</div>

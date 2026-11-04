@@ -95,7 +95,7 @@
 .defaults-note { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
 .dup { border-left: 4px solid var(--amber); }
 .sla { font-variant-numeric: tabular-nums; font-weight: 700; }
-.sla.late { color: var(--red); } .sla.soon { color: var(--orange); }
+.sla.late { color: var(--red); } .sla.soon { color: var(--orange-ink); }
 
 /* ---------- action detail ---------- */
 .due-big { display: flex; align-items: baseline; gap: 10px; }
@@ -160,7 +160,7 @@
 .more-grid .cnt { margin-left: auto; font-size: 12px; background: var(--surface-3); border-radius: 9px; padding: 0 7px; }
 .hint-box { font-size: 13px; color: var(--muted); padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-2); }
 .list-item.local { border-style: dashed; }
-.repeat { color: var(--orange); font-weight: 700; font-size: 12px; }
+.repeat { color: var(--orange-ink); font-weight: 700; font-size: 12px; }
 
 /* Charts page: two KPI tiles per row on phones */
 .page .kpis { grid-template-columns: repeat(auto-fill, minmax(min(46%, 160px), 1fr)); }

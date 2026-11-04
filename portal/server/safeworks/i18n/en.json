@@ -295,5 +295,9 @@
   "err.auditor_expiry_required": "An auditor account needs an expiry date.",
   "err.extra_required": "Fill in the required details for this category.",
   "err.answer_invalid": "This answer is not valid for question {question}.",
-  "err.date_in_future": "Choose a date in the future."
+  "err.date_in_future": "Choose a date in the future.",
+  "err.mfa_already_enrolled": "Your authenticator is already set up. Enter its code, or ask an administrator to reset it.",
+  "err.enrol_code_not_allowed": "You can only issue codes for people below you at your sites.",
+  "err.media_locked": "This photo is already stored and checked; it cannot be replaced.",
+  "xlsx.at_risk_near_miss": "Unsafe act, condition or near miss"
 }

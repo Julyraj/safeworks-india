@@ -21,8 +21,10 @@
   --red-tint: #fbe9e9;
   --orange: #d9620b;
   --orange-tint: #fdeee2;
+  --orange-ink: #a34700; /* orange text on light backgrounds (4.5:1 or better) */
   --amber: #c99700;
   --amber-tint: #fdf5d8;
+  --amber-ink: #7a5900; /* amber text on light backgrounds (4.5:1 or better) */
   --blue: #1d5fa7;
   --blue-tint: #e6eff9;
   --green: #1f7a4d;
@@ -67,6 +69,10 @@
     --orange-tint: #3a2616;
     --amber: #ffd34d;
     --amber-tint: #3a3216;
+  --amber-ink: #ffd34d;
+  --orange-ink: #ff9a4d;
+    --amber-ink: #ffd34d;
+    --orange-ink: #ff9a4d;
     --blue: #6fa8ec;
     --blue-tint: #172c45;
     --green: #4fc28a;
@@ -96,6 +102,8 @@
   --orange-tint: #3a2616;
   --amber: #ffd34d;
   --amber-tint: #3a3216;
+  --amber-ink: #ffd34d;
+  --orange-ink: #ff9a4d;
   --blue: #6fa8ec;
   --blue-tint: #172c45;
   --green: #4fc28a;

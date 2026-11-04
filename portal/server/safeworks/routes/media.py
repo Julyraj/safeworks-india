@@ -7,6 +7,7 @@ from .. import db
 from ..audit import audit
 from ..auth import require_user
 from ..errors import not_found
+from ..rbac import require_writer
 from ..http import JSON, uuid_param
 from ..media import can_view_media, get_media_row, store_upload
 from ..rbac import AuthUser
@@ -21,6 +22,10 @@ async def upload(client_uuid: str, request: Request, user: AuthUser = Depends(re
     client_uuid = uuid_param(client_uuid)
     row = await get_media_row(None, client_uuid=client_uuid)
     if not await can_view_media(None, user, row):
+        raise not_found()
+    # S4: only the person who took the photo or recording sends its bytes; viewers (officers, verifiers, auditors) cannot
+    require_writer(user)
+    if row["created_by"] != user.id:
         raise not_found()
     up = await read_raw_upload(request)
     async with db.tx() as c:
