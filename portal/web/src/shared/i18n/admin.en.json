@@ -1223,5 +1223,13 @@
   "dash.noDepartments": "No departments set up",
   "dash.noDepartmentsHint": "Add departments and give each user one to see this table.",
   "account.language": "Show the console in",
-  "account.languageHint": "Saved to your account: the phone app, emails and notifications use it too. English is the default."
+  "account.languageHint": "Saved to your account: the phone app, emails and notifications use it too. English is the default.",
+  "cmdk.title": "Command menu",
+  "cmdk.go": "Go to…",
+  "cmdk.placeholder": "Type a page name or paste a case number",
+  "cmdk.empty": "Nothing matches.",
+  "cmdk.cases": "Cases",
+  "cmdk.openCase": "Open {case}",
+  "cmdk.move": "move",
+  "cmdk.open": "open"
 }

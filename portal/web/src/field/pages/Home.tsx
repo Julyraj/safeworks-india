@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useI18n } from "../../shared/i18n";
 import { Button, Card, CardHead, Bars, ListSkeleton } from "../../shared/ui";
-import { IconPlus, IconAlert, IconClock, IconCheckCircle, IconInbox, IconClipboard, IconQr, IconRefresh } from "../../shared/icons";
+import { IconPlus, IconAlert, IconClock, IconCheckCircle, IconInbox, IconClipboard, IconRefresh } from "../../shared/icons";
 import { fmtTime } from "../../shared/format";
 import { useSession, isOfficer, isVerifier } from "../session";
 import { useActions, useObservations, useRefData, useRuns } from "../offline/store";
@@ -83,12 +83,9 @@ export default function Home() {
     <div className="page">
       <SyncBanner />
       <div className="home-hero">
-        <div className="row between">
-          <div>
-            <div className="kicker">{t("home.hello", { name: me?.name.split(" ")[0] ?? "" })}</div>
-            <h1 style={{ fontSize: 26 }}>{t("home.headline")}</h1>
-          </div>
-          <Button variant="ghost" icon onClick={() => nav("/scan")} aria-label={t("nav.scan")}><IconQr /></Button>
+        <div>
+          <div className="kicker">{t("home.hello", { name: me?.name.split(" ")[0] ?? "" })}</div>
+          <h1 className="home-title">{t("home.headline")}</h1>
         </div>
         <Button variant="primary" block className="home-report" onClick={() => nav("/report")} data-testid="home-report"><IconPlus size={26} /> {t("home.report")}</Button>
       </div>

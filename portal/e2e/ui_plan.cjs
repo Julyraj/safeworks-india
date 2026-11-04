@@ -925,6 +925,27 @@ tc(["EHS-OBS-233", "EHS-OBS-082"], async () => {
   await p.unroute("**/api/v1/sync/push"); await p.unroute("**/api/v1/media/**");
 });
 
+// ---- console: command menu (UI v2)
+tc(["EHS-ADM-291"], async () => {
+  const p = await consoleAs("SO-TN1");
+  await p.keyboard.press("Control+k");
+  const menu = p.locator('[data-testid="command-menu"]');
+  await menu.waitFor();
+  const opts = await menu.locator('[role="option"]').allInnerTexts();
+  check(opts.includes("Actions") && !opts.includes("Settings"), `pages for the role only: ${opts.join(", ")}`);
+  await menu.locator("input").fill("act");
+  await p.keyboard.press("Enter");
+  await until(async () => new URL(p.url()).pathname.endsWith("/actions"), "Enter opens Actions");
+  const caseNo = sql1("select o.case_no from observations o join sites s on s.id = o.site_id where s.code = 'TN1' and o.case_no is not null order by o.received_at desc limit 1");
+  await p.locator('[data-testid="command-open"]').click();
+  await menu.locator("input").fill(caseNo);
+  check((await menu.locator('[role="option"]').first().innerText()).includes(caseNo), "offers to open the pasted case");
+  await p.keyboard.press("Enter");
+  await until(async () => p.url().includes("/observations") && decodeURIComponent(p.url()).includes(caseNo), "opens the register filtered to the case");
+  await p.keyboard.press("Control+k"); await menu.waitFor(); await p.keyboard.press("Escape");
+  await until(async () => (await menu.count()) === 0, "Esc closes the menu");
+});
+
 (async () => {
   let proc;
   try {

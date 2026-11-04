@@ -1045,6 +1045,7 @@ Answer types in SafeWorks: pass/fail/N.A., number (with pass range), text, photo
 | EHS-ADM-261 | EHS Manager (HSE) | Notifications log | Open | See EHS-RPT-047. | Positive | As RPT-047. |
 | EHS-ADM-262 | External Auditor (AUD) | Console menu → Notifications log ⚠ F5 | Menu item | `AUD01` clicks Notifications log in the menu. | Security | Menu and server must agree. Today the menu shows it and the server answers 404 → log defect F5. |
 | EHS-ADM-290 | EHS Manager (HSE) | Console menu → Health ⚠ F6 | Menu item | Look for Health as `HSE01`; then call `GET /admin/health`. | UI | Menu and server must agree. Today the menu hides it and the server allows it → log defect F6. |
+| EHS-ADM-291 | Safety Officer (SSO) | Console → any page | Command menu (UI v2) | Press Ctrl+K (⌘K on a Mac), type "act", press Enter; open it again and paste a case number. | Positive | The menu lists only pages the role may open, grouped as in the sidebar; Enter opens Actions; a pasted case number offers "Open <case>" and opens that register filtered to the case; Esc closes. |
 
 ---
 
@@ -1174,9 +1175,9 @@ Not testable in 2.1: these are Phase 2 (gap 1.4). The only incident step today i
 | 3 | Corrective and preventive actions | 116 |
 | 4 | Inspections, audits, checklists | 72 |
 | 5 | Reports, exports, notifications | 41 |
-| 6 | Admin and master settings | 142 |
+| 6 | Admin and master settings | 143 |
 | 7 | Cross-role workflows and isolation | 64 |
-| **Total** | | **770** |
+| **Total** | | **771** |
 
 ## How to run this plan
 

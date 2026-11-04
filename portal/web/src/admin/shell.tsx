@@ -14,6 +14,7 @@ import { useAuth, APP_VERSION } from "./auth";
 import { useScope } from "./scope";
 import { useAttention } from "./attention";
 import { api, errMessage } from "./api";
+import { CommandMenu } from "./components/CommandMenu";
 
 /** The person's language: shown at once, and saved to their account (phone app, emails and notifications use it too). */
 function useMyLanguage() {
@@ -46,6 +47,7 @@ export function Shell() {
   const [railOpen, setRailOpen] = useState(false);
   const [account, setAccount] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  const [cmdOpen, setCmdOpen] = useState(false);
   const [jump, setJump] = useState("");
 
   useEffect(() => { setRailOpen(false); }, [loc.pathname]);
@@ -100,6 +102,7 @@ export function Shell() {
     { keys: "g s", handler: () => nav("/sites") },
     { keys: "g t", handler: () => nav("/attention") },
     { keys: "/", handler: focusSearch },
+    { keys: "mod+k", handler: () => setCmdOpen((o) => !o), global: true },
     { keys: "Escape", handler: () => { (document.activeElement as HTMLElement | null)?.blur?.(); setRailOpen(false); }, global: true },
   ]);
   const help = useShortcutsHelp([
@@ -153,6 +156,9 @@ export function Shell() {
               <input ref={searchRef} className="input" value={jump} onChange={(e) => setJump(e.target.value)} placeholder={t("top.jump")} aria-label={t("top.jump")} />
               <kbd aria-hidden>/</kbd>
             </form>
+            <Button variant="ghost" size="sm" className="cmdk-open" onClick={() => setCmdOpen(true)} aria-label={t("cmdk.title")} data-testid="command-open">
+              <span aria-hidden>{t("cmdk.go")}</span> <kbd aria-hidden>{/Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl K"}</kbd>
+            </Button>
             <span className="spacer" />
             <Select value={siteId} onChange={(e) => setSiteId(e.target.value)} aria-label={t("top.siteFilter")}>
               <option value="">{t("top.allSites")}</option>
@@ -181,6 +187,14 @@ export function Shell() {
         </main>
       </div>
       {help}
+      {cmdOpen ? (
+        <CommandMenu
+          items={sections.flatMap((s) => s.items.filter((i) => i.show).map((i) => ({ key: i.to, label: t(`nav.${i.key}`), group: t(`nav.section.${s.key}`), icon: i.icon, to: i.to })))}
+          onGo={(to) => nav(to)}
+          onCase={(q) => { const m = q.toUpperCase().match(/-(OBS|ACT|INS)-/); nav(`${m?.[1] === "ACT" ? "/actions" : m?.[1] === "INS" ? "/inspections" : "/observations"}?q=${encodeURIComponent(q)}`); }}
+          onClose={() => setCmdOpen(false)}
+        />
+      ) : null}
       {account ? <AccountSheet onLang={setLang} onClose={() => setAccount(false)} onSignOut={async () => { setAccount(false); await logout(); }} /> : null}
     </div>
   );

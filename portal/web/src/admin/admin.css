@@ -6,9 +6,10 @@
 .console .shell > main { display: flex; flex-direction: column; min-height: 100dvh; }
 .console-top {
   position: sticky; top: 0; z-index: 45; display: flex; align-items: center; gap: 10px; min-height: var(--top-h); padding: 0 20px;
-  background: var(--surface); border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 88%, transparent); -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px);
 }
-.console-top .crumb { font-family: var(--font-cond); font-weight: 700; font-size: 18px; white-space: nowrap; }
+.console-top .crumb { font-weight: 600; font-size: 15px; white-space: nowrap; letter-spacing: -0.01em; }
+.console-top .search .input { background: var(--surface-2); }
 .console-top .search { flex: 1; max-width: 420px; position: relative; }
 .console-top .search .input { min-height: 38px; padding-left: 36px; font-size: 14px; }
 .console-top .search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
@@ -16,10 +17,10 @@
 .console-top .select { min-height: 38px; padding: 6px 32px 6px 10px; font-size: 14px; width: auto; max-width: 240px; }
 .console-top .spacer { flex: 1; }
 .console-top .who { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.console-top .who .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
-.console .content { padding: 18px 20px 48px; max-width: 1480px; width: 100%; }
+.console-top .who .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: var(--primary-ink); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+.console .content { padding: 22px 24px 48px; max-width: 1480px; width: 100%; }
 .console .rail-toggle { display: none; }
-.console .rail .foot { margin-top: auto; padding: 12px 10px 4px; font-size: 12px; color: #8a99a8; }
+.console .rail .foot { margin-top: auto; padding: 12px 10px 4px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
 .console .rail nav { display: flex; flex-direction: column; gap: 1px; }
 .console .rail a .cnt.red { background: var(--red); color: #fff; }
 .console .rail a .cnt.amber { background: var(--amber); color: #0f1c2b; }
@@ -34,7 +35,7 @@
 
 /* ---------- page header, filters ---------- */
 .ph { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
-.ph h1 { margin: 0; font-size: 26px; }
+.ph h1 { margin: 0; font-size: 24px; }
 .ph .sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
 .ph .tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 12px; }
@@ -80,7 +81,7 @@
 .dl { display: grid; grid-template-columns: minmax(120px, 160px) 1fr; gap: 6px 12px; font-size: 14px; margin: 0; }
 .dl dt { color: var(--muted); }
 .dl dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.section-title { font-family: var(--font-cond); font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; }
+.section-title { font-weight: 600; font-size: 14px; color: var(--ink-2); margin: 18px 0 8px; }
 .section-title:first-child { margin-top: 0; }
 
 /* ---------- dashboard ---------- */
@@ -222,8 +223,8 @@
 
 /* ---------- misc ---------- */
 .readonly-banner { margin: 0 0 14px; }
-.login-wrap { min-height: 100dvh; display: grid; place-items: center; padding: 20px; background: radial-gradient(1200px 600px at 20% 0%, #1c2f45, var(--ink)); }
-.login-card { width: min(440px, 100%); background: var(--surface); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-2); }
+.login-wrap { min-height: 100dvh; display: grid; place-items: center; padding: 20px; background: radial-gradient(900px 480px at 15% -10%, color-mix(in srgb, var(--hivis) 16%, transparent), transparent 60%), var(--paper); }
+.login-card { width: min(440px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-2); }
 .login-card .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .login-card .brand .mark { width: 40px; height: 40px; border-radius: 10px; background: var(--hivis); color: var(--hivis-ink); display: grid; place-items: center; font-weight: 800; font-family: var(--font-cond); font-size: 20px; }
 .login-card h1 { font-size: 24px; margin: 0; }
@@ -252,3 +253,19 @@
 .action-draft .field { margin-bottom: 8px; }
 .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
 .photo-grid .thumb { width: 100%; height: auto; aspect-ratio: 1; }
+
+/* ---------- command menu (Ctrl+K / ⌘K), after shadcn-admin ---------- */
+.console-top .cmdk-open { color: var(--muted); font-weight: 500; gap: 8px; }
+.console-top .cmdk-open kbd { font-size: 11px; }
+@media (max-width: 1100px) { .console-top .cmdk-open span { display: none; } }
+.cmdk { position: fixed; z-index: 61; left: 50%; top: 12vh; transform: translateX(-50%); width: min(620px, calc(100vw - 24px)); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-2); overflow: hidden; animation: fade var(--t-med) var(--ease); }
+.cmdk-input { display: flex; align-items: center; gap: 10px; padding: 0 14px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.cmdk-input input { flex: 1; min-height: 52px; border: 0; outline: none; background: transparent; font-size: 15px; color: var(--ink); }
+.cmdk-list { list-style: none; margin: 0; padding: 6px; max-height: min(420px, 60vh); overflow: auto; }
+.cmdk-group { font-size: 12px; font-weight: 550; color: var(--muted); padding: 10px 10px 4px; }
+.cmdk-item { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 10px; border-radius: 8px; cursor: pointer; font-size: 14.5px; color: var(--ink-2); }
+.cmdk-item svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+.cmdk-item[aria-selected="true"] { background: var(--surface-3); color: var(--ink); }
+.cmdk-item[aria-selected="true"] svg { color: var(--ink); }
+.cmdk-empty { padding: 22px 10px; text-align: center; color: var(--muted); font-size: 14px; }
+.cmdk-foot { display: flex; gap: 16px; padding: 8px 14px; border-top: 1px solid var(--line); background: var(--surface-2); font-size: 12px; color: var(--muted); }

@@ -1,6 +1,10 @@
 /* Field app styles on top of the shared kit: shell layout, home cards, quick-report pieces, blur editor, signature pad,
    outbox rows, QR scanner. Everything uses the tokens so dark mode and the hi-vis primary stay consistent. */
 
+/* v2: on the phone the primary action keeps hi-vis yellow (easy to find in sunlight, with gloves); the console uses dark ink */
+.btn.primary { background: var(--hivis); border-color: var(--hivis); color: var(--hivis-ink); }
+.btn.primary:hover { background: var(--hivis-press); border-color: var(--hivis-press); }
+
 /* ---------- shell ---------- */
 .shell > main { display: flex; flex-direction: column; min-height: 100dvh; }
 .shell .page { width: 100%; }
@@ -11,13 +15,13 @@
 }
 .topbar .brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .topbar .brand .mark { width: 28px; height: 28px; border-radius: 7px; background: var(--hivis); color: var(--hivis-ink); display: grid; place-items: center; font-weight: 800; font-family: var(--font-cond); font-size: 15px; flex: none; }
-.topbar .sub { font-size: 12px; opacity: .75; }
+.topbar .sub { font-size: 12px; color: var(--muted); }
 .topbar .badge { top: 4px; right: 4px; }
-.rail .user { margin-top: auto; padding: 12px 10px 4px; border-top: 1px solid rgba(255,255,255,.08); font-size: 13px; color: #c9d4de; }
-.rail .user b { display: block; color: #fff; font-weight: 600; }
-.rail .sync { font-size: 12px; color: #8a99a8; padding: 6px 10px; display: flex; gap: 6px; align-items: center; }
+.rail .user { margin-top: auto; padding: 12px 10px 4px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-2); }
+.rail .user b { display: block; color: var(--ink); font-weight: 600; }
+.rail .sync { font-size: 12px; color: var(--muted); padding: 6px 10px; display: flex; gap: 6px; align-items: center; }
 .rail .sync .dotc { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
-.rail .sync .dotc.off { background: #8a99a8; } .rail .sync .dotc.bad { background: var(--red); }
+.rail .sync .dotc.off { background: var(--muted); } .rail .sync .dotc.bad { background: var(--red); }
 .rail .report { margin: 6px 0 10px; }
 .bottom-nav a .badge { position: absolute; top: 6px; left: calc(50% + 6px); }
 
@@ -30,8 +34,9 @@
 .stale { font-size: 12px; color: var(--muted); }
 
 /* ---------- home ---------- */
-.home-hero { display: grid; gap: 10px; margin-bottom: 14px; }
-.home-report { min-height: 64px; font-size: 19px; border-radius: var(--r-lg); box-shadow: var(--shadow-2); }
+.home-hero { display: grid; gap: 14px; margin: 4px 0 18px; }
+.home-title { font-size: 26px; margin: 2px 0 0; }
+.home-report { min-height: 64px; font-size: 18px; border-radius: var(--r-lg); box-shadow: 0 8px 24px -10px color-mix(in srgb, var(--hivis) 70%, transparent); }
 .needs { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
 .need-card { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; text-align: left; }
 .need-card .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-3); color: var(--ink-2); flex: none; }
@@ -52,7 +57,7 @@
 @media (min-width: 961px) { .list-head { top: 0; } }
 .search-row { display: flex; gap: 8px; align-items: center; }
 .search-row .input { min-height: 44px; }
-.group-title { font-family: var(--font-cond); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; color: var(--muted); margin: 14px 0 6px; display: flex; align-items: center; gap: 8px; }
+.group-title { font-weight: 600; font-size: 13px; color: var(--muted); margin: 14px 0 6px; display: flex; align-items: center; gap: 8px; }
 .group-title::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
 .chip .cnt { font-size: 11px; background: rgba(0,0,0,.08); border-radius: 9px; padding: 0 6px; }
 .chip[aria-pressed="true"] .cnt { background: rgba(255,255,255,.25); }
