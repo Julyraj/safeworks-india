@@ -1,0 +1,387 @@
+1
+00:00:00,300 --> 00:00:02,503
+Someone on your site just spotted a hazard.
+
+2
+00:00:02,503 --> 00:00:05,680
+What happens next decides whether it gets fixed, or forgotten.
+
+3
+00:00:06,580 --> 00:00:08,903
+This is the complete SafeWorks walkthrough:
+
+4
+00:00:08,903 --> 00:00:13,279
+the phone app, the QR form for visitors, the admin console, and the settings that
+
+5
+00:00:13,279 --> 00:00:14,630
+shape how your sites run.
+
+6
+00:00:15,530 --> 00:00:20,229
+Sign in with your employee code or email, in English, Hindi, Tamil or Kannada.
+
+7
+00:00:20,229 --> 00:00:22,759
+New workers use a one-time enrolment code;
+
+8
+00:00:22,759 --> 00:00:25,410
+managers add a six-digit authenticator code.
+
+9
+00:00:26,310 --> 00:00:30,612
+Home shows your sync status, the Report button, and what needs you now:
+
+10
+00:00:30,612 --> 00:00:35,702
+overdue actions, items to verify, triage backlog and inspections due, then this week
+
+11
+00:00:35,702 --> 00:00:36,490
+at your site.
+
+12
+00:00:37,390 --> 00:00:40,133
+Quick report has every option on one screen:
+
+13
+00:00:40,133 --> 00:00:45,309
+location from GPS or the QR poster, type, categories, up to ten photos, a spoken or
+
+14
+00:00:45,309 --> 00:00:47,615
+typed description, then the switches:
+
+15
+00:00:47,615 --> 00:00:50,733
+fixed on the spot, danger now, report anonymously.
+
+16
+00:00:50,733 --> 00:00:53,040
+More details adds employer and trade.
+
+17
+00:00:53,940 --> 00:00:55,348
+Reports has three tabs:
+
+18
+00:00:55,348 --> 00:00:57,920
+My reports, Triage for officers, and Site.
+
+19
+00:00:57,920 --> 00:01:02,880
+Search, save a filter, and open any report for its photos, timeline, comments and
+
+20
+00:01:02,880 --> 00:01:03,370
+actions.
+
+21
+00:01:04,270 --> 00:01:06,006
+Triage offers seven decisions:
+
+22
+00:01:06,006 --> 00:01:10,519
+accept and assign, fixed on the spot, return with a question, reviewed, merge,
+
+23
+00:01:10,519 --> 00:01:12,603
+discard, or escalate to an incident.
+
+24
+00:01:12,603 --> 00:01:17,463
+Accept and assign scores the risk on the matrix, asks for an interim control on high
+
+25
+00:01:17,463 --> 00:01:20,530
+risks, and creates actions with owners and due dates.
+
+26
+00:01:21,430 --> 00:01:23,652
+Owners see their actions, overdue first.
+
+27
+00:01:23,652 --> 00:01:27,485
+Start the work, then Complete with an after-photo and the root cause.
+
+28
+00:01:27,485 --> 00:01:30,707
+Request a new date, or dispute an action that isn't yours;
+
+29
+00:01:30,707 --> 00:01:33,040
+reminders pause while the officer decides.
+
+30
+00:01:35,070 --> 00:01:39,743
+A verifier, never the owner, compares before and after and marks the fix effective
+
+31
+00:01:39,743 --> 00:01:40,142
+or not.
+
+32
+00:01:40,142 --> 00:01:44,360
+When every action is verified, the report closes and the reporter is told.
+
+33
+00:01:45,260 --> 00:01:49,687
+Danger now sends a stop-work alert to the officers, site head and HSE managers.
+
+34
+00:01:49,687 --> 00:01:53,330
+They must acknowledge it within the target time, or it escalates.
+
+35
+00:01:54,230 --> 00:01:54,866
+No signal?
+
+36
+00:01:54,866 --> 00:01:59,573
+Everything waits in the Outbox and sends itself when you're back in range.
+
+37
+00:01:59,573 --> 00:02:04,217
+Sync now, retry failed items, fix and resend a rejected report, or export
+
+38
+00:02:04,217 --> 00:02:04,980
+diagnostics.
+
+39
+00:02:05,880 --> 00:02:10,527
+Visitors and contract workers scan the QR poster, pick a language, report in a few
+
+40
+00:02:10,527 --> 00:02:14,890
+taps, stay anonymous if they wish, and get a private link to follow progress.
+
+41
+00:02:15,790 --> 00:02:18,687
+Inspections run from a template or a schedule:
+
+42
+00:02:18,687 --> 00:02:22,024
+pass, fail or N A, numbers, choices, text and photos.
+
+43
+00:02:22,024 --> 00:02:25,992
+A failed item asks for a photo, a note and a corrective action.
+
+44
+00:02:25,992 --> 00:02:26,936
+Sign on screen;
+
+45
+00:02:26,936 --> 00:02:28,070
+the run is scored.
+
+46
+00:02:28,970 --> 00:02:33,544
+Charts show your own numbers, your department's, or the whole site, over thirty,
+
+47
+00:02:33,544 --> 00:02:35,373
+ninety or three sixty five days.
+
+48
+00:02:35,373 --> 00:02:37,660
+Officers download the full Excel report.
+
+49
+00:02:38,560 --> 00:02:42,184
+Notifications collect alerts, reminders and closure notices.
+
+50
+00:02:42,184 --> 00:02:47,197
+Settings holds your language, appearance, email digest, quiet hours and the privacy
+
+51
+00:02:47,197 --> 00:02:47,620
+notice.
+
+52
+00:02:48,520 --> 00:02:50,983
+The admin console opens on the dashboard:
+
+53
+00:02:50,983 --> 00:02:55,369
+open and overdue actions, triage backlog, on-time closure, participation,
+
+54
+00:02:55,369 --> 00:03:00,055
+acknowledgement time, inspection completion, repeat findings and percent safe.
+
+55
+00:03:00,055 --> 00:03:01,557
+Filter by site and dates;
+
+56
+00:03:01,557 --> 00:03:03,660
+export the view or the full report.
+
+57
+00:03:04,560 --> 00:03:07,534
+The attention board lists what needs someone today:
+
+58
+00:03:07,534 --> 00:03:12,374
+triage, unacknowledged alerts, overdue actions, missed inspections, repeat findings
+
+59
+00:03:12,374 --> 00:03:13,540
+and health warnings.
+
+60
+00:03:14,440 --> 00:03:19,468
+The registers list every observation, action and inspection, with filters for
+
+61
+00:03:19,468 --> 00:03:22,668
+status, risk, type, category, employer and dates.
+
+62
+00:03:22,668 --> 00:03:27,370
+Save a filter, open the side panel, jump to a case, export CSV or Excel.
+
+63
+00:03:28,270 --> 00:03:30,428
+Press Control K for the command menu:
+
+64
+00:03:30,428 --> 00:03:33,810
+type a page name, or paste a case number, and press Enter.
+
+65
+00:03:34,710 --> 00:03:35,742
+Sites and areas:
+
+66
+00:03:35,742 --> 00:03:41,097
+the wizard creates a site by industry with default areas, templates, categories and
+
+67
+00:03:41,097 --> 00:03:41,807
+QR posters.
+
+68
+00:03:41,807 --> 00:03:46,194
+Each site holds its rule set, matrix version, calendar and geofence.
+
+69
+00:03:46,194 --> 00:03:48,323
+Equipment is registered per area;
+
+70
+00:03:48,323 --> 00:03:50,130
+QR codes rotate and reprint.
+
+71
+00:03:51,030 --> 00:03:55,477
+People and contractors hold workers without a login, contractor companies with their
+
+72
+00:03:55,477 --> 00:03:58,600
+trades and sites, and the department list, with CSV import.
+
+73
+00:03:59,500 --> 00:04:00,463
+Users and roles:
+
+74
+00:04:00,463 --> 00:04:05,518
+each person signs in with an employee code, email or enrolment code, and holds roles
+
+75
+00:04:05,518 --> 00:04:07,022
+per site or company wide.
+
+76
+00:04:07,022 --> 00:04:11,957
+Issue enrolment codes, reset passwords and authenticators, unlock accounts, set an
+
+77
+00:04:11,957 --> 00:04:12,980
+auditor's expiry.
+
+78
+00:04:13,880 --> 00:04:18,088
+Categories carry required fields, recipients and whether they can be critical.
+
+79
+00:04:18,088 --> 00:04:19,652
+The risk matrix is versioned.
+
+80
+00:04:19,652 --> 00:04:23,428
+Due dates and reminders set the days per band and the reminder ladder.
+
+81
+00:04:23,428 --> 00:04:25,370
+Rule sets hold the statutory timers.
+
+82
+00:04:26,270 --> 00:04:30,708
+The template builder has sections, eight question types, guidance, action on fail
+
+83
+00:04:30,708 --> 00:04:33,009
+and pass marks, with a live phone preview;
+
+84
+00:04:33,009 --> 00:04:35,092
+a second person approves each version.
+
+85
+00:04:35,092 --> 00:04:38,160
+Schedules make inspections recur for a person or a role.
+
+86
+00:04:39,060 --> 00:04:41,906
+Languages shows how complete each translation is.
+
+87
+00:04:41,906 --> 00:04:46,495
+Settings holds the company identity, two-step sign-in roles, languages, service
+
+88
+00:04:46,495 --> 00:04:49,980
+levels, quiet hours, push cap, duplicates and photo quality.
+
+89
+00:04:50,880 --> 00:04:51,459
+Oversight:
+
+90
+00:04:51,459 --> 00:04:55,628
+the audit log records every change with a chain you verify in one click;
+
+91
+00:04:55,628 --> 00:04:58,117
+the notifications log shows every delivery;
+
+92
+00:04:58,117 --> 00:05:01,070
+Health, Privacy and Retention complete the picture.
+
+93
+00:05:01,970 --> 00:05:02,935
+That's SafeWorks:
+
+94
+00:05:02,935 --> 00:05:07,706
+reports in seconds, fixes that are owned and verified, inspections with proof, and a
+
+95
+00:05:07,706 --> 00:05:09,750
+console that gives managers control.
+
+96
+00:05:10,650 --> 00:05:14,916
+Choose your pilot site, print your posters, and make your first report today.
+
+97
+00:05:14,916 --> 00:05:16,080
+Welcome to SafeWorks.

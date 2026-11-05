@@ -1,0 +1,142 @@
+[
+ {
+  "id": "01-hook",
+  "text": "Someone on your site just spotted a hazard. What happens next decides whether it gets fixed, or forgotten.",
+  "dur": 5.38
+ },
+ {
+  "id": "02-intro",
+  "text": "This is the complete SafeWorks walkthrough: the phone app, the QR form for visitors, the admin console, and the settings that shape how your sites run.",
+  "dur": 8.05
+ },
+ {
+  "id": "03-signin",
+  "text": "Sign in with your employee code or email, in English, Hindi, Tamil or Kannada. New workers use a one-time enrolment code; managers add a six-digit authenticator code.",
+  "dur": 9.88
+ },
+ {
+  "id": "04-home",
+  "text": "Home shows your sync status, the Report button, and what needs you now: overdue actions, items to verify, triage backlog and inspections due, then this week at your site.",
+  "dur": 10.18
+ },
+ {
+  "id": "05-report",
+  "text": "Quick report has every option on one screen: location from GPS or the QR poster, type, categories, up to ten photos, a spoken or typed description, then the switches: fixed on the spot, danger now, report anonymously. More details adds employer and trade.",
+  "dur": 15.65
+ },
+ {
+  "id": "06-reports",
+  "text": "Reports has three tabs: My reports, Triage for officers, and Site. Search, save a filter, and open any report for its photos, timeline, comments and actions.",
+  "dur": 9.43
+ },
+ {
+  "id": "07-triage",
+  "text": "Triage offers seven decisions: accept and assign, fixed on the spot, return with a question, reviewed, merge, discard, or escalate to an incident. Accept and assign scores the risk on the matrix, asks for an interim control on high risks, and creates actions with owners and due dates.",
+  "dur": 16.26
+ },
+ {
+  "id": "08-actions",
+  "text": "Owners see their actions, overdue first. Start the work, then Complete with an after-photo and the root cause. Request a new date, or dispute an action that isn't yours; reminders pause while the officer decides.",
+  "dur": 11.61
+ },
+ {
+  "id": "09-verify",
+  "text": "A verifier, never the owner, compares before and after and marks the fix effective or not. When every action is verified, the report closes and the reporter is told.",
+  "dur": 9.29
+ },
+ {
+  "id": "10-danger",
+  "text": "Danger now sends a stop-work alert to the officers, site head and HSE managers. They must acknowledge it within the target time, or it escalates.",
+  "dur": 8.07
+ },
+ {
+  "id": "11-offline",
+  "text": "No signal? Everything waits in the Outbox and sends itself when you're back in range. Sync now, retry failed items, fix and resend a rejected report, or export diagnostics.",
+  "dur": 10.75
+ },
+ {
+  "id": "12-qr",
+  "text": "Visitors and contract workers scan the QR poster, pick a language, report in a few taps, stay anonymous if they wish, and get a private link to follow progress.",
+  "dur": 9.01
+ },
+ {
+  "id": "13-inspect",
+  "text": "Inspections run from a template or a schedule: pass, fail or N A, numbers, choices, text and photos. A failed item asks for a photo, a note and a corrective action. Sign on screen; the run is scored.",
+  "dur": 12.28
+ },
+ {
+  "id": "14-charts",
+  "text": "Charts show your own numbers, your department's, or the whole site, over thirty, ninety or three sixty five days. Officers download the full Excel report.",
+  "dur": 8.69
+ },
+ {
+  "id": "15-settings",
+  "text": "Notifications collect alerts, reminders and closure notices. Settings holds your language, appearance, email digest, quiet hours and the privacy notice.",
+  "dur": 9.06
+ },
+ {
+  "id": "16-dashboard",
+  "text": "The admin console opens on the dashboard: open and overdue actions, triage backlog, on-time closure, participation, acknowledgement time, inspection completion, repeat findings and percent safe. Filter by site and dates; export the view or the full report.",
+  "dur": 15.14
+ },
+ {
+  "id": "17-attention",
+  "text": "The attention board lists what needs someone today: triage, unacknowledged alerts, overdue actions, missed inspections, repeat findings and health warnings.",
+  "dur": 8.98
+ },
+ {
+  "id": "18-registers",
+  "text": "The registers list every observation, action and inspection, with filters for status, risk, type, category, employer and dates. Save a filter, open the side panel, jump to a case, export CSV or Excel.",
+  "dur": 12.93
+ },
+ {
+  "id": "19-cmdk",
+  "text": "Press Control K for the command menu: type a page name, or paste a case number, and press Enter.",
+  "dur": 5.54
+ },
+ {
+  "id": "20-sites",
+  "text": "Sites and areas: the wizard creates a site by industry with default areas, templates, categories and QR posters. Each site holds its rule set, matrix version, calendar and geofence. Equipment is registered per area; QR codes rotate and reprint.",
+  "dur": 15.42
+ },
+ {
+  "id": "21-people",
+  "text": "People and contractors hold workers without a login, contractor companies with their trades and sites, and the department list, with CSV import.",
+  "dur": 7.57
+ },
+ {
+  "id": "22-users",
+  "text": "Users and roles: each person signs in with an employee code, email or enrolment code, and holds roles per site or company wide. Issue enrolment codes, reset passwords and authenticators, unlock accounts, set an auditor's expiry.",
+  "dur": 13.48
+ },
+ {
+  "id": "23-config",
+  "text": "Categories carry required fields, recipients and whether they can be critical. The risk matrix is versioned. Due dates and reminders set the days per band and the reminder ladder. Rule sets hold the statutory timers.",
+  "dur": 11.49
+ },
+ {
+  "id": "24-templates",
+  "text": "The template builder has sections, eight question types, guidance, action on fail and pass marks, with a live phone preview; a second person approves each version. Schedules make inspections recur for a person or a role.",
+  "dur": 11.89
+ },
+ {
+  "id": "25-languages-settings",
+  "text": "Languages shows how complete each translation is. Settings holds the company identity, two-step sign-in roles, languages, service levels, quiet hours, push cap, duplicates and photo quality.",
+  "dur": 10.92
+ },
+ {
+  "id": "26-oversight",
+  "text": "Oversight: the audit log records every change with a chain you verify in one click; the notifications log shows every delivery; Health, Privacy and Retention complete the picture.",
+  "dur": 10.19
+ },
+ {
+  "id": "27-recap",
+  "text": "That's SafeWorks: reports in seconds, fixes that are owned and verified, inspections with proof, and a console that gives managers control.",
+  "dur": 7.78
+ },
+ {
+  "id": "28-end",
+  "text": "Choose your pilot site, print your posters, and make your first report today. Welcome to SafeWorks.",
+  "dur": 5.43
+ }
+]
