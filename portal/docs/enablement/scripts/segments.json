@@ -1,0 +1,77 @@
+[
+ {
+  "id": "01-hook",
+  "text": "Someone on your site just spotted a hazard. What happens next decides whether it gets fixed, or forgotten.",
+  "dur": 6.0
+ },
+ {
+  "id": "02-intro",
+  "text": "This is SafeWorks: one connected system that turns what your people notice into fixes you can prove. In the next three minutes you'll see how to report a hazard, how officers assign the fix, and how managers track it all, start to finish.",
+  "dur": 13.66
+ },
+ {
+  "id": "03-signin",
+  "text": "Sign in with your employee code, in English, Hindi, Tamil or Kannada. Home shows your sync status, the big yellow Report button, and anything that needs you now.",
+  "dur": 10.43
+ },
+ {
+  "id": "04-report",
+  "text": "Tap Report. The location is already filled in. Choose what you saw, pick a category, snap a photo and submit. You get a case number straight away.",
+  "dur": 9.51
+ },
+ {
+  "id": "05-triage",
+  "text": "A safety officer opens it from the Triage tab, scores likelihood and severity on your risk matrix, and assigns an owner. The due date follows the risk band.",
+  "dur": 9.31
+ },
+ {
+  "id": "06-close",
+  "text": "The owner starts the work and completes it with an after-photo. A different person verifies it worked, and the report closes. The person who reported it sees that too.",
+  "dur": 9.42
+ },
+ {
+  "id": "07-danger",
+  "text": "When someone is in immediate danger, turn on Danger now. Your officers, site head and HSE managers are alerted at once and must acknowledge it. If nobody does, it escalates.",
+  "dur": 11.08
+ },
+ {
+  "id": "08-offline",
+  "text": "Bad signal on site? SafeWorks keeps working. Everything you save goes into the outbox and syncs automatically as soon as you're back in range.",
+  "dur": 8.51
+ },
+ {
+  "id": "09-qr",
+  "text": "Visitors and contract workers don't need an account. They scan the QR poster, report in their own language, and can stay anonymous.",
+  "dur": 7.9
+ },
+ {
+  "id": "10-inspect",
+  "text": "Inspections work the same way. Run a checklist, mark pass or fail, add a photo, and sign. A failed item can raise a corrective action automatically.",
+  "dur": 9.98
+ },
+ {
+  "id": "11-console",
+  "text": "For managers, the admin console shows live KPIs: open and overdue actions, triage backlog, on-time closure, by site, date and department. The attention board lists what needs action today.",
+  "dur": 12.91
+ },
+ {
+  "id": "12-cmdk",
+  "text": "Find any case in seconds with the command menu, and produce your monthly report with one click: a full Excel workbook, ready for the review meeting.",
+  "dur": 7.73
+ },
+ {
+  "id": "13-recap",
+  "text": "So that's SafeWorks: reports in seconds, fixes that are owned and verified, and a safety picture you can measure every day.",
+  "dur": 7.12
+ },
+ {
+  "id": "14-language",
+  "text": "Set your language in Settings, and switch any time. Your choice follows you to the phone app, the console and your emails.",
+  "dur": 6.38
+ },
+ {
+  "id": "15-end",
+  "text": "Ready to start? Choose your pilot site, scan your first poster, and make your first report today. Welcome to SafeWorks.",
+  "dur": 7.87
+ }
+]
